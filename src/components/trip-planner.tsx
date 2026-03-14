@@ -38,27 +38,27 @@ export function TripPlanner({ className }: { className?: string }) {
         {/* Arrival Date */}
         <div>
           <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-[#333333]">
-            <Calendar className="h-4 w-4 text-[#037B98]" />
+            <Calendar className="h-4 w-4 text-[#7B1A1A]" />
             Arrival Date
           </label>
           <input
             type="date"
             value={arrivalDate}
             onChange={(e) => setArrivalDate(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-[#333333] outline-none transition-colors focus:border-[#037B98] focus:ring-2 focus:ring-[#037B98]/20"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-[#333333] outline-none transition-colors focus:border-[#7B1A1A] focus:ring-2 focus:ring-[#7B1A1A]/20"
           />
         </div>
 
         {/* Length of Stay */}
         <div>
           <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-[#333333]">
-            <Moon className="h-4 w-4 text-[#037B98]" />
+            <Moon className="h-4 w-4 text-[#7B1A1A]" />
             Length of Stay
           </label>
           <select
             value={nights}
             onChange={(e) => setNights(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-[#333333] outline-none transition-colors focus:border-[#037B98] focus:ring-2 focus:ring-[#037B98]/20"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-[#333333] outline-none transition-colors focus:border-[#7B1A1A] focus:ring-2 focus:ring-[#7B1A1A]/20"
           >
             {[1, 2, 3, 4, 5, 6, 7].map((n) => (
               <option key={n} value={n}>
@@ -72,7 +72,7 @@ export function TripPlanner({ className }: { className?: string }) {
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-[#333333]">
-              <Users className="h-4 w-4 text-[#037B98]" />
+              <Users className="h-4 w-4 text-[#7B1A1A]" />
               Adults
             </label>
             <div className="flex items-center rounded-lg border border-gray-300">
@@ -128,7 +128,7 @@ export function TripPlanner({ className }: { className?: string }) {
 
         <button
           type="submit"
-          className="w-full rounded-lg bg-[#018941] px-4 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#017035]"
+          className="w-full rounded-lg bg-[#8B6914] px-4 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#6B5210]"
         >
           Plan My Trip
         </button>

@@ -54,7 +54,7 @@ export function TabNavigation({
             className={cn(
               "shrink-0 px-5 py-3.5 text-sm font-medium transition-colors whitespace-nowrap",
               activeTab === tab.id
-                ? "text-[#037B98]"
+                ? "text-[#7B1A1A]"
                 : "text-gray-500 hover:text-[#333333]"
             )}
           >
@@ -64,7 +64,7 @@ export function TabNavigation({
 
         {/* Active underline indicator */}
         <div
-          className="absolute bottom-0 h-0.5 bg-[#037B98] transition-all duration-300 ease-out"
+          className="absolute bottom-0 h-0.5 bg-[#7B1A1A] transition-all duration-300 ease-out"
           style={{
             left: indicatorStyle.left,
             width: indicatorStyle.width,

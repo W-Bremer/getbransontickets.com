@@ -93,7 +93,7 @@ export default function DealsPage() {
       <JsonLd data={dealsSchema} />
 
       {/* Header */}
-      <section className="bg-[#037B98] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -103,7 +103,7 @@ export default function DealsPage() {
             className="mb-6"
           />
           <div className="flex items-center gap-3 mb-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F76E00] px-3 py-1 text-xs font-bold text-white uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#D4A843] px-3 py-1 text-xs font-bold text-white uppercase tracking-wider">
               <Tag className="h-3 w-3" />
               Deals &amp; Savings
             </span>
@@ -123,7 +123,7 @@ export default function DealsPage() {
         <section className="py-12 sm:py-16 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3 mb-2">
-              <Ticket className="h-6 w-6 text-[#F76E00]" />
+              <Ticket className="h-6 w-6 text-[#D4A843]" />
               <h2 className="text-2xl sm:text-3xl font-bold text-[#333333] font-heading">
                 BOGO &amp; Special Offers
               </h2>
@@ -151,14 +151,14 @@ export default function DealsPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                       {/* BOGO Badge */}
                       <div className="absolute top-3 left-3">
-                        <span className="inline-flex items-center gap-1 rounded-full bg-[#F76E00] px-3 py-1 text-xs font-bold text-white shadow-lg">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[#D4A843] px-3 py-1 text-xs font-bold text-white shadow-lg">
                           <Tag className="h-3 w-3" />
                           BOGO
                         </span>
                       </div>
                       {/* Price */}
                       <div className="absolute bottom-3 right-3 rounded-xl bg-white/95 px-3 py-1.5 backdrop-blur-md shadow-sm">
-                        <span className="text-xs font-medium text-[#037B98]">
+                        <span className="text-xs font-medium text-[#7B1A1A]">
                           From
                         </span>
                         <span className="ml-1 text-lg font-bold text-[#333333]">
@@ -167,14 +167,14 @@ export default function DealsPage() {
                       </div>
                     </div>
                     <div className="p-4">
-                      <h3 className="text-lg font-bold text-[#333333] group-hover:text-[#037B98] transition-colors">
+                      <h3 className="text-lg font-bold text-[#333333] group-hover:text-[#7B1A1A] transition-colors">
                         {show.name}
                       </h3>
                       <p className="mt-1 text-sm text-[#333333]/60">
                         {show.theater}
                       </p>
                       <div className="mt-2 flex items-center gap-1">
-                        <Star className="w-4 h-4 fill-[#FB9219] text-[#FB9219]" />
+                        <Star className="w-4 h-4 fill-[#D4A843] text-[#D4A843]" />
                         <span className="text-sm font-semibold text-[#333333]">
                           {show.rating}
                         </span>
@@ -186,13 +186,13 @@ export default function DealsPage() {
                         {show.specialOffers.map((offer, i) => (
                           <p
                             key={i}
-                            className="text-sm font-semibold text-[#F76E00]"
+                            className="text-sm font-semibold text-[#D4A843]"
                           >
                             {offer}
                           </p>
                         ))}
                       </div>
-                      <button className="mt-4 w-full rounded-lg bg-[#018941] py-2.5 text-sm font-semibold text-white hover:bg-[#018941]/90 transition-colors">
+                      <button className="mt-4 w-full rounded-lg bg-[#8B6914] py-2.5 text-sm font-semibold text-white hover:bg-[#8B6914]/90 transition-colors">
                         View Deal
                       </button>
                     </div>
@@ -205,10 +205,10 @@ export default function DealsPage() {
       )}
 
       {/* Discount Show Tickets */}
-      <section className="py-12 sm:py-16 bg-[#F5F5F5]">
+      <section className="py-12 sm:py-16 bg-[#FAF8F5]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-2">
-            <Sparkles className="h-6 w-6 text-[#037B98]" />
+            <Sparkles className="h-6 w-6 text-[#7B1A1A]" />
             <h2 className="text-2xl sm:text-3xl font-bold text-[#333333] font-heading">
               Lowest-Priced Show Tickets
             </h2>
@@ -235,7 +235,7 @@ export default function DealsPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                     {/* Price badge */}
-                    <div className="absolute bottom-3 right-3 rounded-xl bg-[#018941] px-3 py-1.5 shadow-lg">
+                    <div className="absolute bottom-3 right-3 rounded-xl bg-[#8B6914] px-3 py-1.5 shadow-lg">
                       <span className="text-xs font-medium text-white/80">
                         From
                       </span>
@@ -245,14 +245,14 @@ export default function DealsPage() {
                     </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="text-lg font-bold text-[#333333] group-hover:text-[#037B98] transition-colors">
+                    <h3 className="text-lg font-bold text-[#333333] group-hover:text-[#7B1A1A] transition-colors">
                       {show.name}
                     </h3>
                     <p className="mt-1 text-sm text-[#333333]/60 line-clamp-2">
                       {show.shortDescription}
                     </p>
                     <div className="mt-2 flex items-center gap-1">
-                      <Star className="w-4 h-4 fill-[#FB9219] text-[#FB9219]" />
+                      <Star className="w-4 h-4 fill-[#D4A843] text-[#D4A843]" />
                       <span className="text-sm font-semibold text-[#333333]">
                         {show.rating}
                       </span>
@@ -272,7 +272,7 @@ export default function DealsPage() {
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-2">
-            <Tag className="h-6 w-6 text-[#F76E00]" />
+            <Tag className="h-6 w-6 text-[#D4A843]" />
             <h2 className="text-2xl sm:text-3xl font-bold text-[#333333] font-heading">
               Top Attraction Deals
             </h2>
@@ -299,11 +299,11 @@ export default function DealsPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                     <div className="absolute top-3 left-3">
-                      <span className="rounded-full bg-[#F76E00] px-3 py-1 text-xs font-bold text-white">
+                      <span className="rounded-full bg-[#D4A843] px-3 py-1 text-xs font-bold text-white">
                         Best Value
                       </span>
                     </div>
-                    <div className="absolute bottom-3 right-3 rounded-xl bg-[#005C73]/85 px-3 py-1.5 backdrop-blur-md">
+                    <div className="absolute bottom-3 right-3 rounded-xl bg-[#5A1212]/85 px-3 py-1.5 backdrop-blur-md">
                       <span className="text-xs font-medium text-white/80">
                         From
                       </span>
@@ -313,14 +313,14 @@ export default function DealsPage() {
                     </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="text-lg font-bold text-[#333333] group-hover:text-[#037B98] transition-colors">
+                    <h3 className="text-lg font-bold text-[#333333] group-hover:text-[#7B1A1A] transition-colors">
                       {attr.name}
                     </h3>
                     <p className="mt-1 text-sm text-[#333333]/60 line-clamp-2">
                       {attr.shortDescription}
                     </p>
                     <div className="mt-2 flex items-center gap-1">
-                      <Star className="w-4 h-4 fill-[#FB9219] text-[#FB9219]" />
+                      <Star className="w-4 h-4 fill-[#D4A843] text-[#D4A843]" />
                       <span className="text-sm font-semibold text-[#333333]">
                         {attr.rating}
                       </span>
@@ -337,10 +337,10 @@ export default function DealsPage() {
       </section>
 
       {/* Family Packages */}
-      <section className="py-12 sm:py-16 bg-[#F5F5F5]">
+      <section className="py-12 sm:py-16 bg-[#FAF8F5]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-2">
-            <Users className="h-6 w-6 text-[#018941]" />
+            <Users className="h-6 w-6 text-[#8B6914]" />
             <h2 className="text-2xl sm:text-3xl font-bold text-[#333333] font-heading">
               Family Packages
             </h2>
@@ -355,7 +355,7 @@ export default function DealsPage() {
                 key={pkg.name}
                 className="rounded-2xl bg-white border border-gray-100 shadow-md overflow-hidden"
               >
-                <div className="bg-[#037B98] px-6 py-4">
+                <div className="bg-[#7B1A1A] px-6 py-4">
                   <h3 className="text-lg font-bold text-white">{pkg.name}</h3>
                 </div>
                 <div className="p-6">
@@ -368,7 +368,7 @@ export default function DealsPage() {
                         key={item}
                         className="flex items-center gap-2 text-sm"
                       >
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#018941]" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#8B6914]" />
                         <span className="text-[#333333] font-medium">
                           {item}
                         </span>
@@ -384,11 +384,11 @@ export default function DealsPage() {
                         ${pkg.dealPrice}
                       </div>
                     </div>
-                    <span className="rounded-full bg-[#F76E00]/10 px-3 py-1 text-xs font-bold text-[#F76E00]">
+                    <span className="rounded-full bg-[#D4A843]/10 px-3 py-1 text-xs font-bold text-[#D4A843]">
                       Save ${pkg.savings}
                     </span>
                   </div>
-                  <button className="mt-5 w-full rounded-lg bg-[#018941] py-3 text-sm font-semibold text-white hover:bg-[#018941]/90 transition-colors">
+                  <button className="mt-5 w-full rounded-lg bg-[#8B6914] py-3 text-sm font-semibold text-white hover:bg-[#8B6914]/90 transition-colors">
                     Book Package
                   </button>
                 </div>
@@ -399,7 +399,7 @@ export default function DealsPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="py-16 bg-[#005C73]">
+      <section className="py-16 bg-[#5A1212]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-white font-heading">
             Need Help Finding the Best Deal?
@@ -411,13 +411,13 @@ export default function DealsPage() {
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href={`tel:${siteConfig.phoneRaw}`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#F76E00] text-white rounded-lg font-semibold hover:bg-[#C04E0C] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#D4A843] text-white rounded-lg font-semibold hover:bg-[#C04E0C] transition-colors"
             >
               Call {siteConfig.phone}
             </a>
             <Link
               href="/shows"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-[#005C73] transition-all"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-[#5A1212] transition-all"
             >
               Browse All Shows
             </Link>

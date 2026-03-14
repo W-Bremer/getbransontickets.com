@@ -66,7 +66,7 @@ export function ReviewsSection({
               <Star
                 key={`full-${i}`}
                 size={20}
-                className="fill-[#FB9219] text-[#FB9219]"
+                className="fill-[#D4A843] text-[#D4A843]"
               />
             ))}
             {hasHalf && (
@@ -74,14 +74,14 @@ export function ReviewsSection({
                 className="relative inline-block"
                 style={{ width: 20, height: 20 }}
               >
-                <Star size={20} className="absolute inset-0 text-[#FB9219]" />
+                <Star size={20} className="absolute inset-0 text-[#D4A843]" />
                 <span
                   className="absolute inset-0 overflow-hidden"
                   style={{ width: "50%" }}
                 >
                   <Star
                     size={20}
-                    className="fill-[#FB9219] text-[#FB9219]"
+                    className="fill-[#D4A843] text-[#D4A843]"
                   />
                 </span>
               </span>
@@ -90,7 +90,7 @@ export function ReviewsSection({
               <Star
                 key={`empty-${i}`}
                 size={20}
-                className="text-[#FB9219]/30"
+                className="text-[#D4A843]/30"
               />
             ))}
           </div>
@@ -108,7 +108,7 @@ export function ReviewsSection({
               </span>
               <div className="h-3 flex-1 overflow-hidden rounded-full bg-gray-100">
                 <div
-                  className="h-full rounded-full bg-[#FB9219] transition-all duration-500"
+                  className="h-full rounded-full bg-[#D4A843] transition-all duration-500"
                   style={{ width: `${pct}%` }}
                 />
               </div>
@@ -134,7 +134,7 @@ export function ReviewsSection({
             onClick={() =>
               setVisibleCount((prev) => prev + INITIAL_COUNT)
             }
-            className="rounded-lg border border-[#037B98] px-6 py-2.5 text-sm font-semibold text-[#037B98] transition-colors hover:bg-[#037B98] hover:text-white"
+            className="rounded-lg border border-[#7B1A1A] px-6 py-2.5 text-sm font-semibold text-[#7B1A1A] transition-colors hover:bg-[#7B1A1A] hover:text-white"
           >
             Show More Reviews
           </button>

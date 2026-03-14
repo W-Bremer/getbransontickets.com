@@ -61,7 +61,7 @@ export function TrustBar({ className }: TrustBarProps) {
     <section
       ref={ref}
       className={cn(
-        "bg-[#037B98] py-12 sm:py-16",
+        "bg-[#7B1A1A] py-12 sm:py-16",
         className
       )}
     >

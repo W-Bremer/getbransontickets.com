@@ -11,7 +11,7 @@ const faqCategories = [
     name: "Booking",
     faqs: [
       {
-        question: "How do I book show tickets through ShowTime Branson?",
+        question: "How do I book show tickets through GetBransonTickets.com?",
         answer:
           "You can book tickets directly on our website by browsing shows, selecting your preferred date and time, and completing the checkout process. You can also call us at 1-800-555-SHOW and one of our entertainment experts will help you book.",
       },

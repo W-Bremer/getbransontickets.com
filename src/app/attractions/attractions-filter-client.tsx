@@ -56,8 +56,8 @@ export function AttractionsFilterClient({
                 onClick={() => setActiveType(type.slug)}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${
                   activeType === type.slug
-                    ? "bg-[#037B98] text-white shadow-md"
-                    : "bg-[#F5F5F5] text-[#333333]/70 hover:bg-[#037B98]/10 hover:text-[#037B98]"
+                    ? "bg-[#7B1A1A] text-white shadow-md"
+                    : "bg-[#FAF8F5] text-[#333333]/70 hover:bg-[#7B1A1A]/10 hover:text-[#7B1A1A]"
                 }`}
               >
                 {type.name}
@@ -71,7 +71,7 @@ export function AttractionsFilterClient({
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-[#333333] focus:border-[#037B98] focus:outline-none focus:ring-1 focus:ring-[#037B98]"
+              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-[#333333] focus:border-[#7B1A1A] focus:outline-none focus:ring-1 focus:ring-[#7B1A1A]"
             >
               <option value="popularity">Most Popular</option>
               <option value="rating">Highest Rated</option>
@@ -100,7 +100,7 @@ export function AttractionsFilterClient({
             </p>
             <button
               onClick={() => setActiveType("all")}
-              className="mt-4 text-[#037B98] font-semibold hover:underline"
+              className="mt-4 text-[#7B1A1A] font-semibold hover:underline"
             >
               View all attractions
             </button>

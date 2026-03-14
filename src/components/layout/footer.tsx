@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
-  Ticket,
   Phone,
   Mail,
   MapPin,
@@ -44,24 +44,20 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#005C73] text-white">
+    <footer className="bg-[#5A1212] text-white">
       {/* Main footer */}
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-6">
         {/* Top section - brand + newsletter */}
         <div className="mb-12 flex flex-col gap-8 border-b border-white/10 pb-12 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <Link href="/" className="mb-4 flex items-center gap-2.5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white">
-                <Ticket className="h-6 w-6 text-[#037B98]" />
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-2xl font-bold tracking-tight">
-                  ShowTime
-                </span>
-                <span className="text-[11px] font-semibold tracking-[0.2em] text-white/80 uppercase">
-                  Branson
-                </span>
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Get Branson Tickets"
+                width={200}
+                height={56}
+                className="h-12 w-auto"
+              />
             </Link>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-white/60">
               {siteConfig.description}
@@ -80,11 +76,11 @@ export function Footer() {
               <input
                 type="email"
                 placeholder="Your email address"
-                className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-[#FB9219]/50 focus:outline-none focus:ring-1 focus:ring-[#FB9219]/50"
+                className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-[#D4A843]/50 focus:outline-none focus:ring-1 focus:ring-[#D4A843]/50"
               />
               <button
                 type="submit"
-                className="flex items-center gap-1 rounded-lg bg-[#018941] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#006B33]"
+                className="flex items-center gap-1 rounded-lg bg-[#8B6914] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#6B5210]"
               >
                 Subscribe
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -97,7 +93,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {/* Shows */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#FB9219] uppercase">
+            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#D4A843] uppercase">
               Shows
             </h4>
             <ul className="space-y-2.5">
@@ -116,7 +112,7 @@ export function Footer() {
 
           {/* Explore */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#FB9219] uppercase">
+            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#D4A843] uppercase">
               Explore
             </h4>
             <ul className="space-y-2.5">
@@ -135,7 +131,7 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#FB9219] uppercase">
+            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#D4A843] uppercase">
               Company
             </h4>
             <ul className="space-y-2.5">
@@ -154,20 +150,20 @@ export function Footer() {
 
           {/* Connect */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#FB9219] uppercase">
+            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#D4A843] uppercase">
               Connect
             </h4>
             <div className="mb-4 space-y-3">
               <a
                 href={`tel:${siteConfig.phoneRaw}`}
-                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[#FB9219]"
+                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[#D4A843]"
               >
                 <Phone className="h-4 w-4" />
                 {siteConfig.phone}
               </a>
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[#FB9219]"
+                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[#D4A843]"
               >
                 <Mail className="h-4 w-4" />
                 {siteConfig.email}
@@ -186,7 +182,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/50 transition-colors hover:border-[#FB9219]/30 hover:bg-[#FB9219]/10 hover:text-[#FB9219]"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/50 transition-colors hover:border-[#D4A843]/30 hover:bg-[#D4A843]/10 hover:text-[#D4A843]"
                   aria-label={social.label}
                 >
                   <social.icon className="h-4 w-4" />

@@ -48,7 +48,7 @@ export default function AttractionsPage() {
       <JsonLd data={collectionsSchema} />
 
       {/* Header */}
-      <section className="bg-[#037B98] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -75,7 +75,7 @@ export default function AttractionsPage() {
       />
 
       {/* CTA */}
-      <section className="py-16 sm:py-20 bg-[#F5F5F5]">
+      <section className="py-16 sm:py-20 bg-[#FAF8F5]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-[#333333] font-heading">
             Combine Shows &amp; Attractions for the Ultimate Trip
@@ -87,7 +87,7 @@ export default function AttractionsPage() {
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/shows"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#037B98] text-white rounded-lg font-semibold hover:bg-[#005C73] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#7B1A1A] text-white rounded-lg font-semibold hover:bg-[#5A1212] transition-colors"
             >
               Browse Shows
             </a>

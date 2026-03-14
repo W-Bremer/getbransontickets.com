@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Ticket, Menu, Search, Phone, ChevronDown, X,
+  Menu, Search, Phone, ChevronDown, X,
   Music, Laugh, Wand2, UtensilsCrossed, Guitar,
-  Star, Users, Dumbbell, Drama,
+  Star, Users, Dumbbell, Drama, Ticket,
 } from "lucide-react";
 import { siteConfig, categories } from "@/lib/config";
 import { CartIcon } from "@/components/cart-icon";
@@ -64,25 +65,22 @@ export function Header() {
         className={cn(
           "fixed top-0 right-0 left-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-[#037B98]/95 shadow-lg shadow-black/20 backdrop-blur-xl"
-            : "bg-[#037B98]"
+            ? "bg-[#7B1A1A]/95 shadow-lg shadow-black/20 backdrop-blur-xl"
+            : "bg-[#7B1A1A]"
         )}
       >
         {/* Main nav */}
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
           {/* Logo */}
-          <Link href="/" className="group flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white transition-transform group-hover:scale-105">
-              <Ticket className="h-5 w-5 text-[#037B98]" />
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-lg font-bold tracking-tight text-white md:text-xl">
-                ShowTime
-              </span>
-              <span className="text-[10px] font-semibold tracking-[0.2em] text-white/80 uppercase">
-                Branson
-              </span>
-            </div>
+          <Link href="/" className="group flex items-center">
+            <Image
+              src="/logo.png"
+              alt="Get Branson Tickets"
+              width={180}
+              height={50}
+              className="h-10 w-auto transition-transform group-hover:scale-105"
+              priority
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -113,14 +111,14 @@ export function Header() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 8, scale: 0.97 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="absolute top-full left-1/2 z-50 mt-1 w-[540px] -translate-x-1/2 rounded-xl border border-white/10 bg-[#005C73] p-4 shadow-2xl shadow-black/40"
+                    className="absolute top-full left-1/2 z-50 mt-1 w-[540px] -translate-x-1/2 rounded-xl border border-white/10 bg-[#5A1212] p-4 shadow-2xl shadow-black/40"
                   >
                     <div className="mb-3 border-b border-white/10 pb-3">
                       <Link
                         href="/shows"
                         className="group flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-white/5"
                       >
-                        <Ticket className="h-5 w-5 text-[#FB9219]" />
+                        <Ticket className="h-5 w-5 text-[#D4A843]" />
                         <div>
                           <p className="text-sm font-semibold text-white">All Shows</p>
                           <p className="text-xs text-white/50">Browse every show in Branson</p>
@@ -134,7 +132,7 @@ export function Header() {
                           href={`/shows/category/${cat.slug}`}
                           className="group flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-white/5"
                         >
-                          <span className="text-[#FB9219]/80 transition-colors group-hover:text-[#FB9219]">
+                          <span className="text-[#D4A843]/80 transition-colors group-hover:text-[#D4A843]">
                             {categoryIcons[cat.slug]}
                           </span>
                           <div>
@@ -217,7 +215,7 @@ export function Header() {
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-white/70 hover:bg-white/5 hover:text-white"
                   >
-                    <span className="text-[#FB9219]/70">{categoryIcons[cat.slug]}</span>
+                    <span className="text-[#D4A843]/70">{categoryIcons[cat.slug]}</span>
                     {cat.name}
                   </Link>
                 ))}
@@ -236,7 +234,7 @@ export function Header() {
                 <div className="border-t border-white/10 pt-4 mt-2">
                   <a
                     href={`tel:${siteConfig.phoneRaw}`}
-                    className="flex items-center justify-center gap-2 rounded-lg bg-[#018941] px-4 py-3 font-semibold text-white"
+                    className="flex items-center justify-center gap-2 rounded-lg bg-[#8B6914] px-4 py-3 font-semibold text-white"
                   >
                     <Phone className="h-4 w-4" />
                     Call {siteConfig.phone}
@@ -255,7 +253,7 @@ export function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-[#005C73]/95 backdrop-blur-xl"
+            className="fixed inset-0 z-[60] bg-[#5A1212]/95 backdrop-blur-xl"
           >
             <div className="mx-auto max-w-2xl px-4 pt-24">
               <div className="flex items-center justify-between mb-8">
@@ -275,7 +273,7 @@ export function Header() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search shows, attractions, theaters..."
-                    className="w-full rounded-xl border border-white/20 bg-white/5 py-4 pl-12 pr-4 text-lg text-white placeholder:text-white/40 focus:border-[#FB9219]/50 focus:outline-none focus:ring-2 focus:ring-[#FB9219]/20"
+                    className="w-full rounded-xl border border-white/20 bg-white/5 py-4 pl-12 pr-4 text-lg text-white placeholder:text-white/40 focus:border-[#D4A843]/50 focus:outline-none focus:ring-2 focus:ring-[#D4A843]/20"
                     autoFocus
                   />
                 </div>
@@ -291,7 +289,7 @@ export function Header() {
                         router.push(`/shows?q=${encodeURIComponent(term)}`);
                         setSearchOpen(false);
                       }}
-                      className="rounded-full border border-white/20 px-3 py-1.5 text-sm text-white/70 hover:border-[#FB9219]/50 hover:text-[#FB9219]"
+                      className="rounded-full border border-white/20 px-3 py-1.5 text-sm text-white/70 hover:border-[#D4A843]/50 hover:text-[#D4A843]"
                     >
                       {term}
                     </button>

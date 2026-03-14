@@ -37,7 +37,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/shows"
-              className="hidden sm:inline-flex items-center gap-2 text-[#037B98] hover:text-[#005C73] font-semibold transition-colors"
+              className="hidden sm:inline-flex items-center gap-2 text-[#7B1A1A] hover:text-[#5A1212] font-semibold transition-colors"
             >
               View All Shows →
             </Link>
@@ -50,7 +50,7 @@ export default function HomePage() {
           <div className="mt-8 text-center sm:hidden">
             <Link
               href="/shows"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#018941] text-white rounded-lg font-semibold hover:bg-[#006B33] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#8B6914] text-white rounded-lg font-semibold hover:bg-[#6B5210] transition-colors"
             >
               View All Shows →
             </Link>
@@ -59,7 +59,7 @@ export default function HomePage() {
       </section>
 
       {/* BOGO Deals Callout */}
-      <section className="py-12 sm:py-16 bg-gradient-to-r from-[#F76E00] to-[#FB9219]">
+      <section className="py-12 sm:py-16 bg-gradient-to-r from-[#D4A843] to-[#D4A843]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
@@ -77,7 +77,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/deals"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#F76E00] rounded-xl font-semibold text-lg hover:bg-gray-50 transition-colors shadow-lg whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#D4A843] rounded-xl font-semibold text-lg hover:bg-gray-50 transition-colors shadow-lg whitespace-nowrap"
             >
               View All Deals
             </Link>
@@ -86,7 +86,7 @@ export default function HomePage() {
       </section>
 
       {/* Category Cards */}
-      <section className="py-16 sm:py-20 bg-[#F5F5F5]">
+      <section className="py-16 sm:py-20 bg-[#FAF8F5]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#333333]">
@@ -127,7 +127,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/attractions"
-              className="hidden sm:inline-flex items-center gap-2 text-[#037B98] hover:text-[#005C73] font-semibold transition-colors"
+              className="hidden sm:inline-flex items-center gap-2 text-[#7B1A1A] hover:text-[#5A1212] font-semibold transition-colors"
             >
               View All Attractions →
             </Link>
@@ -148,19 +148,19 @@ export default function HomePage() {
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     />
-                    <div className="absolute top-3 left-3 rounded-full bg-[#037B98] px-3 py-1 text-xs font-semibold text-white capitalize">
+                    <div className="absolute top-3 left-3 rounded-full bg-[#7B1A1A] px-3 py-1 text-xs font-semibold text-white capitalize">
                       {attraction.type.replace("-", " ")}
                     </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="font-bold text-[#333333] group-hover:text-[#037B98] transition-colors">
+                    <h3 className="font-bold text-[#333333] group-hover:text-[#7B1A1A] transition-colors">
                       {attraction.name}
                     </h3>
                     <p className="mt-1 text-sm text-gray-500 line-clamp-2">
                       {attraction.shortDescription}
                     </p>
                     <div className="mt-2 flex items-center justify-between">
-                      <span className="text-sm font-semibold text-[#018941]">
+                      <span className="text-sm font-semibold text-[#8B6914]">
                         From ${attraction.adultPrice}
                       </span>
                       <span className="text-sm text-gray-400">
@@ -175,7 +175,7 @@ export default function HomePage() {
           <div className="mt-8 text-center sm:hidden">
             <Link
               href="/attractions"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#037B98] text-white rounded-lg font-semibold hover:bg-[#005C73] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#7B1A1A] text-white rounded-lg font-semibold hover:bg-[#5A1212] transition-colors"
             >
               View All Attractions →
             </Link>
@@ -187,7 +187,7 @@ export default function HomePage() {
       <TrustBar />
 
       {/* Plan Your Entertainment */}
-      <section className="py-16 sm:py-20 bg-[#F5F5F5]">
+      <section className="py-16 sm:py-20 bg-[#FAF8F5]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#333333]">
@@ -203,12 +203,12 @@ export default function HomePage() {
               href="/shows/schedule"
               className="group rounded-2xl bg-white p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
             >
-              <div className="w-14 h-14 rounded-xl bg-[#037B98] flex items-center justify-center mb-5">
+              <div className="w-14 h-14 rounded-xl bg-[#7B1A1A] flex items-center justify-center mb-5">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#333333] mb-2 group-hover:text-[#037B98] transition-colors">
+              <h3 className="text-xl font-bold text-[#333333] mb-2 group-hover:text-[#7B1A1A] transition-colors">
                 Show Schedule
               </h3>
               <p className="text-gray-500">
@@ -219,10 +219,10 @@ export default function HomePage() {
               href="/deals"
               className="group rounded-2xl bg-white p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
             >
-              <div className="w-14 h-14 rounded-xl bg-[#F76E00] flex items-center justify-center mb-5">
+              <div className="w-14 h-14 rounded-xl bg-[#D4A843] flex items-center justify-center mb-5">
                 <Tag className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-[#333333] mb-2 group-hover:text-[#F76E00] transition-colors">
+              <h3 className="text-xl font-bold text-[#333333] mb-2 group-hover:text-[#D4A843] transition-colors">
                 Deals & Discounts
               </h3>
               <p className="text-gray-500">
@@ -233,12 +233,12 @@ export default function HomePage() {
               href="/plan-your-trip"
               className="group rounded-2xl bg-white p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
             >
-              <div className="w-14 h-14 rounded-xl bg-[#018941] flex items-center justify-center mb-5">
+              <div className="w-14 h-14 rounded-xl bg-[#8B6914] flex items-center justify-center mb-5">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#333333] mb-2 group-hover:text-[#018941] transition-colors">
+              <h3 className="text-xl font-bold text-[#333333] mb-2 group-hover:text-[#8B6914] transition-colors">
                 Plan Your Trip
               </h3>
               <p className="text-gray-500">
@@ -265,7 +265,7 @@ export default function HomePage() {
       </section>
 
       {/* Blog / Guides */}
-      <section className="py-16 sm:py-20 bg-[#005C73]">
+      <section className="py-16 sm:py-20 bg-[#5A1212]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-white">
@@ -292,14 +292,14 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="p-6">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#FB9219]">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#D4A843]">
                     {post.category}
                   </span>
-                  <h3 className="mt-2 text-lg font-bold text-white group-hover:text-[#FB9219] transition-colors">
+                  <h3 className="mt-2 text-lg font-bold text-white group-hover:text-[#D4A843] transition-colors">
                     {post.title}
                   </h3>
                   <p className="mt-2 text-sm text-white/50 line-clamp-2">{post.excerpt}</p>
-                  <span className="mt-4 inline-block text-sm text-[#FB9219] font-medium">Read Guide →</span>
+                  <span className="mt-4 inline-block text-sm text-[#D4A843] font-medium">Read Guide →</span>
                 </div>
               </Link>
             ))}
@@ -307,7 +307,7 @@ export default function HomePage() {
           <div className="mt-10 text-center">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/30 text-white rounded-lg font-semibold hover:bg-white hover:text-[#005C73] transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/30 text-white rounded-lg font-semibold hover:bg-white hover:text-[#5A1212] transition-all duration-300"
             >
               View All Guides →
             </Link>
@@ -317,7 +317,7 @@ export default function HomePage() {
 
       {/* Final CTA */}
       <section className="py-20 sm:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#037B98] to-[#005C73]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#7B1A1A] to-[#5A1212]" />
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-5xl font-bold text-white">
             Ready to Experience Branson?
@@ -328,13 +328,13 @@ export default function HomePage() {
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/shows"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#018941] text-white rounded-xl font-semibold text-lg hover:bg-[#006B33] transition-colors shadow-xl"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#8B6914] text-white rounded-xl font-semibold text-lg hover:bg-[#6B5210] transition-colors shadow-xl"
             >
               Browse All Shows
             </Link>
             <Link
               href={`tel:${siteConfig.phoneRaw}`}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#037B98] rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors shadow-xl"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#7B1A1A] rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors shadow-xl"
             >
               Call {siteConfig.phone}
             </Link>
@@ -343,7 +343,7 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-16 sm:py-20 bg-[#F5F5F5]">
+      <section className="py-16 sm:py-20 bg-[#FAF8F5]">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-[#333333]">
             Get Branson Deals in Your Inbox
@@ -355,12 +355,12 @@ export default function HomePage() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#037B98] focus:border-transparent text-[#333333]"
+              className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7B1A1A] focus:border-transparent text-[#333333]"
               required
             />
             <button
               type="submit"
-              className="px-6 py-3 bg-[#018941] text-white rounded-lg font-semibold hover:bg-[#006B33] transition-colors whitespace-nowrap"
+              className="px-6 py-3 bg-[#8B6914] text-white rounded-lg font-semibold hover:bg-[#6B5210] transition-colors whitespace-nowrap"
             >
               Get Deals
             </button>

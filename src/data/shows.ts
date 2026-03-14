@@ -63,7 +63,7 @@ export const shows: Show[] = [
     seoKeywords: ["haygoods branson", "haygoods show tickets", "branson variety show"],
     relatedShows: ["clay-coopers-country-express", "six", "grand-jubilee"],
     imageAlt: "The Haygoods performing live on stage with pyrotechnics in Branson Missouri",
-    imageUrl: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&h=500&fit=crop",
+    imageUrl: "https://thehaygoods.com/wp-content/uploads/2022/04/haygoods-hp2.jpg",
     faqs: [
       { question: "How long is The Haygoods show?", answer: "The show runs approximately 2 hours with no intermission." },
       { question: "Is The Haygoods show appropriate for children?", answer: "Yes! The Haygoods is a family-friendly show enjoyed by all ages. The high-energy performance, lights, and pyrotechnics are a hit with kids." },
@@ -100,7 +100,7 @@ export const shows: Show[] = [
     seoKeywords: ["six show branson", "hughes brothers branson", "branson harmony show"],
     relatedShows: ["the-haygoods", "the-petersens", "grand-jubilee"],
     imageAlt: "SIX Hughes Brothers performing vocal harmonies on stage in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/8ff0d220-6f8e-49a3-a101-245a3661ac61.jpg",
     faqs: [
       { question: "Do the SIX brothers really sing without instruments?", answer: "Yes! The entire show is performed a cappella — six voices creating every sound you hear, from bass lines to percussion." },
       { question: "Where is the SIX show located?", answer: "SIX performs at the Hughes Brothers Theatre at 3425 W 76 Country Blvd in Branson." },
@@ -136,7 +136,7 @@ export const shows: Show[] = [
     seoKeywords: ["clay cooper branson", "branson morning show", "country express branson"],
     relatedShows: ["the-haygoods", "grand-jubilee", "comedy-jamboree"],
     imageAlt: "Clay Cooper performing country music on stage in Branson Missouri",
-    imageUrl: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=800&h=500&fit=crop",
+    imageUrl: "https://media.bransontourismcenter.com/images/property_galleries/704_758.jpg",
     faqs: [
       { question: "What time does Clay Cooper's show start?", answer: "Clay Cooper's Country Express is a morning show, starting at 10:00 AM." },
     ],
@@ -171,7 +171,7 @@ export const shows: Show[] = [
     seoKeywords: ["legends in concert branson", "branson tribute show", "tribute show branson"],
     relatedShows: ["hits-of-the-60s", "hot-rods-and-high-heels", "motown-downtown"],
     imageAlt: "Legends in Concert tribute performers on stage in Branson Missouri",
-    imageUrl: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&h=500&fit=crop",
+    imageUrl: "https://legendsinconcert.com/wp-content/uploads/2023/09/Theater-Complex-edited-scaled.jpg",
     faqs: [
       { question: "Which legends are featured in the current show?", answer: "The cast rotates throughout the season. Past performers include tributes to Elvis, Dolly Parton, Michael Jackson, Whitney Houston, and more. Check our schedule for the current lineup." },
     ],
@@ -206,7 +206,7 @@ export const shows: Show[] = [
     seoKeywords: ["petersens branson", "petersens show tickets", "branson bluegrass show"],
     relatedShows: ["six", "southern-raised", "grand-jubilee"],
     imageAlt: "The Petersens family band performing bluegrass music in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=800&h=500&fit=crop",
+    imageUrl: "https://petersenband.com/wp-content/uploads/2021/10/branson-show-full-band-mood-lighting.png",
     faqs: [],
   },
   {
@@ -239,7 +239,7 @@ export const shows: Show[] = [
     seoKeywords: ["pierce arrow branson", "branson vocal show", "branson comedy variety"],
     relatedShows: ["six", "comedy-jamboree", "grand-jubilee"],
     imageAlt: "Pierce Arrow vocal quartet performing comedy and music in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/15710a8d-50c6-4341-8667-f01445b0fea8.jpg",
     faqs: [],
   },
   {
@@ -272,7 +272,7 @@ export const shows: Show[] = [
     seoKeywords: ["grand jubilee branson", "branson variety show", "grand country music hall show"],
     relatedShows: ["clay-coopers-country-express", "the-haygoods", "comedy-jamboree"],
     imageAlt: "Grand Jubilee cast performing variety entertainment in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/d7712386-66cb-4af3-8c74-f08143bcb2c4.jpg",
     faqs: [],
   },
   {
@@ -305,7 +305,7 @@ export const shows: Show[] = [
     seoKeywords: ["dolly parton stampede branson", "branson dinner show", "stampede branson tickets"],
     relatedShows: ["showboat-branson-belle", "shepherd-of-the-hills"],
     imageAlt: "Dolly Parton's Stampede dinner show with horses performing in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&h=500&fit=crop",
+    imageUrl: "https://dpstampede.com/hs-fs/hubfs/Stampede/stampede-website-assets/images/card-dinner-show.jpg",
     faqs: [
       { question: "What's included with the Stampede ticket?", answer: "Your ticket includes the full pre-show experience, the main arena show, and a four-course meal including rotisserie chicken, BBQ pork, corn on the cob, biscuit, soup, and dessert." },
       { question: "Can you accommodate dietary restrictions?", answer: "Yes, vegetarian and gluten-free options are available. Please notify staff when you arrive." },
@@ -341,7 +341,7 @@ export const shows: Show[] = [
     seoKeywords: ["showboat branson belle", "branson dinner cruise", "table rock lake cruise"],
     relatedShows: ["dolly-partons-stampede", "riga-tonys-murder-mystery"],
     imageAlt: "Showboat Branson Belle paddlewheel cruising on Table Rock Lake",
-    imageUrl: "https://images.unsplash.com/photo-1500514966906-fe245eea9344?w=800&h=500&fit=crop",
+    imageUrl: "https://hfe.widen.net/content/sxarxzpznv/png/SBB22_General_625x355_Boat-Front.png?w=625&h=355&keep=c&crop=yes&color=ffffff00&quality=80&u=vko3qc",
     faqs: [],
   },
   {
@@ -374,7 +374,7 @@ export const shows: Show[] = [
     seoKeywords: ["reza branson", "branson magic show", "edge of illusion branson"],
     relatedShows: ["rick-thomas", "brett-daniels"],
     imageAlt: "Reza performing grand illusion on stage during Edge of Illusion show in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1503095396549-807759245b35?w=800&h=500&fit=crop",
+    imageUrl: "https://media.bransontourismcenter.com/images/property_galleries/8233_051.jpg",
     faqs: [
       { question: "Is the Reza show scary for young children?", answer: "Not at all! Reza's show is family-friendly. While some illusions are dramatic, they're designed to amaze rather than frighten." },
     ],
@@ -409,7 +409,7 @@ export const shows: Show[] = [
     seoKeywords: ["rick thomas branson", "branson magic show", "illusionist branson"],
     relatedShows: ["reza-edge-of-illusion", "brett-daniels"],
     imageAlt: "Rick Thomas performing grand illusion magic show in Branson Missouri",
-    imageUrl: "https://images.unsplash.com/photo-1543422655-fa862d5bf8c9?w=800&h=500&fit=crop",
+    imageUrl: "https://www.bransonshows.com/images_cache/listingPhotos/1/628508/5413532-VYFW_normal-w_1362-h_0-force_webp.webp",
     faqs: [],
   },
   {
@@ -442,7 +442,7 @@ export const shows: Show[] = [
     seoKeywords: ["comedy jamboree branson", "branson comedy show", "funny branson show"],
     relatedShows: ["yakov-smirnoff", "the-baldknobbers", "pierce-arrow"],
     imageAlt: "Comedy Jamboree comedians performing at Grand Country Music Hall in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=800&h=500&fit=crop",
+    imageUrl: "https://cdn.prod.website-files.com/67ec37430895a542084c8deb/67ec4ec2964679551e3d511d_2025-Comedy-Jamboree-2.jpg",
     faqs: [],
   },
   {
@@ -475,7 +475,7 @@ export const shows: Show[] = [
     seoKeywords: ["yakov smirnoff branson", "branson stand-up comedy", "yakov show tickets"],
     relatedShows: ["comedy-jamboree", "the-baldknobbers"],
     imageAlt: "Yakov Smirnoff performing stand-up comedy at his theater in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?w=800&h=500&fit=crop",
+    imageUrl: "https://yakov.com/wp-content/uploads/2025/10/yakoffbranson@2x-1024x600.png",
     faqs: [],
   },
   {
@@ -508,7 +508,7 @@ export const shows: Show[] = [
     seoKeywords: ["sight and sound branson", "sight sound theatre branson", "branson biblical show"],
     relatedShows: ["shepherd-of-the-hills", "bransons-christmas-wonderland"],
     imageAlt: "Sight and Sound Theatre dramatic biblical production on massive stage in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=800&h=500&fit=crop",
+    imageUrl: "https://sst-prod.cdn.sight-sound.com/assets/ec329951-c2cf-41b3-affe-e454e2a4a0bf",
     faqs: [
       { question: "How big is the Sight & Sound stage?", answer: "The stage wraps around the audience at 300 feet, creating a fully immersive experience. It's one of the largest stages in the country." },
     ],
@@ -543,7 +543,7 @@ export const shows: Show[] = [
     seoKeywords: ["spirit of america branson", "branson patriotic show", "branson veteran tribute"],
     relatedShows: ["clay-coopers-country-express", "grand-jubilee"],
     imageAlt: "Spirit of America patriotic show performance in Branson Missouri",
-    imageUrl: "https://images.unsplash.com/photo-1569002901264-6db10f8e3044?w=800&h=500&fit=crop",
+    imageUrl: "https://www.bransonshows.com/images_cache/listingPhotos/1/1355332/The-image-shows-a-vibrant-stage-performance-with-singers-and-dancers-in-colorful-costumes-including-long-blue-gowns-and-American-XMDi_normal-w_1362-h_0-force_webp.webp",
     faqs: [],
   },
   {
@@ -576,7 +576,7 @@ export const shows: Show[] = [
     seoKeywords: ["60s hits branson", "branson oldies show", "sixties music branson"],
     relatedShows: ["legends-in-concert", "hot-rods-and-high-heels", "motown-downtown"],
     imageAlt: "60s music tribute show with performers in period costumes in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=500&fit=crop",
+    imageUrl: "https://images.squarespace-cdn.com/content/v1/53bc0a8ee4b054e2f4ed8f0d/2c5a6ff8-8c30-41fd-87c0-c34ba15239b6/60s_2026.PNG",
     faqs: [],
   },
   {
@@ -609,7 +609,7 @@ export const shows: Show[] = [
     seoKeywords: ["hot rods high heels branson", "branson rock and roll show", "50s show branson"],
     relatedShows: ["hits-of-the-60s", "legends-in-concert", "classic-rock-icons"],
     imageAlt: "Hot Rods and High Heels rock and roll show performers in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1508854710579-5cecc3a9ff17?w=800&h=500&fit=crop",
+    imageUrl: "https://www.bransonshows.com/images_cache/listingPhotos/1/669648/Hot-Rods-and-High-Heels-Collage_normal-w_1362-h_0-force_webp.webp",
     faqs: [],
   },
   {
@@ -642,7 +642,7 @@ export const shows: Show[] = [
     seoKeywords: ["motown branson", "branson soul music show", "motown tribute branson"],
     relatedShows: ["hits-of-the-60s", "legends-in-concert", "hot-rods-and-high-heels"],
     imageAlt: "Motown Downtown performers singing soul music on stage in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1460667262436-cf19894f4774?w=800&h=500&fit=crop",
+    imageUrl: "https://www.bransonshows.com/images_cache/listingPhotos/1/579654/5413619-dmUU_normal-w_1362-h_0-force_webp.webp",
     faqs: [],
   },
   {
@@ -675,7 +675,7 @@ export const shows: Show[] = [
     seoKeywords: ["baldknobbers branson", "branson original show", "oldest branson show"],
     relatedShows: ["comedy-jamboree", "clay-coopers-country-express", "grand-jubilee"],
     imageAlt: "The Baldknobbers performing Branson's original show with comedy and music",
-    imageUrl: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800&h=500&fit=crop",
+    imageUrl: "https://www.baldknobbers.com/img/baldknobbers-2024.jpg",
     faqs: [],
   },
   {
@@ -708,7 +708,7 @@ export const shows: Show[] = [
     seoKeywords: ["acrobats shanghai branson", "branson acrobat show", "chinese acrobats branson"],
     relatedShows: ["reza-edge-of-illusion", "the-haygoods"],
     imageAlt: "Amazing Acrobats of Shanghai performing gravity-defying acts in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=500&fit=crop",
+    imageUrl: "https://www.bransonshows.com/images_cache/listingPhotos/1/678678/The-image-showcases-captivating-acrobatic-performances-by-the-New-Shanghai-Circus-featuring-various-stunts-and-acts-with-praise--ojyI_normal-w_1362-h_0-force_webp.webp",
     faqs: [],
   },
   {
@@ -741,7 +741,7 @@ export const shows: Show[] = [
     seoKeywords: ["amazing pets branson", "branson animal show", "branson kids show"],
     relatedShows: ["comedy-jamboree"],
     imageAlt: "Amazing Pets show with rescue animals performing tricks in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=500&fit=crop",
+    imageUrl: "https://www.bransonshows.com/images_cache/listingPhotos/1/31782/5146226_normal-w_1362-h_0-force_webp.webp",
     faqs: [],
   },
   {
@@ -774,7 +774,7 @@ export const shows: Show[] = [
     seoKeywords: ["southern raised branson", "branson gospel show", "branson inspirational music"],
     relatedShows: ["the-petersens", "new-south-gospel", "ozarks-gospel"],
     imageAlt: "Southern Raised performing gospel music on stage in Branson Missouri",
-    imageUrl: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=800&h=500&fit=crop",
+    imageUrl: "https://postcardslive.com/wp-content/uploads/2024/03/Southern-Raised.png",
     faqs: [],
   },
   {
@@ -807,7 +807,7 @@ export const shows: Show[] = [
     seoKeywords: ["brett daniels branson", "branson comedy magic", "funny magic show branson"],
     relatedShows: ["reza-edge-of-illusion", "rick-thomas"],
     imageAlt: "Brett Daniels performing comedy magic show in Branson Missouri",
-    imageUrl: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/345020c3-2c9d-404e-8db0-a50a7364dd1f.jpg",
     faqs: [],
   },
   {
@@ -840,7 +840,7 @@ export const shows: Show[] = [
     seoKeywords: ["shepherd of the hills branson", "branson outdoor drama", "ozark outdoor show"],
     relatedShows: ["sight-and-sound-moses", "dolly-partons-stampede"],
     imageAlt: "Shepherd of the Hills outdoor drama performance under Ozark stars",
-    imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=500&fit=crop",
+    imageUrl: "https://theshepherdofthehills.com/wp-content/uploads/2025/03/1Y8A3079-copy.jpg",
     faqs: [],
   },
   {
@@ -873,7 +873,7 @@ export const shows: Show[] = [
     seoKeywords: ["murder mystery branson", "branson dinner theater", "riga tonys branson"],
     relatedShows: ["showboat-branson-belle", "dolly-partons-stampede"],
     imageAlt: "Riga Tony's Murder Mystery Dinner Show with actors and diners in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/06f2d607-bbae-4751-b94c-92d41ea30481.jpg",
     faqs: [],
   },
   {
@@ -906,7 +906,7 @@ export const shows: Show[] = [
     seoKeywords: ["aaron wayne branson", "branson hypnosis show", "comedy hypnosis branson"],
     relatedShows: ["comedy-jamboree", "yakov-smirnoff"],
     imageAlt: "Aaron Wayne performing comedy hypnosis show with audience volunteers in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/79076315-3e5b-42a4-96f2-edaa34575b40.jpg",
     faqs: [],
   },
   {
@@ -939,7 +939,7 @@ export const shows: Show[] = [
     seoKeywords: ["classic rock branson", "rock tribute branson", "branson rock show"],
     relatedShows: ["hot-rods-and-high-heels", "legends-in-concert"],
     imageAlt: "Classic Rock Icons tribute band performing rock concert in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/18a236e5-bc2a-447d-b5ec-b0675f7d9259.jpg",
     faqs: [],
   },
   {
@@ -972,7 +972,7 @@ export const shows: Show[] = [
     seoKeywords: ["new south gospel branson", "branson gospel show", "southern gospel branson"],
     relatedShows: ["southern-raised", "ozarks-gospel"],
     imageAlt: "New South Gospel performing award-winning gospel music in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/32a8bd44-5234-4b8c-b178-171a8e2bf2cb.jpg",
     faqs: [],
   },
   {
@@ -1005,7 +1005,7 @@ export const shows: Show[] = [
     seoKeywords: ["ozarks gospel branson", "gospel music branson", "branson gospel show"],
     relatedShows: ["new-south-gospel", "southern-raised"],
     imageAlt: "Ozarks Gospel musicians performing traditional gospel music in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1477233534935-f5e6fe7c1159?w=800&h=500&fit=crop",
+    imageUrl: "https://cdn.prod.website-files.com/67ec37430895a542084c8deb/67ec37430895a542084c91d5_2024-Ozarks-Gospel-6x6-No-Logo-RGB.jpg",
     faqs: [],
   },
   {
@@ -1038,7 +1038,7 @@ export const shows: Show[] = [
     seoKeywords: ["mountain ruckus branson", "branson mountain music", "energetic branson show"],
     relatedShows: ["the-petersens", "the-baldknobbers", "clay-coopers-country-express"],
     imageAlt: "Mountain Ruckus performing high-energy mountain music in Branson Missouri",
-    imageUrl: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/d7712386-66cb-4af3-8c74-f08143bcb2c4.jpg",
     faqs: [],
   },
   {
@@ -1071,7 +1071,7 @@ export const shows: Show[] = [
     seoKeywords: ["george dyer branson", "branson broadway show", "branson tenor"],
     relatedShows: ["six", "legends-in-concert"],
     imageAlt: "George Dyer performing Broadway and opera music in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/6fe2174f-5fbc-408d-8620-d90ff9f60bfc.jpg",
     faqs: [],
   },
   {
@@ -1104,7 +1104,7 @@ export const shows: Show[] = [
     seoKeywords: ["cj newsom branson", "branson classic country", "branson comedy country show"],
     relatedShows: ["the-baldknobbers", "comedy-jamboree", "clay-coopers-country-express"],
     imageAlt: "CJ Newsom performing classic country music and comedy in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/1e13639f-9207-4b17-aefb-f0870a5f36b5.jpg",
     faqs: [],
   },
   {
@@ -1137,7 +1137,7 @@ export const shows: Show[] = [
     seoKeywords: ["branson christmas show", "christmas wonderland branson", "branson holiday show"],
     relatedShows: ["sight-and-sound-moses"],
     imageAlt: "Branson's Christmas Wonderland holiday show with dancers and festive sets",
-    imageUrl: "https://images.unsplash.com/photo-1512389142860-9c449e58a814?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/1d5c76b7-b6be-4d3e-b0b2-bf0c6126a384.jpg",
     faqs: [],
   },
   {
@@ -1170,7 +1170,7 @@ export const shows: Show[] = [
     seoKeywords: ["rock n roll sunrise branson", "branson morning rock show", "rock tribute branson morning"],
     relatedShows: ["hot-rods-and-high-heels", "classic-rock-icons", "hits-of-the-60s"],
     imageAlt: "Rock n Roll Sunrise morning tribute show in Branson Missouri",
-    imageUrl: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/18a236e5-bc2a-447d-b5ec-b0675f7d9259.jpg",
     faqs: [],
   },
   {
@@ -1203,7 +1203,7 @@ export const shows: Show[] = [
     seoKeywords: ["dean martin tribute branson", "branson rat pack show", "dean martin branson"],
     relatedShows: ["legends-in-concert", "george-dyer"],
     imageAlt: "Dean Martin tribute performer singing classic hits in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/d66cf24b-26c7-4d52-869b-c390b528ed86.jpg",
     faqs: [],
   },
   {
@@ -1236,7 +1236,7 @@ export const shows: Show[] = [
     seoKeywords: ["hamners branson", "branson variety show", "unbelievable variety branson"],
     relatedShows: ["reza-edge-of-illusion", "the-haygoods", "brett-daniels"],
     imageAlt: "Hamners Unbelievable Variety Show with magic and music in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/0b0f8c46-e7e8-40e7-b061-565f372898ea.jpg",
     faqs: [],
   },
   {
@@ -1269,7 +1269,7 @@ export const shows: Show[] = [
     seoKeywords: ["carpenters tribute branson", "cassandre branson", "karen carpenter tribute"],
     relatedShows: ["legends-in-concert", "dean-martin-tribute"],
     imageAlt: "Cassandre performing Karen Carpenter tribute show in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/bb4c3105-2219-4984-9ce9-ea20bb5afb20.jpg",
     faqs: [],
   },
   {
@@ -1302,7 +1302,7 @@ export const shows: Show[] = [
     seoKeywords: ["patsy cline branson", "branson country tribute", "patsy cline tribute show"],
     relatedShows: ["cj-newsoms-classic-country", "legends-in-concert"],
     imageAlt: "Patsy Cline tribute performer singing classic country in Branson",
-    imageUrl: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=800&h=500&fit=crop",
+    imageUrl: "https://www.discoverbranson.com/media/products/f75a400f-b19a-4c79-8ae0-1c57a703540e.jpg",
     faqs: [],
   },
 ];

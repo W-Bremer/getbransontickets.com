@@ -134,13 +134,13 @@ export function CartDrawer() {
             <Link
               href="/checkout"
               onClick={closeCart}
-              className="block w-full rounded-lg bg-[#018941] py-3 text-center text-sm font-bold text-white transition-colors hover:bg-[#017535]"
+              className="block w-full rounded-lg bg-[#8B6914] py-3 text-center text-sm font-bold text-white transition-colors hover:bg-[#6B5210]"
             >
               Proceed to Checkout
             </Link>
             <button
               onClick={closeCart}
-              className="mt-2 w-full py-2 text-center text-sm font-medium text-[#037B98] hover:underline"
+              className="mt-2 w-full py-2 text-center text-sm font-medium text-[#7B1A1A] hover:underline"
             >
               Continue Shopping
             </button>

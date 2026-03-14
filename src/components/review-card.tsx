@@ -28,7 +28,7 @@ export function ReviewCard({
           <div className="flex items-center gap-2">
             <h4 className="font-semibold text-[#333333]">{name}</h4>
             {verified && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#018941]/10 px-2 py-0.5 text-xs font-medium text-[#018941]">
+              <span className="inline-flex items-center gap-1 rounded-full bg-[#8B6914]/10 px-2 py-0.5 text-xs font-medium text-[#8B6914]">
                 <CheckCircle className="h-3 w-3" />
                 Verified Booking
               </span>
@@ -46,14 +46,14 @@ export function ReviewCard({
           <Star
             key={`full-${i}`}
             size={16}
-            className="fill-[#FB9219] text-[#FB9219]"
+            className="fill-[#D4A843] text-[#D4A843]"
           />
         ))}
         {Array.from({ length: emptyStars }).map((_, i) => (
           <Star
             key={`empty-${i}`}
             size={16}
-            className="text-[#FB9219]/30"
+            className="text-[#D4A843]/30"
           />
         ))}
       </div>

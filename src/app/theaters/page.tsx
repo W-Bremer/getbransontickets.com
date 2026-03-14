@@ -63,7 +63,7 @@ export default function TheatersPage() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#005C73] via-[#005C73]/60 to-[#005C73]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#5A1212] via-[#5A1212]/60 to-[#5A1212]/30" />
         <div className="absolute bottom-0 left-0 right-0 pb-10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Breadcrumbs

@@ -99,7 +99,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
                   onClick={() => setSelectedCategory(cat.slug)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     selectedCategory === cat.slug
-                      ? "bg-[#037B98] text-white"
+                      ? "bg-[#7B1A1A] text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
@@ -116,7 +116,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
               <SlidersHorizontal className="w-4 h-4" />
               Filters
               {activeFilterCount > 0 && (
-                <span className="w-5 h-5 rounded-full bg-[#F76E00] text-white text-xs flex items-center justify-center">
+                <span className="w-5 h-5 rounded-full bg-[#D4A843] text-white text-xs flex items-center justify-center">
                   {activeFilterCount}
                 </span>
               )}
@@ -124,7 +124,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-[#037B98]"
+              className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-[#7B1A1A]"
             >
               <option value="popular">Most Popular</option>
               <option value="rating">Highest Rated</option>
@@ -137,7 +137,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
 
         {/* Expanded Filters */}
         {showFilters && (
-          <div className="mb-8 p-6 rounded-xl bg-[#F5F5F5] border border-gray-200">
+          <div className="mb-8 p-6 rounded-xl bg-[#FAF8F5] border border-gray-200">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-[#333333] mb-2">
@@ -148,7 +148,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Show name, theater..."
-                  className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#037B98]"
+                  className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#7B1A1A]"
                 />
               </div>
               <div>
@@ -158,7 +158,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
                 <select
                   value={timeOfDay}
                   onChange={(e) => setTimeOfDay(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#037B98]"
+                  className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#7B1A1A]"
                 >
                   <option value="all">Any Time</option>
                   <option value="morning">Morning</option>
@@ -178,7 +178,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
                   onChange={(e) =>
                     setPriceRange([priceRange[0], parseInt(e.target.value)])
                   }
-                  className="w-full accent-[#037B98]"
+                  className="w-full accent-[#7B1A1A]"
                 />
                 <div className="text-sm text-gray-500 mt-1">Up to ${priceRange[1]}</div>
               </div>
@@ -191,7 +191,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
                     type="checkbox"
                     checked={mealOnly}
                     onChange={(e) => setMealOnly(e.target.checked)}
-                    className="rounded accent-[#037B98]"
+                    className="rounded accent-[#7B1A1A]"
                   />
                   Dinner shows only
                 </label>
@@ -206,7 +206,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
                   setPriceRange([0, 100]);
                   setSearchQuery("");
                 }}
-                className="mt-4 flex items-center gap-1 text-sm text-[#037B98] hover:text-[#005C73] font-medium"
+                className="mt-4 flex items-center gap-1 text-sm text-[#7B1A1A] hover:text-[#5A1212] font-medium"
               >
                 <X className="w-4 h-4" /> Clear all filters
               </button>
@@ -237,7 +237,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
                 setPriceRange([0, 100]);
                 setSearchQuery("");
               }}
-              className="mt-4 text-[#037B98] hover:text-[#005C73] font-medium"
+              className="mt-4 text-[#7B1A1A] hover:text-[#5A1212] font-medium"
             >
               Clear all filters
             </button>

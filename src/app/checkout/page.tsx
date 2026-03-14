@@ -31,7 +31,7 @@ function StepIndicator({ current }: { current: Step }) {
             {i > 0 && (
               <div
                 className={`h-0.5 w-8 sm:w-16 ${
-                  isComplete ? "bg-[#018941]" : "bg-gray-200"
+                  isComplete ? "bg-[#8B6914]" : "bg-gray-200"
                 }`}
               />
             )}
@@ -39,9 +39,9 @@ function StepIndicator({ current }: { current: Step }) {
               <div
                 className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all ${
                   isComplete
-                    ? "bg-[#018941] text-white"
+                    ? "bg-[#8B6914] text-white"
                     : isActive
-                      ? "bg-[#037B98] text-white ring-4 ring-[#037B98]/20"
+                      ? "bg-[#7B1A1A] text-white ring-4 ring-[#7B1A1A]/20"
                       : "bg-gray-100 text-[#333333]/40"
                 }`}
               >
@@ -50,9 +50,9 @@ function StepIndicator({ current }: { current: Step }) {
               <span
                 className={`text-xs font-semibold whitespace-nowrap ${
                   isActive
-                    ? "text-[#037B98]"
+                    ? "text-[#7B1A1A]"
                     : isComplete
-                      ? "text-[#018941]"
+                      ? "text-[#8B6914]"
                       : "text-[#333333]/40"
                 }`}
               >
@@ -91,8 +91,8 @@ function ContactInfoStep({
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#037B98]/10">
-          <User className="h-5 w-5 text-[#037B98]" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#7B1A1A]/10">
+          <User className="h-5 w-5 text-[#7B1A1A]" />
         </div>
         <h2 className="text-xl font-bold text-[#333333]">
           Contact Information
@@ -111,7 +111,7 @@ function ContactInfoStep({
           className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.name
               ? "border-red-300 focus:ring-red-200"
-              : "border-gray-200 focus:border-[#037B98] focus:ring-[#037B98]/20"
+              : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
           }`}
         />
         {errors.name && (
@@ -131,7 +131,7 @@ function ContactInfoStep({
           className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.email
               ? "border-red-300 focus:ring-red-200"
-              : "border-gray-200 focus:border-[#037B98] focus:ring-[#037B98]/20"
+              : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
           }`}
         />
         {errors.email && (
@@ -151,7 +151,7 @@ function ContactInfoStep({
           className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.phone
               ? "border-red-300 focus:ring-red-200"
-              : "border-gray-200 focus:border-[#037B98] focus:ring-[#037B98]/20"
+              : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
           }`}
         />
         {errors.phone && (
@@ -161,7 +161,7 @@ function ContactInfoStep({
 
       <button
         onClick={() => validate() && onNext()}
-        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#018941] py-4 text-lg font-semibold text-white hover:bg-[#018941]/90 transition-colors"
+        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#8B6914] py-4 text-lg font-semibold text-white hover:bg-[#8B6914]/90 transition-colors"
       >
         Continue to Payment
         <ArrowRight className="h-5 w-5" />
@@ -208,16 +208,16 @@ function PaymentStep({
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#037B98]/10">
-          <CreditCard className="h-5 w-5 text-[#037B98]" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#7B1A1A]/10">
+          <CreditCard className="h-5 w-5 text-[#7B1A1A]" />
         </div>
         <h2 className="text-xl font-bold text-[#333333]">
           Payment Information
         </h2>
       </div>
 
-      <div className="rounded-lg bg-[#F5F5F5] p-3 flex items-center gap-2 text-sm text-[#333333]/60">
-        <ShieldCheck className="h-4 w-4 text-[#018941]" />
+      <div className="rounded-lg bg-[#FAF8F5] p-3 flex items-center gap-2 text-sm text-[#333333]/60">
+        <ShieldCheck className="h-4 w-4 text-[#8B6914]" />
         <span>Your payment information is secure and encrypted</span>
       </div>
 
@@ -233,7 +233,7 @@ function PaymentStep({
           className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.cardNumber
               ? "border-red-300 focus:ring-red-200"
-              : "border-gray-200 focus:border-[#037B98] focus:ring-[#037B98]/20"
+              : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
           }`}
         />
         {errors.cardNumber && (
@@ -253,7 +253,7 @@ function PaymentStep({
           className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.cardName
               ? "border-red-300 focus:ring-red-200"
-              : "border-gray-200 focus:border-[#037B98] focus:ring-[#037B98]/20"
+              : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
           }`}
         />
         {errors.cardName && (
@@ -274,7 +274,7 @@ function PaymentStep({
             className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
               errors.expiry
                 ? "border-red-300 focus:ring-red-200"
-                : "border-gray-200 focus:border-[#037B98] focus:ring-[#037B98]/20"
+                : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
             }`}
           />
           {errors.expiry && (
@@ -293,7 +293,7 @@ function PaymentStep({
             className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
               errors.cvv
                 ? "border-red-300 focus:ring-red-200"
-                : "border-gray-200 focus:border-[#037B98] focus:ring-[#037B98]/20"
+                : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
             }`}
           />
           {errors.cvv && (
@@ -305,14 +305,14 @@ function PaymentStep({
       <div className="flex gap-3">
         <button
           onClick={onBack}
-          className="flex items-center justify-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-4 font-semibold text-[#333333]/70 hover:border-[#037B98] hover:text-[#037B98] transition-all"
+          className="flex items-center justify-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-4 font-semibold text-[#333333]/70 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-all"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
         </button>
         <button
           onClick={() => validate() && onNext()}
-          className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-[#018941] py-4 text-lg font-semibold text-white hover:bg-[#018941]/90 transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-[#8B6914] py-4 text-lg font-semibold text-white hover:bg-[#8B6914]/90 transition-colors"
         >
           Complete Booking
           <ShieldCheck className="h-5 w-5" />
@@ -335,8 +335,8 @@ function ConfirmationStep({
 
   return (
     <div className="text-center space-y-6">
-      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#018941]/10">
-        <Check className="h-10 w-10 text-[#018941]" />
+      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#8B6914]/10">
+        <Check className="h-10 w-10 text-[#8B6914]" />
       </div>
 
       <div>
@@ -346,10 +346,10 @@ function ConfirmationStep({
         </p>
       </div>
 
-      <div className="rounded-xl bg-[#F5F5F5] p-6 text-left space-y-3">
+      <div className="rounded-xl bg-[#FAF8F5] p-6 text-left space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-[#333333]/60">Order Number</span>
-          <span className="font-bold text-[#037B98]">{orderNumber}</span>
+          <span className="font-bold text-[#7B1A1A]">{orderNumber}</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-[#333333]/60">Items</span>
@@ -382,13 +382,13 @@ function ConfirmationStep({
       <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
         <Link
           href="/shows"
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#037B98] px-6 py-3 font-semibold text-white hover:bg-[#005C73] transition-colors"
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#7B1A1A] px-6 py-3 font-semibold text-white hover:bg-[#5A1212] transition-colors"
         >
           Browse More Shows
         </Link>
         <Link
           href="/"
-          className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-gray-200 px-6 py-3 font-semibold text-[#333333]/70 hover:border-[#037B98] hover:text-[#037B98] transition-all"
+          className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-gray-200 px-6 py-3 font-semibold text-[#333333]/70 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-all"
         >
           Return Home
         </Link>
@@ -414,7 +414,7 @@ export default function CheckoutPage() {
   if (!mounted) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#037B98] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#7B1A1A] border-t-transparent" />
       </div>
     );
   }
@@ -424,7 +424,7 @@ export default function CheckoutPage() {
   if (items.length === 0 && step !== 3) {
     return (
       <>
-        <section className="bg-[#037B98] pt-12 pb-16">
+        <section className="bg-[#7B1A1A] pt-12 pb-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Breadcrumbs
               items={[
@@ -440,7 +440,7 @@ export default function CheckoutPage() {
         </section>
         <section className="py-20 bg-white">
           <div className="mx-auto max-w-lg px-4 text-center">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#F5F5F5]">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#FAF8F5]">
               <ShoppingCart className="h-10 w-10 text-[#333333]/30" />
             </div>
             <h2 className="mt-6 text-2xl font-bold text-[#333333]">
@@ -451,7 +451,7 @@ export default function CheckoutPage() {
             </p>
             <Link
               href="/shows"
-              className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-[#018941] px-6 py-3 font-semibold text-white hover:bg-[#018941]/90 transition-colors"
+              className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-[#8B6914] px-6 py-3 font-semibold text-white hover:bg-[#8B6914]/90 transition-colors"
             >
               Browse Shows
               <ArrowRight className="h-4 w-4" />
@@ -470,7 +470,7 @@ export default function CheckoutPage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-[#037B98] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -494,7 +494,7 @@ export default function CheckoutPage() {
       </div>
 
       {/* Content */}
-      <section className="py-10 sm:py-14 bg-[#F5F5F5]">
+      <section className="py-10 sm:py-14 bg-[#FAF8F5]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-3 lg:gap-8">
             {/* Form Area */}
@@ -565,7 +565,7 @@ export default function CheckoutPage() {
                   </div>
                   <Link
                     href="/cart"
-                    className="mt-4 block text-center text-sm font-medium text-[#037B98] hover:text-[#005C73] transition-colors"
+                    className="mt-4 block text-center text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
                   >
                     Edit Cart
                   </Link>

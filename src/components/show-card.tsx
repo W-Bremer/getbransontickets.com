@@ -15,12 +15,12 @@ interface ShowCardProps {
 }
 
 const tagColors: Record<string, string> = {
-  BOGO: "bg-[#018941] text-white",
-  Dinner: "bg-[#F76E00] text-white",
-  New: "bg-[#037B98] text-white",
+  BOGO: "bg-[#8B6914] text-white",
+  Dinner: "bg-[#D4A843] text-white",
+  New: "bg-[#7B1A1A] text-white",
   "Limited Engagement": "bg-[#C04E0C] text-white",
   "Family Friendly": "bg-sky-500/90 text-white",
-  "Most Popular": "bg-[#FB9219] text-white",
+  "Most Popular": "bg-[#D4A843] text-white",
 };
 
 function getTagStyle(tag: string) {
@@ -76,7 +76,7 @@ export function ShowCard({ show, index = 0, className }: ShowCardProps) {
 
             {/* Price badge */}
             <div className="absolute bottom-3 right-3 rounded-xl bg-white/95 px-3 py-1.5 backdrop-blur-md shadow-sm">
-              <span className="text-xs font-medium text-[#037B98]">From</span>
+              <span className="text-xs font-medium text-[#7B1A1A]">From</span>
               <span className="ml-1 text-lg font-bold text-[#333333]">
                 ${show.priceFrom}
               </span>
@@ -85,17 +85,17 @@ export function ShowCard({ show, index = 0, className }: ShowCardProps) {
 
           {/* Content */}
           <div className="p-4 pt-3">
-            <h3 className="text-lg font-bold text-[#333333] leading-tight group-hover:text-[#037B98] transition-colors line-clamp-1">
+            <h3 className="text-lg font-bold text-[#333333] leading-tight group-hover:text-[#7B1A1A] transition-colors line-clamp-1">
               {show.name}
             </h3>
 
             <div className="mt-1.5 flex items-center gap-1.5 text-sm text-gray-500">
-              <MapPin className="h-3.5 w-3.5 shrink-0 text-[#F76E00]" />
+              <MapPin className="h-3.5 w-3.5 shrink-0 text-[#D4A843]" />
               <span className="truncate">{show.theater}</span>
             </div>
 
             <div className="mt-1 flex items-center gap-1.5 text-sm text-gray-500">
-              <Clock className="h-3.5 w-3.5 shrink-0 text-[#037B98]" />
+              <Clock className="h-3.5 w-3.5 shrink-0 text-[#7B1A1A]" />
               <span>{show.duration}</span>
               <span className="text-gray-300">|</span>
               <span className="capitalize">{show.timeOfDay}</span>

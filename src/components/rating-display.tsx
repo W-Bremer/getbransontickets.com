@@ -36,19 +36,19 @@ export function RatingDisplay({
           <Star
             key={`full-${i}`}
             size={starSize}
-            className="fill-[#FB9219] text-[#FB9219]"
+            className="fill-[#D4A843] text-[#D4A843]"
           />
         ))}
         {hasHalf && (
           <span className="relative inline-block" style={{ width: starSize, height: starSize }}>
             <Star
               size={starSize}
-              className="absolute inset-0 text-[#FB9219]"
+              className="absolute inset-0 text-[#D4A843]"
             />
             <span className="absolute inset-0 overflow-hidden" style={{ width: "50%" }}>
               <Star
                 size={starSize}
-                className="fill-[#FB9219] text-[#FB9219]"
+                className="fill-[#D4A843] text-[#D4A843]"
               />
             </span>
           </span>
@@ -57,11 +57,11 @@ export function RatingDisplay({
           <Star
             key={`empty-${i}`}
             size={starSize}
-            className="text-[#FB9219]/30"
+            className="text-[#D4A843]/30"
           />
         ))}
       </div>
-      <span className={cn("font-semibold text-[#F76E00]", text)}>
+      <span className={cn("font-semibold text-[#D4A843]", text)}>
         {rating.toFixed(1)}
       </span>
       {showCount && reviewCount !== undefined && (

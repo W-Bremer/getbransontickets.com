@@ -111,7 +111,7 @@ A dinner cruise on beautiful Table Rock Lake with live entertainment, gorgeous O
     imageUrl: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=1200&h=630&fit=crop",
     imageAlt: "Branson Missouri entertainment district with theater lights at night",
     tags: ["best-shows", "guide", "2026", "top-10"],
-    seoTitle: "Best Branson Shows 2026: Complete Guide & Rankings | ShowTime Branson",
+    seoTitle: "Best Branson Shows 2026: Complete Guide & Rankings | GetBransonTickets.com",
     seoDescription: "Discover the best shows in Branson, MO for 2026. Our experts rank the top 10 must-see shows plus insider tips for planning your entertainment schedule.",
   },
   {
@@ -216,7 +216,7 @@ The Branson strip (Highway 76/Country Blvd) is the main entertainment corridor. 
     imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=630&fit=crop",
     imageAlt: "Beautiful Ozark Mountain scenery near Branson Missouri",
     tags: ["first-time", "guide", "tips", "planning"],
-    seoTitle: "First Time in Branson? Complete Visitor Guide 2026 | ShowTime Branson",
+    seoTitle: "First Time in Branson? Complete Visitor Guide 2026 | GetBransonTickets.com",
     seoDescription: "First time visiting Branson, MO? Our complete guide covers show recommendations, trip planning, money-saving tips, and everything you need to know.",
   },
   {

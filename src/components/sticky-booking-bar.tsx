@@ -41,12 +41,12 @@ export default function StickyBookingBar({
         <div>
           <p className="text-xs text-gray-500 leading-tight">{showName}</p>
           <p className="text-lg font-bold text-[#333333]">
-            From <span className="text-[#018941]">${priceFrom}</span>
+            From <span className="text-[#8B6914]">${priceFrom}</span>
           </p>
         </div>
         <button
           onClick={scrollToBooking}
-          className="rounded-lg bg-[#018941] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#017535]"
+          className="rounded-lg bg-[#8B6914] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#6B5210]"
         >
           Book Now
         </button>

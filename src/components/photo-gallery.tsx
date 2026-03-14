@@ -60,7 +60,7 @@ export function PhotoGallery({ images, className }: PhotoGalleryProps) {
             key={i}
             onClick={() => setLightboxIndex(i)}
             className={cn(
-              "group relative overflow-hidden rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#037B98]",
+              "group relative overflow-hidden rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7B1A1A]",
               i === 0 && "col-span-2 row-span-2"
             )}
           >

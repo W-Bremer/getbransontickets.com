@@ -90,7 +90,7 @@ export default function AvailabilityGrid({
                           N/A
                         </span>
                       ) : (
-                        <button className="inline-block rounded bg-[#018941] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#017535]">
+                        <button className="inline-block rounded bg-[#8B6914] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#6B5210]">
                           BOOK
                         </button>
                       )}

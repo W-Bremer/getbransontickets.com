@@ -22,7 +22,7 @@ export function TicketPricingTable({
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       {/* Header */}
-      <div className="bg-[#037B98] px-5 py-3">
+      <div className="bg-[#7B1A1A] px-5 py-3">
         <h3 className="text-lg font-bold text-white">
           {showName} — Ticket Prices
         </h3>
@@ -31,7 +31,7 @@ export function TicketPricingTable({
       {/* Table */}
       <table className="w-full text-left">
         <thead>
-          <tr className="border-b border-gray-200 bg-[#037B98]/5 text-sm font-semibold text-[#333333]">
+          <tr className="border-b border-gray-200 bg-[#7B1A1A]/5 text-sm font-semibold text-[#333333]">
             <th className="px-5 py-3">Ticket Type</th>
             <th className="px-5 py-3">Age</th>
             <th className="px-5 py-3 text-right">Price</th>
@@ -58,7 +58,7 @@ export function TicketPricingTable({
               <td className="px-5 py-3.5 text-right">
                 <button
                   type="button"
-                  className="rounded-lg bg-[#018941] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#018941]/90"
+                  className="rounded-lg bg-[#8B6914] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#8B6914]/90"
                 >
                   Book
                 </button>

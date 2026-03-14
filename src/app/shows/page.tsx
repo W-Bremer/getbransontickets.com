@@ -33,7 +33,7 @@ export default function ShowsPage() {
   return (
     <>
       <JsonLd data={collectionSchema} />
-      <div className="bg-[#037B98] py-16 sm:py-20">
+      <div className="bg-[#7B1A1A] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Shows" }]} />
           <h1 className="mt-4 text-4xl sm:text-5xl font-bold text-white font-heading">

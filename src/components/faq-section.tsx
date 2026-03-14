@@ -41,7 +41,7 @@ export function FAQSection({ faqs, title = "Frequently Asked Questions" }: FAQSe
       <Accordion className="mt-6">
         {faqs.map((faq, i) => (
           <AccordionItem key={i} value={i}>
-            <AccordionTrigger className="text-base font-semibold text-[#333333] hover:text-[#037B98] hover:no-underline [&>svg]:text-[#037B98]">
+            <AccordionTrigger className="text-base font-semibold text-[#333333] hover:text-[#7B1A1A] hover:no-underline [&>svg]:text-[#7B1A1A]">
               {faq.question}
             </AccordionTrigger>
             <AccordionContent className="text-[#333333]/70 leading-relaxed">

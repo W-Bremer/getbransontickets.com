@@ -172,7 +172,7 @@ export default async function AttractionDetailPage({
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#005C73] via-[#005C73]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#5A1212] via-[#5A1212]/50 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 pb-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Breadcrumbs
@@ -186,7 +186,7 @@ export default async function AttractionDetailPage({
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-heading">
               {attraction.name}
             </h1>
-            <p className="mt-2 text-lg text-[#FB9219] font-medium">
+            <p className="mt-2 text-lg text-[#D4A843] font-medium">
               {attraction.tagline}
             </p>
             <div className="mt-3 flex items-center gap-2">
@@ -196,7 +196,7 @@ export default async function AttractionDetailPage({
                     key={i}
                     className={`w-5 h-5 ${
                       i < Math.round(attraction.rating)
-                        ? "fill-[#FB9219] text-[#FB9219]"
+                        ? "fill-[#D4A843] text-[#D4A843]"
                         : "text-white/30"
                     }`}
                   />
@@ -276,7 +276,7 @@ export default async function AttractionDetailPage({
                   <div className="overflow-hidden rounded-xl border border-gray-200">
                     <table className="w-full text-left">
                       <thead>
-                        <tr className="bg-[#037B98]/5 border-b border-gray-200">
+                        <tr className="bg-[#7B1A1A]/5 border-b border-gray-200">
                           <th className="px-5 py-3 text-sm font-semibold text-[#333333]">
                             Season
                           </th>
@@ -300,7 +300,7 @@ export default async function AttractionDetailPage({
                           >
                             <td className="px-5 py-3.5 font-medium text-[#333333]">
                               <div className="flex items-center gap-2">
-                                <Clock className="h-4 w-4 text-[#037B98]" />
+                                <Clock className="h-4 w-4 text-[#7B1A1A]" />
                                 {h.season}
                               </div>
                             </td>
@@ -328,9 +328,9 @@ export default async function AttractionDetailPage({
                     {attraction.features.map((feature) => (
                       <div
                         key={feature}
-                        className="flex items-start gap-3 rounded-lg bg-[#F5F5F5] p-3"
+                        className="flex items-start gap-3 rounded-lg bg-[#FAF8F5] p-3"
                       >
-                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#018941]" />
+                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8B6914]" />
                         <span className="text-sm font-medium text-[#333333]">
                           {feature}
                         </span>
@@ -353,9 +353,9 @@ export default async function AttractionDetailPage({
                 <h2 className="text-2xl font-bold text-[#333333] font-heading mb-4">
                   Location &amp; Contact
                 </h2>
-                <div className="rounded-xl bg-[#F5F5F5] p-6 space-y-3">
+                <div className="rounded-xl bg-[#FAF8F5] p-6 space-y-3">
                   <div className="flex items-start gap-3">
-                    <MapPin className="mt-0.5 h-5 w-5 text-[#F76E00]" />
+                    <MapPin className="mt-0.5 h-5 w-5 text-[#D4A843]" />
                     <div>
                       <p className="font-semibold text-[#333333]">
                         {attraction.name}
@@ -366,21 +366,21 @@ export default async function AttractionDetailPage({
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Phone className="h-5 w-5 text-[#037B98]" />
+                    <Phone className="h-5 w-5 text-[#7B1A1A]" />
                     <a
                       href={`tel:${attraction.phone.replace(/[^0-9+]/g, "")}`}
-                      className="text-sm font-medium text-[#037B98] hover:underline"
+                      className="text-sm font-medium text-[#7B1A1A] hover:underline"
                     >
                       {attraction.phone}
                     </a>
                   </div>
                   <div className="flex items-center gap-3">
-                    <ExternalLink className="h-5 w-5 text-[#037B98]" />
+                    <ExternalLink className="h-5 w-5 text-[#7B1A1A]" />
                     <a
                       href={attraction.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-medium text-[#037B98] hover:underline"
+                      className="text-sm font-medium text-[#7B1A1A] hover:underline"
                     >
                       Official Website
                     </a>
@@ -389,7 +389,7 @@ export default async function AttractionDetailPage({
                     href={attraction.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 text-[#F76E00] hover:text-[#C04E0C] font-semibold text-sm transition-colors"
+                    className="mt-3 inline-flex items-center gap-1 text-[#D4A843] hover:text-[#C04E0C] font-semibold text-sm transition-colors"
                   >
                     Get Directions &rarr;
                   </a>
@@ -408,7 +408,7 @@ export default async function AttractionDetailPage({
                         <Link
                           key={show.slug}
                           href={`/shows/${show.slug}`}
-                          className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all hover:shadow-md hover:border-[#037B98]/30"
+                          className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all hover:shadow-md hover:border-[#7B1A1A]/30"
                         >
                           <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-lg">
                             <Image
@@ -420,13 +420,13 @@ export default async function AttractionDetailPage({
                             />
                           </div>
                           <div className="min-w-0">
-                            <h3 className="font-bold text-[#333333] group-hover:text-[#037B98] transition-colors truncate">
+                            <h3 className="font-bold text-[#333333] group-hover:text-[#7B1A1A] transition-colors truncate">
                               {show.name}
                             </h3>
                             <p className="mt-0.5 text-sm text-[#333333]/60 line-clamp-1">
                               {show.theater}
                             </p>
-                            <p className="mt-1 text-sm font-semibold text-[#F76E00]">
+                            <p className="mt-1 text-sm font-semibold text-[#D4A843]">
                               From ${show.priceFrom}
                             </p>
                           </div>
@@ -460,13 +460,13 @@ export default async function AttractionDetailPage({
                           />
                         </div>
                         <div className="p-4">
-                          <h3 className="font-bold text-[#333333] group-hover:text-[#037B98] transition-colors">
+                          <h3 className="font-bold text-[#333333] group-hover:text-[#7B1A1A] transition-colors">
                             {r.name}
                           </h3>
                           <p className="mt-1 text-sm text-[#333333]/60 line-clamp-2">
                             {r.shortDescription}
                           </p>
-                          <span className="mt-2 inline-block text-sm font-semibold text-[#F76E00]">
+                          <span className="mt-2 inline-block text-sm font-semibold text-[#D4A843]">
                             From ${r.adultPrice}
                           </span>
                         </div>
@@ -493,14 +493,14 @@ export default async function AttractionDetailPage({
                   </div>
 
                   <div className="mt-6">
-                    <button className="w-full py-4 bg-[#018941] hover:bg-[#018941]/90 text-white rounded-xl font-semibold text-lg transition-colors shadow-lg cursor-pointer">
+                    <button className="w-full py-4 bg-[#8B6914] hover:bg-[#8B6914]/90 text-white rounded-xl font-semibold text-lg transition-colors shadow-lg cursor-pointer">
                       Get Tickets
                     </button>
                   </div>
                   <div className="mt-3">
                     <Link
                       href={`tel:${siteConfig.phoneRaw}`}
-                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#037B98] text-[#037B98] rounded-xl font-semibold hover:bg-[#037B98] hover:text-white transition-all"
+                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-xl font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
                     >
                       Call {siteConfig.phone}
                     </Link>
@@ -510,7 +510,7 @@ export default async function AttractionDetailPage({
                     <div className="flex justify-between text-[#333333]/70">
                       <span>Rating</span>
                       <span className="flex items-center gap-1 font-medium text-[#333333]">
-                        <Star className="w-4 h-4 fill-[#FB9219] text-[#FB9219]" />
+                        <Star className="w-4 h-4 fill-[#D4A843] text-[#D4A843]" />
                         {attraction.rating} (
                         {attraction.reviewCount.toLocaleString()})
                       </span>
@@ -545,12 +545,12 @@ export default async function AttractionDetailPage({
                 </div>
 
                 {/* Quick Links */}
-                <div className="rounded-xl bg-[#F5F5F5] p-4 space-y-2">
+                <div className="rounded-xl bg-[#FAF8F5] p-4 space-y-2">
                   <a
                     href={attraction.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm font-medium text-[#037B98] hover:text-[#005C73] transition-colors"
+                    className="flex items-center gap-2 text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
                   >
                     <ExternalLink className="h-4 w-4" />
                     Official Website
@@ -559,14 +559,14 @@ export default async function AttractionDetailPage({
                     href={attraction.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm font-medium text-[#037B98] hover:text-[#005C73] transition-colors"
+                    className="flex items-center gap-2 text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
                   >
                     <MapPin className="h-4 w-4" />
                     View on Map
                   </a>
                   <a
                     href={`tel:${attraction.phone.replace(/[^0-9+]/g, "")}`}
-                    className="flex items-center gap-2 text-sm font-medium text-[#037B98] hover:text-[#005C73] transition-colors"
+                    className="flex items-center gap-2 text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
                   >
                     <Phone className="h-4 w-4" />
                     {attraction.phone}

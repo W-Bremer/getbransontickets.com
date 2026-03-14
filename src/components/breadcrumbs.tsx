@@ -23,7 +23,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
         "@type": "ListItem",
         position: index + 1,
         name: item.label,
-        item: `https://showtimebranson.com${item.href}`,
+        item: `https://getbransontickets.com${item.href}`,
       })),
   };
 
@@ -49,7 +49,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
                 ) : (
                   <Link
                     href={item.href}
-                    className="text-white/70 hover:text-[#FB9219] transition-colors truncate max-w-[200px]"
+                    className="text-white/70 hover:text-[#D4A843] transition-colors truncate max-w-[200px]"
                   >
                     {item.label}
                   </Link>

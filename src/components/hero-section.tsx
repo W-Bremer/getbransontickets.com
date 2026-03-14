@@ -11,14 +11,14 @@ export function HeroSection() {
       {/* Background */}
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=1920&h=1080&fit=crop&q=80"
-          alt="Live entertainment stage with bright lights in Branson Missouri"
+          src="https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,f_jpg,h_1080,q_65,w_1920/v1/clients/bransonmo/Branson_Track_Family_Fun_Parks_aerial_photo_credit_Branson_CVB_1__d0632dfe-27a3-49f3-a498-1db3eb35182d.jpg"
+          alt="Aerial view of Branson Missouri entertainment district with Ferris wheel and attractions"
           fill
           className="object-cover"
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#037B98]/70 via-[#005C73]/50 to-[#005C73]/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#7B1A1A]/70 via-[#5A1212]/50 to-[#5A1212]/80" />
       </div>
 
       {/* Content */}
@@ -31,14 +31,14 @@ export function HeroSection() {
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm mb-6">
-              <Star className="w-4 h-4 text-[#FB9219] fill-[#FB9219]" />
+              <Star className="w-4 h-4 text-[#D4A843] fill-[#D4A843]" />
               <span>The Live Entertainment Capital of the World</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
               Book Your Perfect
               <br />
-              <span className="text-[#FB9219]">Branson Experience</span>
+              <span className="text-[#D4A843]">Branson Experience</span>
             </h1>
 
             <p className="mt-6 text-lg text-white/80 max-w-xl">
@@ -50,21 +50,21 @@ export function HeroSection() {
             <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <Ticket className="w-5 h-5 text-[#FB9219]" />
+                  <Ticket className="w-5 h-5 text-[#D4A843]" />
                 </div>
                 <div className="text-2xl font-bold text-white">50+</div>
                 <div className="text-xs text-white/60">Live Shows</div>
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <Star className="w-5 h-5 text-[#FB9219] fill-[#FB9219]" />
+                  <Star className="w-5 h-5 text-[#D4A843] fill-[#D4A843]" />
                 </div>
                 <div className="text-2xl font-bold text-white">4.8</div>
                 <div className="text-xs text-white/60">Avg Rating</div>
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <MapPin className="w-5 h-5 text-[#FB9219]" />
+                  <MapPin className="w-5 h-5 text-[#D4A843]" />
                 </div>
                 <div className="text-2xl font-bold text-white">7M+</div>
                 <div className="text-xs text-white/60">Annual Visitors</div>

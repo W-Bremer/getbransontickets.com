@@ -22,21 +22,21 @@ function StarRating({ rating, reviewCount }: { rating: number; reviewCount: numb
     <div className="flex items-center gap-1">
       <div className="flex items-center" aria-label={`${rating} out of 5 stars`}>
         {Array.from({ length: fullStars }).map((_, i) => (
-          <Star key={`full-${i}`} size={14} className="fill-[#FB9219] text-[#FB9219]" />
+          <Star key={`full-${i}`} size={14} className="fill-[#D4A843] text-[#D4A843]" />
         ))}
         {hasHalf && (
           <span className="relative inline-block" style={{ width: 14, height: 14 }}>
-            <Star size={14} className="absolute inset-0 text-[#FB9219]" />
+            <Star size={14} className="absolute inset-0 text-[#D4A843]" />
             <span className="absolute inset-0 overflow-hidden" style={{ width: "50%" }}>
-              <Star size={14} className="fill-[#FB9219] text-[#FB9219]" />
+              <Star size={14} className="fill-[#D4A843] text-[#D4A843]" />
             </span>
           </span>
         )}
         {Array.from({ length: emptyStars }).map((_, i) => (
-          <Star key={`empty-${i}`} size={14} className="text-[#FB9219]/30" />
+          <Star key={`empty-${i}`} size={14} className="text-[#D4A843]/30" />
         ))}
       </div>
-      <span className="text-xs font-semibold text-[#FB9219]">{rating.toFixed(1)}</span>
+      <span className="text-xs font-semibold text-[#D4A843]">{rating.toFixed(1)}</span>
       <span className="text-xs text-[#333333]/60">
         ({reviewCount.toLocaleString()} reviews)
       </span>
@@ -66,13 +66,13 @@ export function AttractionCard({ attraction, className }: AttractionCardProps) {
 
             {/* Type badge */}
             <div className="absolute top-3 left-3">
-              <span className="rounded-full bg-[#037B98]/90 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+              <span className="rounded-full bg-[#7B1A1A]/90 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
                 {typeLabels[attraction.type]}
               </span>
             </div>
 
             {/* Price badge */}
-            <div className="absolute bottom-3 right-3 rounded-xl bg-[#005C73]/85 px-3 py-1.5 backdrop-blur-md">
+            <div className="absolute bottom-3 right-3 rounded-xl bg-[#5A1212]/85 px-3 py-1.5 backdrop-blur-md">
               <span className="text-xs font-medium text-white/80">From</span>
               <span className="ml-1 text-lg font-bold text-white">
                 ${attraction.adultPrice}
@@ -82,7 +82,7 @@ export function AttractionCard({ attraction, className }: AttractionCardProps) {
 
           {/* Content */}
           <div className="p-4 pt-3">
-            <h3 className="text-lg font-bold leading-tight text-[#333333] transition-colors group-hover:text-[#037B98] line-clamp-1">
+            <h3 className="text-lg font-bold leading-tight text-[#333333] transition-colors group-hover:text-[#7B1A1A] line-clamp-1">
               {attraction.name}
             </h3>
 
@@ -95,7 +95,7 @@ export function AttractionCard({ attraction, className }: AttractionCardProps) {
             </p>
 
             <div className="mt-2.5 flex items-center gap-1.5 text-sm text-[#333333]/50">
-              <MapPin className="h-3.5 w-3.5 shrink-0 text-[#F76E00]" />
+              <MapPin className="h-3.5 w-3.5 shrink-0 text-[#D4A843]" />
               <span className="truncate">{attraction.address}</span>
             </div>
           </div>

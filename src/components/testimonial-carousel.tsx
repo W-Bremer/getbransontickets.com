@@ -89,8 +89,8 @@ export function TestimonialCarousel({ className }: TestimonialCarouselProps) {
                 key={i}
                 className="flex-[0_0_100%] min-w-0 pl-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
               >
-                <div className="h-full rounded-2xl border border-gray-100 bg-[#F5F5F5] p-6 flex flex-col">
-                  <Quote className="h-8 w-8 text-[#037B98]/20 mb-3 shrink-0" />
+                <div className="h-full rounded-2xl border border-gray-100 bg-[#FAF8F5] p-6 flex flex-col">
+                  <Quote className="h-8 w-8 text-[#7B1A1A]/20 mb-3 shrink-0" />
                   <p className="text-[#333333]/80 text-sm leading-relaxed flex-1">
                     &ldquo;{t.text}&rdquo;
                   </p>
@@ -116,8 +116,8 @@ export function TestimonialCarousel({ className }: TestimonialCarouselProps) {
               className={cn(
                 "h-2.5 rounded-full transition-all duration-300",
                 i === selectedIndex
-                  ? "w-8 bg-[#037B98]"
-                  : "w-2.5 bg-[#037B98]/20 hover:bg-[#037B98]/40"
+                  ? "w-8 bg-[#7B1A1A]"
+                  : "w-2.5 bg-[#7B1A1A]/20 hover:bg-[#7B1A1A]/40"
               )}
               aria-label={`Go to testimonial ${i + 1}`}
             />

@@ -47,7 +47,7 @@ function CartItemRow({ item }: { item: CartItem }) {
             sizes="144px"
           />
           <div className="absolute top-2 left-2">
-            <span className="rounded-full bg-[#037B98]/90 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
+            <span className="rounded-full bg-[#7B1A1A]/90 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
               {item.type}
             </span>
           </div>
@@ -64,7 +64,7 @@ function CartItemRow({ item }: { item: CartItem }) {
               {item.time ? ` at ${item.time}` : ""}
             </p>
             {item.seatingTier && (
-              <p className="text-sm text-[#037B98] font-medium mt-0.5">
+              <p className="text-sm text-[#7B1A1A] font-medium mt-0.5">
                 {item.seatingTier}
               </p>
             )}
@@ -89,7 +89,7 @@ function CartItemRow({ item }: { item: CartItem }) {
               <div className="mt-1 flex items-center gap-2">
                 <button
                   onClick={() => updateAdults(-1)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#037B98] hover:text-[#037B98] transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-colors"
                 >
                   <Minus className="h-3.5 w-3.5" />
                 </button>
@@ -98,7 +98,7 @@ function CartItemRow({ item }: { item: CartItem }) {
                 </span>
                 <button
                   onClick={() => updateAdults(1)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#037B98] hover:text-[#037B98] transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-colors"
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </button>
@@ -116,7 +116,7 @@ function CartItemRow({ item }: { item: CartItem }) {
               <div className="mt-1 flex items-center gap-2">
                 <button
                   onClick={() => updateChildren(-1)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#037B98] hover:text-[#037B98] transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-colors"
                 >
                   <Minus className="h-3.5 w-3.5" />
                 </button>
@@ -125,7 +125,7 @@ function CartItemRow({ item }: { item: CartItem }) {
                 </span>
                 <button
                   onClick={() => updateChildren(1)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#037B98] hover:text-[#037B98] transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-colors"
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </button>
@@ -160,7 +160,7 @@ export default function CartPage() {
   if (!mounted) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#037B98] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#7B1A1A] border-t-transparent" />
       </div>
     );
   }
@@ -170,7 +170,7 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <>
-        <section className="bg-[#037B98] pt-12 pb-16">
+        <section className="bg-[#7B1A1A] pt-12 pb-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Breadcrumbs
               items={[
@@ -186,7 +186,7 @@ export default function CartPage() {
         </section>
         <section className="py-20 bg-white">
           <div className="mx-auto max-w-lg px-4 text-center">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#F5F5F5]">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#FAF8F5]">
               <ShoppingCart className="h-10 w-10 text-[#333333]/30" />
             </div>
             <h2 className="mt-6 text-2xl font-bold text-[#333333]">
@@ -199,14 +199,14 @@ export default function CartPage() {
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href="/shows"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#018941] px-6 py-3 font-semibold text-white hover:bg-[#018941]/90 transition-colors"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#8B6914] px-6 py-3 font-semibold text-white hover:bg-[#8B6914]/90 transition-colors"
               >
                 Browse Shows
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/attractions"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-[#037B98] px-6 py-3 font-semibold text-[#037B98] hover:bg-[#037B98] hover:text-white transition-all"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-[#7B1A1A] px-6 py-3 font-semibold text-[#7B1A1A] hover:bg-[#7B1A1A] hover:text-white transition-all"
               >
                 Browse Attractions
               </Link>
@@ -220,7 +220,7 @@ export default function CartPage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-[#037B98] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -236,7 +236,7 @@ export default function CartPage() {
       </section>
 
       {/* Cart Content */}
-      <section className="py-10 sm:py-14 bg-[#F5F5F5]">
+      <section className="py-10 sm:py-14 bg-[#FAF8F5]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-3 lg:gap-8">
             {/* Items List */}
@@ -248,7 +248,7 @@ export default function CartPage() {
               <div className="flex items-center justify-between pt-4">
                 <Link
                   href="/shows"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-[#037B98] hover:text-[#005C73] transition-colors"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   Continue Shopping
@@ -297,7 +297,7 @@ export default function CartPage() {
 
                 <Link
                   href="/checkout"
-                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#018941] py-4 text-lg font-semibold text-white hover:bg-[#018941]/90 transition-colors shadow-lg"
+                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#8B6914] py-4 text-lg font-semibold text-white hover:bg-[#8B6914]/90 transition-colors shadow-lg"
                 >
                   Proceed to Checkout
                   <ArrowRight className="h-5 w-5" />
