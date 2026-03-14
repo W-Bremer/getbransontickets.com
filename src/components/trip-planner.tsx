@@ -35,11 +35,11 @@ export function TripPlanner({ className }: { className?: string }) {
       </p>
 
       <form onSubmit={handleSubmit} className="mt-3 sm:mt-5 space-y-3 sm:space-y-4">
-        {/* Date & Nights — side by side on mobile */}
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-1 sm:gap-4">
+        {/* Date & Nights */}
+        <div className="grid grid-cols-1 gap-3 sm:gap-4">
           <div>
             <label className="mb-1 flex items-center gap-1.5 text-xs sm:text-sm font-medium text-[#333333]">
-              <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#7B1A1A]" />
+              <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#7B1A1A] shrink-0" />
               Arrival Date
             </label>
             <input
@@ -52,7 +52,7 @@ export function TripPlanner({ className }: { className?: string }) {
 
           <div>
             <label className="mb-1 flex items-center gap-1.5 text-xs sm:text-sm font-medium text-[#333333]">
-              <Moon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#7B1A1A]" />
+              <Moon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#7B1A1A] shrink-0" />
               Length of Stay
             </label>
             <select

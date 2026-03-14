@@ -20,7 +20,7 @@ export function HeroSection() {
           sizes="100vw"
           quality={90}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 via-50% to-black/20 lg:from-black/90 lg:via-black/40 lg:via-40% lg:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/75 via-50% to-black/40 lg:from-black/95 lg:via-black/55 lg:via-40% lg:to-black/20" />
       </div>
 
       {/* Content */}
