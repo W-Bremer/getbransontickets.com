@@ -42,6 +42,8 @@ export const attractionTypes = [
   { name: "Amusement", slug: "amusement" },
   { name: "Tours", slug: "tour" },
   { name: "Shows", slug: "show" },
+  { name: "Entertainment", slug: "entertainment" },
+  { name: "Mini Golf", slug: "mini-golf" },
 ] as const;
 
 export type CategorySlug = (typeof categories)[number]["slug"];

@@ -11,6 +11,8 @@ const typeLabels: Record<Attraction["type"], string> = {
   "water-park": "Water Park",
   amusement: "Amusement",
   tour: "Tour",
+  entertainment: "Entertainment",
+  "mini-golf": "Mini Golf",
 };
 
 function StarRating({ rating, reviewCount }: { rating: number; reviewCount: number }) {
