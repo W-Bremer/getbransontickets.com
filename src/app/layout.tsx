@@ -90,7 +90,7 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
       >
         <Header />
-        <main className="min-h-screen pt-[72px] pb-14 md:pt-[72px] md:pb-0">
+        <main className="min-h-screen pt-[80px] pb-14 md:pt-[80px] md:pb-0">
           {children}
         </main>
         <Footer />

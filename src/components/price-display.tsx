@@ -4,7 +4,7 @@ interface PriceDisplayProps {
   priceFrom: number;
   priceTo?: number;
   showPerPerson?: boolean;
-  variant?: "teal" | "green";
+  variant?: "teal" | "green" | "light";
   size?: "sm" | "md" | "lg";
   className?: string;
 }
@@ -18,6 +18,7 @@ const sizeStyles = {
 const variantStyles = {
   teal: { label: "text-[#7B1A1A]", price: "text-[#333333]" },
   green: { label: "text-[#8B6914]", price: "text-[#8B6914]" },
+  light: { label: "text-[#D4A843]", price: "text-white" },
 };
 
 export function PriceDisplay({
@@ -41,11 +42,11 @@ export function PriceDisplay({
           ${priceFrom}
         </span>
         {priceTo && priceTo !== priceFrom && (
-          <span className={cn("text-gray-400", styles.range)}>– ${priceTo}</span>
+          <span className={cn(variant === "light" ? "text-white/60" : "text-gray-400", styles.range)}>– ${priceTo}</span>
         )}
       </div>
       {showPerPerson && (
-        <span className={cn("text-gray-500 mt-1", styles.sub)}>per person</span>
+        <span className={cn(variant === "light" ? "text-white/60" : "text-gray-500", "mt-1", styles.sub)}>per person</span>
       )}
     </div>
   );

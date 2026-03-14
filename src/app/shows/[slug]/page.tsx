@@ -259,7 +259,7 @@ export default async function ShowDetailPage({
               <div id="booking-widget" className="sticky top-24 space-y-6">
                 <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
                   <div className="bg-[#7B1A1A] px-6 py-4">
-                    <PriceDisplay priceFrom={show.priceFrom} priceTo={show.priceTo} />
+                    <PriceDisplay priceFrom={show.priceFrom} priceTo={show.priceTo} variant="light" />
                   </div>
                   <div className="p-1">
                     <BookingWidget
