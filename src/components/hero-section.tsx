@@ -1,84 +1,78 @@
 "use client";
 
 import Image from "next/image";
-import { Star, Ticket, MapPin } from "lucide-react";
+import Link from "next/link";
 import { motion } from "framer-motion";
+import { Search, ChevronRight } from "lucide-react";
 import { TripPlanner } from "@/components/trip-planner";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-      {/* Background */}
+    <section className="relative min-h-[85vh] flex flex-col justify-end overflow-hidden">
+      {/* Background Photo — let it breathe */}
       <div className="absolute inset-0">
         <Image
           src="/Branson-strip.jpg"
           alt="Aerial nighttime view of the Branson Strip with Ferris wheel and attractions lit up"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           priority
           sizes="100vw"
+          quality={90}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#7B1A1A]/70 via-[#5A1212]/50 to-[#5A1212]/80" />
+        {/* Subtle gradient: transparent at top to let photo show, dark at bottom for text */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-16 lg:py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left - Text */}
+      {/* Content — pinned to the bottom */}
+      <div className="relative z-10 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 pb-12 lg:pb-16">
+        <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-end">
+          {/* Left — Headline & CTAs (3 cols) */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            className="lg:col-span-3"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm mb-6">
-              <Star className="w-4 h-4 text-[#D4A843] fill-[#D4A843]" />
-              <span>The Live Entertainment Capital of the World</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              Book Your Perfect
-              <br />
-              <span className="text-[#D4A843]">Branson Experience</span>
-            </h1>
-
-            <p className="mt-6 text-lg text-white/80 max-w-xl">
-              50+ incredible live shows, world-class attractions, and unforgettable entertainment.
-              Book tickets, compare prices, and save with exclusive deals.
+            <p className="text-sm sm:text-base font-medium tracking-wide text-white/70 uppercase mb-3">
+              Branson, Missouri
             </p>
 
-            {/* Stats */}
-            <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <Ticket className="w-5 h-5 text-[#D4A843]" />
-                </div>
-                <div className="text-2xl font-bold text-white">50+</div>
-                <div className="text-xs text-white/60">Live Shows</div>
-              </div>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <Star className="w-5 h-5 text-[#D4A843] fill-[#D4A843]" />
-                </div>
-                <div className="text-2xl font-bold text-white">4.8</div>
-                <div className="text-xs text-white/60">Avg Rating</div>
-              </div>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <MapPin className="w-5 h-5 text-[#D4A843]" />
-                </div>
-                <div className="text-2xl font-bold text-white">7M+</div>
-                <div className="text-xs text-white/60">Annual Visitors</div>
-              </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-white leading-[1.1] tracking-tight">
+              Live Shows, Legendary
+              <br />
+              Attractions, One Town.
+            </h1>
+
+            <p className="mt-5 text-base sm:text-lg text-white/70 max-w-lg leading-relaxed">
+              Find tickets to 50+ shows and 130+ attractions in the live entertainment capital of the world.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/shows"
+                className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-[#1a1a1a] shadow-lg transition hover:bg-white/90"
+              >
+                Browse Shows
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/attractions"
+                className="inline-flex items-center gap-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+              >
+                Explore Attractions
+              </Link>
             </div>
           </motion.div>
 
-          {/* Right - Trip Planner Widget */}
+          {/* Right — Trip Planner (2 cols) */}
           <motion.div
+            className="lg:col-span-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
           >
-            <TripPlanner />
+            <TripPlanner className="backdrop-blur-md bg-white/95 shadow-2xl" />
           </motion.div>
         </div>
       </div>
