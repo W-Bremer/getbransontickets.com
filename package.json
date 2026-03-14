@@ -1,5 +1,5 @@
 {
-  "name": "branson-shows-temp",
+  "name": "branson-shows",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^5.2.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.36.0",
     "fuse.js": "^7.1.0",
