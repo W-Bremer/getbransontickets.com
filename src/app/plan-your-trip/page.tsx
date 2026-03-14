@@ -184,7 +184,7 @@ export default function PlanYourTripPage() {
       <JsonLd data={tripSchema} />
 
       {/* Header */}
-      <section className="bg-[#0f172a] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -212,7 +212,7 @@ export default function PlanYourTripPage() {
               href="/shows"
               className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#d4a843] transition-colors"
             >
-              <div className="text-2xl font-bold text-[#0f172a]">
+              <div className="text-2xl font-bold text-[#7B1A1A]">
                 {shows.length}+
               </div>
               <div className="text-sm text-gray-600">Live Shows</div>
@@ -221,21 +221,21 @@ export default function PlanYourTripPage() {
               href="/shows/deals"
               className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#d4a843] transition-colors"
             >
-              <div className="text-2xl font-bold text-[#0f172a]">BOGO</div>
+              <div className="text-2xl font-bold text-[#7B1A1A]">BOGO</div>
               <div className="text-sm text-gray-600">Deals Available</div>
             </Link>
             <Link
               href="/attractions"
               className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#d4a843] transition-colors"
             >
-              <div className="text-2xl font-bold text-[#0f172a]">20+</div>
+              <div className="text-2xl font-bold text-[#7B1A1A]">20+</div>
               <div className="text-sm text-gray-600">Attractions</div>
             </Link>
             <Link
               href="/shows/schedule"
               className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#d4a843] transition-colors"
             >
-              <div className="text-2xl font-bold text-[#0f172a]">7</div>
+              <div className="text-2xl font-bold text-[#7B1A1A]">7</div>
               <div className="text-sm text-gray-600">Days of Fun</div>
             </Link>
           </div>
@@ -246,7 +246,7 @@ export default function PlanYourTripPage() {
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
               Sample Itineraries
             </h2>
             <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
@@ -261,7 +261,7 @@ export default function PlanYourTripPage() {
                 key={itinerary.title}
                 className="rounded-2xl border border-gray-200 overflow-hidden"
               >
-                <div className="p-6 bg-[#0f172a]">
+                <div className="p-6 bg-[#7B1A1A]">
                   <h3 className="text-xl font-bold text-white font-heading">
                     {itinerary.title}
                   </h3>
@@ -274,7 +274,7 @@ export default function PlanYourTripPage() {
                     <div key={day.label} className="p-6">
                       <div className="flex items-center gap-3 mb-3">
                         <Calendar className="w-5 h-5 text-[#d4a843]" />
-                        <h4 className="font-bold text-[#0f172a]">
+                        <h4 className="font-bold text-[#7B1A1A]">
                           {day.label}
                         </h4>
                       </div>
@@ -301,7 +301,7 @@ export default function PlanYourTripPage() {
       <section className="py-12 sm:py-16 bg-[#faf8f5]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
               Best Time to Visit Branson
             </h2>
             <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
@@ -321,7 +321,7 @@ export default function PlanYourTripPage() {
                   >
                     <season.icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-lg font-bold text-[#0f172a]">
+                  <h3 className="text-lg font-bold text-[#7B1A1A]">
                     {season.season}
                   </h3>
                 </div>
@@ -344,12 +344,12 @@ export default function PlanYourTripPage() {
       {/* Travel Tips */}
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading mb-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading mb-8 text-center">
             Branson Travel Tips
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="p-6 rounded-xl bg-[#faf8f5] border border-gray-100">
-              <h3 className="font-bold text-[#0f172a] mb-3">Getting There</h3>
+              <h3 className="font-bold text-[#7B1A1A] mb-3">Getting There</h3>
               <p className="text-sm text-gray-600">
                 Fly into Springfield-Branson National Airport (SGF), about 45
                 minutes north. Branson Airport (BKG) has limited direct flights.
@@ -358,7 +358,7 @@ export default function PlanYourTripPage() {
               </p>
             </div>
             <div className="p-6 rounded-xl bg-[#faf8f5] border border-gray-100">
-              <h3 className="font-bold text-[#0f172a] mb-3">Getting Around</h3>
+              <h3 className="font-bold text-[#7B1A1A] mb-3">Getting Around</h3>
               <p className="text-sm text-gray-600">
                 A car is recommended for getting around Branson. Most shows and
                 attractions are along the 76 Country Boulevard corridor. Parking
@@ -367,7 +367,7 @@ export default function PlanYourTripPage() {
               </p>
             </div>
             <div className="p-6 rounded-xl bg-[#faf8f5] border border-gray-100">
-              <h3 className="font-bold text-[#0f172a] mb-3">Where to Stay</h3>
+              <h3 className="font-bold text-[#7B1A1A] mb-3">Where to Stay</h3>
               <p className="text-sm text-gray-600">
                 Hotels along Highway 76 put you closest to theaters. Table Rock
                 Lake resorts offer waterfront relaxation. Branson Landing area
@@ -376,7 +376,7 @@ export default function PlanYourTripPage() {
               </p>
             </div>
             <div className="p-6 rounded-xl bg-[#faf8f5] border border-gray-100">
-              <h3 className="font-bold text-[#0f172a] mb-3">Booking Tips</h3>
+              <h3 className="font-bold text-[#7B1A1A] mb-3">Booking Tips</h3>
               <p className="text-sm text-gray-600">
                 Book popular shows 1-2 weeks ahead during peak season. Look for
                 BOGO deals and kids-free specials. Consider seeing 2-3 shows per
@@ -400,13 +400,13 @@ export default function PlanYourTripPage() {
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/shows"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#0f172a] text-white rounded-xl font-semibold text-lg hover:bg-[#1e293b] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#7B1A1A] text-white rounded-xl font-semibold text-lg hover:bg-[#5A1212] transition-colors"
             >
               Browse All Shows
             </Link>
             <Link
               href="/shows/deals"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#0f172a] rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#7B1A1A] rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors"
             >
               View Deals
             </Link>

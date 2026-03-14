@@ -84,7 +84,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh]">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-[#0f172a]/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#7B1A1A]/80 backdrop-blur-sm"
         onClick={onClose}
       />
 
@@ -99,11 +99,11 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search shows, theaters, categories..."
-            className="flex-1 bg-transparent text-[#0f172a] text-lg placeholder:text-[#0f172a]/30 outline-none"
+            className="flex-1 bg-transparent text-[#7B1A1A] text-lg placeholder:text-[#7B1A1A]/30 outline-none"
           />
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-[#0f172a]/40 transition-colors hover:bg-gray-100 hover:text-[#0f172a]"
+            className="rounded-lg p-1.5 text-[#7B1A1A]/40 transition-colors hover:bg-gray-100 hover:text-[#7B1A1A]"
             aria-label="Close search"
           >
             <X className="h-5 w-5" />
@@ -113,13 +113,13 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
         {/* Results */}
         <div className="max-h-[60vh] overflow-y-auto">
           {!query.trim() && (
-            <p className="px-5 pt-3 pb-1 text-xs font-medium uppercase tracking-wider text-[#0f172a]/40">
+            <p className="px-5 pt-3 pb-1 text-xs font-medium uppercase tracking-wider text-[#7B1A1A]/40">
               Featured Shows
             </p>
           )}
           {results.length === 0 ? (
             <div className="px-5 py-12 text-center">
-              <p className="text-[#0f172a]/50">No shows found for &ldquo;{query}&rdquo;</p>
+              <p className="text-[#7B1A1A]/50">No shows found for &ldquo;{query}&rdquo;</p>
             </div>
           ) : (
             <ul className="py-2">
@@ -133,10 +133,10 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                     )}
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-[#0f172a] text-sm truncate">
+                      <p className="font-semibold text-[#7B1A1A] text-sm truncate">
                         {show.name}
                       </p>
-                      <div className="mt-0.5 flex items-center gap-3 text-xs text-[#0f172a]/50">
+                      <div className="mt-0.5 flex items-center gap-3 text-xs text-[#7B1A1A]/50">
                         <span className="flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
                           {show.theater}
@@ -158,7 +158,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
         </div>
 
         {/* Footer hint */}
-        <div className="border-t border-gray-100 px-5 py-2.5 flex items-center gap-4 text-xs text-[#0f172a]/30">
+        <div className="border-t border-gray-100 px-5 py-2.5 flex items-center gap-4 text-xs text-[#7B1A1A]/30">
           <span>
             <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-[10px]">ESC</kbd> to close
           </span>

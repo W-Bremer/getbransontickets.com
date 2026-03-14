@@ -43,7 +43,7 @@ export default function ContactPage() {
       <JsonLd data={contactSchema} />
 
       {/* Header */}
-      <section className="bg-[#0f172a] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -68,7 +68,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Contact Form */}
             <div>
-              <h2 className="text-2xl font-bold text-[#0f172a] font-heading mb-6">
+              <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-6">
                 Send Us a Message
               </h2>
               <form className="space-y-5">
@@ -84,7 +84,7 @@ export default function ContactPage() {
                     id="name"
                     name="name"
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#0f172a]"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#7B1A1A]"
                     placeholder="Your full name"
                   />
                 </div>
@@ -100,7 +100,7 @@ export default function ContactPage() {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#0f172a]"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#7B1A1A]"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -116,7 +116,7 @@ export default function ContactPage() {
                     type="tel"
                     id="phone"
                     name="phone"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#0f172a]"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#7B1A1A]"
                     placeholder="(555) 123-4567"
                   />
                 </div>
@@ -132,7 +132,7 @@ export default function ContactPage() {
                     name="message"
                     rows={5}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#0f172a] resize-none"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#7B1A1A] resize-none"
                     placeholder="How can we help you?"
                   />
                 </div>
@@ -147,16 +147,16 @@ export default function ContactPage() {
 
             {/* Contact Info */}
             <div>
-              <h2 className="text-2xl font-bold text-[#0f172a] font-heading mb-6">
+              <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-6">
                 Get in Touch
               </h2>
               <div className="space-y-6">
                 <div className="flex items-start gap-4 p-5 rounded-xl bg-[#faf8f5] border border-gray-100">
-                  <div className="w-12 h-12 rounded-xl bg-[#0f172a] flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#7B1A1A] flex items-center justify-center shrink-0">
                     <Phone className="w-6 h-6 text-[#d4a843]" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#0f172a]">Call Us</h3>
+                    <h3 className="font-bold text-[#7B1A1A]">Call Us</h3>
                     <p className="text-sm text-gray-500 mt-0.5">
                       Speak with a Branson entertainment expert
                     </p>
@@ -170,11 +170,11 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4 p-5 rounded-xl bg-[#faf8f5] border border-gray-100">
-                  <div className="w-12 h-12 rounded-xl bg-[#0f172a] flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#7B1A1A] flex items-center justify-center shrink-0">
                     <Mail className="w-6 h-6 text-[#d4a843]" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#0f172a]">Email Us</h3>
+                    <h3 className="font-bold text-[#7B1A1A]">Email Us</h3>
                     <p className="text-sm text-gray-500 mt-0.5">
                       We&apos;ll respond within 24 hours
                     </p>
@@ -188,11 +188,11 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4 p-5 rounded-xl bg-[#faf8f5] border border-gray-100">
-                  <div className="w-12 h-12 rounded-xl bg-[#0f172a] flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#7B1A1A] flex items-center justify-center shrink-0">
                     <MapPin className="w-6 h-6 text-[#d4a843]" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#0f172a]">Visit Us</h3>
+                    <h3 className="font-bold text-[#7B1A1A]">Visit Us</h3>
                     <p className="text-sm text-gray-500 mt-0.5">
                       Located in the heart of Branson
                     </p>
@@ -201,11 +201,11 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4 p-5 rounded-xl bg-[#faf8f5] border border-gray-100">
-                  <div className="w-12 h-12 rounded-xl bg-[#0f172a] flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#7B1A1A] flex items-center justify-center shrink-0">
                     <Clock className="w-6 h-6 text-[#d4a843]" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#0f172a]">Business Hours</h3>
+                    <h3 className="font-bold text-[#7B1A1A]">Business Hours</h3>
                     <div className="mt-2 space-y-1 text-sm text-gray-700">
                       <div className="flex justify-between gap-8">
                         <span>Monday - Friday</span>
@@ -231,7 +231,7 @@ export default function ContactPage() {
       {/* CTA */}
       <section className="py-12 sm:py-16 bg-[#faf8f5]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-[#0f172a] font-heading">
+          <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading">
             Ready to Start Planning?
           </h2>
           <p className="mt-3 text-gray-600">
@@ -247,7 +247,7 @@ export default function ContactPage() {
             </Link>
             <Link
               href="/faq"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#0f172a] text-[#0f172a] rounded-lg font-semibold hover:bg-[#0f172a] hover:text-white transition-all"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-lg font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
             >
               View FAQs
             </Link>

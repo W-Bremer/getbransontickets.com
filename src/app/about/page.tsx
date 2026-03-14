@@ -89,7 +89,7 @@ export default function AboutPage() {
       <JsonLd data={aboutSchema} />
 
       {/* Header */}
-      <section className="bg-[#0f172a] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -111,7 +111,7 @@ export default function AboutPage() {
       {/* Story */}
       <section className="py-16 sm:py-20 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading mb-6">
             Our Story
           </h2>
           <div className="prose prose-lg max-w-none text-gray-700">
@@ -141,7 +141,7 @@ export default function AboutPage() {
       {/* Mission */}
       <section className="py-16 sm:py-20 bg-[#faf8f5]">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading mb-6">
             Our Mission
           </h2>
           <p className="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
@@ -154,7 +154,7 @@ export default function AboutPage() {
       </section>
 
       {/* Trust Stats */}
-      <section className="py-16 sm:py-20 bg-[#0f172a]">
+      <section className="py-16 sm:py-20 bg-[#7B1A1A]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-white font-heading">
@@ -185,7 +185,7 @@ export default function AboutPage() {
       <section className="py-16 sm:py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
               Meet Our Team
             </h2>
             <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
@@ -199,12 +199,12 @@ export default function AboutPage() {
                 key={member.name}
                 className="text-center p-6 rounded-2xl bg-[#faf8f5] border border-gray-100"
               >
-                <div className="w-20 h-20 rounded-full bg-[#0f172a] flex items-center justify-center mx-auto mb-4">
+                <div className="w-20 h-20 rounded-full bg-[#7B1A1A] flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold text-[#d4a843]">
                     {member.initials}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-[#0f172a]">
+                <h3 className="text-lg font-bold text-[#7B1A1A]">
                   {member.name}
                 </h3>
                 <p className="text-sm text-[#d4a843] font-medium">
@@ -230,13 +230,13 @@ export default function AboutPage() {
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/shows"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#0f172a] text-white rounded-xl font-semibold text-lg hover:bg-[#1e293b] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#7B1A1A] text-white rounded-xl font-semibold text-lg hover:bg-[#5A1212] transition-colors"
             >
               Browse Shows
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#0f172a] rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#7B1A1A] rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors"
             >
               Contact Us
             </Link>

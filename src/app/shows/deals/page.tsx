@@ -51,7 +51,7 @@ export default function DealsPage() {
       <JsonLd data={dealsSchema} />
 
       {/* Header */}
-      <section className="bg-[#0f172a] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -87,12 +87,12 @@ export default function DealsPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 sm:w-72 px-4 py-3 rounded-lg border-0 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-white"
+                className="flex-1 sm:w-72 px-4 py-3 rounded-lg border-0 text-[#7B1A1A] focus:outline-none focus:ring-2 focus:ring-white"
                 required
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-[#0f172a] text-white rounded-lg font-semibold hover:bg-[#1e293b] transition-colors whitespace-nowrap"
+                className="px-6 py-3 bg-[#7B1A1A] text-white rounded-lg font-semibold hover:bg-[#5A1212] transition-colors whitespace-nowrap"
               >
                 Get Alerts
               </button>
@@ -109,7 +109,7 @@ export default function DealsPage() {
               <span className="px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-sm font-bold uppercase tracking-wider">
                 BOGO
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
                 Buy One, Get One Deals
               </h2>
             </div>
@@ -134,7 +134,7 @@ export default function DealsPage() {
               <span className="px-4 py-1.5 rounded-full bg-sky-100 text-sky-800 text-sm font-bold uppercase tracking-wider">
                 Kids Free
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
                 Kids Go Free Specials
               </h2>
             </div>
@@ -159,7 +159,7 @@ export default function DealsPage() {
               <span className="px-4 py-1.5 rounded-full bg-orange-100 text-orange-800 text-sm font-bold uppercase tracking-wider">
                 Dinner Included
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
                 Dinner Show Packages
               </h2>
             </div>
@@ -184,7 +184,7 @@ export default function DealsPage() {
               <span className="px-4 py-1.5 rounded-full bg-purple-100 text-purple-800 text-sm font-bold uppercase tracking-wider">
                 Family
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
                 Family-Friendly Shows
               </h2>
             </div>
@@ -202,7 +202,7 @@ export default function DealsPage() {
       )}
 
       {/* CTA */}
-      <section className="py-16 sm:py-20 bg-[#0f172a]">
+      <section className="py-16 sm:py-20 bg-[#7B1A1A]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white font-heading">
             Can&apos;t Find What You&apos;re Looking For?

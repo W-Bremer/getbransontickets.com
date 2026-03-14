@@ -85,7 +85,7 @@ export default function TheatersPage() {
       </section>
 
       {/* Stats Bar */}
-      <section className="bg-[#0f172a] border-t border-white/10 py-6">
+      <section className="bg-[#7B1A1A] border-t border-white/10 py-6">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             <div>
@@ -141,13 +141,13 @@ export default function TheatersPage() {
                       </span>
                     </div>
                     {showCount > 0 && (
-                      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#d4a843] text-[#0f172a] text-xs font-bold">
+                      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#d4a843] text-[#7B1A1A] text-xs font-bold">
                         {showCount} {showCount === 1 ? "Show" : "Shows"}
                       </div>
                     )}
                   </div>
                   <div className="p-5">
-                    <h2 className="text-lg font-bold text-[#0f172a] font-heading group-hover:text-[#d4a843] transition-colors">
+                    <h2 className="text-lg font-bold text-[#7B1A1A] font-heading group-hover:text-[#d4a843] transition-colors">
                       {theater.name}
                     </h2>
                     <p className="mt-1 text-sm text-gray-500 flex items-center gap-1">
@@ -183,7 +183,7 @@ export default function TheatersPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
                 The 76 Country Boulevard Theater District
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
@@ -254,7 +254,7 @@ export default function TheatersPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-12 sm:py-16 bg-[#0f172a]">
+      <section className="py-12 sm:py-16 bg-[#7B1A1A]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-white font-heading">
             Need Help Choosing a Show?
@@ -266,7 +266,7 @@ export default function TheatersPage() {
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href={`tel:${siteConfig.phoneRaw}`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#d4a843] text-[#0f172a] rounded-lg font-semibold hover:bg-[#e8c36a] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#d4a843] text-[#7B1A1A] rounded-lg font-semibold hover:bg-[#e8c36a] transition-colors"
             >
               Call {siteConfig.phone}
             </Link>

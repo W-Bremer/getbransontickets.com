@@ -57,7 +57,7 @@ export default function SchedulePage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-[#0f172a] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav className="text-sm text-white/60 mb-6">
             <Link href="/" className="hover:text-[#d4a843] transition-colors">
@@ -90,7 +90,7 @@ export default function SchedulePage() {
                 onClick={() => setSelectedDay(day)}
                 className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                   selectedDay === day
-                    ? "bg-[#0f172a] text-white"
+                    ? "bg-[#7B1A1A] text-white"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
@@ -109,11 +109,11 @@ export default function SchedulePage() {
             return (
               <div key={slot.value}>
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-[#0f172a] flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-xl bg-[#7B1A1A] flex items-center justify-center">
                     <Clock className="w-6 h-6 text-[#d4a843]" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-[#0f172a] font-heading">
+                    <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading">
                       {slot.label}
                     </h2>
                     <p className="text-sm text-gray-500">
@@ -141,7 +141,7 @@ export default function SchedulePage() {
                           />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-[#0f172a] group-hover:text-[#d4a843] transition-colors truncate">
+                          <h3 className="font-bold text-[#7B1A1A] group-hover:text-[#d4a843] transition-colors truncate">
                             {show.name}
                           </h3>
                           <div className="flex items-center gap-1.5 text-sm text-gray-500 mt-1">
@@ -181,7 +181,7 @@ export default function SchedulePage() {
       {/* CTA */}
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
             Need Help Planning Your Schedule?
           </h2>
           <p className="mt-4 text-gray-600">
@@ -197,7 +197,7 @@ export default function SchedulePage() {
             </Link>
             <Link
               href="/plan-your-trip"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#0f172a] text-[#0f172a] rounded-lg font-semibold hover:bg-[#0f172a] hover:text-white transition-all"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-lg font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
             >
               Trip Planning Guide
             </Link>

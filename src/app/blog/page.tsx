@@ -43,7 +43,7 @@ export default function BlogPage() {
       <JsonLd data={blogSchema} />
 
       {/* Header */}
-      <section className="bg-[#0f172a] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -68,7 +68,7 @@ export default function BlogPage() {
           <div className="flex gap-1 overflow-x-auto py-4 -mx-4 px-4 sm:mx-0 sm:px-0">
             <Link
               href="/blog"
-              className="px-4 py-2 rounded-full text-sm font-medium bg-[#0f172a] text-white whitespace-nowrap"
+              className="px-4 py-2 rounded-full text-sm font-medium bg-[#7B1A1A] text-white whitespace-nowrap"
             >
               All Posts
             </Link>
@@ -106,7 +106,7 @@ export default function BlogPage() {
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#d4a843]">
                   Featured &middot; {featuredPost.category}
                 </span>
-                <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-[#0f172a] font-heading group-hover:text-[#d4a843] transition-colors">
+                <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading group-hover:text-[#d4a843] transition-colors">
                   {featuredPost.title}
                 </h2>
                 <p className="mt-3 text-gray-600 line-clamp-3">
@@ -131,7 +131,7 @@ export default function BlogPage() {
       {/* Posts Grid */}
       <section className="py-12 sm:py-16 bg-[#faf8f5]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#0f172a] font-heading mb-8">
+          <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-8">
             Latest Articles
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -154,7 +154,7 @@ export default function BlogPage() {
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#d4a843]">
                     {post.category}
                   </span>
-                  <h3 className="mt-2 text-lg font-bold text-[#0f172a] group-hover:text-[#d4a843] transition-colors line-clamp-2">
+                  <h3 className="mt-2 text-lg font-bold text-[#7B1A1A] group-hover:text-[#d4a843] transition-colors line-clamp-2">
                     {post.title}
                   </h3>
                   <p className="mt-2 text-sm text-gray-600 line-clamp-2">

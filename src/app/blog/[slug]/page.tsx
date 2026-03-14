@@ -77,7 +77,7 @@ export default async function BlogPostPage({
       <JsonLd data={articleSchema} />
 
       {/* Header */}
-      <section className="bg-[#0f172a] pt-12 pb-16">
+      <section className="bg-[#7B1A1A] pt-12 pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -120,7 +120,7 @@ export default async function BlogPostPage({
       {/* Article Content */}
       <article className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-[#0f172a] prose-a:text-[#d4a843] prose-a:no-underline hover:prose-a:underline prose-strong:text-[#0f172a]">
+          <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-[#7B1A1A] prose-a:text-[#d4a843] prose-a:no-underline hover:prose-a:underline prose-strong:text-[#7B1A1A]">
             {post.content.split("\n\n").map((paragraph, i) => {
               if (paragraph.startsWith("## ")) {
                 return (
@@ -163,13 +163,13 @@ export default async function BlogPostPage({
           {/* Author Box */}
           <div className="mt-10 p-6 rounded-2xl bg-[#faf8f5] border border-gray-100">
             <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-full bg-[#0f172a] flex items-center justify-center shrink-0">
+              <div className="w-14 h-14 rounded-full bg-[#7B1A1A] flex items-center justify-center shrink-0">
                 <span className="text-xl font-bold text-[#d4a843]">
                   {post.author.charAt(0)}
                 </span>
               </div>
               <div>
-                <p className="font-bold text-[#0f172a]">{post.author}</p>
+                <p className="font-bold text-[#7B1A1A]">{post.author}</p>
                 <p className="text-sm text-gray-500">{post.authorRole}</p>
                 <p className="mt-2 text-sm text-gray-600">
                   Our team of Branson entertainment experts shares insider tips,
@@ -186,7 +186,7 @@ export default async function BlogPostPage({
       {relatedPosts.length > 0 && (
         <section className="py-12 sm:py-16 bg-[#faf8f5]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-[#0f172a] font-heading mb-8">
+            <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-8">
               Related Articles
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -209,7 +209,7 @@ export default async function BlogPostPage({
                     <span className="text-xs font-semibold uppercase tracking-wider text-[#d4a843]">
                       {related.category}
                     </span>
-                    <h3 className="mt-2 text-lg font-bold text-[#0f172a] group-hover:text-[#d4a843] transition-colors line-clamp-2">
+                    <h3 className="mt-2 text-lg font-bold text-[#7B1A1A] group-hover:text-[#d4a843] transition-colors line-clamp-2">
                       {related.title}
                     </h3>
                     <p className="mt-2 text-sm text-gray-600 line-clamp-2">
@@ -226,7 +226,7 @@ export default async function BlogPostPage({
       {/* CTA */}
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-[#0f172a] font-heading">
+          <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading">
             Ready to Book Your Branson Shows?
           </h2>
           <p className="mt-3 text-gray-600">
@@ -241,7 +241,7 @@ export default async function BlogPostPage({
             </Link>
             <Link
               href="/blog"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#0f172a] text-[#0f172a] rounded-lg font-semibold hover:bg-[#0f172a] hover:text-white transition-all"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-lg font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
             >
               More Articles
             </Link>
