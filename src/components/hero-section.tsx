@@ -11,7 +11,7 @@ export function HeroSection() {
       {/* Background */}
       <div className="absolute inset-0">
         <Image
-          src="/hero-bg.jpg"
+          src="https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,f_jpg,h_1080,q_65,w_1920/v1/clients/bransonmo/Branson_Track_Family_Fun_Parks_aerial_photo_credit_Branson_CVB_1__d0632dfe-27a3-49f3-a498-1db3eb35182d.jpg"
           alt="Aerial view of Branson Missouri entertainment district with Ferris wheel and attractions"
           fill
           className="object-cover"
