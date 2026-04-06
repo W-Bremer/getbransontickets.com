@@ -141,4 +141,10 @@
   h1, h2, h3, h4 {
     font-family: var(--font-heading), serif;
   }
+  /* Fix iOS date input rendering with excessive height */
+  input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+    min-height: 0;
+  }
 }

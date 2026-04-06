@@ -25,40 +25,37 @@ export function TripPlanner({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "rounded-2xl bg-white p-4 sm:p-6 shadow-lg shadow-black/5",
+        "rounded-2xl bg-white p-3 sm:p-6 shadow-lg shadow-black/5",
         className
       )}
     >
-      <h3 className="text-base sm:text-lg font-bold text-[#333333]">Plan Your Trip</h3>
-      <p className="mt-0.5 text-xs sm:text-sm text-gray-500">
-        Find the perfect shows for your Branson vacation.
-      </p>
+      <h3 className="text-sm sm:text-lg font-bold text-[#333333]">Plan Your Trip</h3>
 
-      <form onSubmit={handleSubmit} className="mt-3 sm:mt-5 space-y-3 sm:space-y-4">
+      <form onSubmit={handleSubmit} className="mt-2 sm:mt-5 space-y-2 sm:space-y-4">
         {/* Date & Nights */}
-        <div className="grid grid-cols-1 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-1 sm:gap-4">
           <div>
-            <label className="mb-1 flex items-center gap-1.5 text-xs sm:text-sm font-medium text-[#333333]">
-              <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#7B1A1A] shrink-0" />
-              Arrival Date
+            <label className="mb-0.5 sm:mb-1 flex items-center gap-1 text-[0.65rem] sm:text-sm font-medium text-[#333333]">
+              <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-[#7B1A1A] shrink-0" />
+              Date
             </label>
             <input
               type="date"
               value={arrivalDate}
               onChange={(e) => setArrivalDate(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-2.5 py-2 sm:px-3 sm:py-2.5 text-sm text-[#333333] outline-none transition-colors focus:border-[#7B1A1A] focus:ring-2 focus:ring-[#7B1A1A]/20"
+              className="w-full h-8 sm:h-auto rounded-md border border-gray-300 px-2 py-1.5 sm:rounded-lg sm:px-3 sm:py-2.5 text-xs sm:text-sm text-[#333333] outline-none transition-colors focus:border-[#7B1A1A] focus:ring-2 focus:ring-[#7B1A1A]/20"
             />
           </div>
 
           <div>
-            <label className="mb-1 flex items-center gap-1.5 text-xs sm:text-sm font-medium text-[#333333]">
-              <Moon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#7B1A1A] shrink-0" />
-              Length of Stay
+            <label className="mb-0.5 sm:mb-1 flex items-center gap-1 text-[0.65rem] sm:text-sm font-medium text-[#333333]">
+              <Moon className="h-3 w-3 sm:h-4 sm:w-4 text-[#7B1A1A] shrink-0" />
+              Nights
             </label>
             <select
               value={nights}
               onChange={(e) => setNights(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-2.5 py-2 sm:px-3 sm:py-2.5 text-sm text-[#333333] outline-none transition-colors focus:border-[#7B1A1A] focus:ring-2 focus:ring-[#7B1A1A]/20"
+              className="w-full h-8 sm:h-auto rounded-md border border-gray-300 px-2 py-1.5 sm:rounded-lg sm:px-3 sm:py-2.5 text-xs sm:text-sm text-[#333333] outline-none transition-colors focus:border-[#7B1A1A] focus:ring-2 focus:ring-[#7B1A1A]/20"
             >
               {[1, 2, 3, 4, 5, 6, 7].map((n) => (
                 <option key={n} value={n}>
@@ -70,28 +67,28 @@ export function TripPlanner({ className }: { className?: string }) {
         </div>
 
         {/* Adults & Children */}
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
           <div>
-            <label className="mb-1 flex items-center gap-1.5 text-xs sm:text-sm font-medium text-[#333333]">
-              <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#7B1A1A]" />
+            <label className="mb-0.5 sm:mb-1 flex items-center gap-1 text-[0.65rem] sm:text-sm font-medium text-[#333333]">
+              <Users className="h-3 w-3 sm:h-4 sm:w-4 text-[#7B1A1A]" />
               Adults
             </label>
-            <div className="flex items-center rounded-lg border border-gray-300">
+            <div className="flex items-center rounded-md sm:rounded-lg border border-gray-300">
               <button
                 type="button"
                 onClick={() => setAdults((v) => Math.max(1, v - 1))}
-                className="px-2.5 py-1.5 sm:px-3 sm:py-2.5 text-lg text-gray-500 transition-colors hover:text-[#333333]"
+                className="px-2 py-1 sm:px-3 sm:py-2.5 text-base sm:text-lg text-gray-500 transition-colors hover:text-[#333333]"
                 aria-label="Decrease adults"
               >
                 -
               </button>
-              <span className="flex-1 text-center text-sm font-semibold text-[#333333]">
+              <span className="flex-1 text-center text-xs sm:text-sm font-semibold text-[#333333]">
                 {adults}
               </span>
               <button
                 type="button"
                 onClick={() => setAdults((v) => Math.min(10, v + 1))}
-                className="px-2.5 py-1.5 sm:px-3 sm:py-2.5 text-lg text-gray-500 transition-colors hover:text-[#333333]"
+                className="px-2 py-1 sm:px-3 sm:py-2.5 text-base sm:text-lg text-gray-500 transition-colors hover:text-[#333333]"
                 aria-label="Increase adults"
               >
                 +
@@ -100,25 +97,25 @@ export function TripPlanner({ className }: { className?: string }) {
           </div>
 
           <div>
-            <label className="mb-1 text-xs sm:text-sm font-medium text-[#333333]">
+            <label className="mb-0.5 sm:mb-1 text-[0.65rem] sm:text-sm font-medium text-[#333333]">
               Children
             </label>
-            <div className="flex items-center rounded-lg border border-gray-300">
+            <div className="flex items-center rounded-md sm:rounded-lg border border-gray-300">
               <button
                 type="button"
                 onClick={() => setChildren((v) => Math.max(0, v - 1))}
-                className="px-2.5 py-1.5 sm:px-3 sm:py-2.5 text-lg text-gray-500 transition-colors hover:text-[#333333]"
+                className="px-2 py-1 sm:px-3 sm:py-2.5 text-base sm:text-lg text-gray-500 transition-colors hover:text-[#333333]"
                 aria-label="Decrease children"
               >
                 -
               </button>
-              <span className="flex-1 text-center text-sm font-semibold text-[#333333]">
+              <span className="flex-1 text-center text-xs sm:text-sm font-semibold text-[#333333]">
                 {children}
               </span>
               <button
                 type="button"
                 onClick={() => setChildren((v) => Math.min(10, v + 1))}
-                className="px-2.5 py-1.5 sm:px-3 sm:py-2.5 text-lg text-gray-500 transition-colors hover:text-[#333333]"
+                className="px-2 py-1 sm:px-3 sm:py-2.5 text-base sm:text-lg text-gray-500 transition-colors hover:text-[#333333]"
                 aria-label="Increase children"
               >
                 +
@@ -129,7 +126,7 @@ export function TripPlanner({ className }: { className?: string }) {
 
         <button
           type="submit"
-          className="w-full rounded-lg bg-[#8B6914] px-4 py-2.5 sm:py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#6B5210]"
+          className="w-full rounded-md sm:rounded-lg bg-[#8B6914] px-4 py-2 sm:py-3 text-xs sm:text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#6B5210]"
         >
           Plan My Trip
         </button>

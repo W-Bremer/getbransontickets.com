@@ -24,8 +24,8 @@ export function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-10 lg:pb-0">
-        <div className="grid lg:grid-cols-5 gap-5 lg:gap-12 items-center">
+      <div className="relative z-10 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 pb-4 sm:pb-10 lg:pb-0">
+        <div className="grid lg:grid-cols-5 gap-3 lg:gap-12 items-center">
           {/* Headline & CTAs */}
           <motion.div
             className="lg:col-span-3"

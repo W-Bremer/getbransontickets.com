@@ -249,6 +249,74 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Lodging Partner — Branson Lakes Lodging */}
+      <section className="py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <a
+            href="https://bransonlakeslodging.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
+          >
+            <div className="flex flex-col lg:flex-row">
+              {/* Image side */}
+              <div className="relative lg:w-1/2 h-64 sm:h-80 lg:h-auto min-h-[320px] overflow-hidden">
+                <Image
+                  src="/branson-lakes-lodging.jpg"
+                  alt="Premium vacation rental with lake view in Branson, Missouri — Branson Lakes Lodging"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute top-4 left-4 rounded-full bg-[#1e3a5f] px-4 py-1.5 text-xs font-semibold text-white uppercase tracking-wider">
+                  Featured Partner
+                </div>
+              </div>
+              {/* Content side */}
+              <div className="lg:w-1/2 p-8 sm:p-10 lg:p-12 flex flex-col justify-center bg-gradient-to-br from-[#1e3a5f] to-[#152d4a]">
+                <p className="text-[#D4A843] font-semibold text-sm uppercase tracking-wider mb-3">
+                  Where to Stay in Branson
+                </p>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
+                  Branson Lakes Lodging
+                </h2>
+                <p className="text-white/80 text-lg leading-relaxed mb-6">
+                  Premium vacation rentals in the heart of Branson — villas, condos, and lake houses with hot tubs, game rooms, and stunning views. From $135/night with 24/7 support and local expertise.
+                </p>
+                <div className="flex flex-wrap gap-3 mb-8">
+                  {["Lake Views", "Hot Tubs", "Game Rooms", "Private Docks"].map(
+                    (amenity) => (
+                      <span
+                        key={amenity}
+                        className="px-3 py-1.5 rounded-full bg-white/10 text-white/90 text-sm font-medium"
+                      >
+                        {amenity}
+                      </span>
+                    )
+                  )}
+                </div>
+                <span className="inline-flex items-center gap-2 text-[#D4A843] font-semibold text-lg group-hover:gap-3 transition-all duration-300">
+                  Browse Vacation Rentals
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
