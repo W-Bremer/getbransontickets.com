@@ -2,5 +2,11 @@
   "projectSettings": {
     "framework": "nextjs",
     "nodeVersion": "20.x"
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/revalidate-blog",
+      "schedule": "0 6 * * *"
+    }
+  ]
 }

@@ -1,25 +1,25 @@
 import Link from "next/link";
 import Image from "next/image";
-import { siteConfig, categories } from "@/lib/config";
-import { getFeaturedShows, shows } from "@/data/shows";
+import { siteConfig } from "@/lib/config";
+import { getPartnerShows } from "@/data/shows";
 import { attractions } from "@/data/attractions";
-import { blogPosts } from "@/data/blog";
+// import { getPublishedPosts } from "@/data/blog"; // archived
 import { ShowCard } from "@/components/show-card";
-import { CategoryCard } from "@/components/category-card";
+// import { CategoryCard } from "@/components/category-card";
 import { TrustBar } from "@/components/trust-bar";
 import { TestimonialCarousel } from "@/components/testimonial-carousel";
-import { DealBanner } from "@/components/deal-banner";
+// import { DealBanner } from "@/components/deal-banner";
 import { HeroSection } from "@/components/hero-section";
-import { Tag, Percent, Sparkles } from "lucide-react";
+import { NewsletterForm } from "@/components/passport/newsletter-form";
+import { Tag, Percent, Compass, QrCode, BadgePercent } from "lucide-react";
 
 export default function HomePage() {
-  const featuredShows = getFeaturedShows();
-  const showCategories = categories.filter((c) => c.slug !== "all");
+  const partnerShows = getPartnerShows();
   const topAttractions = attractions.slice(0, 4);
 
   return (
     <>
-      <DealBanner />
+      {/* DealBanner removed */}
       <HeroSection />
 
       {/* Popular Shows */}
@@ -43,7 +43,7 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {featuredShows.slice(0, 6).map((show, index) => (
+            {partnerShows.map((show, index) => (
               <ShowCard key={show.slug} show={show} index={index} />
             ))}
           </div>
@@ -85,30 +85,68 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Category Cards */}
-      <section className="py-16 sm:py-20 bg-[#FAF8F5]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#333333]">
-              What Kind of Show Are You Looking For?
-            </h2>
-            <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
-              From high-energy variety shows to intimate dinner theater, Branson
-              has something for every taste.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-            {showCategories.map((category) => (
-              <CategoryCard
-                key={category.slug}
-                name={category.name}
-                slug={category.slug}
-                description={category.description}
-                showCount={
-                  shows.filter((s) => s.category.includes(category.slug)).length
-                }
-              />
-            ))}
+      {/* Branson Passport */}
+      <section className="relative overflow-hidden py-16 sm:py-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#13264D] via-[#1B355F] to-[#13264D]" />
+        <div className="pointer-events-none absolute -top-20 right-0 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+            <div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border-2 border-[#C8102E] px-4 py-1.5 text-xs font-bold tracking-widest text-white uppercase">
+                <Compass className="h-4 w-4" />
+                New & Free
+              </div>
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                The Branson Passport
+              </h2>
+              <p className="mt-4 text-lg text-white/80">
+                More than tickets: your free insider guide to Branson. Where locals eat, what&apos;s
+                free to do, what&apos;s on this season, and exclusive deals from local partner
+                businesses.
+              </p>
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                <Link
+                  href="/passport"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#C8102E] px-7 py-3.5 font-bold text-white shadow-lg transition-colors hover:bg-[#A50D26]"
+                >
+                  Open the Passport
+                </Link>
+                <Link
+                  href="/passport/join"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-7 py-3.5 font-semibold text-white transition-colors hover:bg-white/20"
+                >
+                  For Businesses
+                </Link>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+              {[
+                {
+                  icon: <Compass className="h-6 w-6 text-[#E8555F]" />,
+                  title: "Insider Guide",
+                  text: "Local restaurants, coffee, shopping, and free things to do.",
+                },
+                {
+                  icon: <QrCode className="h-6 w-6 text-[#E8555F]" />,
+                  title: "Scan Anywhere",
+                  text: "Passport QR codes at hotels and shops all over town.",
+                },
+                {
+                  icon: <BadgePercent className="h-6 w-6 text-[#E8555F]" />,
+                  title: "Exclusive Deals",
+                  text: "Partner-only offers you won't find anywhere else.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm"
+                >
+                  {item.icon}
+                  <h3 className="mt-3 font-bold text-white">{item.title}</h3>
+                  <p className="mt-1.5 text-sm text-white/70">{item.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -194,7 +232,7 @@ export default function HomePage() {
               Plan Your Branson Entertainment
             </h2>
             <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
-              With {shows.length}+ shows and {attractions.length}+ attractions,
+              With 40+ shows and {attractions.length}+ attractions,
               every day in Branson is packed with entertainment.
             </p>
           </div>
@@ -332,56 +370,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Blog / Guides */}
-      <section className="py-16 sm:py-20 bg-[#5A1212]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white">
-              Branson Travel Guides
-            </h2>
-            <p className="mt-4 text-lg text-white/70 max-w-2xl mx-auto">
-              Expert tips, show reviews, and insider knowledge to help you plan the perfect Branson trip.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogPosts.slice(0, 3).map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group rounded-2xl bg-white/5 backdrop-blur-sm overflow-hidden hover:bg-white/10 transition-all duration-300 border border-white/10"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={post.imageUrl}
-                    alt={post.imageAlt}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                </div>
-                <div className="p-6">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#D4A843]">
-                    {post.category}
-                  </span>
-                  <h3 className="mt-2 text-lg font-bold text-white group-hover:text-[#D4A843] transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-white/50 line-clamp-2">{post.excerpt}</p>
-                  <span className="mt-4 inline-block text-sm text-[#D4A843] font-medium">Read Guide →</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="mt-10 text-center">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/30 text-white rounded-lg font-semibold hover:bg-white hover:text-[#5A1212] transition-all duration-300"
-            >
-              View All Guides →
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Blog / Guides — archived, restore when ready */}
 
       {/* Final CTA */}
       <section className="py-20 sm:py-28 relative overflow-hidden">
@@ -391,7 +380,7 @@ export default function HomePage() {
             Ready to Experience Branson?
           </h2>
           <p className="mt-6 text-xl text-white/80 max-w-2xl mx-auto">
-            Over {shows.length} incredible shows, world-class attractions, and unforgettable memories await. Start planning your trip today.
+            Over 40 incredible shows, world-class attractions, and unforgettable memories await. Start planning your trip today.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -419,20 +408,7 @@ export default function HomePage() {
           <p className="mt-3 text-gray-500">
             Be the first to know about BOGO offers, new shows, and exclusive discounts.
           </p>
-          <form className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7B1A1A] focus:border-transparent text-[#333333]"
-              required
-            />
-            <button
-              type="submit"
-              className="px-6 py-3 bg-[#8B6914] text-white rounded-lg font-semibold hover:bg-[#6B5210] transition-colors whitespace-nowrap"
-            >
-              Get Deals
-            </button>
-          </form>
+          <NewsletterForm />
           <p className="mt-3 text-xs text-gray-400">No spam, ever. Unsubscribe anytime.</p>
         </div>
       </section>

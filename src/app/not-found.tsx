@@ -53,13 +53,6 @@ export default function NotFound() {
           </Link>
           <span className="text-gray-300">|</span>
           <Link
-            href="/blog"
-            className="text-[#d4a843] hover:text-[#b8922e] font-medium transition-colors"
-          >
-            Blog
-          </Link>
-          <span className="text-gray-300">|</span>
-          <Link
             href="/plan-your-trip"
             className="text-[#d4a843] hover:text-[#b8922e] font-medium transition-colors"
           >

@@ -493,9 +493,14 @@ export default async function AttractionDetailPage({
                   </div>
 
                   <div className="mt-6">
-                    <button className="w-full py-4 bg-[#8B6914] hover:bg-[#8B6914]/90 text-white rounded-xl font-semibold text-lg transition-colors shadow-lg cursor-pointer">
+                    <a
+                      href={attraction.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full py-4 bg-[#8B6914] hover:bg-[#8B6914]/90 text-white rounded-xl font-semibold text-lg transition-colors shadow-lg cursor-pointer text-center"
+                    >
                       Get Tickets
-                    </button>
+                    </a>
                   </div>
                   <div className="mt-3">
                     <Link

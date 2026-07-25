@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import {
   Check,
@@ -11,8 +11,16 @@ import {
   ArrowRight,
   ShoppingCart,
 } from "lucide-react";
-import { useCartStore } from "@/stores/cart";
+import {
+  Elements,
+  PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import type { Appearance } from "@stripe/stripe-js";
+import { useCartStore, type CartItem } from "@/stores/cart";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { getStripe } from "@/lib/stripe-client";
 
 type Step = 1 | 2 | 3;
 
@@ -170,43 +178,78 @@ function ContactInfoStep({
   );
 }
 
-function PaymentStep({
-  onNext,
+function StripePaymentForm({
   onBack,
+  onSuccess,
+  contactEmail,
+  contactName,
+  contactPhone,
 }: {
-  onNext: () => void;
   onBack: () => void;
+  onSuccess: (paymentIntentId: string) => Promise<void>;
+  contactEmail: string;
+  contactName: string;
+  contactPhone: string;
 }) {
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [cvv, setCvv] = useState("");
-  const [cardName, setCardName] = useState("");
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const stripe = useStripe();
+  const elements = useElements();
+  const [submitting, setSubmitting] = useState(false);
+  const [submitStage, setSubmitStage] = useState<"idle" | "paying" | "emailing">("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  function formatCardNumber(val: string) {
-    const digits = val.replace(/\D/g, "").slice(0, 16);
-    return digits.replace(/(\d{4})(?=\d)/g, "$1 ");
-  }
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!stripe || !elements) return;
 
-  function formatExpiry(val: string) {
-    const digits = val.replace(/\D/g, "").slice(0, 4);
-    if (digits.length > 2) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
-    return digits;
-  }
+    setSubmitting(true);
+    setSubmitStage("paying");
+    setErrorMessage(null);
 
-  function validate() {
-    const e: Record<string, string> = {};
-    if (cardNumber.replace(/\s/g, "").length < 16)
-      e.cardNumber = "Enter a valid card number";
-    if (expiry.length < 5) e.expiry = "Enter expiration date";
-    if (cvv.length < 3) e.cvv = "Enter CVV";
-    if (!cardName.trim()) e.cardName = "Enter name on card";
-    setErrors(e);
-    return Object.keys(e).length === 0;
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      redirect: "if_required",
+      confirmParams: {
+        payment_method_data: {
+          billing_details: {
+            name: contactName,
+            email: contactEmail,
+            phone: contactPhone,
+          },
+        },
+      },
+    });
+
+    if (error) {
+      setErrorMessage(error.message ?? "Payment failed. Please try again.");
+      setSubmitting(false);
+      setSubmitStage("idle");
+      return;
+    }
+
+    if (!paymentIntent) {
+      setErrorMessage("Payment did not complete. Please try again.");
+      setSubmitting(false);
+      setSubmitStage("idle");
+      return;
+    }
+
+    setSubmitStage("emailing");
+
+    try {
+      await onSuccess(paymentIntent.id);
+    } catch (err) {
+      setErrorMessage(
+        err instanceof Error
+          ? err.message
+          : "Payment succeeded but we couldn't send your voucher email. We'll follow up shortly."
+      );
+      setSubmitting(false);
+      setSubmitStage("idle");
+    }
   }
 
   return (
-    <div className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#7B1A1A]/10">
           <CreditCard className="h-5 w-5 text-[#7B1A1A]" />
@@ -218,107 +261,181 @@ function PaymentStep({
 
       <div className="rounded-lg bg-[#FAF8F5] p-3 flex items-center gap-2 text-sm text-[#333333]/60">
         <ShieldCheck className="h-4 w-4 text-[#8B6914]" />
-        <span>Your payment information is secure and encrypted</span>
+        <span>Payments securely processed by Stripe</span>
       </div>
 
-      <div>
-        <label className="block text-sm font-semibold text-[#333333] mb-1.5">
-          Card Number *
-        </label>
-        <input
-          type="text"
-          value={cardNumber}
-          onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
-          placeholder="1234 5678 9012 3456"
-          className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
-            errors.cardNumber
-              ? "border-red-300 focus:ring-red-200"
-              : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
-          }`}
-        />
-        {errors.cardNumber && (
-          <p className="mt-1 text-xs text-red-500">{errors.cardNumber}</p>
-        )}
-      </div>
+      <PaymentElement
+        options={{
+          layout: "tabs",
+          defaultValues: {
+            billingDetails: {
+              name: contactName,
+              email: contactEmail,
+              phone: contactPhone,
+            },
+          },
+        }}
+      />
 
-      <div>
-        <label className="block text-sm font-semibold text-[#333333] mb-1.5">
-          Name on Card *
-        </label>
-        <input
-          type="text"
-          value={cardName}
-          onChange={(e) => setCardName(e.target.value)}
-          placeholder="John Smith"
-          className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
-            errors.cardName
-              ? "border-red-300 focus:ring-red-200"
-              : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
-          }`}
-        />
-        {errors.cardName && (
-          <p className="mt-1 text-xs text-red-500">{errors.cardName}</p>
-        )}
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-semibold text-[#333333] mb-1.5">
-            Expiration *
-          </label>
-          <input
-            type="text"
-            value={expiry}
-            onChange={(e) => setExpiry(formatExpiry(e.target.value))}
-            placeholder="MM/YY"
-            className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
-              errors.expiry
-                ? "border-red-300 focus:ring-red-200"
-                : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
-            }`}
-          />
-          {errors.expiry && (
-            <p className="mt-1 text-xs text-red-500">{errors.expiry}</p>
-          )}
+      {errorMessage && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600">
+          {errorMessage}
         </div>
-        <div>
-          <label className="block text-sm font-semibold text-[#333333] mb-1.5">
-            CVV *
-          </label>
-          <input
-            type="text"
-            value={cvv}
-            onChange={(e) => setCvv(e.target.value.replace(/\D/g, "").slice(0, 4))}
-            placeholder="123"
-            className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
-              errors.cvv
-                ? "border-red-300 focus:ring-red-200"
-                : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
-            }`}
-          />
-          {errors.cvv && (
-            <p className="mt-1 text-xs text-red-500">{errors.cvv}</p>
-          )}
-        </div>
-      </div>
+      )}
 
       <div className="flex gap-3">
         <button
+          type="button"
           onClick={onBack}
-          className="flex items-center justify-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-4 font-semibold text-[#333333]/70 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-all"
+          disabled={submitting}
+          className="flex items-center justify-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-4 font-semibold text-[#333333]/70 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-all disabled:opacity-50"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
         </button>
         <button
-          onClick={() => validate() && onNext()}
-          className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-[#8B6914] py-4 text-lg font-semibold text-white hover:bg-[#8B6914]/90 transition-colors"
+          type="submit"
+          disabled={!stripe || !elements || submitting}
+          className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-[#8B6914] py-4 text-lg font-semibold text-white hover:bg-[#8B6914]/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Complete Booking
-          <ShieldCheck className="h-5 w-5" />
+          {submitting ? (
+            <>
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              {submitStage === "emailing" ? "Sending voucher..." : "Processing..."}
+            </>
+          ) : (
+            <>
+              Complete Booking
+              <ShieldCheck className="h-5 w-5" />
+            </>
+          )}
         </button>
       </div>
-    </div>
+    </form>
+  );
+}
+
+function PaymentStep({
+  onBack,
+  onSuccess,
+  items,
+  formData,
+}: {
+  onBack: () => void;
+  onSuccess: (paymentIntentId: string) => Promise<void>;
+  items: CartItem[];
+  formData: { name: string; email: string; phone: string };
+}) {
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function createIntent() {
+      try {
+        const res = await fetch("/api/create-payment-intent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: items.map((item) => ({
+              id: item.id,
+              name: item.name,
+              date: item.date,
+              adults: item.adults,
+              children: item.children,
+              pricePerAdult: item.pricePerAdult,
+              pricePerChild: item.pricePerChild,
+            })),
+          }),
+        });
+
+        if (!res.ok) {
+          const body = (await res.json().catch(() => ({}))) as {
+            error?: string;
+          };
+          throw new Error(body.error ?? "Unable to start payment");
+        }
+
+        const data = (await res.json()) as { clientSecret: string; amount: number };
+        const expectedCents = items.reduce(
+          (sum, item) =>
+            sum +
+            Math.round(item.pricePerAdult * 100) * item.adults +
+            Math.round(item.pricePerChild * 100) * item.children,
+          0
+        );
+        if (data.amount !== expectedCents) {
+          throw new Error(
+            "Prices have been updated since you added these items. Please empty your cart and add them again."
+          );
+        }
+        if (!cancelled) setClientSecret(data.clientSecret);
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : "Unable to start payment");
+        }
+      }
+    }
+
+    createIntent();
+    return () => {
+      cancelled = true;
+    };
+  }, [items]);
+
+  const appearance: Appearance = useMemo(
+    () => ({
+      theme: "stripe",
+      variables: {
+        colorPrimary: "#7B1A1A",
+        colorText: "#333333",
+        fontFamily: "system-ui, sans-serif",
+        borderRadius: "8px",
+      },
+    }),
+    []
+  );
+
+  if (error) {
+    return (
+      <div className="space-y-4">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+          {error}
+        </div>
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-3 font-semibold text-[#333333]/70 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-all"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </button>
+      </div>
+    );
+  }
+
+  if (!clientSecret) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-3 py-16">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#7B1A1A] border-t-transparent" />
+        <p className="text-sm text-[#333333]/60">Preparing secure payment...</p>
+      </div>
+    );
+  }
+
+  return (
+    <Elements
+      stripe={getStripe()}
+      options={{ clientSecret, appearance }}
+    >
+      <StripePaymentForm
+        onBack={onBack}
+        onSuccess={onSuccess}
+        contactEmail={formData.email}
+        contactName={formData.name}
+        contactPhone={formData.phone}
+      />
+    </Elements>
   );
 }
 
@@ -326,12 +443,15 @@ function ConfirmationStep({
   formData,
   total,
   itemCount,
+  orderNumber,
+  emailSent,
 }: {
   formData: { name: string; email: string; phone: string };
   total: number;
   itemCount: number;
+  orderNumber: string;
+  emailSent: boolean;
 }) {
-  const orderNumber = `BRN-${Date.now().toString(36).toUpperCase()}`;
 
   return (
     <div className="text-center space-y-6">
@@ -373,11 +493,30 @@ function ConfirmationStep({
         </div>
       </div>
 
-      <p className="text-sm text-[#333333]/50">
-        A confirmation email has been sent to{" "}
-        <span className="font-medium text-[#333333]">{formData.email}</span>.
-        Please check your inbox for your e-tickets and booking details.
-      </p>
+      {emailSent ? (
+        <p className="text-sm text-[#333333]/50">
+          Your show voucher has been sent to{" "}
+          <span className="font-medium text-[#333333]">{formData.email}</span>.
+          Please check your inbox — present the voucher at the box office to
+          redeem your tickets.
+        </p>
+      ) : (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-left">
+          <p className="text-sm font-semibold text-amber-900">
+            Payment received — voucher email couldn&apos;t be sent automatically.
+          </p>
+          <p className="mt-1 text-xs text-amber-800">
+            Please screenshot this confirmation and email{" "}
+            <a
+              href="mailto:info@getbransontickets.com"
+              className="underline font-medium"
+            >
+              info@getbransontickets.com
+            </a>{" "}
+            with your order number. We&apos;ll send your voucher manually.
+          </p>
+        </div>
+      )}
 
       <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
         <Link
@@ -406,6 +545,12 @@ export default function CheckoutPage() {
     email: "",
     phone: "",
   });
+  const [completedOrder, setCompletedOrder] = useState<{
+    orderNumber: string;
+    total: number;
+    itemCount: number;
+    emailSent: boolean;
+  } | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -462,7 +607,59 @@ export default function CheckoutPage() {
     );
   }
 
-  function handleCompleteBooking() {
+  async function handleCompleteBooking(paymentIntentId: string) {
+    const fallbackOrder = `BRN-${Date.now().toString(36).toUpperCase()}`;
+    const snapshotTotal = total;
+    const snapshotCount = items.length;
+
+    try {
+      const res = await fetch("/api/send-voucher", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          paymentIntentId,
+          customerName: formData.name,
+          customerEmail: formData.email,
+          customerPhone: formData.phone,
+          items: items.map((item) => ({
+            id: item.id,
+            name: item.name,
+            date: item.date,
+            time: item.time,
+            adults: item.adults,
+            children: item.children,
+            seatingTier: item.seatingTier,
+            pricePerAdult: item.pricePerAdult,
+            pricePerChild: item.pricePerChild,
+          })),
+        }),
+      });
+
+      if (res.ok) {
+        const data = (await res.json()) as { orderNumber: string };
+        setCompletedOrder({
+          orderNumber: data.orderNumber,
+          total: snapshotTotal,
+          itemCount: snapshotCount,
+          emailSent: true,
+        });
+      } else {
+        setCompletedOrder({
+          orderNumber: fallbackOrder,
+          total: snapshotTotal,
+          itemCount: snapshotCount,
+          emailSent: false,
+        });
+      }
+    } catch {
+      setCompletedOrder({
+        orderNumber: fallbackOrder,
+        total: snapshotTotal,
+        itemCount: snapshotCount,
+        emailSent: false,
+      });
+    }
+
     clearCart();
     setStep(3);
   }
@@ -510,14 +707,18 @@ export default function CheckoutPage() {
                 {step === 2 && (
                   <PaymentStep
                     onBack={() => setStep(1)}
-                    onNext={handleCompleteBooking}
+                    onSuccess={handleCompleteBooking}
+                    items={items}
+                    formData={formData}
                   />
                 )}
-                {step === 3 && (
+                {step === 3 && completedOrder && (
                   <ConfirmationStep
                     formData={formData}
-                    total={total}
-                    itemCount={items.length}
+                    total={completedOrder.total}
+                    itemCount={completedOrder.itemCount}
+                    orderNumber={completedOrder.orderNumber}
+                    emailSent={completedOrder.emailSent}
                   />
                 )}
               </div>

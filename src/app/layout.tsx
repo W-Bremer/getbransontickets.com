@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { getPartnerShows } from "@/data/shows";
 import { PhoneBar } from "@/components/layout/phone-bar";
 import { CartDrawer } from "@/components/cart-drawer";
 import { siteConfig } from "@/lib/config";
@@ -98,7 +99,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
       >
-        <Header />
+        <Header
+          partnerShows={getPartnerShows().map((s) => ({ name: s.name, slug: s.slug }))}
+        />
         <main className="min-h-screen pt-[80px] pb-14 md:pt-[80px] md:pb-0">
           {children}
         </main>

@@ -39,7 +39,7 @@ export const attractions: Attraction[] = [
       "Everyone knows the name TITANIC—how it struck an iceberg with 2,208 passengers and crew aboard and how it ultimately sank—but there is so much more to her story! With over 400 genuine TITANIC artifacts valued at more than four million dollars, our permanent, interactive Titanic experience goes beyo",
     address: "3235 W 76 Hwy",
     phone: "(417) 334-9500",
-    website: "https://www.explorebranson.com/listing/titanic-museum-attraction/5132/",
+    website: "https://titanicattraction.com/branson",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3235%20W%2076%20Hwy",
     imageUrl:
@@ -111,7 +111,7 @@ export const attractions: Attraction[] = [
       "Branson/Lakes Area Convention & Visitors Bureau 4100 Gretna Road, Branson, MO 65616 417-334-4084 • 1-800-296-0463",
     address: "Branson, MO 65616",
     phone: "",
-    website: "https://www.explorebranson.com/listing/ancient-ozarks-natural-history-museum/4860/",
+    website: "https://bigcedar.com/activity/ancient-ozarks-history-museum/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Ancient%20Ozarks%20Natural%20History%20Museum%20Branson%20MO",
     imageUrl:
@@ -172,7 +172,7 @@ export const attractions: Attraction[] = [
       "Come Play With the Stars! Don't miss the Hollywood Wax Museum, a world-famous tribute to your favorite stars.",
     address: "3030 W 76 Country Blvd, Unit A",
     phone: "(417) 337-8700",
-    website: "https://www.explorebranson.com/listing/hollywood-wax-museum/5555/",
+    website: "https://www.hollywoodwaxentertainment.com/branson-mo-attractions/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3030%20W%2076%20Country%20Blvd%2C%20Unit%20A",
     imageUrl:
@@ -240,7 +240,7 @@ export const attractions: Attraction[] = [
       "Experience the magic of the Ozarks like never before from the comfort of a custom Pink Jeep® Wrangler. Wind past lakeside landmarks and ascend off-road trails to the summit of Baird Mountain while expert, local guides bring centuries of mountain history and culture to life.",
     address: "3310 W 76 Country Blvd Ste D",
     phone: "(800) 873-3662",
-    website: "https://www.explorebranson.com/listing/pink-jeep-adventure-tours%3a-branson/5707/",
+    website: "https://www.pinkadventuretours.com/branson",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3310%20W%2076%20Country%20Blvd%20Ste%20D",
     imageUrl:
@@ -308,7 +308,7 @@ export const attractions: Attraction[] = [
       "\"Shepherd Inspiration Tower\" literally towers above all the amazing sights, scenery, glitz and glamour of America's entertainment capital... Branson, Missouri!",
     address: "5586 W. Hwy 76 Country Blvd",
     phone: "(417) 334-4191",
-    website: "https://www.explorebranson.com/listing/inspiration-tower-at-shepherd-of-the-hills/5765/",
+    website: "https://theshepherdofthehills.com/inspiration-tower/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=5586%20W.%20Hwy%2076%20Country%20Blvd",
     imageUrl:
@@ -376,7 +376,7 @@ export const attractions: Attraction[] = [
       "The noted explorer, archaeologist, anthropologist, paleontologist, and part-time taxidermist from the University of Chicago, Professor Duffer A. Hacker, led two expeditions to the Fogclift Islands off the coast of South America in the 1920's.",
     address: "3346 W 76 Country Blvd",
     phone: "(417) 332-0889",
-    website: "https://www.explorebranson.com/listing/lost-treasure-mini-golf/5626/",
+    website: "https://losttreasuregolfbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3346%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -440,7 +440,7 @@ export const attractions: Attraction[] = [
       "This 18-hole course offers a spectacular atmosphere to bring your family, friends, or group for an outdoor Branson experience. Putt your way through the volcano and around waterfalls and dinosaurs to explore a land thought to be lost.",
     address: "2501 Green Mountain Drive",
     phone: "(417) 332-0887",
-    website: "https://www.explorebranson.com/listing/dinosaur-canyon-mini-golf/5451/",
+    website: "https://dinosaurcanyongolf.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2501%20Green%20Mountain%20Drive",
     imageUrl:
@@ -504,7 +504,7 @@ export const attractions: Attraction[] = [
       "Join Dolly Parton's Stampede for a festive holiday show featuring 32 horses, a North vs. South Pole rivalry, and the magical Sugar Plum Fairy.",
     address: "1525 W. 76 Country Blvd",
     phone: "(417) 337-9400",
-    website: "https://www.explorebranson.com/listing/dolly-partons-stampede-dinner-attraction/5456/",
+    website: "https://dpstampede.com/branson",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1525%20W.%2076%20Country%20Blvd",
     imageUrl:
@@ -575,7 +575,7 @@ export const attractions: Attraction[] = [
       "Branson Mountain Adventure Park is home of the Runaway, the first mountain coaster in the Branson area. This unique, family-friendly thrill ride takes you on over 5,000 feet of track as gravity pulls you down hills, around corners and through two 360° horizontal loops as you race to the bottom at s",
     address: "935 State Highway 165",
     phone: "(417) 334-7337",
-    website: "https://www.explorebranson.com/listing/runaway-mountain-coaster-%26-flyaway-ziplines-at-branson-mountain-adventure/5354/",
+    website: "https://www.bransonalpinemountaincoaster.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=935%20State%20Highway%20165",
     imageUrl:
@@ -644,7 +644,7 @@ export const attractions: Attraction[] = [
       "The 1984 BRANSON ARCADE is a classic gaming & retro arcade voted Branson's Best Arcade for the last 5 years by \"The Best Of All Things Branson\"! Not only is 1984 BRANSON an AWESOME classic gaming arcade, but it also serves as a preservation museum and 80's hangout for the young & old.",
     address: "4240 N. Gretna Road",
     phone: "(417) 320-6055",
-    website: "https://www.explorebranson.com/listing/1984-arcade/5397/",
+    website: "https://www.1984bransonarcade.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4240%20N.%20Gretna%20Road",
     imageUrl:
@@ -712,7 +712,7 @@ export const attractions: Attraction[] = [
       "See website for tour hours. Our mission is to provide a wide variety of outdoor activities that enhance each individual's quality of life while also connecting these individuals to other like-minded outdoor enthusiasts and educating the community of the importance of outdoor conservation.",
     address: "201 E Main St.",
     phone: "(417) 501-5455",
-    website: "https://www.explorebranson.com/listing/37-north-expeditions/5464/",
+    website: "https://www.37northexpeditions.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=201%20E%20Main%20St.",
     imageUrl:
@@ -780,7 +780,7 @@ export const attractions: Attraction[] = [
       "Did you feel that? 7D Dark Ride Adventure is a game that's not for the faint of heart.",
     address: "715 Branson Landing Blvd.",
     phone: "(417) 203-4149",
-    website: "https://www.explorebranson.com/listing/7d-dark-ride-adventure/5621/",
+    website: "https://faceamusement.com/experiences/7d-adventure/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=715%20Branson%20Landing%20Blvd.",
     imageUrl:
@@ -844,7 +844,7 @@ export const attractions: Attraction[] = [
       "Branson's ULTIMATE family adventure with 150+ immersive exhibits, photo ops, and gaming experiences that span generations! HOME OF THE AMAZING FlyRide®!",
     address: "3115 W 76 Country Blvd",
     phone: "(417) 605-3211",
-    website: "https://www.explorebranson.com/listing/adventure-seekers-branson/5782/",
+    website: "https://adventureseekersbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3115%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -913,7 +913,7 @@ export const attractions: Attraction[] = [
       "Adventure Ziplines of Branson is a full-featured zipline complex only three blocks off of Branson's famous Highway 76 Strip. Their high-flying adventure is a favorite destination for families because they can accommodate anyone from three years of age and older, up to 275 pounds.",
     address: "501 N. Wildwood Drive",
     phone: "(417) 239-3030",
-    website: "https://www.explorebranson.com/listing/adventure-ziplines-of-branson/5153/",
+    website: "https://www.adventureziplinesofbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=501%20N.%20Wildwood%20Drive",
     imageUrl:
@@ -982,7 +982,7 @@ export const attractions: Attraction[] = [
       "Bigfoot Fun Park is Branson's Best Place to Play! Featuring a captivating mini-golf course, 3 escape rooms, and an Arcade with cutting-edge games and unique prizes!",
     address: "3608 W. Hwy 76",
     phone: "(417) 213-4266",
-    website: "https://www.explorebranson.com/listing/bigfoot-fun-park/5219/",
+    website: "https://www.bigfootfunpark.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3608%20W.%20Hwy%2076",
     imageUrl:
@@ -1054,7 +1054,7 @@ export const attractions: Attraction[] = [
       "Bigfoot Mini-Golf has been named the #1 Mini-Golf Course in the State of Missouri! It's Branson's Best Place to Play!",
     address: "3608 W. Hwy 76",
     phone: "(417) 213-4266",
-    website: "https://www.explorebranson.com/listing/bigfoot-mini-golf/5220/",
+    website: "https://www.bigfootfunpark.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3608%20W.%20Hwy%2076",
     imageUrl:
@@ -1189,7 +1189,7 @@ export const attractions: Attraction[] = [
       "Take a tour on a classic amphicar guided by an experienced captain. Aboard this piece of history, you will enjoy the Branson Landing fountain show and the scenic views of Lake Taneycomo from the best seats in the house!",
     address: "325 Promenade Way",
     phone: "(417) 641-0225",
-    website: "https://www.explorebranson.com/listing/branson-amphicar-tours/5933/",
+    website: "https://amphicar.org/tour",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=325%20Promenade%20Way",
     imageUrl:
@@ -1254,7 +1254,7 @@ export const attractions: Attraction[] = [
       "The Branson Auto Museum has been a favorite for car enthusiasts since it's opening in 2009. As home to more than 100 cars and antique tractors, the inventory of cars on display was changed often so that guests always had something new to see.",
     address: "1335 W. Hwy 76",
     phone: "(417) 335-2600",
-    website: "https://www.explorebranson.com/listing/branson-auto-%26-farm-museum/5003/",
+    website: "https://bransonmuseum.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1335%20W.%20Hwy%2076",
     imageUrl:
@@ -1322,7 +1322,7 @@ export const attractions: Attraction[] = [
       "Ready to roll the dice on some real fun? At Dice & Dine, we bring people together over great food and even better games.",
     address: "103 S Business Hwy 65",
     phone: "(417) 973-3113",
-    website: "https://www.explorebranson.com/listing/branson-board-game-cafe/5937/",
+    website: "https://bransonboardgamecafe.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=103%20S%20Business%20Hwy%2065",
     imageUrl:
@@ -1390,7 +1390,7 @@ export const attractions: Attraction[] = [
       "Branson Centennial Museum occupies a historic downtown space built after the 1912 fire. Rotating exhibits tell stories from the 1839 arrival of the first permanent residents in the area.",
     address: "120 S Commercial Street",
     phone: "(417) 239-1912",
-    website: "https://www.explorebranson.com/listing/branson-centennial-museum/5280/",
+    website: "https://wrvhs.org/locations/bcm/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=120%20S%20Commercial%20Street",
     imageUrl:
@@ -1457,7 +1457,7 @@ export const attractions: Attraction[] = [
       "Ready To Set Sail? As part of the Branson community, we welcome you and your loved ones to a once-in-a-lifetime experience.",
     address: "1940 W 76 Country Blvd",
     phone: "(417) 598-9099",
-    website: "https://www.explorebranson.com/listing/branson-duck-tours/5338/",
+    website: "https://bransonducktours.com/tickets/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1940%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -1525,7 +1525,7 @@ export const attractions: Attraction[] = [
       "Branson Jet Boats will be ready for a new adventure in 2024! High Speed Bow Dunks, 360 spins and Power Slides.",
     address: "7A North Boardwalk, Branson Landing",
     phone: "(417) 335-7683",
-    website: "https://www.explorebranson.com/listing/branson-jet-boats/5224/",
+    website: "https://www.bransonjetboats.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=7A%20North%20Boardwalk%2C%20Branson%20Landing",
     imageUrl:
@@ -1597,7 +1597,7 @@ export const attractions: Attraction[] = [
       "Branson Landing features a scenic boardwalk along the 1. 5-mile Taneycomo Lakefront.",
     address: "100 Branson Landing",
     phone: "(417) 239-3002",
-    website: "https://www.explorebranson.com/listing/branson-landing-fountain-show/5350/",
+    website: "https://bransonlanding.com/pages/fountains",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=100%20Branson%20Landing",
     imageUrl:
@@ -1661,7 +1661,7 @@ export const attractions: Attraction[] = [
       "\"Branson Limousine\" is one of Branson's most luxurious ways to enjoy an afternoon in Branson! You'll be treated to a smooth ride around the area in one of a variety of cozy vehicles, including a gleaming white, super-stretch Lincoln Town Car limousine outfitted with plush black leather seating.",
     address: "140 Sterling Way",
     phone: "(417) 331-1316",
-    website: "https://www.explorebranson.com/listing/branson-limousine-and-executive-charter-wine-tours/5351/",
+    website: "https://bransonlimoservice.com/wine-and-shine-tour/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=140%20Sterling%20Way",
     imageUrl:
@@ -1729,7 +1729,7 @@ export const attractions: Attraction[] = [
       "America's romance with trains lives on during excursions on the Branson Scenic Railway. Join us aboard our collection of vintage passenger cars that travel through the foothills of the Ozark Mountains.",
     address: "206 East Main Street",
     phone: "(417) 334-6110",
-    website: "https://www.explorebranson.com/listing/branson-scenic-railway/5364/",
+    website: "https://bransontrain.com/tickets.cfm",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=206%20East%20Main%20Street",
     imageUrl:
@@ -1792,7 +1792,7 @@ export const attractions: Attraction[] = [
       "Branson's Promised Land Zoo offers a unique opportunity to get up-close-and-personal with animals from all over the world! Branson's largest attraction and #1 animal adventure offers a variety of experiences on 75-acres of natural Ozarks topography.",
     address: "2751 Shepherd of the Hills Expwy",
     phone: "(417) 337-9453",
-    website: "https://www.explorebranson.com/listing/bransons-promised-land-zoo/5178/",
+    website: "https://www.plzoo.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2751%20Shepherd%20of%20the%20Hills%20Expwy",
     imageUrl:
@@ -1864,7 +1864,7 @@ export const attractions: Attraction[] = [
       "Visit an incredible animal attraction like none you've ever experienced before. Kid and adults alike will enjoy all sorts of opportunities to interact with the animals, feed them, hold them, and learn about them.",
     address: "2020 W 76 Country Blvd",
     phone: "(417) 239-0854",
-    website: "https://www.explorebranson.com/listing/bransons-wild-world/5377/",
+    website: "https://www.bransonswildworld.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2020%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -1932,7 +1932,7 @@ export const attractions: Attraction[] = [
       "Come relax and play on the banks of the babbling brooks. The grounds have been landscaped to include waterfalls, fountains, and streams.",
     address: "2925 Shepherd Of The Hills Expressway",
     phone: "(417) 334-1262",
-    website: "https://www.explorebranson.com/listing/brookside-miniature-golf/5018/",
+    website: "https://brooksideminiaturegolf.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2925%20Shepherd%20Of%20The%20Hills%20Expressway",
     imageUrl:
@@ -2004,7 +2004,7 @@ export const attractions: Attraction[] = [
       "Bull Shoals Lake is part of a recreation and water sports paradise that features nearly 20 developed parks around its wooded borders. The area boasts pavilions, boat docks and a variety of campgrounds, which can accommodate everything from pop-up tents to luxury RVs.",
     address: "Northern Arkansas, Southern Missouri",
     phone: "(870) 425-2700",
-    website: "https://www.explorebranson.com/listing/bull-shoals-lake/5389/",
+    website: "https://www.swl.usace.army.mil/Missions/Recreation/Lakes/Bull-Shoals-Lake/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Northern%20Arkansas%2C%20Southern%20Missouri",
     imageUrl:
@@ -2072,7 +2072,7 @@ export const attractions: Attraction[] = [
       "Step back in time to have your portrait made in another era at Buster's Old Time Photos! Choose from themes such as Wild West, Victorian, and Southern Belle for a unique souvenir from Branson!",
     address: "3265 Falls Parkway Suite I",
     phone: "(417) 320-6226",
-    website: "https://www.explorebranson.com/listing/busters-old-time-photos-at-the-falls/5390/",
+    website: "https://www.bustersoldtimephotos.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3265%20Falls%20Parkway%20Suite%20I",
     imageUrl:
@@ -2136,7 +2136,7 @@ export const attractions: Attraction[] = [
       "Step back in time to have your portrait made in another era at Buster's Old Time Photos! Choose from themes such as Wild West, Victorian, and Southern Belle for a unique souvenir from Branson!",
     address: "1318 W 76 Country Blvd Suite C",
     phone: "(417) 336-0036",
-    website: "https://www.explorebranson.com/listing/busters-old-time-photos-at-westwood-center/5391/",
+    website: "https://www.bustersoldtimephotos.com/westwood-center-branson",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1318%20W%2076%20Country%20Blvd%20Suite%20C",
     imageUrl:
@@ -2203,7 +2203,7 @@ export const attractions: Attraction[] = [
       "Step back in time to have your portrait made in another era at Buster's Old Time Photos! Choose from themes such as Wild West, Victorian, and Southern Belle for a unique souvenir from Branson!",
     address: "211 Branson Landing Blvd.",
     phone: "(417) 334-5252",
-    website: "https://www.explorebranson.com/listing/busters-old-time-photos-on-the-landing/5392/",
+    website: "https://www.bustersoldtimephotos.com/landing",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=211%20Branson%20Landing%20Blvd.",
     imageUrl:
@@ -2267,7 +2267,7 @@ export const attractions: Attraction[] = [
       "Treat the entire family or that special someone to an array of natural adventures! Experience a 3D film on the life of a butterfly.",
     address: "4106 W. Hwy 76 Country Blvd.",
     phone: "(417) 332-2231",
-    website: "https://www.explorebranson.com/listing/butterfly-palace-%26-rainforest-adventure/5393/",
+    website: "https://thebutterflypalace.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4106%20W.%20Hwy%2076%20Country%20Blvd.",
     imageUrl:
@@ -2331,7 +2331,7 @@ export const attractions: Attraction[] = [
       "Buckle up and grab your 3D goggles for a non-stop, shoot-em-up ride that's fun for all ages. Castle of Chaos brings you into a wild, continuous 5D adventure where you're seated but feel like you're moving through a whole new reality.",
     address: "3030 W 76 Hwy",
     phone: "(417) 337-8700",
-    website: "https://www.explorebranson.com/listing/castle-of-chaos/5148/",
+    website: "https://www.hollywoodwaxentertainment.com/branson-mo-attractions/castle-of-chaos/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3030%20W%2076%20Hwy",
     imageUrl:
@@ -2403,7 +2403,7 @@ export const attractions: Attraction[] = [
       "Hollywood Meets Branson is an immersive collection of over 100 iconic movie and TV show vehicles. Featuring a large variety of instantly recognizable cars, there is sure to be something for everyone in the family.",
     address: "1600 W 76 Country Blvd",
     phone: "(417) 239-1644",
-    website: "https://www.explorebranson.com/listing/celebrity-car-museum-and-attraction/5403/",
+    website: "https://bransoncarmuseum.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1600%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -2467,7 +2467,7 @@ export const attractions: Attraction[] = [
       "Chopper Charter Branson offers Branson helicopter tours for any budget. We have a variety of flight packages and charter options available and can customize any flight to take you anywhere in Missouri, Arkansas and Beyond!",
     address: "2941 W 76 Country Blvd",
     phone: "(417) 332-1545",
-    website: "https://www.explorebranson.com/listing/chopper-charter-branson/5413/",
+    website: "https://www.choppercharter.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2941%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -2532,7 +2532,7 @@ export const attractions: Attraction[] = [
       "The Clydesdale Experience is happy to announce we are now offering trail rides through the Ozarks! Come trail ride on our big guys and experience the Ozarks like you never have before!",
     address: "595 howell drive",
     phone: "",
-    website: "https://www.explorebranson.com/listing/the-clydesdale-experience/5425/",
+    website: "https://theclydesdaleexperience.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=595%20howell%20drive",
     imageUrl:
@@ -2600,7 +2600,7 @@ export const attractions: Attraction[] = [
       "The Keeter Center is open for curbside pickup. Visit www.",
     address: "100 Opportunity Ave.",
     phone: "(417) 334-6411",
-    website: "https://www.explorebranson.com/listing/the-keeter-center/5031/",
+    website: "https://www.keetercenter.edu/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=100%20Opportunity%20Ave.",
     imageUrl:
@@ -2672,7 +2672,7 @@ export const attractions: Attraction[] = [
       "The newest, fastest, most scenic, and longest downhill family fun thrill ride! The Copperhead Mountain Coaster is located at Shepherd's Adventure Park.",
     address: "6021 W 76 Country Blvd",
     phone: "(417) 334-4191",
-    website: "https://www.explorebranson.com/listing/copperhead-mountain-coaster/5432/",
+    website: "https://theshepherdofthehills.com/coaster/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=6021%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -2740,7 +2740,7 @@ export const attractions: Attraction[] = [
       "Dive into the fun at Coral Reef Mini Golf! Head under the sea for a unique indoor mini golf experience, located right in the heart of Branson, Missouri.",
     address: "200 Wildwood Drive South",
     phone: "(417) 320-6214",
-    website: "https://www.explorebranson.com/listing/coral-reef-indoor-mini-golf/5433/",
+    website: "https://bransonminigolf.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=200%20Wildwood%20Drive%20South",
     imageUrl:
@@ -2808,7 +2808,7 @@ export const attractions: Attraction[] = [
       "The Creation Experience Museum offers free, interactive tours for the whole family! Designed to educate and inspire people with the authority and reliability of the Bible, we use science (God's amazing world) to show that, yes, you can trust the Bible!",
     address: "4180 US Hwy 65 N",
     phone: "(417) 561-0750",
-    website: "https://www.explorebranson.com/listing/creation-experience-museum/5195/",
+    website: "https://creationexperiencemuseum.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4180%20US%20Hwy%2065%20N",
     imageUrl:
@@ -2880,7 +2880,7 @@ export const attractions: Attraction[] = [
       "Welcome to Creation Station Design Studio! At Creation Station, we're more than just a cool t-shirt shop – we're a unique and vibrant creative hub where personalized artistry comes to life.",
     address: "1615 W 76 Country Blvd, Suite B",
     phone: "(417) 812-5122",
-    website: "https://www.explorebranson.com/listing/creation-station-design-station/5251/",
+    website: "https://creationstationds.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1615%20W%2076%20Country%20Blvd%2C%20Suite%20B",
     imageUrl:
@@ -2948,7 +2948,7 @@ export const attractions: Attraction[] = [
       "Our Rooms are created with a specific goal in mind - to help participants develop new skills and enhance \"outside of the box\" thinking. From the layout of the room to the clues and puzzles, everything is designed to push participants out of their comfort zones and encourage growth.",
     address: "1819 w Hwy 76, D",
     phone: "(417) 320-6263",
-    website: "https://www.explorebranson.com/listing/cryptex-escape-games/5311/",
+    website: "https://cryptexbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1819%20w%20Hwy%2076%2C%20D",
     imageUrl:
@@ -3015,7 +3015,7 @@ export const attractions: Attraction[] = [
       "FREE to visit. The new visitor center opened April 27, 2012 and has been called the \"crown jewel\" of Table Rock Lake.",
     address: "4500 State Hwy 165",
     phone: "(471) 213-4812",
-    website: "https://www.explorebranson.com/listing/dewey-short-visitor-center/5257/",
+    website: "https://www.swl.usace.army.mil/Missions/Recreation/Lakes/Table-Rock-Lake/Dewey-Short-Visitor-Center/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4500%20State%20Hwy%20165",
     imageUrl:
@@ -3083,7 +3083,7 @@ export const attractions: Attraction[] = [
       "In 1961, Dick and June Hartley founded Dick's 5 & 10, a 1,500 sq. ft.",
     address: "103 W. Main Street",
     phone: "(417) 334-2410",
-    website: "https://www.explorebranson.com/listing/dicks-5-%26-10/5038/",
+    website: "https://www.dicks5and10.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=103%20W.%20Main%20Street",
     imageUrl:
@@ -3155,7 +3155,7 @@ export const attractions: Attraction[] = [
       "Kids will love this awesome museum filled with their favorite dinosaurs! With over 40 life-sized dinosaurs on display, from the very smallest creature-a 1 ft.",
     address: "3619 W 76 Country Blvd",
     phone: "(417) 239-0733",
-    website: "https://www.explorebranson.com/listing/dinosaur-museum/5452/",
+    website: "https://bransondinosaurmuseum.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3619%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -3223,7 +3223,7 @@ export const attractions: Attraction[] = [
       "What better way to escape the stress of everyday life than by hitting the lakes? Head down to Hollister, Missouri, and get your hands on some incredible Table Rock Lake fish with Dodson Guide Service!",
     address: "Branson Lakes",
     phone: "(870) 688-4574",
-    website: "https://www.explorebranson.com/listing/dodson-guide-service-fishing-charter-for-table-rock-or-taneycomo/5455/",
+    website: "https://www.dodsonguideservice.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Branson%20Lakes",
     imageUrl:
@@ -3286,7 +3286,7 @@ export const attractions: Attraction[] = [
       "A 10,000-acre expanse of rugged unspoiled Ozarks landscape featuring trout fishing, walking and biking on the canyon floor. Tram tours and old west cattledrives meander through our hilltop prairies and may include chuckwagon meals.",
     address: "2038 W State Hwy 86",
     phone: "(800) 225-6343",
-    website: "https://www.explorebranson.com/listing/dogwood-canyon-nature-park/5039/",
+    website: "https://dogwoodcanyon.org/tickets/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2038%20W%20State%20Hwy%2086",
     imageUrl:
@@ -3354,7 +3354,7 @@ export const attractions: Attraction[] = [
       "Step aboard our comfortable, open air trams and explore the beauty of Dogwood Canyon on our two-hour Wildlife Tram Tour. You'll not only see our most popular sites and waterfalls, but you'll also cross the Arkansas border where your tram may mingle with herds of bison, elk, whitetail deer and Texas",
     address: "2038 W State Hwy 86",
     phone: "(800) 225-6343",
-    website: "https://www.explorebranson.com/listing/dogwood-canyon-tram-tours/5041/",
+    website: "https://dogwoodcanyon.org/tickets/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2038%20W%20State%20Hwy%2086",
     imageUrl:
@@ -3422,7 +3422,7 @@ export const attractions: Attraction[] = [
       "The Escape Branson® is a new, simple, and fun live escape game, designed for small groups of 2-6 people. You get 60 minutes to climb a mountain of puzzles and mysteries in a room.",
     address: "203 S Commercial St",
     phone: "(417) 334-6620",
-    website: "https://www.explorebranson.com/listing/the-escape-branson/5474/",
+    website: "https://theescapebranson.com",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=203%20S%20Commercial%20St",
     imageUrl:
@@ -3490,7 +3490,7 @@ export const attractions: Attraction[] = [
       "LET THE GAMES BEGIN After checking in and watching a short video that will prepare you for your experience, you enter your game room with your team. Once inside, the countdown begins!",
     address: "4560 Gretna Road",
     phone: "(417) 365-7999",
-    website: "https://www.explorebranson.com/listing/escape-code/5213/",
+    website: "https://www.escapecode.tv/home/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4560%20Gretna%20Road",
     imageUrl:
@@ -3557,7 +3557,7 @@ export const attractions: Attraction[] = [
       "Discover the timeless beauty of Fantastic Caverns. Experience the natural wonders of a world underfoot and out-of-sight close-up from the comfort of a Jeep-drawn tram.",
     address: "4872 N. Farm Road 125",
     phone: "(417) 833-2010",
-    website: "https://www.explorebranson.com/listing/fantastic-caverns/5049/",
+    website: "https://fantasticcaverns.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4872%20N.%20Farm%20Road%20125",
     imageUrl:
@@ -3625,7 +3625,7 @@ export const attractions: Attraction[] = [
       "Firehouse Bowfishing and Outdoors, LLC is a first responder owned and operated fishing guide service, operating year round. We put you on the fish while providing unbeatable customer service.",
     address: "Branson Area",
     phone: "(417) 929-1050",
-    website: "https://www.explorebranson.com/listing/firehouse-bowfishing-%26-outdoors-llc/5486/",
+    website: "https://firehousebowfishing.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Branson%20Area",
     imageUrl:
@@ -3693,7 +3693,7 @@ export const attractions: Attraction[] = [
       "Freedom Encounter is currently a theater, bookstore, and eating area. Future plans include an interactive museum and Colonial Village children's play area.",
     address: "3220 Falls Parkway",
     phone: "(573) 308-7592",
-    website: "https://www.explorebranson.com/listing/freedom-encounter/5249/",
+    website: "https://www.freedomencounter.com",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3220%20Falls%20Parkway",
     imageUrl:
@@ -3765,7 +3765,7 @@ export const attractions: Attraction[] = [
       "Fritz's Adventure offers fun-filled activities for every age so the entire family can enjoy an action-packed experience. Located at 1425 W.",
     address: "1425 W. 76 Country Blvd",
     phone: "(417) 320-6138",
-    website: "https://www.explorebranson.com/listing/fritzs-adventure/5502/",
+    website: "https://www.fritzsadventure.com/buy-tickets/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1425%20W.%2076%20Country%20Blvd",
     imageUrl:
@@ -3833,7 +3833,7 @@ export const attractions: Attraction[] = [
       "Welcome to Fun Mountain, where you'll find endless entertainment for the kid in all of us! With 50,000 square feet of action-packed activities, the whole family will never want to leave.",
     address: "612 Devil's Pool Rd.",
     phone: "(417) 339-5264",
-    website: "https://www.explorebranson.com/listing/fun-mountain-at-big-cedar-lodge/4996/",
+    website: "https://bigcedar.com/fun-mountain/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=612%20Devil's%20Pool%20Rd.",
     imageUrl:
@@ -3900,7 +3900,7 @@ export const attractions: Attraction[] = [
       "Daily hours of operation are changing weekly so please call before visiting. Farm Mini-Golf is Branson's newest themed mini-golf course located at Grand Country Resort.",
     address: "1945 W 76 Country Blvd",
     phone: "(417) 334-3919",
-    website: "https://www.explorebranson.com/listing/farm-mini-golf-at-grand-country/5522/",
+    website: "https://www.grandcountry.com/attractions",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1945%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -3967,7 +3967,7 @@ export const attractions: Attraction[] = [
       "Fun Spot is Branson's one-stop for family entertainment, located at Grand Country Resort. A two story arcade featuring a laser tag arena, indoor black light mini-golf, outdoor Farm Mini-Golf, bumper cars, a play area, and an assortment of fun-filled games and prizes.",
     address: "1945 W 76 Country Blvd",
     phone: "(417) 334-3919",
-    website: "https://www.explorebranson.com/listing/fun-spot-at-grand-country/5524/",
+    website: "https://www.grandcountry.com/attractions",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1945%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -4034,7 +4034,7 @@ export const attractions: Attraction[] = [
       "From little children to grandparents, this 36-hole indoor mini-golf course provides fun and enjoyment for every member of the family. The obstacles are fun and challenging in a climate controlled course surrounded by rivers and waterfalls set in a cool night setting.",
     address: "1945 W 76 Country Blvd",
     phone: "(417) 334-3919",
-    website: "https://www.explorebranson.com/listing/grand-country-indoor-mini-golf/5519/",
+    website: "https://www.grandcountry.com/attractions",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1945%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -4098,7 +4098,7 @@ export const attractions: Attraction[] = [
       "Greatest Adventures Mini-Golf is a 36 hole outdoor mini-golf in the heart of Branson, MO. With two separate themed mini-golf courses, you'll get to see the \"Smokin Dragon,\" a Medieval castle, knights, a waterfall cave, a gorilla, the sphinx, and Egyptian Artifacts.",
     address: "4800 N. Gretna Rd.",
     phone: "(417) 332-0888",
-    website: "https://www.explorebranson.com/listing/greatest-adventures-mini-golf/5188/",
+    website: "https://www.greatestadventuresminigolf.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4800%20N.%20Gretna%20Rd.",
     imageUrl:
@@ -4166,7 +4166,7 @@ export const attractions: Attraction[] = [
       "Are you The Chosen One? Find out inside this modern-day fairy-tale where you'll have the chance to rescue Princess Hannah of Savannah from her fateful maze of mirrors.",
     address: "3030 W 76 Hwy",
     phone: "(417) 337-8700",
-    website: "https://www.explorebranson.com/listing/hannahs-maze-of-mirrors/5147/",
+    website: "https://www.hannahsmazeofmirrors.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3030%20W%2076%20Hwy",
     imageUrl:
@@ -4238,7 +4238,7 @@ export const attractions: Attraction[] = [
       "The History of Fishing Museum in the largest collection of antique fishing lures, rods, reels, boats and motors entirely collected by one man and his wife. Karl and Beverly White have collected more than 40,000 pieces for the museum and valued at nearly $5 million.",
     address: "225 N Wildwood Dr",
     phone: "(417) 239-3474",
-    website: "https://www.explorebranson.com/listing/history-of-fishing-museum/5551/",
+    website: "https://www.facebook.com/HistoryOfFishing/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=225%20N%20Wildwood%20Dr",
     imageUrl:
@@ -4306,7 +4306,7 @@ export const attractions: Attraction[] = [
       "Hog Wild Adventures offers a one of a kind Ozarks Off-Road Adventure Tour. Our rides are 1.",
     address: "14552 Old Springfield Rd",
     phone: "(417) 986-6418",
-    website: "https://www.explorebranson.com/listing/hog-wild-adventures-llc/5312/",
+    website: "https://hogwildbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=14552%20Old%20Springfield%20Rd",
     imageUrl:
@@ -4378,7 +4378,7 @@ export const attractions: Attraction[] = [
       "Howler is Missouri's premier mountain bike park located just outside Branson, Missouri in the Ozark mountains. We're a gravity-focused bike park built by riders to share the stoke of mountain biking.",
     address: "3410 US-65",
     phone: "(417) 834-6050",
-    website: "https://www.explorebranson.com/listing/howler-bike-park/5292/",
+    website: "https://www.howlerbikepark.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3410%20US-65",
     imageUrl:
@@ -4447,7 +4447,7 @@ export const attractions: Attraction[] = [
       "Whether it's the latest Hollywood blockbuster films, stunning IMAX adventure films, delicious Ozarks cuisine, talented live entertainers or 17 different specialty shops, the Branson IMAX has something for everyone and every part of your stay in Branson. Our IMAX with Laser is one of just 13 theater",
     address: "3562 Shepherd of the Hills Expressway",
     phone: "(417) 335-4832",
-    website: "https://www.explorebranson.com/listing/imax-entertainment-complex/5572/",
+    website: "https://bransonimax.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3562%20Shepherd%20of%20the%20Hills%20Expressway",
     imageUrl:
@@ -4513,7 +4513,7 @@ export const attractions: Attraction[] = [
       "Surround Yourself in the Worlds, Music & Stories of Disney Animation! Immersive Disney Animation is an innovative celebration that takes you inside the greatest films of Walt Disney Animation Studios, from their very earliest, groundbreaking features to the beloved hit movies of today.",
     address: "3300 Gretna Road",
     phone: "(417) 544-9980",
-    website: "https://www.explorebranson.com/listing/immersive-disney-animation/5573/",
+    website: "https://disneyimmersive.com/branson/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3300%20Gretna%20Road",
     imageUrl:
@@ -4576,7 +4576,7 @@ export const attractions: Attraction[] = [
       "Come see us to dive and explore the underwater world of Branson, MO, on beautiful Table Rock Lake! Located inside Indian Point Marina, we love serving our customers.",
     address: "3443 Indian Point Road",
     phone: "(417) 338-6900",
-    website: "https://www.explorebranson.com/listing/indian-point-dive-center/5576/",
+    website: "https://akascubadiving.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3443%20Indian%20Point%20Road",
     imageUrl:
@@ -4644,7 +4644,7 @@ export const attractions: Attraction[] = [
       "How about a little ADVENTURE today? Imagine gliding over the sparkling waters of Table Rock Lake or Lake Taneycomo and you're in control!",
     address: "5439 State Highway 165",
     phone: "(417) 336-2811",
-    website: "https://www.explorebranson.com/listing/kayak-branson/5590/",
+    website: "https://kayakbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=5439%20State%20Highway%20165",
     imageUrl:
@@ -4709,7 +4709,7 @@ export const attractions: Attraction[] = [
       "Lake Taneycomo is one of the great trout fishing destinations in the country. The lake originally was a section of the White River; since the completion of the Table Rock Lake Dam, Taneycomo has been fed by the bottom waters of Table Rock Lake.",
     address: "Taney County",
     phone: "(417) 895-6880",
-    website: "https://www.explorebranson.com/listing/lake-taneycomo/5603/",
+    website: "https://mdc.mo.gov/fishing/fishing-prospects/areas/lake-taneycomo",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Taney%20County",
     imageUrl:
@@ -4777,7 +4777,7 @@ export const attractions: Attraction[] = [
       "It's beginning to look a lot like Christmas at Top of the Rock Ozark's Heritage Preserve! We are happy to announce the opening of Lost Canyon Christmas – our first-ever light tour at Lost Canyon Cave and Nature Trail.",
     address: "150 Top of the Rock Road",
     phone: "(417) 339-5306",
-    website: "https://www.explorebranson.com/listing/lost-canyon-nature-at-night-christmas-at-top-of-the-rock/5625/",
+    website: "https://bigcedar.com/activity/nature-at-night-on-the-lost-canyon-cave-nature-trail/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=150%20Top%20of%20the%20Rock%20Road",
     imageUrl:
@@ -4844,7 +4844,7 @@ export const attractions: Attraction[] = [
       "Your journey to Top of the Rock begins with an unforgettable two-and-a-half mile ride in an electric cart through Lost Canyon Nature Trail that leads you to the awe-inspiring Lost Canyon Cave. The centerpiece of this four-story cave is a cascading waterfall complemented by viewing balconies on all",
     address: "150 Top of Rock Road",
     phone: "(417) 231-7553",
-    website: "https://www.explorebranson.com/listing/lost-canyon-cave-and-nature-trail/5861/",
+    website: "https://bigcedar.com/activity/lost-canyon-cave-nature-trail/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=150%20Top%20of%20Rock%20Road",
     imageUrl:
@@ -4912,7 +4912,7 @@ export const attractions: Attraction[] = [
       "The Masters of Escape & Mirage Virtual Reality is now open as of August 2024! Not only does this attraction redesign the concept of escape rooms through amazing special effects and incredibly interactive room designs, but it also houses a 1800+ square foot virtual reality arena, the first of its ki",
     address: "120 Rojana Wy",
     phone: "(417) 527-3434",
-    website: "https://www.explorebranson.com/listing/the-masters-of-escape-%26-mirage-virtual-reality/5636/",
+    website: "https://www.themastersofescape.com",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=120%20Rojana%20Wy",
     imageUrl:
@@ -4980,7 +4980,7 @@ export const attractions: Attraction[] = [
       "Challenge your sense of direction in the world's first indoor corn \"maize! \" According to legend, some maze goers never return.",
     address: "713 Branson Landing Blvd.",
     phone: "(417) 203-4158",
-    website: "https://www.explorebranson.com/listing/the-mirror-maize/5650/",
+    website: "https://bransonlanding.com/stores/the-mirror-maize",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=713%20Branson%20Landing%20Blvd.",
     imageUrl:
@@ -5044,7 +5044,7 @@ export const attractions: Attraction[] = [
       "Step back in time to have your portrait made in another era at Outlaw Old Time Photos! Choose from themes such as Wild West and Southern Belle for a unique souvenir from Branson!",
     address: "3010 W 76 Country Blvd",
     phone: "(417) 320-6403",
-    website: "https://www.explorebranson.com/listing/outlaw-old-time-photos/5678/",
+    website: "https://www.facebook.com/outlawoldtimephotos/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3010%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -5108,7 +5108,7 @@ export const attractions: Attraction[] = [
       "Ozark Hills Winery is taking wine back to its roots! Join us for a wine tasting experience led by our friendly wine tenders, or a curated whiskey tasting from local distillers, and you'll fall in love with our exclusive collection of signature sips.",
     address: "601 State Hwy 165",
     phone: "(417) 334-1897",
-    website: "https://www.explorebranson.com/listing/ozark-hills-winery/5302/",
+    website: "https://ozarkhillswinery.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=601%20State%20Hwy%20165",
     imageUrl:
@@ -5180,7 +5180,7 @@ export const attractions: Attraction[] = [
       "Opening in Spring of 2024, Ozark Nights is prepared to take you on a nighttime journey where \"the forest glows and the folktales grow. \" Shrouded in mystery, even Branson locals were kept in the dark about what this new attraction truly was...",
     address: "1001 West End Parkway",
     phone: "(417) 337-4809",
-    website: "https://www.explorebranson.com/listing/ozark-nights/5310/",
+    website: "https://www.ozarknights.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1001%20West%20End%20Parkway",
     imageUrl:
@@ -5247,7 +5247,7 @@ export const attractions: Attraction[] = [
       "Parakeet Pete's Waterfront Zipline at Branson Landing is a World-Class Urban Adventure. Zip across Lake Taneycomo to Mount Branson!",
     address: "1113 Branson Landing Blvd",
     phone: "(417) 559-1405",
-    website: "https://www.explorebranson.com/listing/parakeet-petes-waterfront-zipline/5920/",
+    website: "https://www.bransonlandingattractions.com/waterfront-zipline",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1113%20Branson%20Landing%20Blvd",
     imageUrl:
@@ -5314,7 +5314,7 @@ export const attractions: Attraction[] = [
       "Located next to the entrance of campus, Patriots Park is a place of respect, reflection, and remembrance. It encompasses Veterans Grove, The Global War on Terrorism Memorial, The Korean War Memorial, The Missouri Vietnam Veterans Memorial, The Missouri Gold Star Families Memorial, and the World War",
     address: "100 Opportunity Ave.",
     phone: "",
-    website: "https://www.explorebranson.com/listing/patriots-park-at-college-of-the-ozarks/5029/",
+    website: "https://www.cofo.edu/Visit/Patriots-Park",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=100%20Opportunity%20Ave.",
     imageUrl:
@@ -5377,7 +5377,7 @@ export const attractions: Attraction[] = [
       "Plunge into the legendary world of 18th century buccaneers! With twenty five family-friendly courses across the U.",
     address: "2901 Green Mountain Drive",
     phone: "(417) 336-6606",
-    website: "https://www.explorebranson.com/listing/pirates-cove-adventure-golf/5100/",
+    website: "https://www.piratescove.net/locations/missouri/branson/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2901%20Green%20Mountain%20Drive",
     imageUrl:
@@ -5445,7 +5445,7 @@ export const attractions: Attraction[] = [
       "Prehistoric Fossils is a Natural History Gallery that offers Genuine Fossils, Gems, Minerals & Educational items for kids as well as advanced collectors. There are no results that match your filter.",
     address: "101 Veterans Blvd.",
     phone: "(417) 320-6124",
-    website: "https://www.explorebranson.com/listing/prehistoric-fossils/5223/",
+    website: "https://prehistoricfossils.com/branson-store-information/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=101%20Veterans%20Blvd.",
     imageUrl:
@@ -5515,7 +5515,7 @@ export const attractions: Attraction[] = [
       "Home to hundreds of rare and endangered animals from around the world, Promised Land Zoo is the kind of place where you can get up close and personal to so many of these dwindling species! Every admission includes the Drive Thru park, Parakeet Paradise, Bottle Feeding Babies (@ 10, 2 & 6) and the P",
     address: "2751 Shepherd of the Hills Expwy",
     phone: "(417) 271-3324",
-    website: "https://www.explorebranson.com/listing/promised-land-zoo%3a-eagle-rock/5179/",
+    website: "https://www.plzoo.com/eureka-springs-safari-park/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2751%20Shepherd%20of%20the%20Hills%20Expwy",
     imageUrl:
@@ -5578,7 +5578,7 @@ export const attractions: Attraction[] = [
       "The Ralph Foster Museum is dedicated to the history of the Ozarks region. The museum houses thousands of objects representing archaeology, history, firearms, and antiques.",
     address: "100 Opportunity Ave.",
     phone: "(417) 690-3407",
-    website: "https://www.explorebranson.com/listing/the-ralph-foster-museum-at-college-of-the-ozarks/5032/",
+    website: "https://www.rfostermuseum.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=100%20Opportunity%20Ave.",
     imageUrl:
@@ -5641,7 +5641,7 @@ export const attractions: Attraction[] = [
       "Welcome to the Heart Of The Ozarks! This rowdy ride hosted by our award-winning comedians is sure to keep ya smilin' all the way home!",
     address: "Meeting point: Scooter's Sports Grill, 2805 Green Mountain Dr",
     phone: "(615) 316-0014",
-    website: "https://www.explorebranson.com/listing/redneck-comedy-bus-tour/5734/",
+    website: "https://theredneckbus.com/branson-redneck-tour/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Meeting%20point%3A%20Scooter's%20Sports%20Grill%2C%202805%20Green%20Mountain%20Dr",
     imageUrl:
@@ -5709,7 +5709,7 @@ export const attractions: Attraction[] = [
       "Step back into the 80s! Take selfies with the movie stars in our 80s museum, golf our putt putt course with your favorite rockers, scream your way through our haunted house, get your game on old school style in our FREE PLAY 80s arcade, attempt an escape game, enjoy a great meal, check out our all",
     address: "3307 State Hwy 76",
     phone: "(417) 544-0143",
-    website: "https://www.explorebranson.com/listing/retromania/5303/",
+    website: "https://www.retromania.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3307%20State%20Hwy%2076",
     imageUrl:
@@ -5781,7 +5781,7 @@ export const attractions: Attraction[] = [
       "The only place in Branson where you'll find shrunken heads, a 22 ft. tall car parts robot, an authentic vampire killing kit, one-of-a-kind artwork, tons of hands-on interactives, and a wicked spinning vortex tunnel!",
     address: "3326 W 76 Country Blvd",
     phone: "(417) 337-5300",
-    website: "https://www.explorebranson.com/listing/ripleys-believe-it-or-not!/5741/",
+    website: "https://www.ripleys.com/attractions/ripleys-believe-it-or-not-branson",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3326%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -5849,7 +5849,7 @@ export const attractions: Attraction[] = [
       "Visit Ripley's Super Fun Zone with your family, friends, or foes and challenge them to a game of skill, sport, and ultimate fun! Experience Ripley's laser tag arena and master the 12,000-square-foot interactive outdoor maze!",
     address: "2320 W 76 Country Blvd.",
     phone: "(417) 266-7699",
-    website: "https://www.explorebranson.com/listing/ripleys-super-fun-zone/5742/",
+    website: "https://www.ripleys.com/attractions/ripleys-super-fun-park-branson",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2320%20W%2076%20Country%20Blvd.",
     imageUrl:
@@ -5917,7 +5917,7 @@ export const attractions: Attraction[] = [
       "Welcome to the family entertainment park and farm centered around the legendary Outdoor Drama and historic farm of the namesake novel, \"The Shepherd of the Hills. \" Treat your family to a vast array of options at Shepherd of the Hills including the Adventure Park, Shepherd's Christmas, Outdoor Drama",
     address: "5586 W. Hwy 76 Country Blvd",
     phone: "(417) 334-4191",
-    website: "https://www.explorebranson.com/listing/shepherd-of-the-hills/5773/",
+    website: "https://theshepherdofthehills.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=5586%20W.%20Hwy%2076%20Country%20Blvd",
     imageUrl:
@@ -5985,7 +5985,7 @@ export const attractions: Attraction[] = [
       "Voted #1 Aerial Adventure Park in America by USA Today! The Ozark mountains lend the perfect backdrop for a day full of adventure and family fun.",
     address: "5586 W. Hwy 76 Country Blvd",
     phone: "(417) 334-4191",
-    website: "https://www.explorebranson.com/listing/shepherd-of-the-hills-adventure-park/5771/",
+    website: "https://theshepherdofthehills.com/adventure-park/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=5586%20W.%20Hwy%2076%20Country%20Blvd",
     imageUrl:
@@ -6053,7 +6053,7 @@ export const attractions: Attraction[] = [
       "Voted #1 Aerial Adventure Park in America the past 2 years - USA TODAY Enjoy the beauty of the Ozark terrain as you soar from tree to tree on the all-new Zipline Canopy Tour. Guests will experience breathtaking views and thrills as they zip their way across the horizon from unique tree-suspended pl",
     address: "5586 W. Hwy 76 Country Blvd",
     phone: "(417) 334-4191",
-    website: "https://www.explorebranson.com/listing/shepherd-of-the-hills-zipline-canopy-tours/5772/",
+    website: "https://theshepherdofthehills.com/zipline/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=5586%20W.%20Hwy%2076%20Country%20Blvd",
     imageUrl:
@@ -6121,7 +6121,7 @@ export const attractions: Attraction[] = [
       "What makes the Vigilante Extreme ZipRider different from every other zipline? Launch from 140 ft.",
     address: "5586 W. Hwy 76 Country Blvd",
     phone: "(417) 334-4191",
-    website: "https://www.explorebranson.com/listing/vigilante-extreme-ziprider-at-shepherd-of-the-hills/5774/",
+    website: "https://theshepherdofthehills.com/ziprider/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=5586%20W.%20Hwy%2076%20Country%20Blvd",
     imageUrl:
@@ -6189,7 +6189,7 @@ export const attractions: Attraction[] = [
       "The Historic Shepherd of the Hills Outdoor Drama is the action-packed live reenactment of the famous historical novel by Christian minister, Harold Bell Wright. Published in 1907, this beautiful story tells of life in the rugged Ozark Mountains of Missouri in the late 1800's.",
     address: "5586 W. Hwy 76 Country Blvd",
     phone: "",
-    website: "https://www.explorebranson.com/listing/shepherd-of-the-hills-outdoor-drama/5766/",
+    website: "https://theshepherdofthehills.com/drama/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=5586%20W.%20Hwy%2076%20Country%20Blvd",
     imageUrl:
@@ -6253,7 +6253,7 @@ export const attractions: Attraction[] = [
       "The all-new Wild West Murder Mystery Show at The Shepherd of the Hills Outdoor Theater in Branson, MO! The wild west is coming to the Shepherd of the Hills, and there's a mystery to be solved too!",
     address: "5586 W. Hwy 76 Country Blvd",
     phone: "",
-    website: "https://www.explorebranson.com/listing/shepherds-wild-west-murder-mystery/5776/",
+    website: "https://theshepherdofthehills.com/wild-west-showdown/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=5586%20W.%20Hwy%2076%20Country%20Blvd",
     imageUrl:
@@ -6317,7 +6317,7 @@ export const attractions: Attraction[] = [
       "Shires for Hire is a full service horse-drawn adventure company. Shires for Hire specializes in making memories!",
     address: "2567 W State Highway CC",
     phone: "(417) 848-4648",
-    website: "https://www.explorebranson.com/listing/shires-for-hire-carriage-rides/5778/",
+    website: "https://www.shiresforhire.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2567%20W%20State%20Highway%20CC",
     imageUrl:
@@ -6385,7 +6385,7 @@ export const attractions: Attraction[] = [
       "Experience the landmarks of Hollywood as you take the 18 steps to becoming a star. From Being Discovered to earning a star on Hollywood Boulevard, your wisecracking agent, Marty McBooster, guides your journey with hilarious words of advice at each hole.",
     address: "3110 W. Hwy. 76",
     phone: "(417) 337-8700",
-    website: "https://www.explorebranson.com/listing/shoot-for-the-stars-mini-golf/5158/",
+    website: "https://www.shootforthestarsminigolf.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3110%20W.%20Hwy.%2076",
     imageUrl:
@@ -6454,7 +6454,7 @@ export const attractions: Attraction[] = [
       "Are you ready to create memories worth repeating? Silver Dollar City is an internationally award-winning 1880s theme park nestled in the Ozark Mountains near Branson, MO.",
     address: "399 Silver Dollar City Parkway",
     phone: "(417) 336-7100",
-    website: "https://www.explorebranson.com/listing/silver-dollar-city/5112/",
+    website: "https://www.silverdollarcity.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=399%20Silver%20Dollar%20City%20Parkway",
     imageUrl:
@@ -6528,7 +6528,7 @@ export const attractions: Attraction[] = [
       "The Silver Dollar City's Showboat, America's Most Entertaining Lake Adventure, presents an exciting musical variety show this season plus specialty cruises. All cruises offer a unique experience aboard the 700-passenger paddle-wheeler as it cruises Table Rock Lake.",
     address: "4800 State Hwy 165",
     phone: "(417) 336-7171",
-    website: "https://www.explorebranson.com/listing/silver-dollar-citys-showboat/5113/",
+    website: "https://www.silverdollarcity.com/showboat-branson/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4800%20State%20Hwy%20165",
     imageUrl:
@@ -6598,7 +6598,7 @@ export const attractions: Attraction[] = [
       "Providing a fun, family environment for the youth of southwest Missouri since 1976. Roller skating burns 600 calories an hour!",
     address: "1715 State Hwy 76",
     phone: "(417) 334-1630",
-    website: "https://www.explorebranson.com/listing/skateworld/5785/",
+    website: "https://bransonskateworld.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1715%20State%20Hwy%2076",
     imageUrl:
@@ -6662,7 +6662,7 @@ export const attractions: Attraction[] = [
       "Sparky is the free, year-round Downtown Branson trolley. Visitors and convention attendees can hop on and hop off at any of the 12 convenient stops and travel easily throughout downtown, including Main Street, Branson Landing and the Branson Convention Center.",
     address: "102 W Main St",
     phone: "(417) 334-1548",
-    website: "https://www.explorebranson.com/listing/sparky-the-free-downtown-branson-trolley/5794/",
+    website: "https://www.ridesparky.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=102%20W%20Main%20St",
     imageUrl:
@@ -6727,7 +6727,7 @@ export const attractions: Attraction[] = [
       "Branson's best indoor water park, located at Grand Country Resort. Enjoy a 3 story treehouse complete with water slides, a 1,000 gallon tipping bucket, toddler pool, lazy river, basket ball pool, hot tubs as well as a season outdoor park!",
     address: "1945 W 76 Country Blvd",
     phone: "",
-    website: "https://www.explorebranson.com/listing/splash-country-indoor-waterpark-at-grand-country/5521/",
+    website: "https://www.grandcountry.com/waterpark",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1945%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -6792,7 +6792,7 @@ export const attractions: Attraction[] = [
       "An honest passion for authentic connections and meaningful moments lies at the heart of Sycamore Creek. Beautiful gathering spaces for private events, warm hospitality in our unique farm-stay lodging, and wholesome community activities on 272 acres of captivating natural beauty in the Ozark Mountai",
     address: "2657 Sunset Inn Road",
     phone: "(417) 221-6097",
-    website: "https://www.explorebranson.com/listing/sycamore-creek-ranch/5829/",
+    website: "https://www.sycamorecreekfamilyranch.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2657%20Sunset%20Inn%20Road",
     imageUrl:
@@ -6860,7 +6860,7 @@ export const attractions: Attraction[] = [
       "According to Travellersworldwide. com's 14 Best Lakes in the U.",
     address: "Branson Lakes Area",
     phone: "(800) 595-0393",
-    website: "https://www.explorebranson.com/listing/table-rock-lake/5831/",
+    website: "https://mostateparks.com/park/table-rock-state-park",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Branson%20Lakes%20Area",
     imageUrl:
@@ -6928,7 +6928,7 @@ export const attractions: Attraction[] = [
       "Less than half an hour away from Branson, this family entertainment center offers bowling, an on-site restaurant, a party room, and a lower-level lounge with games like ping pong, cornhole, darts, air hockey, pool, and several arcade games. Join them on Friday nights for \"cosmic bowling\" or catch y",
     address: "19711 State Hwy",
     phone: "(417) 272-0028",
-    website: "https://www.explorebranson.com/listing/table-rock-lanes/5832/",
+    website: "https://tablerocklanes.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=19711%20State%20Hwy",
     imageUrl:
@@ -6994,7 +6994,7 @@ export const attractions: Attraction[] = [
       "Talking Rocks Cavern offers guided, walking cave tours in a vertical cave featuring world class living crystal cave formations. View them from concrete pathways.",
     address: "423 Fairy Cave Lane",
     phone: "(417) 272-3366",
-    website: "https://www.explorebranson.com/listing/talking-rocks-cavern/5126/",
+    website: "https://talkingrockscavern.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=423%20Fairy%20Cave%20Lane",
     imageUrl:
@@ -7066,7 +7066,7 @@ export const attractions: Attraction[] = [
       "Located in the heart of Downtown Branson, the Historic Owen Theatre is the official home of the Branson Regional Arts Council and is Branson's only entertainment venue presenting amateur and professional level Broadway musicals and plays year-round. The Historic Owen Theater was built in 1936 by fa",
     address: "205 S Commercial Street",
     phone: "",
-    website: "https://www.explorebranson.com/listing/the-historic-owen-theatre/5550/",
+    website: "https://bransonarts.org/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=205%20S%20Commercial%20Street",
     imageUrl:
@@ -7129,7 +7129,7 @@ export const attractions: Attraction[] = [
       "You've heard the saying \"birds of a feather flock together? \" Yeah, we really don't know what that means either.",
     address: "1250 Branson Hills Parkway",
     phone: "(417) 208-2500",
-    website: "https://www.explorebranson.com/listing/the-social-birdy/5789/",
+    website: "https://www.thesocialbirdy.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1250%20Branson%20Hills%20Parkway",
     imageUrl:
@@ -7197,7 +7197,7 @@ export const attractions: Attraction[] = [
       "Located at Track 3 of The Track's three locations, Skyscraper's base tower stands 80 feet tall. Two vertical windmill-like propeller arms, which extend 170 feet at their maximum height and spin up to 60 miles per hour during the ride, produce a G-force effect for its riders.",
     address: "3345 W 76 Country Blvd",
     phone: "(417) 334-1612",
-    website: "https://www.explorebranson.com/listing/the-skyscraper/5867/",
+    website: "https://www.bransontracks.com/rides/skyscraper",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3345%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -7260,7 +7260,7 @@ export const attractions: Attraction[] = [
       "Electrify is a nightly light show displayed on the Branson Ferris Wheel, choreographed to music that can be heard through speakers at Track 4. If you are near the ferris wheel, you can also tune into 90.",
     address: "3345 W 76 Country Blvd",
     phone: "(417) 334-1612",
-    website: "https://www.explorebranson.com/listing/electrify-a-music-and-light-spectacular/5865/",
+    website: "https://www.bransontracks.com/ferris-wheel",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3345%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -7323,7 +7323,7 @@ export const attractions: Attraction[] = [
       "See https://bransontracks. com/operating-schedule/ for updated schedule The Track Family Fun Parks is celebrating An unforgettable 43 years!!",
     address: "4 Locations In Branson, Mo",
     phone: "(417) 334-1612",
-    website: "https://www.explorebranson.com/listing/the-track-family-fun-parks/5868/",
+    website: "https://bransontracks.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4%20Locations%20In%20Branson%2C%20Mo",
     imageUrl:
@@ -7386,7 +7386,7 @@ export const attractions: Attraction[] = [
       "Formerly known as the Navy Pier Ferris Wheel, the Branson Ferris Wheel has now made its home in Branson, Missouri. Located in the heart of Branson's Entertainment District at Track 4, the Branson skyline has now welcomed a new addition.",
     address: "3345 W 76 Country Blvd",
     phone: "(417) 334-1612",
-    website: "https://www.explorebranson.com/listing/branson-ferris-wheel/5866/",
+    website: "https://www.bransontracks.com/ferris-wheel",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3345%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -7449,7 +7449,7 @@ export const attractions: Attraction[] = [
       "Located adjacent to Big Cedar Lodge, Top of the Rock offers a world-class golf experience designed by golf legends Jack Nicklaus, Arnold Palmer, and Tom Watson. Top of the Rock Restaurant and Arnie's Barn Restaurant find their home here along with a walk through wine cellar and cave bar.",
     address: "150 Top of Rock Road",
     phone: "(417) 335-2777",
-    website: "https://www.explorebranson.com/listing/top-of-the-rock-ozarks-heritage-preserve/5856/",
+    website: "https://bigcedar.com/top-of-the-rock/tickets/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=150%20Top%20of%20Rock%20Road",
     imageUrl:
@@ -7517,7 +7517,7 @@ export const attractions: Attraction[] = [
       "Explore the beauty of Branson, Missouri and the surrounding area in a fun and eco-friendly way. ?",
     address: "1615 W 76 Country Blvd Suite G",
     phone: "(417) 231-4078",
-    website: "https://www.explorebranson.com/listing/totally-rad-e-bikes/5862/",
+    website: "https://www.totallyradebikes.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1615%20W%2076%20Country%20Blvd%20Suite%20G",
     imageUrl:
@@ -7584,7 +7584,7 @@ export const attractions: Attraction[] = [
       "New in 2025! Family-friendly, fun things to do in Branson just took a giant step into the future with a thrilling 5D VR time-travel journey.",
     address: "1 Andy Williams Blvd.",
     phone: "(417) 334-4500",
-    website: "https://www.explorebranson.com/listing/truth-traveler-attraction/5329/",
+    website: "https://truthtraveler.com/branson",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1%20Andy%20Williams%20Blvd.",
     imageUrl:
@@ -7656,7 +7656,7 @@ export const attractions: Attraction[] = [
       "Welcome to the Veterans Memorial GardenWe are dedicated to honoring and preserving the legacy of those who have served in the armed forces. Our mission is to provide a serene and reflective space (less of a hiking trail, more of a short walking path) where veterans, their families, and the communit",
     address: "1107 W Main St",
     phone: "(417) 294-5092",
-    website: "https://www.explorebranson.com/listing/veterans-memorial-garden/5886/",
+    website: "https://www.veteransmemorialgarden.org/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1107%20W%20Main%20St",
     imageUrl:
@@ -7724,7 +7724,7 @@ export const attractions: Attraction[] = [
       "Over 2,000 exhibits progressing through the wars of the 20th Century. A full-size P-51 Mustang fighter outside the museum soars above the life-sized 50-man statue known as \"Storming the Beach\", along with a real Huey from the Vietnam area.",
     address: "1250 W 76 Country Blvd",
     phone: "(417) 336-2300",
-    website: "https://www.explorebranson.com/listing/veterans-memorial-museum-branson/5887/",
+    website: "https://veteransmemorialbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=1250%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -7792,7 +7792,7 @@ export const attractions: Attraction[] = [
       "Discover Branson History with our experienced and entertaining local guide. You'll see the sights, hear the history, and laugh at funny stories, as you roll around Branson like one of our luxury vehicles.",
     address: "4220 Gretna Rd",
     phone: "(479) 244-5116",
-    website: "https://www.explorebranson.com/listing/discover-branson-tour/5891/",
+    website: "https://viptoursofbranson.com/discover-branson-tour",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4220%20Gretna%20Rd",
     imageUrl:
@@ -7861,7 +7861,7 @@ export const attractions: Attraction[] = [
       "You will sample the tastes of the Ozarks with one of our experienced local guides as they take you on a tasty tour of Branson's finest wineries and distilleries, including a delicious 3 course dinner at one of the area's top eateries. You will roll like VIPs in one of our luxury vehicles, sampling",
     address: "4220 Gretna Rd",
     phone: "(479) 244-5116",
-    website: "https://www.explorebranson.com/listing/vip-wine-shine-%26-dine-tour/5893/",
+    website: "https://viptoursofbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4220%20Gretna%20Rd",
     imageUrl:
@@ -7930,7 +7930,7 @@ export const attractions: Attraction[] = [
       "Seeing Branson has never been more fun! Our guides are well-versed in the rich history of the area to provide you with the most informative and fun city tour experiences possible.",
     address: "4220 Gretna Rd",
     phone: "(417) 337-4129",
-    website: "https://www.explorebranson.com/listing/vip-tours-of-branson/5892/",
+    website: "https://viptoursofbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=4220%20Gretna%20Rd",
     imageUrl:
@@ -7998,7 +7998,7 @@ export const attractions: Attraction[] = [
       "You've just found the most popular Scuba Diving and Water Sports activities center in Branson! At WHITE RIVER ADVENTURES and DIVE COMPANY, we offer KAYAKING, STAND UP PADDLE BOARDS, LILY PADS, TUBES, BIKE RENTALS and RV sites.",
     address: "5325 State Hwy 165",
     phone: "(417) 334-9073",
-    website: "https://www.explorebranson.com/listing/white-river-adventure-%26-dive-company/5905/",
+    website: "https://www.whiteriverdivecompany.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=5325%20State%20Hwy%20165",
     imageUrl:
@@ -8061,7 +8061,7 @@ export const attractions: Attraction[] = [
       "Silver Dollar City's White Water is over 2 million gallons of fun! The whole family will enjoy the park's 13 acres of rides and slides, from riveting to relaxing.",
     address: "3505 W 76 Hwy",
     phone: "(800) 831-4386",
-    website: "https://www.explorebranson.com/listing/white-water/5144/",
+    website: "https://www.silverdollarcity.com/white-water/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3505%20W%2076%20Hwy",
     imageUrl:
@@ -8128,7 +8128,7 @@ export const attractions: Attraction[] = [
       "Enjoy 12 hours of adventure on 13 acres of rides & slides - from mega-thrill rides like KaPau Plummet and Kalani Towers to kid-friendly activity zones including the Play Area in Coconut Cove and Splashaway Cay. Plus, ride the tide in the 500,000-gallon Surf's Up Wave Pool, float away on the Aloha R",
     address: "3505 W 76 Country Blvd",
     phone: "",
-    website: "https://www.explorebranson.com/listing/white-waters-night-water/5908/",
+    website: "https://www.silverdollarcity.com/white-water/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3505%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -8196,7 +8196,7 @@ export const attractions: Attraction[] = [
       "Begin your journey at Wolfe Creek Station with our simple 10 minute orientation into proper zipline use. From here, we transport you to the top of Wolfe Mountain to begin your adventure.",
     address: "2339 Highway 65",
     phone: "(417) 561-2500",
-    website: "https://www.explorebranson.com/listing/flying-prospector-zipline-tour-at-wolfe-mountain/5916/",
+    website: "https://www.wolfemountainbranson.com/pricing",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2339%20Highway%2065",
     imageUrl:
@@ -8265,7 +8265,7 @@ export const attractions: Attraction[] = [
       "Along the journey, you will have the opportunity to admire the canopy floor as you leisurely cross suspension bridges and walkways and fly through the canopy itself by way of zipline. As with all of our canopy experiences, the first ten minutes of your time at Wolfe Creek Preserve will be spent lea",
     address: "2339 Highway 65",
     phone: "(417) 561-2500",
-    website: "https://www.explorebranson.com/listing/canopy-adventure-combo-at-wolfe-mountain/5915/",
+    website: "https://www.wolfemountainbranson.com/canopy-adventure",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2339%20Highway%2065",
     imageUrl:
@@ -8332,7 +8332,7 @@ export const attractions: Attraction[] = [
       "Experience Snowflex tubing in the Ozarks! Grab your family and friends and head to the slopes for an adventure to remember!",
     address: "2339 Highway 65",
     phone: "(417) 561-2500",
-    website: "https://www.explorebranson.com/listing/snowflex-tubing-park-at-wolfe-mountain/5917/",
+    website: "https://www.wolfemountainbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2339%20Highway%2065",
     imageUrl:
@@ -8401,7 +8401,7 @@ export const attractions: Attraction[] = [
       "Find yourself soaring at heights of over 150-feet, taking in panoramic views of the surrounding Ozark hills, and zipping at speeds fast enough to feel the wind in your hair. You will zip nearly a quarter of a mile on our longest & fastest line followed by a freefall drop from Everest, our tallest p",
     address: "2339 Highway 65",
     phone: "(417) 561-2500",
-    website: "https://www.explorebranson.com/listing/blue-streak-fast-line-%26-free-fall-express/5918/",
+    website: "https://www.wolfemountainbranson.com/pricing",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2339%20Highway%2065",
     imageUrl:
@@ -8469,7 +8469,7 @@ export const attractions: Attraction[] = [
       "Just seven miles north of Branson on US 65 is Branson Zipline at Wolfe Mountain. From zipline canopy tours to themed shopping, Branson Zipline at Wolfe Mountain offers world class eco-adventure and fun for visitors of all ages.",
     address: "2339 US Hwy 65",
     phone: "(417) 561-2500",
-    website: "https://www.explorebranson.com/listing/wolfe-mountain/5919/",
+    website: "https://www.wolfemountainbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2339%20US%20Hwy%2065",
     imageUrl:
@@ -8538,7 +8538,7 @@ export const attractions: Attraction[] = [
       "Your journey into the natural wonders of the Ozarks begins with a 10 minute orientation that covers the basics of Zipline Safety. After becoming acquainted with the zipline equipment, you will be transported from Wolfe Creek Station to the top of Wolfe Mountain to begin the adventure of a lifetime!",
     address: "2339 Highway 65",
     phone: "(417) 561-2500",
-    website: "https://www.explorebranson.com/listing/ozarks-explorer-zipline-canopy-tour-at-wolfe-mountain/5921/",
+    website: "https://www.wolfemountainbranson.com/pricing",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2339%20Highway%2065",
     imageUrl:
@@ -8607,7 +8607,7 @@ export const attractions: Attraction[] = [
       "Spanning 350,000 square feet with over 1. 5 miles of trails, Wonders of Wildlife takes you on a journey through immersive habitats that entertain and educate while sharing the story of America's most significant conservationists throughout history and today.",
     address: "500 W Sunshine St",
     phone: "(417) 225-1137",
-    website: "https://www.explorebranson.com/listing/wonders-of-wildlife/5922/",
+    website: "https://wondersofwildlife.org/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=500%20W%20Sunshine%20St",
     imageUrl:
@@ -8674,7 +8674,7 @@ export const attractions: Attraction[] = [
       "WonderWorks is an amusement park for the mind with 48,000 square feet of \"edu-tainment. \" The attraction combines education and entertainment with more than 100 hands on exhibits that challenge the mind and spark the imagination.",
     address: "2835 W 76 Country Blvd",
     phone: "(417) 231-9999",
-    website: "https://www.explorebranson.com/listing/wonderworks/5923/",
+    website: "https://www.wonderworksonline.com/branson/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2835%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -8739,7 +8739,7 @@ export const attractions: Attraction[] = [
       "Owned by the Breedlove Family since May 2012, we offer affordable prices and a family-friendly atmosphere as well as Pro Shop Services from our certified technician. We have 16 all-wooden lanes, a snack bar, and a game room.",
     address: "2126 E. State Hwy 76",
     phone: "(417) 335-2695",
-    website: "https://www.explorebranson.com/listing/woodland-lanes/5924/",
+    website: "https://www.bransonbowling.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2126%20E.%20State%20Hwy%2076",
     imageUrl:
@@ -8806,7 +8806,7 @@ export const attractions: Attraction[] = [
       "Whether you're a hardcore mini golf fanatic or just looking for a fun way to spend time while on vacation, World of Wizards is the place to be. This indoor blacklight mini-golf course features a gigantic animatronic dragon, the spooky spider forest, fairies, orcs, wizards, and a beautiful unicorn!",
     address: "2805 Green Mountain Drive",
     phone: "(417) 320-1270",
-    website: "https://www.explorebranson.com/listing/world-of-wizards-blacklight-mini-golf/5925/",
+    website: "https://www.minigolfinbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=2805%20Green%20Mountain%20Drive",
     imageUrl:
@@ -8871,7 +8871,7 @@ export const attractions: Attraction[] = [
       "The BECK Museums of Branson / World's Largest Toy Museum is the ultimate trip down memory lane! Enjoy finding your childhood toys in this vast collection containing over 1 million toys in 2 buildings and covering over 30,000 square feet.",
     address: "3609 W 76 Country Blvd.",
     phone: "(417) 332-1499",
-    website: "https://www.explorebranson.com/listing/the-beck-museums-of-branson-worlds-largest-toy-museum/5704/",
+    website: "https://worldslargesttoymuseum.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3609%20W%2076%20Country%20Blvd.",
     imageUrl:
@@ -8940,7 +8940,7 @@ export const attractions: Attraction[] = [
       "Branson's Xtreme Racing Center offers you the opportunity to drive world championship European racing karts on a state-of-the-art, 3,500-foot concrete raceway. These are not your standard go karts; they are high performance racing karts that will pump you full of adrenaline from start to finish.",
     address: "3600 W 76 Country Blvd",
     phone: "(417) 239-2947",
-    website: "https://www.explorebranson.com/listing/xtreme-racing-center/5927/",
+    website: "https://www.xtremeracingcenterbranson.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3600%20W%2076%20Country%20Blvd",
     imageUrl:
@@ -9006,7 +9006,7 @@ export const attractions: Attraction[] = [
       "What makes Zipline USA different from the others? 9 lines totaling over 3 miles of cable, with the longest line over 3200 feet long and 350 feet high!!!",
     address: "3335 US HWY 160",
     phone: "(417) 559-5398",
-    website: "https://www.explorebranson.com/listing/zipline-usa/5932/",
+    website: "https://goziplineusa.com/",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=3335%20US%20HWY%20160",
     imageUrl:

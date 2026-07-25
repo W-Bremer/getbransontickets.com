@@ -10,29 +10,32 @@ import {
   Youtube,
   ArrowRight,
 } from "lucide-react";
-import { siteConfig, categories } from "@/lib/config";
+import { siteConfig } from "@/lib/config";
+import { getPartnerShows } from "@/data/shows";
 
-const showLinks = categories
-  .filter((c) => c.slug !== "all")
-  .map((c) => ({ label: c.name, href: `/shows/category/${c.slug}` }));
+const showLinks = getPartnerShows().map((s) => ({
+  label: s.name,
+  href: `/shows/${s.slug}`,
+}));
 
 const exploreLinks = [
   { label: "All Shows", href: "/shows" },
   { label: "Attractions", href: "/attractions" },
+  { label: "Branson Passport", href: "/passport" },
   { label: "Theaters & Venues", href: "/theaters" },
   { label: "Show Schedule", href: "/shows/schedule" },
   { label: "Deals & Discounts", href: "/deals" },
-  { label: "Blog", href: "/blog" },
   { label: "Plan Your Trip", href: "/plan-your-trip" },
 ];
 
 const companyLinks = [
   { label: "About Us", href: "/about" },
+  { label: "Join the Passport (Businesses)", href: "/passport/join" },
   { label: "Contact", href: "/contact" },
   { label: "FAQ", href: "/faq" },
-  { label: "Reviews", href: "/reviews" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
+  { label: "Refund Policy", href: "/refund-policy" },
 ];
 
 const socialLinks = [

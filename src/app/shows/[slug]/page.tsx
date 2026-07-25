@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Star, Tag, ChevronRight, Phone } from "lucide-react";
-import { shows, getShowBySlug } from "@/data/shows";
+import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Star, Tag, ChevronRight, Phone, ExternalLink } from "lucide-react";
+import { shows, getShowBySlug, getPartnerShows } from "@/data/shows";
 import { theaters } from "@/data/theaters";
 import { siteConfig } from "@/lib/config";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -57,10 +57,9 @@ export default async function ShowDetailPage({
       t.name.toLowerCase() === show.theater.toLowerCase()
   );
 
-  const relatedShows = show.relatedShows
-    .map((s) => getShowBySlug(s))
-    .filter(Boolean)
-    .slice(0, 3);
+  const relatedShows = getPartnerShows()
+    .filter((s) => s.slug !== show.slug)
+    .slice(0, 6);
 
   const eventSchema = {
     "@context": "https://schema.org",
@@ -254,33 +253,68 @@ export default async function ShowDetailPage({
               />
             </div>
 
-            {/* Sidebar -- Booking Widget */}
+            {/* Sidebar */}
             <div className="mt-10 lg:mt-0">
               <div id="booking-widget" className="sticky top-24 space-y-6">
-                <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
-                  <div className="bg-[#7B1A1A] px-6 py-4">
-                    <PriceDisplay priceFrom={show.priceFrom} priceTo={show.priceTo} variant="light" />
-                  </div>
-                  <div className="p-1">
-                    <BookingWidget
-                      showId={show.slug}
-                      showName={show.name}
-                      pricePerAdult={show.priceFrom}
-                      pricePerChild={Math.round(show.priceFrom * 0.6)}
-                      imageUrl={show.imageUrl}
-                      showTimes={show.showTimes}
-                    />
-                  </div>
-                </div>
+                {show.isFeaturedPartner ? (
+                  <>
+                    <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
+                      <div className="bg-[#7B1A1A] px-6 py-4">
+                        <PriceDisplay priceFrom={show.priceFrom} priceTo={show.priceTo} variant="light" />
+                      </div>
+                      <div className="p-1">
+                        <BookingWidget
+                          showId={show.slug}
+                          showName={show.name}
+                          pricePerAdult={show.priceFrom}
+                          pricePerChild={show.childPriceFrom ?? Math.round(show.priceFrom * 0.6)}
+                          imageUrl={show.imageUrl}
+                          showTimes={show.showTimes}
+                        />
+                      </div>
+                    </div>
 
-                {/* Call to book */}
-                <Link
-                  href={`tel:${siteConfig.phoneRaw}`}
-                  className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-xl font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
-                >
-                  <Phone className="w-4 h-4" />
-                  Call {siteConfig.phone}
-                </Link>
+                    {/* Call to book */}
+                    <Link
+                      href={`tel:${siteConfig.phoneRaw}`}
+                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-xl font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
+                    >
+                      <Phone className="w-4 h-4" />
+                      Call {siteConfig.phone}
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
+                      <div className="bg-[#7B1A1A] px-6 py-4">
+                        <PriceDisplay priceFrom={show.priceFrom} priceTo={show.priceTo} variant="light" />
+                      </div>
+                      <div className="p-6 space-y-4">
+                        <p className="text-sm text-gray-600 text-center">
+                          Tickets for this show are available directly from the venue.
+                        </p>
+                        {show.externalUrl && (
+                          <a
+                            href={show.externalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full flex items-center justify-center gap-2 py-3 bg-[#d4a843] text-white rounded-xl font-semibold hover:bg-[#b8922e] transition-colors"
+                          >
+                            Visit Official Website
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        )}
+                        <Link
+                          href={`tel:${siteConfig.phoneRaw}`}
+                          className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-xl font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
+                        >
+                          <Phone className="w-4 h-4" />
+                          Questions? Call {siteConfig.phone}
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 {/* Sidebar quick info */}
                 <div className="rounded-xl border border-gray-200 p-5 bg-white space-y-3 text-sm">
@@ -301,6 +335,11 @@ export default async function ShowDetailPage({
                       {show.showTimes.join(", ")}
                     </span>
                   </div>
+                  {show.scheduleNote && (
+                    <p className="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2">
+                      {show.scheduleNote}
+                    </p>
+                  )}
                   {show.mealIncluded && (
                     <div className="flex justify-between text-gray-600">
                       <span>Meal</span>
@@ -331,7 +370,7 @@ export default async function ShowDetailPage({
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {relatedShows.map((related, index) => (
-                  <ShowCard key={related!.slug} show={related!} index={index} />
+                  <ShowCard key={related.slug} show={related} index={index} />
                 ))}
               </div>
             </div>
@@ -340,7 +379,7 @@ export default async function ShowDetailPage({
       </div>
 
       {/* Sticky mobile booking bar */}
-      <StickyBookingBar priceFrom={show.priceFrom} showName={show.name} />
+      <StickyBookingBar priceFrom={show.priceFrom} showName={show.name} isFeaturedPartner={show.isFeaturedPartner} externalUrl={show.externalUrl} />
     </>
   );
 }

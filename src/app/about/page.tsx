@@ -181,41 +181,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="py-16 sm:py-20 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
-              Meet Our Team
-            </h2>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              A passionate team of Branson entertainment experts dedicated to
-              helping you have the best experience.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {team.map((member) => (
-              <div
-                key={member.name}
-                className="text-center p-6 rounded-2xl bg-[#faf8f5] border border-gray-100"
-              >
-                <div className="w-20 h-20 rounded-full bg-[#7B1A1A] flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-[#d4a843]">
-                    {member.initials}
-                  </span>
-                </div>
-                <h3 className="text-lg font-bold text-[#7B1A1A]">
-                  {member.name}
-                </h3>
-                <p className="text-sm text-[#d4a843] font-medium">
-                  {member.role}
-                </p>
-                <p className="mt-3 text-sm text-gray-600">{member.bio}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Team section removed */}
 
       {/* CTA */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-[#d4a843] to-[#b8922e]">

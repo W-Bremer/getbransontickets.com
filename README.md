@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GetBransonTickets.com (Tix Branson)
 
-## Getting Started
+Next.js site for Branson show and attraction tickets, plus the free **Branson Passport** insider guide.
 
-First, run the development server:
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | yes | Stripe checkout (client) |
+| `STRIPE_SECRET_KEY` | yes | Stripe checkout (server) |
+| `RESEND_API_KEY` | yes | Voucher emails + passport signup notifications |
+| `EMAIL_FROM` | no | From address for outgoing email |
+| `PASSPORT_WEBHOOK_URL` | no | Forward passport signups / partner applications to a CRM webhook |
+| `PASSPORT_TRACKING_WEBHOOK_URL` | no | Forward partner QR scan events to an analytics webhook |
 
-## Learn More
+## Branson Passport
 
-To learn more about Next.js, take a look at the following resources:
+The Passport lives at `/passport`. Key pieces:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/data/passport.ts`: guide content (restaurants, coffee, shopping, free things, seasonal events, local tips)
+- `src/data/partners.ts`: partner businesses, each with a unique `refCode`
+- `/p/<refCode>`: partner tracking links. Sets a 30-day `bp_ref` cookie, logs the scan, redirects to `/passport`
+- `/passport/partners/<slug>/kit`: printable QR counter card for a partner
+- `/api/passport-signup`: visitor email/SMS signups and partner applications (Resend notification + optional webhook)
+- Referral attribution: `bp_ref` is written into Stripe PaymentIntent metadata (`referralPartner`) at checkout, so partner-referred ticket sales are measurable in Stripe
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Scan counts are visible in Vercel runtime logs (search `passport_scan`) until a database-backed dashboard exists.
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed on Vercel (project `branson-shows`). Production domain: [www.getbransontickets.com](https://www.getbransontickets.com).

@@ -10,9 +10,14 @@ import {
   Music, Laugh, Wand2, UtensilsCrossed, Guitar,
   Star, Users, Dumbbell, Drama, Ticket,
 } from "lucide-react";
-import { siteConfig, categories } from "@/lib/config";
+import { siteConfig } from "@/lib/config";
 import { CartIcon } from "@/components/cart-icon";
 import { cn } from "@/lib/utils";
+
+export interface HeaderShowLink {
+  name: string;
+  slug: string;
+}
 
 const categoryIcons: Record<string, React.ReactNode> = {
   "variety-music": <Music className="h-4 w-4" />,
@@ -28,13 +33,13 @@ const categoryIcons: Record<string, React.ReactNode> = {
 
 const navLinks = [
   { label: "Attractions", href: "/attractions" },
+  { label: "Passport", href: "/passport" },
   { label: "Deals", href: "/deals" },
   { label: "Schedule", href: "/shows/schedule" },
-  { label: "Blog", href: "/blog" },
   { label: "Plan Your Trip", href: "/plan-your-trip" },
 ];
 
-export function Header() {
+export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [showsOpen, setShowsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -47,8 +52,6 @@ export function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const showCategories = categories.filter((c) => c.slug !== "all");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,21 +129,18 @@ export function Header() {
                       </Link>
                     </div>
                     <div className="grid grid-cols-2 gap-1">
-                      {showCategories.map((cat) => (
+                      {partnerShows.map((show) => (
                         <Link
-                          key={cat.slug}
-                          href={`/shows/category/${cat.slug}`}
+                          key={show.slug}
+                          href={`/shows/${show.slug}`}
                           className="group flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-white/5"
                         >
                           <span className="text-[#D4A843]/80 transition-colors group-hover:text-[#D4A843]">
-                            {categoryIcons[cat.slug]}
+                            <Ticket className="h-4 w-4" />
                           </span>
-                          <div>
-                            <p className="text-sm font-medium text-white/90 group-hover:text-white">
-                              {cat.name}
-                            </p>
-                            <p className="text-xs text-white/40 line-clamp-1">{cat.description}</p>
-                          </div>
+                          <p className="text-sm font-medium text-white/90 group-hover:text-white">
+                            {show.name}
+                          </p>
                         </Link>
                       ))}
                     </div>
@@ -208,15 +208,15 @@ export function Header() {
                 >
                   All Shows
                 </Link>
-                {showCategories.map((cat) => (
+                {partnerShows.map((show) => (
                   <Link
-                    key={cat.slug}
-                    href={`/shows/category/${cat.slug}`}
+                    key={show.slug}
+                    href={`/shows/${show.slug}`}
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-white/70 hover:bg-white/5 hover:text-white"
                   >
-                    <span className="text-[#D4A843]/70">{categoryIcons[cat.slug]}</span>
-                    {cat.name}
+                    <span className="text-[#D4A843]/70"><Ticket className="h-4 w-4" /></span>
+                    {show.name}
                   </Link>
                 ))}
                 <div className="border-t border-white/10 pt-2 mt-2">

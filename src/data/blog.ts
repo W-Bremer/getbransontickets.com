@@ -15,7 +15,12 @@ export interface BlogPost {
   seoDescription: string;
 }
 
-export const blogPosts: BlogPost[] = [
+import { blogPostsBatch1 } from "./blog-posts-batch1";
+import { blogPostsBatch2 } from "./blog-posts-batch2";
+import { blogPostsBatch3 } from "./blog-posts-batch3";
+import { blogPostsBatch4 } from "./blog-posts-batch4";
+
+const corePosts: BlogPost[] = [
   {
     title: "Best Branson Shows 2026: The Complete Guide",
     slug: "best-branson-shows-2026",
@@ -301,6 +306,24 @@ Evening shows tend to be the most expensive. Morning and afternoon shows are oft
   },
 ];
 
+export const blogPosts: BlogPost[] = [
+  ...corePosts,
+  ...blogPostsBatch1,
+  ...blogPostsBatch2,
+  ...blogPostsBatch3,
+  ...blogPostsBatch4,
+];
+
+export function getPublishedPosts(): BlogPost[] {
+  const today = new Date().toISOString().split("T")[0];
+  return blogPosts
+    .filter((p) => p.publishedDate <= today)
+    .sort((a, b) => b.publishedDate.localeCompare(a.publishedDate));
+}
+
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
-  return blogPosts.find((p) => p.slug === slug);
+  const today = new Date().toISOString().split("T")[0];
+  const post = blogPosts.find((p) => p.slug === slug);
+  if (post && post.publishedDate <= today) return post;
+  return undefined;
 }
