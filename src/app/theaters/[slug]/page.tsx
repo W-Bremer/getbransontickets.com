@@ -37,8 +37,9 @@ export async function generateMetadata({
   if (!theater) return { title: "Theater Not Found" };
 
   return {
-    title: `${theater.name} — Shows, Seating & Directions | ${siteConfig.name}`,
+    title: `${theater.name} — Shows, Seating & Directions`,
     description: `${theater.name} in Branson, MO — ${theater.shortDescription} ${theater.seatingCapacity} seats. See current shows, get directions, and book tickets.`,
+    alternates: { canonical: `${siteConfig.url}/theaters/${theater.slug}` },
     openGraph: {
       title: `${theater.name} — Branson Theater Guide`,
       description: theater.shortDescription,
@@ -85,12 +86,6 @@ export default async function TheaterDetailPage({
       postalCode: "65616",
       addressCountry: "US",
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: theater.rating,
-      reviewCount: theater.reviewCount,
-      bestRating: 5,
-    },
   };
 
   return (
@@ -107,7 +102,7 @@ export default async function TheaterDetailPage({
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#7B1A1A] via-[#7B1A1A]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#13264D] via-[#13264D]/50 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 pb-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Breadcrumbs
@@ -127,7 +122,7 @@ export default async function TheaterDetailPage({
           <div className="lg:grid lg:grid-cols-3 lg:gap-12">
             {/* Left Content */}
             <div className="lg:col-span-2">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#7B1A1A] font-heading">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#13264D] font-heading">
                 {theater.name}
               </h1>
               <p className="mt-3 text-xl text-[#d4a843] font-medium">
@@ -147,7 +142,7 @@ export default async function TheaterDetailPage({
                   <Armchair className="w-5 h-5 text-[#d4a843]" />
                   <div>
                     <div className="text-xs text-gray-500">Capacity</div>
-                    <div className="font-semibold text-[#7B1A1A]">
+                    <div className="font-semibold text-[#13264D]">
                       {theater.seatingCapacity.toLocaleString()} seats
                     </div>
                   </div>
@@ -156,7 +151,7 @@ export default async function TheaterDetailPage({
                   <MapPin className="w-5 h-5 text-[#d4a843]" />
                   <div>
                     <div className="text-xs text-gray-500">Location</div>
-                    <div className="font-semibold text-[#7B1A1A] text-sm">
+                    <div className="font-semibold text-[#13264D] text-sm">
                       {theater.address.includes("76 Country")
                         ? "76 Strip"
                         : theater.address.includes("Shepherd")
@@ -171,7 +166,7 @@ export default async function TheaterDetailPage({
                   <Calendar className="w-5 h-5 text-[#d4a843]" />
                   <div>
                     <div className="text-xs text-gray-500">Established</div>
-                    <div className="font-semibold text-[#7B1A1A]">
+                    <div className="font-semibold text-[#13264D]">
                       {theater.yearBuilt}
                     </div>
                   </div>
@@ -180,7 +175,7 @@ export default async function TheaterDetailPage({
                   <Star className="w-5 h-5 text-[#d4a843] fill-[#d4a843]" />
                   <div>
                     <div className="text-xs text-gray-500">Rating</div>
-                    <div className="font-semibold text-[#7B1A1A]">
+                    <div className="font-semibold text-[#13264D]">
                       {theater.rating} / 5.0
                     </div>
                   </div>
@@ -189,7 +184,7 @@ export default async function TheaterDetailPage({
 
               {/* Description */}
               <div className="mt-10">
-                <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-4">
+                <h2 className="text-2xl font-bold text-[#13264D] font-heading mb-4">
                   About {theater.name}
                 </h2>
                 <div className="prose prose-lg max-w-none text-gray-700">
@@ -199,7 +194,7 @@ export default async function TheaterDetailPage({
 
               {/* Features */}
               <div className="mt-10">
-                <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-4">
+                <h2 className="text-2xl font-bold text-[#13264D] font-heading mb-4">
                   Theater Features
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -220,14 +215,14 @@ export default async function TheaterDetailPage({
                 <div className="p-6 rounded-xl bg-gray-50 border border-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <Car className="w-5 h-5 text-[#d4a843]" />
-                    <h3 className="font-semibold text-[#7B1A1A]">Parking</h3>
+                    <h3 className="font-semibold text-[#13264D]">Parking</h3>
                   </div>
                   <p className="text-sm text-gray-600">{theater.parking}</p>
                 </div>
                 <div className="p-6 rounded-xl bg-gray-50 border border-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <Accessibility className="w-5 h-5 text-[#d4a843]" />
-                    <h3 className="font-semibold text-[#7B1A1A]">Accessibility</h3>
+                    <h3 className="font-semibold text-[#13264D]">Accessibility</h3>
                   </div>
                   <p className="text-sm text-gray-600">{theater.accessibility}</p>
                 </div>
@@ -236,7 +231,7 @@ export default async function TheaterDetailPage({
               {/* Gallery */}
               {theater.galleryImages.length > 0 && (
                 <div className="mt-10">
-                  <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-4">
+                  <h2 className="text-2xl font-bold text-[#13264D] font-heading mb-4">
                     Photo Gallery
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -260,11 +255,11 @@ export default async function TheaterDetailPage({
 
               {/* Location */}
               <div className="mt-10">
-                <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-4">
+                <h2 className="text-2xl font-bold text-[#13264D] font-heading mb-4">
                   Location & Directions
                 </h2>
                 <div className="p-6 rounded-xl bg-gray-50 border border-gray-100">
-                  <p className="font-semibold text-[#7B1A1A]">{theater.name}</p>
+                  <p className="font-semibold text-[#13264D]">{theater.name}</p>
                   <p className="text-gray-600 mt-1">{theater.address}</p>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -286,7 +281,7 @@ export default async function TheaterDetailPage({
               <div className="sticky top-24 space-y-6">
                 {/* Contact Card */}
                 <div className="rounded-2xl border border-gray-200 shadow-lg p-6 bg-white">
-                  <h3 className="text-lg font-bold text-[#7B1A1A] font-heading mb-4">
+                  <h3 className="text-lg font-bold text-[#13264D] font-heading mb-4">
                     Contact & Info
                   </h3>
                   <div className="space-y-4">
@@ -323,7 +318,7 @@ export default async function TheaterDetailPage({
                   <div className="mt-3">
                     <Link
                       href={`tel:${siteConfig.phoneRaw}`}
-                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-xl font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
+                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#13264D] text-[#13264D] rounded-xl font-semibold hover:bg-[#13264D] hover:text-white transition-all"
                     >
                       Call {siteConfig.phone}
                     </Link>
@@ -338,25 +333,25 @@ export default async function TheaterDetailPage({
                   <div className="space-y-3 text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Seating Capacity</span>
-                      <span className="font-medium text-[#7B1A1A]">
+                      <span className="font-medium text-[#13264D]">
                         {theater.seatingCapacity.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Established</span>
-                      <span className="font-medium text-[#7B1A1A]">
+                      <span className="font-medium text-[#13264D]">
                         {theater.yearBuilt}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Shows Playing</span>
-                      <span className="font-medium text-[#7B1A1A]">
+                      <span className="font-medium text-[#13264D]">
                         {theaterShows.length}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Rating</span>
-                      <span className="flex items-center gap-1 font-medium text-[#7B1A1A]">
+                      <span className="flex items-center gap-1 font-medium text-[#13264D]">
                         <Star className="w-3.5 h-3.5 text-[#d4a843] fill-[#d4a843]" />
                         {theater.rating}
                       </span>
@@ -370,7 +365,7 @@ export default async function TheaterDetailPage({
           {/* Shows at This Theater */}
           {theaterShows.length > 0 && (
             <div className="mt-16 pt-12 border-t border-gray-200">
-              <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-2">
+              <h2 className="text-2xl font-bold text-[#13264D] font-heading mb-2">
                 Shows at {theater.name}
               </h2>
               <p className="text-gray-600 mb-8">
@@ -388,7 +383,7 @@ export default async function TheaterDetailPage({
 
           {/* Other Theaters */}
           <div className="mt-16 pt-12 border-t border-gray-200">
-            <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-8">
+            <h2 className="text-2xl font-bold text-[#13264D] font-heading mb-8">
               Explore More Branson Theaters
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -408,7 +403,7 @@ export default async function TheaterDetailPage({
                     />
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-[#7B1A1A] group-hover:text-[#d4a843] transition-colors">
+                    <h3 className="font-semibold text-[#13264D] group-hover:text-[#d4a843] transition-colors">
                       {t.name}
                     </h3>
                     <p className="mt-1 text-sm text-gray-500">

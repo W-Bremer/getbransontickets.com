@@ -47,7 +47,7 @@ function CartItemRow({ item }: { item: CartItem }) {
             sizes="144px"
           />
           <div className="absolute top-2 left-2">
-            <span className="rounded-full bg-[#7B1A1A]/90 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
+            <span className="rounded-full bg-[#13264D]/90 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
               {item.type}
             </span>
           </div>
@@ -58,20 +58,20 @@ function CartItemRow({ item }: { item: CartItem }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <h3 className="text-lg font-bold text-[#333333]">{item.name}</h3>
-            <p className="text-sm text-[#333333]/60 mt-0.5">
+            <h3 className="text-lg font-bold text-[#1A1614]">{item.name}</h3>
+            <p className="text-sm text-[#1A1614]/60 mt-0.5">
               {item.date}
               {item.time ? ` at ${item.time}` : ""}
             </p>
             {item.seatingTier && (
-              <p className="text-sm text-[#7B1A1A] font-medium mt-0.5">
+              <p className="text-sm text-[#13264D] font-medium mt-0.5">
                 {item.seatingTier}
               </p>
             )}
           </div>
           <button
             onClick={() => removeItem(item.id, item.date)}
-            className="shrink-0 rounded-lg p-2 text-[#333333]/40 hover:bg-red-50 hover:text-red-500 transition-colors"
+            className="shrink-0 rounded-lg p-2 text-[#1A1614]/40 hover:bg-red-50 hover:text-red-500 transition-colors"
             aria-label="Remove item"
           >
             <Trash2 className="h-4 w-4" />
@@ -83,54 +83,54 @@ function CartItemRow({ item }: { item: CartItem }) {
           <div className="flex gap-6">
             {/* Adults */}
             <div>
-              <span className="text-xs font-semibold uppercase tracking-wide text-[#333333]/40">
+              <span className="text-xs font-semibold uppercase tracking-wide text-[#1A1614]/40">
                 Adults
               </span>
               <div className="mt-1 flex items-center gap-2">
                 <button
                   onClick={() => updateAdults(-1)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#1A1614]/60 hover:border-[#13264D] hover:text-[#13264D] transition-colors"
                 >
                   <Minus className="h-3.5 w-3.5" />
                 </button>
-                <span className="w-8 text-center text-sm font-bold text-[#333333]">
+                <span className="w-8 text-center text-sm font-bold text-[#1A1614]">
                   {item.adults}
                 </span>
                 <button
                   onClick={() => updateAdults(1)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#1A1614]/60 hover:border-[#13264D] hover:text-[#13264D] transition-colors"
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </button>
               </div>
-              <span className="text-xs text-[#333333]/40 mt-0.5 block">
+              <span className="text-xs text-[#1A1614]/40 mt-0.5 block">
                 ${item.pricePerAdult} each
               </span>
             </div>
 
             {/* Children */}
             <div>
-              <span className="text-xs font-semibold uppercase tracking-wide text-[#333333]/40">
+              <span className="text-xs font-semibold uppercase tracking-wide text-[#1A1614]/40">
                 Children
               </span>
               <div className="mt-1 flex items-center gap-2">
                 <button
                   onClick={() => updateChildren(-1)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#1A1614]/60 hover:border-[#13264D] hover:text-[#13264D] transition-colors"
                 >
                   <Minus className="h-3.5 w-3.5" />
                 </button>
-                <span className="w-8 text-center text-sm font-bold text-[#333333]">
+                <span className="w-8 text-center text-sm font-bold text-[#1A1614]">
                   {item.children}
                 </span>
                 <button
                   onClick={() => updateChildren(1)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#333333]/60 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-[#1A1614]/60 hover:border-[#13264D] hover:text-[#13264D] transition-colors"
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </button>
               </div>
-              <span className="text-xs text-[#333333]/40 mt-0.5 block">
+              <span className="text-xs text-[#1A1614]/40 mt-0.5 block">
                 ${item.pricePerChild} each
               </span>
             </div>
@@ -138,8 +138,8 @@ function CartItemRow({ item }: { item: CartItem }) {
 
           {/* Item Total */}
           <div className="text-right">
-            <span className="text-xs text-[#333333]/40">Subtotal</span>
-            <div className="text-xl font-bold text-[#333333]">
+            <span className="text-xs text-[#1A1614]/40">Subtotal</span>
+            <div className="text-xl font-bold text-[#1A1614]">
               ${itemTotal.toFixed(2)}
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function CartPage() {
   if (!mounted) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#7B1A1A] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#13264D] border-t-transparent" />
       </div>
     );
   }
@@ -170,7 +170,7 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <>
-        <section className="bg-[#7B1A1A] pt-12 pb-16">
+        <section className="bg-[#13264D] pt-12 pb-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Breadcrumbs
               items={[
@@ -186,27 +186,27 @@ export default function CartPage() {
         </section>
         <section className="py-20 bg-white">
           <div className="mx-auto max-w-lg px-4 text-center">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#FAF8F5]">
-              <ShoppingCart className="h-10 w-10 text-[#333333]/30" />
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#F6F4EF]">
+              <ShoppingCart className="h-10 w-10 text-[#1A1614]/30" />
             </div>
-            <h2 className="mt-6 text-2xl font-bold text-[#333333]">
+            <h2 className="mt-6 text-2xl font-bold text-[#1A1614]">
               Your Cart is Empty
             </h2>
-            <p className="mt-3 text-[#333333]/60">
+            <p className="mt-3 text-[#1A1614]/60">
               Browse our shows and attractions to find the perfect Branson
               entertainment.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href="/shows"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#8B6914] px-6 py-3 font-semibold text-white hover:bg-[#8B6914]/90 transition-colors"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#C8102E] px-6 py-3 font-semibold text-white hover:bg-[#C8102E]/90 transition-colors"
               >
                 Browse Shows
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/attractions"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-[#7B1A1A] px-6 py-3 font-semibold text-[#7B1A1A] hover:bg-[#7B1A1A] hover:text-white transition-all"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-[#13264D] px-6 py-3 font-semibold text-[#13264D] hover:bg-[#13264D] hover:text-white transition-all"
               >
                 Browse Attractions
               </Link>
@@ -220,7 +220,7 @@ export default function CartPage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-[#7B1A1A] pt-12 pb-16">
+      <section className="bg-[#13264D] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -236,7 +236,7 @@ export default function CartPage() {
       </section>
 
       {/* Cart Content */}
-      <section className="py-10 sm:py-14 bg-[#FAF8F5]">
+      <section className="py-10 sm:py-14 bg-[#F6F4EF]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-3 lg:gap-8">
             {/* Items List */}
@@ -248,14 +248,14 @@ export default function CartPage() {
               <div className="flex items-center justify-between pt-4">
                 <Link
                   href="/shows"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-[#13264D] hover:text-[#0D1B38] transition-colors"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   Continue Shopping
                 </Link>
                 <button
                   onClick={clearCart}
-                  className="text-sm font-medium text-[#333333]/50 hover:text-red-500 transition-colors"
+                  className="text-sm font-medium text-[#1A1614]/50 hover:text-red-500 transition-colors"
                 >
                   Clear Cart
                 </button>
@@ -265,7 +265,7 @@ export default function CartPage() {
             {/* Order Summary */}
             <div className="mt-8 lg:mt-0">
               <div className="sticky top-24 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
-                <h2 className="text-lg font-bold text-[#333333]">
+                <h2 className="text-lg font-bold text-[#1A1614]">
                   Order Summary
                 </h2>
 
@@ -279,10 +279,10 @@ export default function CartPage() {
                         key={`${item.id}-${item.date}-${i}`}
                         className="flex justify-between text-sm"
                       >
-                        <span className="text-[#333333]/70 truncate mr-2">
+                        <span className="text-[#1A1614]/70 truncate mr-2">
                           {item.name}
                         </span>
-                        <span className="font-medium text-[#333333] whitespace-nowrap">
+                        <span className="font-medium text-[#1A1614] whitespace-nowrap">
                           ${sub.toFixed(2)}
                         </span>
                       </div>
@@ -290,20 +290,20 @@ export default function CartPage() {
                   })}
                 </div>
 
-                <div className="mt-4 flex justify-between text-lg font-bold text-[#333333]">
+                <div className="mt-4 flex justify-between text-lg font-bold text-[#1A1614]">
                   <span>Total</span>
                   <span>${total.toFixed(2)}</span>
                 </div>
 
                 <Link
                   href="/checkout"
-                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#8B6914] py-4 text-lg font-semibold text-white hover:bg-[#8B6914]/90 transition-colors shadow-lg"
+                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#C8102E] py-4 text-lg font-semibold text-white hover:bg-[#C8102E]/90 transition-colors shadow-lg"
                 >
                   Proceed to Checkout
                   <ArrowRight className="h-5 w-5" />
                 </Link>
 
-                <p className="mt-4 text-center text-xs text-[#333333]/40">
+                <p className="mt-4 text-center text-xs text-[#1A1614]/40">
                   Secure checkout. No hidden fees.
                 </p>
               </div>

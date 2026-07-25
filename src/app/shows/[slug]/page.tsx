@@ -6,6 +6,7 @@ import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Star, Tag, Chevron
 import { shows, getShowBySlug, getPartnerShows } from "@/data/shows";
 import { theaters } from "@/data/theaters";
 import { siteConfig } from "@/lib/config";
+import { getSeasonDates } from "@/lib/season";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { RatingDisplay } from "@/components/rating-display";
 import { PriceDisplay } from "@/components/price-display";
@@ -29,8 +30,9 @@ export async function generateMetadata({
   if (!show) return { title: "Show Not Found" };
 
   return {
-    title: `${show.name} Branson Tickets 2026 | Discount Tickets & Schedule | ${siteConfig.name}`,
+    title: `${show.name} Branson Tickets 2026 | Discount Tickets & Schedule`,
     description: `Get ${show.name} tickets in Branson, MO. ${show.shortDescription} Book online & save! ★ ${show.rating} rated. Tickets from $${show.priceFrom}.`,
+    alternates: { canonical: `${siteConfig.url}/shows/${show.slug}` },
     openGraph: {
       title: `${show.name} Branson Tickets 2026 | Discount Tickets & Schedule`,
       description: `Get ${show.name} tickets in Branson, MO. ${show.shortDescription}`,
@@ -61,13 +63,24 @@ export default async function ShowDetailPage({
     .filter((s) => s.slug !== show.slug)
     .slice(0, 6);
 
+  const season = getSeasonDates(show);
+
   const eventSchema = {
     "@context": "https://schema.org",
+    // startDate is required for Event rich results; without it the whole
+    // block is ignored by Google.
     "@type": "Event",
     name: show.name,
     description: show.shortDescription,
     url: `${siteConfig.url}/shows/${show.slug}`,
     image: show.imageUrl,
+    ...(season ? { startDate: season.startDate, endDate: season.endDate } : {}),
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    organizer: {
+      "@type": "Organization",
+      name: show.theater,
+    },
     location: {
       "@type": "Place",
       name: show.theater,
@@ -86,6 +99,7 @@ export default async function ShowDetailPage({
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
       url: `${siteConfig.url}/shows/${show.slug}`,
+      ...(season ? { validFrom: season.startDate } : {}),
     },
     performer: {
       "@type": "PerformingGroup",
@@ -99,12 +113,6 @@ export default async function ShowDetailPage({
     name: `${show.name} Tickets`,
     description: show.shortDescription,
     image: show.imageUrl,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: show.rating,
-      reviewCount: show.reviewCount,
-      bestRating: 5,
-    },
     offers: {
       "@type": "AggregateOffer",
       lowPrice: show.priceFrom,
@@ -128,7 +136,7 @@ export default async function ShowDetailPage({
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#7B1A1A] via-[#5A1212]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#13264D] via-[#0D1B38]/50 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 pb-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Breadcrumbs
@@ -142,14 +150,14 @@ export default async function ShowDetailPage({
               {show.specialOffers.map((offer) => (
                 <span
                   key={offer}
-                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#8B6914] text-white text-sm font-medium"
+                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#C8102E] text-white text-sm font-medium"
                 >
                   <Tag className="w-3 h-3" />
                   {offer}
                 </span>
               ))}
               {show.mealIncluded && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#D4A843] text-white text-sm font-medium">
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#E8C65A] text-white text-sm font-medium">
                   <UtensilsCrossed className="w-3 h-3" />
                   {show.mealType} Included
                 </span>
@@ -171,7 +179,7 @@ export default async function ShowDetailPage({
                     key={i}
                     className={`w-5 h-5 ${
                       i < Math.round(show.rating)
-                        ? "text-[#D4A843] fill-[#D4A843]"
+                        ? "text-[#E8C65A] fill-[#E8C65A]"
                         : "text-white/40"
                     }`}
                   />
@@ -193,32 +201,32 @@ export default async function ShowDetailPage({
             <div className="lg:col-span-2">
               {/* Quick Facts */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-[#FAF8F5]">
-                  <Clock className="w-5 h-5 text-[#7B1A1A]" />
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-[#F6F4EF]">
+                  <Clock className="w-5 h-5 text-[#13264D]" />
                   <div>
                     <div className="text-xs text-gray-500">Duration</div>
-                    <div className="font-semibold text-[#333333]">{show.duration}</div>
+                    <div className="font-semibold text-[#1A1614]">{show.duration}</div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-[#FAF8F5]">
-                  <MapPin className="w-5 h-5 text-[#7B1A1A]" />
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-[#F6F4EF]">
+                  <MapPin className="w-5 h-5 text-[#13264D]" />
                   <div>
                     <div className="text-xs text-gray-500">Theater</div>
-                    <div className="font-semibold text-[#333333] text-sm">{show.theater}</div>
+                    <div className="font-semibold text-[#1A1614] text-sm">{show.theater}</div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-[#FAF8F5]">
-                  <Users className="w-5 h-5 text-[#7B1A1A]" />
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-[#F6F4EF]">
+                  <Users className="w-5 h-5 text-[#13264D]" />
                   <div>
                     <div className="text-xs text-gray-500">Ages</div>
-                    <div className="font-semibold text-[#333333]">{show.ageRecommendation}</div>
+                    <div className="font-semibold text-[#1A1614]">{show.ageRecommendation}</div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-[#FAF8F5]">
-                  <CalendarDays className="w-5 h-5 text-[#7B1A1A]" />
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-[#F6F4EF]">
+                  <CalendarDays className="w-5 h-5 text-[#13264D]" />
                   <div>
                     <div className="text-xs text-gray-500">Season</div>
-                    <div className="font-semibold text-[#333333]">
+                    <div className="font-semibold text-[#1A1614]">
                       {show.seasonStart} – {show.seasonEnd}
                     </div>
                   </div>
@@ -259,7 +267,7 @@ export default async function ShowDetailPage({
                 {show.isFeaturedPartner ? (
                   <>
                     <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
-                      <div className="bg-[#7B1A1A] px-6 py-4">
+                      <div className="bg-[#13264D] px-6 py-4">
                         <PriceDisplay priceFrom={show.priceFrom} priceTo={show.priceTo} variant="light" />
                       </div>
                       <div className="p-1">
@@ -277,7 +285,7 @@ export default async function ShowDetailPage({
                     {/* Call to book */}
                     <Link
                       href={`tel:${siteConfig.phoneRaw}`}
-                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-xl font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
+                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#13264D] text-[#13264D] rounded-xl font-semibold hover:bg-[#13264D] hover:text-white transition-all"
                     >
                       <Phone className="w-4 h-4" />
                       Call {siteConfig.phone}
@@ -286,7 +294,7 @@ export default async function ShowDetailPage({
                 ) : (
                   <>
                     <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
-                      <div className="bg-[#7B1A1A] px-6 py-4">
+                      <div className="bg-[#13264D] px-6 py-4">
                         <PriceDisplay priceFrom={show.priceFrom} priceTo={show.priceTo} variant="light" />
                       </div>
                       <div className="p-6 space-y-4">
@@ -306,7 +314,7 @@ export default async function ShowDetailPage({
                         )}
                         <Link
                           href={`tel:${siteConfig.phoneRaw}`}
-                          className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-xl font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
+                          className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#13264D] text-[#13264D] rounded-xl font-semibold hover:bg-[#13264D] hover:text-white transition-all"
                         >
                           <Phone className="w-4 h-4" />
                           Questions? Call {siteConfig.phone}
@@ -320,18 +328,18 @@ export default async function ShowDetailPage({
                 <div className="rounded-xl border border-gray-200 p-5 bg-white space-y-3 text-sm">
                   <div className="flex justify-between text-gray-600">
                     <span>Rating</span>
-                    <span className="flex items-center gap-1 font-medium text-[#333333]">
-                      <Star className="w-4 h-4 text-[#D4A843] fill-[#D4A843]" />
+                    <span className="flex items-center gap-1 font-medium text-[#1A1614]">
+                      <Star className="w-4 h-4 text-[#E8C65A] fill-[#E8C65A]" />
                       {show.rating} ({show.reviewCount.toLocaleString()} reviews)
                     </span>
                   </div>
                   <div className="flex justify-between text-gray-600">
                     <span>Duration</span>
-                    <span className="font-medium text-[#333333]">{show.duration}</span>
+                    <span className="font-medium text-[#1A1614]">{show.duration}</span>
                   </div>
                   <div className="flex justify-between text-gray-600">
                     <span>Show Times</span>
-                    <span className="font-medium text-[#333333]">
+                    <span className="font-medium text-[#1A1614]">
                       {show.showTimes.join(", ")}
                     </span>
                   </div>
@@ -343,16 +351,16 @@ export default async function ShowDetailPage({
                   {show.mealIncluded && (
                     <div className="flex justify-between text-gray-600">
                       <span>Meal</span>
-                      <span className="font-medium text-[#8B6914]">{show.mealType} Included</span>
+                      <span className="font-medium text-[#C8102E]">{show.mealType} Included</span>
                     </div>
                   )}
                 </div>
 
                 {show.specialOffers.length > 0 && (
-                  <div className="p-4 rounded-lg bg-[#8B6914]/10 border border-[#8B6914]/20">
-                    <p className="text-sm font-semibold text-[#8B6914]">Special Offers</p>
+                  <div className="p-4 rounded-lg bg-[#C8102E]/10 border border-[#C8102E]/20">
+                    <p className="text-sm font-semibold text-[#C8102E]">Special Offers</p>
                     {show.specialOffers.map((offer) => (
-                      <p key={offer} className="text-sm text-[#8B6914]/80 mt-1">
+                      <p key={offer} className="text-sm text-[#C8102E]/80 mt-1">
                         {offer}
                       </p>
                     ))}
@@ -365,7 +373,7 @@ export default async function ShowDetailPage({
           {/* Related Shows */}
           {relatedShows.length > 0 && (
             <div className="mt-16 pt-12 border-t border-gray-200">
-              <h2 className="text-2xl font-bold text-[#333333] font-heading mb-8">
+              <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-8">
                 You Might Also Like
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

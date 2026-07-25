@@ -8,7 +8,16 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
-  --font-heading: var(--font-heading);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
+  --font-heading: var(--font-display);
+  --color-navy: #13264D;
+  --color-navy-deep: #0D1B38;
+  --color-navy-mid: #1B355F;
+  --color-flag-red: #C8102E;
+  --color-flag-red-dark: #A50D26;
+  --color-flag-red-light: #E8555F;
+  --color-paper: #F6F4EF;
   --font-mono: var(--font-geist-mono);
   --color-crimson: #7B1A1A;
   --color-crimson-dark: #5A1212;
@@ -60,24 +69,24 @@
 }
 
 :root {
-  --background: #FFFFFF;
-  --foreground: #333333;
+  --background: #FAF8F3;
+  --foreground: #1A1614;
   --card: #FFFFFF;
-  --card-foreground: #333333;
+  --card-foreground: #1A1614;
   --popover: #FFFFFF;
-  --popover-foreground: #333333;
-  --primary: #7B1A1A;
+  --popover-foreground: #1A1614;
+  --primary: #13264D;
   --primary-foreground: #FFFFFF;
-  --secondary: #FAF8F5;
-  --secondary-foreground: #333333;
-  --muted: #FAF8F5;
-  --muted-foreground: #666666;
-  --accent: #D4A843;
+  --secondary: #F6F4EF;
+  --secondary-foreground: #1A1614;
+  --muted: #F6F4EF;
+  --muted-foreground: #5C6478;
+  --accent: #C8102E;
   --accent-foreground: #FFFFFF;
   --destructive: #C04E0C;
-  --border: #E5E5E5;
-  --input: #E5E5E5;
-  --ring: #7B1A1A;
+  --border: #E4E2DC;
+  --input: #E4E2DC;
+  --ring: #13264D;
   --chart-1: #7B1A1A;
   --chart-2: #D4A843;
   --chart-3: #8B6914;
@@ -139,12 +148,46 @@
     @apply font-sans;
   }
   h1, h2, h3, h4 {
-    font-family: var(--font-heading), serif;
+    font-family: var(--font-display), "Helvetica Neue", sans-serif;
+    letter-spacing: -0.02em;
+  }
+  /* Marquee headings: heavy, tight, slightly condensed by tracking */
+  .marquee {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.015em;
+    line-height: 0.95;
+  }
+  .ozark-serif {
+    font-family: var(--font-serif), Georgia, serif;
+    font-variation-settings: "SOFT" 40, "WONK" 1;
   }
   /* Fix iOS date input rendering with excessive height */
   input[type="date"] {
     -webkit-appearance: none;
     appearance: none;
     min-height: 0;
+  }
+}
+
+/* Partner counter cards are printed on real paper: keep the ink. */
+@media print {
+  @page {
+    margin: 0.4in;
+  }
+  html,
+  body {
+    background: #fff;
+  }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  header,
+  footer,
+  nav,
+  .print\:hidden {
+    display: none !important;
   }
 }

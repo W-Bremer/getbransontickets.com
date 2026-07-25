@@ -15,18 +15,18 @@ export function MarkdownContent({ content }: { content: string }) {
               .toLowerCase()
               .replace(/[^a-z0-9]+/g, "-")
               .replace(/(^-|-$)/g, "")}
-            className="text-2xl sm:text-3xl font-bold mt-12 mb-4 text-[#7B1A1A] font-heading scroll-mt-24"
+            className="text-2xl sm:text-3xl font-bold mt-12 mb-4 text-[#13264D] font-heading scroll-mt-24"
           >
             {children}
           </h2>
         ),
         h3: ({ children }) => (
-          <h3 className="text-xl sm:text-2xl font-bold mt-8 mb-3 text-[#7B1A1A] font-heading">
+          <h3 className="text-xl sm:text-2xl font-bold mt-8 mb-3 text-[#13264D] font-heading">
             {children}
           </h3>
         ),
         h4: ({ children }) => (
-          <h4 className="text-lg font-bold mt-6 mb-2 text-[#7B1A1A]">
+          <h4 className="text-lg font-bold mt-6 mb-2 text-[#13264D]">
             {children}
           </h4>
         ),
@@ -95,7 +95,7 @@ export function MarkdownContent({ content }: { content: string }) {
           <thead className="bg-[#faf8f5]">{children}</thead>
         ),
         th: ({ children }) => (
-          <th className="px-4 py-3 text-left text-sm font-bold text-[#7B1A1A]">
+          <th className="px-4 py-3 text-left text-sm font-bold text-[#13264D]">
             {children}
           </th>
         ),

@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/config";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export const metadata: Metadata = {
-  title: `Refund Policy | ${siteConfig.name}`,
+  title: `Refund Policy`,
   description:
     "Refund and cancellation policy for tickets purchased through GetBransonTickets.com. Learn about cancellation windows, no-show policies, and refund procedures.",
 };
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RefundPolicyPage() {
   return (
     <>
-      <section className="bg-[#7B1A1A] pt-12 pb-16">
+      <section className="bg-[#13264D] pt-12 pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -31,7 +31,7 @@ export default function RefundPolicyPage() {
       </section>
 
       <section className="py-12 sm:py-16 bg-white">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 prose prose-lg max-w-none prose-headings:text-[#7B1A1A] prose-headings:font-heading">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 prose prose-lg max-w-none prose-headings:text-[#13264D] prose-headings:font-heading">
           <h2>Overview</h2>
           <p>
             {siteConfig.name} is committed to providing a fair and transparent

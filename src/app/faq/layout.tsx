@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: `Frequently Asked Questions | ${siteConfig.name}`,
+  title: `Frequently Asked Questions`,
   description:
     "Get answers to common questions about booking Branson show tickets, attractions, parking, group discounts, and planning your Branson, Missouri vacation.",
   openGraph: {

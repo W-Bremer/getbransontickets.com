@@ -124,6 +124,20 @@ export function getGuideCategory(slug: string): PassportCategory | undefined {
   return passportCategories.find((c) => c.slug === slug && c.isGuideCategory);
 }
 
+export interface FeaturedDeal {
+  name: string;
+  href: string;
+  imageUrl: string;
+  imageAlt: string;
+  /** Short badge, e.g. "Save 15%" or "Free dessert". */
+  badge: string;
+  blurb: string;
+  priceFrom?: number;
+  /** Struck-through comparison price when the deal is a discount. */
+  wasPrice?: number;
+  isExclusive?: boolean;
+}
+
 export function getPlacesByCategory(slug: PassportCategorySlug): PassportPlace[] {
   return passportPlaces.filter((p) => p.category === slug);
 }

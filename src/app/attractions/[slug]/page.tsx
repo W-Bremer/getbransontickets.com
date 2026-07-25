@@ -40,9 +40,10 @@ export async function generateMetadata({
   const primaryKeyword = attraction.targetKeywords[0] || attraction.name;
 
   return {
-    title: `${attraction.name} Branson 2026 | Tickets from $${attraction.adultPrice} | ${siteConfig.name}`,
+    title: `${attraction.name} Branson 2026 | Tickets from $${attraction.adultPrice}`,
     description: `${attraction.shortDescription} Tickets from $${attraction.adultPrice}. Rated ${attraction.rating}/5 stars (${attraction.reviewCount.toLocaleString()} reviews). Hours, pricing, photos & FAQs.`,
     keywords: attraction.targetKeywords,
+    alternates: { canonical: `${siteConfig.url}/attractions/${attraction.slug}` },
     openGraph: {
       title: `${attraction.name} Branson 2026 | Tickets & Info`,
       description: `Visit ${attraction.name} in Branson, MO. ${attraction.shortDescription}`,
@@ -107,13 +108,6 @@ export default async function AttractionDetailPage({
       postalCode: "65616",
       addressCountry: "US",
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: attraction.rating,
-      reviewCount: attraction.reviewCount,
-      bestRating: 5,
-      worstRating: 1,
-    },
     geo: {
       "@type": "GeoCoordinates",
       url: attraction.mapUrl,
@@ -133,12 +127,6 @@ export default async function AttractionDetailPage({
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
       url: `${siteConfig.url}/attractions/${attraction.slug}`,
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: attraction.rating,
-      reviewCount: attraction.reviewCount,
-      bestRating: 5,
     },
   };
 
@@ -172,7 +160,7 @@ export default async function AttractionDetailPage({
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#5A1212] via-[#5A1212]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B38] via-[#0D1B38]/50 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 pb-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Breadcrumbs
@@ -186,7 +174,7 @@ export default async function AttractionDetailPage({
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-heading">
               {attraction.name}
             </h1>
-            <p className="mt-2 text-lg text-[#D4A843] font-medium">
+            <p className="mt-2 text-lg text-[#E8C65A] font-medium">
               {attraction.tagline}
             </p>
             <div className="mt-3 flex items-center gap-2">
@@ -196,7 +184,7 @@ export default async function AttractionDetailPage({
                     key={i}
                     className={`w-5 h-5 ${
                       i < Math.round(attraction.rating)
-                        ? "fill-[#D4A843] text-[#D4A843]"
+                        ? "fill-[#E8C65A] text-[#E8C65A]"
                         : "text-white/30"
                     }`}
                   />
@@ -232,10 +220,10 @@ export default async function AttractionDetailPage({
             <div className="lg:col-span-2 space-y-12">
               {/* Description */}
               <section>
-                <h2 className="text-2xl font-bold text-[#333333] font-heading mb-4">
+                <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
                   About {attraction.name}
                 </h2>
-                <div className="prose prose-lg max-w-none text-[#333333]/80">
+                <div className="prose prose-lg max-w-none text-[#1A1614]/80">
                   {descParagraphs.map((p, i) => (
                     <p key={i} className="mb-4 leading-relaxed">
                       {p}
@@ -246,7 +234,7 @@ export default async function AttractionDetailPage({
 
               {/* Ticket Pricing */}
               <section>
-                <h2 className="text-2xl font-bold text-[#333333] font-heading mb-4">
+                <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
                   Ticket Prices
                 </h2>
                 <TicketPricingTable
@@ -260,7 +248,7 @@ export default async function AttractionDetailPage({
               {/* Photo Gallery */}
               {galleryImages.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-bold text-[#333333] font-heading mb-4">
+                  <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
                     Photos
                   </h2>
                   <PhotoGallery images={galleryImages} />
@@ -270,20 +258,20 @@ export default async function AttractionDetailPage({
               {/* Hours */}
               {attraction.hours.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-bold text-[#333333] font-heading mb-4">
+                  <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
                     Hours of Operation
                   </h2>
                   <div className="overflow-hidden rounded-xl border border-gray-200">
                     <table className="w-full text-left">
                       <thead>
-                        <tr className="bg-[#7B1A1A]/5 border-b border-gray-200">
-                          <th className="px-5 py-3 text-sm font-semibold text-[#333333]">
+                        <tr className="bg-[#13264D]/5 border-b border-gray-200">
+                          <th className="px-5 py-3 text-sm font-semibold text-[#1A1614]">
                             Season
                           </th>
-                          <th className="px-5 py-3 text-sm font-semibold text-[#333333]">
+                          <th className="px-5 py-3 text-sm font-semibold text-[#1A1614]">
                             Days
                           </th>
-                          <th className="px-5 py-3 text-sm font-semibold text-[#333333]">
+                          <th className="px-5 py-3 text-sm font-semibold text-[#1A1614]">
                             Hours
                           </th>
                         </tr>
@@ -298,16 +286,16 @@ export default async function AttractionDetailPage({
                                 : ""
                             }
                           >
-                            <td className="px-5 py-3.5 font-medium text-[#333333]">
+                            <td className="px-5 py-3.5 font-medium text-[#1A1614]">
                               <div className="flex items-center gap-2">
-                                <Clock className="h-4 w-4 text-[#7B1A1A]" />
+                                <Clock className="h-4 w-4 text-[#13264D]" />
                                 {h.season}
                               </div>
                             </td>
-                            <td className="px-5 py-3.5 text-sm text-[#333333]/70">
+                            <td className="px-5 py-3.5 text-sm text-[#1A1614]/70">
                               {h.days}
                             </td>
-                            <td className="px-5 py-3.5 text-sm font-medium text-[#333333]">
+                            <td className="px-5 py-3.5 text-sm font-medium text-[#1A1614]">
                               {h.hours}
                             </td>
                           </tr>
@@ -321,17 +309,17 @@ export default async function AttractionDetailPage({
               {/* Features */}
               {attraction.features.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-bold text-[#333333] font-heading mb-4">
+                  <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
                     Features &amp; Highlights
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {attraction.features.map((feature) => (
                       <div
                         key={feature}
-                        className="flex items-start gap-3 rounded-lg bg-[#FAF8F5] p-3"
+                        className="flex items-start gap-3 rounded-lg bg-[#F6F4EF] p-3"
                       >
-                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8B6914]" />
-                        <span className="text-sm font-medium text-[#333333]">
+                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#C8102E]" />
+                        <span className="text-sm font-medium text-[#1A1614]">
                           {feature}
                         </span>
                       </div>
@@ -350,37 +338,37 @@ export default async function AttractionDetailPage({
 
               {/* Location */}
               <section>
-                <h2 className="text-2xl font-bold text-[#333333] font-heading mb-4">
+                <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
                   Location &amp; Contact
                 </h2>
-                <div className="rounded-xl bg-[#FAF8F5] p-6 space-y-3">
+                <div className="rounded-xl bg-[#F6F4EF] p-6 space-y-3">
                   <div className="flex items-start gap-3">
-                    <MapPin className="mt-0.5 h-5 w-5 text-[#D4A843]" />
+                    <MapPin className="mt-0.5 h-5 w-5 text-[#E8C65A]" />
                     <div>
-                      <p className="font-semibold text-[#333333]">
+                      <p className="font-semibold text-[#1A1614]">
                         {attraction.name}
                       </p>
-                      <p className="text-sm text-[#333333]/70">
+                      <p className="text-sm text-[#1A1614]/70">
                         {attraction.address}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Phone className="h-5 w-5 text-[#7B1A1A]" />
+                    <Phone className="h-5 w-5 text-[#13264D]" />
                     <a
                       href={`tel:${attraction.phone.replace(/[^0-9+]/g, "")}`}
-                      className="text-sm font-medium text-[#7B1A1A] hover:underline"
+                      className="text-sm font-medium text-[#13264D] hover:underline"
                     >
                       {attraction.phone}
                     </a>
                   </div>
                   <div className="flex items-center gap-3">
-                    <ExternalLink className="h-5 w-5 text-[#7B1A1A]" />
+                    <ExternalLink className="h-5 w-5 text-[#13264D]" />
                     <a
                       href={attraction.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-medium text-[#7B1A1A] hover:underline"
+                      className="text-sm font-medium text-[#13264D] hover:underline"
                     >
                       Official Website
                     </a>
@@ -389,7 +377,7 @@ export default async function AttractionDetailPage({
                     href={attraction.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 text-[#D4A843] hover:text-[#C04E0C] font-semibold text-sm transition-colors"
+                    className="mt-3 inline-flex items-center gap-1 text-[#E8C65A] hover:text-[#C04E0C] font-semibold text-sm transition-colors"
                   >
                     Get Directions &rarr;
                   </a>
@@ -399,7 +387,7 @@ export default async function AttractionDetailPage({
               {/* Related Shows */}
               {relatedShows.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-bold text-[#333333] font-heading mb-6">
+                  <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-6">
                     Related Shows
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -408,7 +396,7 @@ export default async function AttractionDetailPage({
                         <Link
                           key={show.slug}
                           href={`/shows/${show.slug}`}
-                          className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all hover:shadow-md hover:border-[#7B1A1A]/30"
+                          className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all hover:shadow-md hover:border-[#13264D]/30"
                         >
                           <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-lg">
                             <Image
@@ -420,13 +408,13 @@ export default async function AttractionDetailPage({
                             />
                           </div>
                           <div className="min-w-0">
-                            <h3 className="font-bold text-[#333333] group-hover:text-[#7B1A1A] transition-colors truncate">
+                            <h3 className="font-bold text-[#1A1614] group-hover:text-[#13264D] transition-colors truncate">
                               {show.name}
                             </h3>
-                            <p className="mt-0.5 text-sm text-[#333333]/60 line-clamp-1">
+                            <p className="mt-0.5 text-sm text-[#1A1614]/60 line-clamp-1">
                               {show.theater}
                             </p>
-                            <p className="mt-1 text-sm font-semibold text-[#D4A843]">
+                            <p className="mt-1 text-sm font-semibold text-[#E8C65A]">
                               From ${show.priceFrom}
                             </p>
                           </div>
@@ -440,7 +428,7 @@ export default async function AttractionDetailPage({
               {/* Related Attractions */}
               {related.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-bold text-[#333333] font-heading mb-6">
+                  <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-6">
                     Related Attractions
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -460,13 +448,13 @@ export default async function AttractionDetailPage({
                           />
                         </div>
                         <div className="p-4">
-                          <h3 className="font-bold text-[#333333] group-hover:text-[#7B1A1A] transition-colors">
+                          <h3 className="font-bold text-[#1A1614] group-hover:text-[#13264D] transition-colors">
                             {r.name}
                           </h3>
-                          <p className="mt-1 text-sm text-[#333333]/60 line-clamp-2">
+                          <p className="mt-1 text-sm text-[#1A1614]/60 line-clamp-2">
                             {r.shortDescription}
                           </p>
-                          <span className="mt-2 inline-block text-sm font-semibold text-[#D4A843]">
+                          <span className="mt-2 inline-block text-sm font-semibold text-[#E8C65A]">
                             From ${r.adultPrice}
                           </span>
                         </div>
@@ -483,13 +471,13 @@ export default async function AttractionDetailPage({
                 {/* Booking Card */}
                 <div className="rounded-2xl border border-gray-200 shadow-lg p-6 bg-white">
                   <div className="text-center">
-                    <span className="text-sm text-[#333333]/60">
+                    <span className="text-sm text-[#1A1614]/60">
                       Tickets from
                     </span>
-                    <div className="text-4xl font-bold text-[#333333] mt-1">
+                    <div className="text-4xl font-bold text-[#1A1614] mt-1">
                       ${Math.min(attraction.adultPrice, attraction.childPrice)}
                     </div>
-                    <span className="text-sm text-[#333333]/50">per person</span>
+                    <span className="text-sm text-[#1A1614]/50">per person</span>
                   </div>
 
                   <div className="mt-6">
@@ -497,7 +485,7 @@ export default async function AttractionDetailPage({
                       href={attraction.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full py-4 bg-[#8B6914] hover:bg-[#8B6914]/90 text-white rounded-xl font-semibold text-lg transition-colors shadow-lg cursor-pointer text-center"
+                      className="block w-full py-4 bg-[#C8102E] hover:bg-[#C8102E]/90 text-white rounded-xl font-semibold text-lg transition-colors shadow-lg cursor-pointer text-center"
                     >
                       Get Tickets
                     </a>
@@ -505,43 +493,43 @@ export default async function AttractionDetailPage({
                   <div className="mt-3">
                     <Link
                       href={`tel:${siteConfig.phoneRaw}`}
-                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-xl font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
+                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#13264D] text-[#13264D] rounded-xl font-semibold hover:bg-[#13264D] hover:text-white transition-all"
                     >
                       Call {siteConfig.phone}
                     </Link>
                   </div>
 
                   <div className="mt-6 space-y-3 text-sm">
-                    <div className="flex justify-between text-[#333333]/70">
+                    <div className="flex justify-between text-[#1A1614]/70">
                       <span>Rating</span>
-                      <span className="flex items-center gap-1 font-medium text-[#333333]">
-                        <Star className="w-4 h-4 fill-[#D4A843] text-[#D4A843]" />
+                      <span className="flex items-center gap-1 font-medium text-[#1A1614]">
+                        <Star className="w-4 h-4 fill-[#E8C65A] text-[#E8C65A]" />
                         {attraction.rating} (
                         {attraction.reviewCount.toLocaleString()})
                       </span>
                     </div>
-                    <div className="flex justify-between text-[#333333]/70">
+                    <div className="flex justify-between text-[#1A1614]/70">
                       <span>Type</span>
-                      <span className="font-medium text-[#333333] capitalize">
+                      <span className="font-medium text-[#1A1614] capitalize">
                         {attraction.type.replace("-", " ")}
                       </span>
                     </div>
-                    <div className="flex justify-between text-[#333333]/70">
+                    <div className="flex justify-between text-[#1A1614]/70">
                       <span>Adult</span>
-                      <span className="font-medium text-[#333333]">
+                      <span className="font-medium text-[#1A1614]">
                         ${attraction.adultPrice}
                       </span>
                     </div>
-                    <div className="flex justify-between text-[#333333]/70">
+                    <div className="flex justify-between text-[#1A1614]/70">
                       <span>Child</span>
-                      <span className="font-medium text-[#333333]">
+                      <span className="font-medium text-[#1A1614]">
                         ${attraction.childPrice}
                       </span>
                     </div>
                     {attraction.seniorPrice && (
-                      <div className="flex justify-between text-[#333333]/70">
+                      <div className="flex justify-between text-[#1A1614]/70">
                         <span>Senior</span>
-                        <span className="font-medium text-[#333333]">
+                        <span className="font-medium text-[#1A1614]">
                           ${attraction.seniorPrice}
                         </span>
                       </div>
@@ -550,12 +538,12 @@ export default async function AttractionDetailPage({
                 </div>
 
                 {/* Quick Links */}
-                <div className="rounded-xl bg-[#FAF8F5] p-4 space-y-2">
+                <div className="rounded-xl bg-[#F6F4EF] p-4 space-y-2">
                   <a
                     href={attraction.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
+                    className="flex items-center gap-2 text-sm font-medium text-[#13264D] hover:text-[#0D1B38] transition-colors"
                   >
                     <ExternalLink className="h-4 w-4" />
                     Official Website
@@ -564,14 +552,14 @@ export default async function AttractionDetailPage({
                     href={attraction.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
+                    className="flex items-center gap-2 text-sm font-medium text-[#13264D] hover:text-[#0D1B38] transition-colors"
                   >
                     <MapPin className="h-4 w-4" />
                     View on Map
                   </a>
                   <a
                     href={`tel:${attraction.phone.replace(/[^0-9+]/g, "")}`}
-                    className="flex items-center gap-2 text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
+                    className="flex items-center gap-2 text-sm font-medium text-[#13264D] hover:text-[#0D1B38] transition-colors"
                   >
                     <Phone className="h-4 w-4" />
                     {attraction.phone}

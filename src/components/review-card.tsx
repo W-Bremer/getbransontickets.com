@@ -26,9 +26,9 @@ export function ReviewCard({
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h4 className="font-semibold text-[#333333]">{name}</h4>
+            <h4 className="font-semibold text-[#1A1614]">{name}</h4>
             {verified && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#8B6914]/10 px-2 py-0.5 text-xs font-medium text-[#8B6914]">
+              <span className="inline-flex items-center gap-1 rounded-full bg-[#C8102E]/10 px-2 py-0.5 text-xs font-medium text-[#C8102E]">
                 <CheckCircle className="h-3 w-3" />
                 Verified Booking
               </span>
@@ -46,19 +46,19 @@ export function ReviewCard({
           <Star
             key={`full-${i}`}
             size={16}
-            className="fill-[#D4A843] text-[#D4A843]"
+            className="fill-[#E8C65A] text-[#E8C65A]"
           />
         ))}
         {Array.from({ length: emptyStars }).map((_, i) => (
           <Star
             key={`empty-${i}`}
             size={16}
-            className="text-[#D4A843]/30"
+            className="text-[#E8C65A]/30"
           />
         ))}
       </div>
 
-      <p className="mt-3 text-sm leading-relaxed text-[#333333]/80">{text}</p>
+      <p className="mt-3 text-sm leading-relaxed text-[#1A1614]/80">{text}</p>
     </div>
   );
 }

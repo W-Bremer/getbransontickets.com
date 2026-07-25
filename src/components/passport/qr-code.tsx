@@ -1,18 +1,15 @@
-import QRCode from "qrcode";
+import { brandedQrSvg, qrSvg } from "@/lib/qr";
 
 interface QrCodeProps {
   value: string;
   className?: string;
+  /** Adds the Tix Branson star badge in the center. */
+  branded?: boolean;
 }
 
 /** Server-rendered QR code (SVG, no client JS). */
-export async function QrCode({ value, className }: QrCodeProps) {
-  const svg = await QRCode.toString(value, {
-    type: "svg",
-    errorCorrectionLevel: "M",
-    margin: 1,
-    color: { dark: "#13264D", light: "#FFFFFF" },
-  });
+export async function QrCode({ value, className, branded = true }: QrCodeProps) {
+  const svg = branded ? await brandedQrSvg(value) : await qrSvg(value);
 
   return (
     <div

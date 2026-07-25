@@ -89,14 +89,14 @@ export function TestimonialCarousel({ className }: TestimonialCarouselProps) {
                 key={i}
                 className="flex-[0_0_100%] min-w-0 pl-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
               >
-                <div className="h-full rounded-2xl border border-gray-100 bg-[#FAF8F5] p-6 flex flex-col">
-                  <Quote className="h-8 w-8 text-[#7B1A1A]/20 mb-3 shrink-0" />
-                  <p className="text-[#333333]/80 text-sm leading-relaxed flex-1">
+                <div className="h-full rounded-2xl border border-gray-100 bg-[#F6F4EF] p-6 flex flex-col">
+                  <Quote className="h-8 w-8 text-[#13264D]/20 mb-3 shrink-0" />
+                  <p className="text-[#1A1614]/80 text-sm leading-relaxed flex-1">
                     &ldquo;{t.text}&rdquo;
                   </p>
                   <div className="mt-4 pt-4 border-t border-gray-200">
                     <RatingDisplay rating={t.rating} showCount={false} size="sm" />
-                    <p className="mt-1.5 font-semibold text-[#333333] text-sm">
+                    <p className="mt-1.5 font-semibold text-[#1A1614] text-sm">
                       {t.name}
                     </p>
                     <p className="text-xs text-gray-500">{t.location}</p>
@@ -116,8 +116,8 @@ export function TestimonialCarousel({ className }: TestimonialCarouselProps) {
               className={cn(
                 "h-2.5 rounded-full transition-all duration-300",
                 i === selectedIndex
-                  ? "w-8 bg-[#7B1A1A]"
-                  : "w-2.5 bg-[#7B1A1A]/20 hover:bg-[#7B1A1A]/40"
+                  ? "w-8 bg-[#13264D]"
+                  : "w-2.5 bg-[#13264D]/20 hover:bg-[#13264D]/40"
               )}
               aria-label={`Go to testimonial ${i + 1}`}
             />

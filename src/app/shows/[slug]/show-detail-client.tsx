@@ -117,7 +117,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
           <div className="space-y-10">
             {/* Description */}
             <div>
-              <h2 className="text-2xl font-bold text-[#333333] font-heading mb-4">
+              <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
                 About {show.name}
               </h2>
               <div className="prose prose-lg max-w-none text-gray-700">
@@ -126,43 +126,43 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
             </div>
 
             {/* Quick Facts Card */}
-            <div className="rounded-xl bg-[#FAF8F5] border border-gray-100 p-6">
-              <h3 className="text-lg font-bold text-[#333333] mb-4">Quick Facts</h3>
+            <div className="rounded-xl bg-[#F6F4EF] border border-gray-100 p-6">
+              <h3 className="text-lg font-bold text-[#1A1614] mb-4">Quick Facts</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-center gap-3">
-                  <Clock className="w-5 h-5 text-[#7B1A1A]" />
+                  <Clock className="w-5 h-5 text-[#13264D]" />
                   <div>
                     <span className="text-sm text-gray-500">Duration: </span>
-                    <span className="text-sm font-semibold text-[#333333]">{show.duration}</span>
+                    <span className="text-sm font-semibold text-[#1A1614]">{show.duration}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-[#7B1A1A]" />
+                  <Users className="w-5 h-5 text-[#13264D]" />
                   <div>
                     <span className="text-sm text-gray-500">Ages: </span>
-                    <span className="text-sm font-semibold text-[#333333]">{show.ageRecommendation}</span>
+                    <span className="text-sm font-semibold text-[#1A1614]">{show.ageRecommendation}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <CalendarDays className="w-5 h-5 text-[#7B1A1A]" />
+                  <CalendarDays className="w-5 h-5 text-[#13264D]" />
                   <div>
                     <span className="text-sm text-gray-500">Season: </span>
-                    <span className="text-sm font-semibold text-[#333333]">{show.seasonStart} – {show.seasonEnd}</span>
+                    <span className="text-sm font-semibold text-[#1A1614]">{show.seasonStart} – {show.seasonEnd}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-[#7B1A1A]" />
+                  <MapPin className="w-5 h-5 text-[#13264D]" />
                   <div>
                     <span className="text-sm text-gray-500">Theater: </span>
-                    <span className="text-sm font-semibold text-[#333333]">{show.theater}</span>
+                    <span className="text-sm font-semibold text-[#1A1614]">{show.theater}</span>
                   </div>
                 </div>
               </div>
               {show.mealIncluded && (
                 <div className="mt-4 flex items-center gap-3 pt-4 border-t border-gray-200">
-                  <UtensilsCrossed className="w-5 h-5 text-[#D4A843]" />
+                  <UtensilsCrossed className="w-5 h-5 text-[#E8C65A]" />
                   <div>
-                    <span className="text-sm font-semibold text-[#D4A843]">{show.mealType} Included</span>
+                    <span className="text-sm font-semibold text-[#E8C65A]">{show.mealType} Included</span>
                     <span className="text-sm text-gray-500"> with your ticket</span>
                   </div>
                 </div>
@@ -171,13 +171,13 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
 
             {/* Show Times */}
             <div>
-              <h3 className="text-lg font-bold text-[#333333] mb-4">Show Times</h3>
-              <div className="p-6 rounded-xl bg-[#FAF8F5] border border-gray-100">
+              <h3 className="text-lg font-bold text-[#1A1614] mb-4">Show Times</h3>
+              <div className="p-6 rounded-xl bg-[#F6F4EF] border border-gray-100">
                 <div className="flex flex-wrap gap-3">
                   {show.showTimes.map((time) => (
                     <span
                       key={time}
-                      className="px-4 py-2 rounded-lg bg-[#7B1A1A] text-white font-medium"
+                      className="px-4 py-2 rounded-lg bg-[#13264D] text-white font-medium"
                     >
                       {time}
                     </span>
@@ -196,15 +196,15 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
 
             {/* Special Offers */}
             {show.specialOffers.length > 0 && (
-              <div className="rounded-xl bg-[#8B6914]/5 border border-[#8B6914]/20 p-6">
-                <h3 className="text-lg font-bold text-[#8B6914] mb-3 flex items-center gap-2">
+              <div className="rounded-xl bg-[#C8102E]/5 border border-[#C8102E]/20 p-6">
+                <h3 className="text-lg font-bold text-[#C8102E] mb-3 flex items-center gap-2">
                   <Tag className="w-5 h-5" />
                   Special Offers
                 </h3>
                 <ul className="space-y-2">
                   {show.specialOffers.map((offer) => (
-                    <li key={offer} className="flex items-center gap-2 text-[#333333]">
-                      <span className="w-2 h-2 rounded-full bg-[#8B6914] shrink-0" />
+                    <li key={offer} className="flex items-center gap-2 text-[#1A1614]">
+                      <span className="w-2 h-2 rounded-full bg-[#C8102E] shrink-0" />
                       {offer}
                     </li>
                   ))}
@@ -225,7 +225,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
         {/* ===== Schedule Tab ===== */}
         {activeTab === "schedule" && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-[#333333] font-heading">
+            <h2 className="text-2xl font-bold text-[#1A1614] font-heading">
               {show.name} Schedule & Availability
             </h2>
             <p className="text-gray-600">
@@ -238,8 +238,8 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
               pricePerAdult={show.priceFrom}
               darkDays={show.darkDays}
             />
-            <div className="rounded-xl bg-[#FAF8F5] border border-gray-100 p-6">
-              <h3 className="text-lg font-bold text-[#333333] mb-2">Season Information</h3>
+            <div className="rounded-xl bg-[#F6F4EF] border border-gray-100 p-6">
+              <h3 className="text-lg font-bold text-[#1A1614] mb-2">Season Information</h3>
               <p className="text-gray-600 text-sm">
                 {show.name} runs from <strong>{show.seasonStart}</strong> through{" "}
                 <strong>{show.seasonEnd}</strong>.
@@ -255,7 +255,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
         {activeTab === "reviews" && (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-bold text-[#333333] font-heading">
+              <h2 className="text-2xl font-bold text-[#1A1614] font-heading">
                 Guest Reviews
               </h2>
               <div className="mt-3 flex items-center gap-4">
@@ -265,13 +265,13 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                       key={i}
                       className={`w-6 h-6 ${
                         i < Math.round(show.rating)
-                          ? "text-[#D4A843] fill-[#D4A843]"
+                          ? "text-[#E8C65A] fill-[#E8C65A]"
                           : "text-gray-300"
                       }`}
                     />
                   ))}
                 </div>
-                <span className="text-lg font-bold text-[#333333]">{show.rating}</span>
+                <span className="text-lg font-bold text-[#1A1614]">{show.rating}</span>
                 <span className="text-gray-500">
                   Based on {show.reviewCount.toLocaleString()} reviews
                 </span>
@@ -279,8 +279,8 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
             </div>
 
             {/* Rating Breakdown */}
-            <div className="rounded-xl bg-[#FAF8F5] border border-gray-100 p-6">
-              <h3 className="text-sm font-bold text-[#333333] mb-3">Rating Breakdown</h3>
+            <div className="rounded-xl bg-[#F6F4EF] border border-gray-100 p-6">
+              <h3 className="text-sm font-bold text-[#1A1614] mb-3">Rating Breakdown</h3>
               {[5, 4, 3, 2, 1].map((stars) => {
                 const pct =
                   stars === 5
@@ -297,7 +297,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                     <span className="text-sm text-gray-600 w-12">{stars} star</span>
                     <div className="flex-1 h-2.5 bg-gray-200 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-[#D4A843] rounded-full"
+                        className="h-full bg-[#E8C65A] rounded-full"
                         style={{ width: `${pct}%` }}
                       />
                     </div>
@@ -322,19 +322,19 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                             key={j}
                             className={`w-4 h-4 ${
                               j < review.rating
-                                ? "text-[#D4A843] fill-[#D4A843]"
+                                ? "text-[#E8C65A] fill-[#E8C65A]"
                                 : "text-gray-300"
                             }`}
                           />
                         ))}
                       </div>
-                      <h4 className="font-bold text-[#333333]">{review.title}</h4>
+                      <h4 className="font-bold text-[#1A1614]">{review.title}</h4>
                     </div>
                     <span className="text-xs text-gray-400">{review.date}</span>
                   </div>
                   <p className="text-gray-700 text-sm leading-relaxed">{review.body}</p>
                   <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
-                    <span className="font-medium text-[#333333]">{review.name}</span>
+                    <span className="font-medium text-[#1A1614]">{review.name}</span>
                     <span>&middot;</span>
                     <span>{review.location}</span>
                   </div>
@@ -347,24 +347,24 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
         {/* ===== Location Tab ===== */}
         {activeTab === "location" && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-[#333333] font-heading">
+            <h2 className="text-2xl font-bold text-[#1A1614] font-heading">
               Theater Location
             </h2>
-            <div className="rounded-xl bg-[#FAF8F5] border border-gray-100 p-6">
+            <div className="rounded-xl bg-[#F6F4EF] border border-gray-100 p-6">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#7B1A1A]/10 flex items-center justify-center shrink-0">
-                  <MapPin className="w-6 h-6 text-[#7B1A1A]" />
+                <div className="w-12 h-12 rounded-xl bg-[#13264D]/10 flex items-center justify-center shrink-0">
+                  <MapPin className="w-6 h-6 text-[#13264D]" />
                 </div>
                 <div>
                   {theaterSlug ? (
                     <Link
                       href={`/theaters/${theaterSlug}`}
-                      className="text-xl font-bold text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
+                      className="text-xl font-bold text-[#13264D] hover:text-[#0D1B38] transition-colors"
                     >
                       {show.theater}
                     </Link>
                   ) : (
-                    <p className="text-xl font-bold text-[#333333]">{show.theater}</p>
+                    <p className="text-xl font-bold text-[#1A1614]">{show.theater}</p>
                   )}
                   <p className="text-gray-600 mt-1">{show.theaterAddress}</p>
                 </div>
@@ -377,7 +377,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#7B1A1A] text-white font-medium text-sm hover:bg-[#5A1212] transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#13264D] text-white font-medium text-sm hover:bg-[#0D1B38] transition-colors"
                 >
                   <MapPin className="w-4 h-4" />
                   Get Directions
@@ -385,7 +385,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                 {theaterSlug && (
                   <Link
                     href={`/theaters/${theaterSlug}`}
-                    className="inline-flex items-center gap-1 px-5 py-2.5 rounded-lg border-2 border-[#7B1A1A] text-[#7B1A1A] font-medium text-sm hover:bg-[#7B1A1A] hover:text-white transition-all"
+                    className="inline-flex items-center gap-1 px-5 py-2.5 rounded-lg border-2 border-[#13264D] text-[#13264D] font-medium text-sm hover:bg-[#13264D] hover:text-white transition-all"
                   >
                     View Theater Details <ChevronRight className="w-4 h-4" />
                   </Link>
@@ -397,7 +397,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
             <div className="rounded-xl border border-gray-200 overflow-hidden">
               <div className="bg-gray-100 h-64 flex items-center justify-center">
                 <div className="text-center">
-                  <MapPin className="w-10 h-10 text-[#7B1A1A] mx-auto mb-2" />
+                  <MapPin className="w-10 h-10 text-[#13264D] mx-auto mb-2" />
                   <p className="text-sm text-gray-500">{show.theater}</p>
                   <p className="text-xs text-gray-400 mt-1">{show.theaterAddress}</p>
                   <a
@@ -406,7 +406,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block mt-3 text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212]"
+                    className="inline-block mt-3 text-sm font-medium text-[#13264D] hover:text-[#0D1B38]"
                   >
                     Open in Google Maps
                   </a>
@@ -415,19 +415,19 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
             </div>
 
             {/* Getting There */}
-            <div className="rounded-xl bg-[#FAF8F5] border border-gray-100 p-6">
-              <h3 className="text-lg font-bold text-[#333333] mb-3">Getting There</h3>
+            <div className="rounded-xl bg-[#F6F4EF] border border-gray-100 p-6">
+              <h3 className="text-lg font-bold text-[#1A1614] mb-3">Getting There</h3>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#7B1A1A] mt-2 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#13264D] mt-2 shrink-0" />
                   Located on the famous 76 Country Boulevard (Highway 76) in Branson, MO.
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#7B1A1A] mt-2 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#13264D] mt-2 shrink-0" />
                   Free parking is available at the theater. Arrive 30 minutes early for best seating.
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#7B1A1A] mt-2 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#13264D] mt-2 shrink-0" />
                   The theater is wheelchair accessible with designated parking spots near the entrance.
                 </li>
               </ul>
@@ -438,17 +438,17 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
         {/* ===== Menu Tab (Dinner Shows Only) ===== */}
         {activeTab === "menu" && isDinnerShow && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-[#333333] font-heading">
+            <h2 className="text-2xl font-bold text-[#1A1614] font-heading">
               {show.mealType} Menu
             </h2>
             <p className="text-gray-600">
               Your {show.mealType?.toLowerCase()} is included with every ticket to {show.name}.
               Enjoy a delicious meal before the show begins.
             </p>
-            <div className="rounded-xl bg-[#FAF8F5] border border-gray-100 p-6">
+            <div className="rounded-xl bg-[#F6F4EF] border border-gray-100 p-6">
               <div className="flex items-center gap-3 mb-4">
-                <UtensilsCrossed className="w-6 h-6 text-[#D4A843]" />
-                <h3 className="text-lg font-bold text-[#333333]">
+                <UtensilsCrossed className="w-6 h-6 text-[#E8C65A]" />
+                <h3 className="text-lg font-bold text-[#1A1614]">
                   {show.mealType} Included with Your Ticket
                 </h3>
               </div>
@@ -457,7 +457,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                 sides, and desserts. Vegetarian and gluten-free options are available upon request.
                 Please inform staff of any dietary restrictions when you arrive.
               </p>
-              <div className="mt-4 p-4 rounded-lg bg-[#D4A843]/5 border border-[#D4A843]/20">
+              <div className="mt-4 p-4 rounded-lg bg-[#E8C65A]/5 border border-[#E8C65A]/20">
                 <p className="text-sm text-[#C04E0C] font-medium">
                   Tip: {show.mealType} is served before the show. Doors typically open 60-90
                   minutes before showtime for dinner seating.

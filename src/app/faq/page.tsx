@@ -170,7 +170,7 @@ export default function FAQPage() {
       <JsonLd data={faqSchema} />
 
       {/* Header */}
-      <section className="bg-[#7B1A1A] pt-12 pb-16">
+      <section className="bg-[#13264D] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav className="text-sm text-white/60 mb-6">
             <Link href="/" className="hover:text-[#d4a843] transition-colors">
@@ -197,7 +197,7 @@ export default function FAQPage() {
               onClick={() => setActiveCategory("all")}
               className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                 activeCategory === "all"
-                  ? "bg-[#7B1A1A] text-white"
+                  ? "bg-[#13264D] text-white"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
@@ -209,7 +209,7 @@ export default function FAQPage() {
                 onClick={() => setActiveCategory(cat.name)}
                 className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                   activeCategory === cat.name
-                    ? "bg-[#7B1A1A] text-white"
+                    ? "bg-[#13264D] text-white"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
@@ -225,7 +225,7 @@ export default function FAQPage() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-10">
           {displayCategories.map((category) => (
             <div key={category.name}>
-              <h2 className="text-xl font-bold text-[#7B1A1A] font-heading mb-4">
+              <h2 className="text-xl font-bold text-[#13264D] font-heading mb-4">
                 {category.name}
               </h2>
               <div className="space-y-2">
@@ -240,7 +240,7 @@ export default function FAQPage() {
                         onClick={() => toggleItem(faq.question)}
                         className="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-gray-50 transition-colors"
                       >
-                        <span className="font-semibold text-[#7B1A1A]">
+                        <span className="font-semibold text-[#13264D]">
                           {faq.question}
                         </span>
                         <ChevronDown
@@ -266,7 +266,7 @@ export default function FAQPage() {
       {/* CTA */}
       <section className="py-12 sm:py-16 bg-[#faf8f5]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading">
+          <h2 className="text-2xl font-bold text-[#13264D] font-heading">
             Still Have Questions?
           </h2>
           <p className="mt-3 text-gray-600">
@@ -281,7 +281,7 @@ export default function FAQPage() {
             </Link>
             <Link
               href={`tel:${siteConfig.phoneRaw}`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#7B1A1A] text-[#7B1A1A] rounded-lg font-semibold hover:bg-[#7B1A1A] hover:text-white transition-all"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#13264D] text-[#13264D] rounded-lg font-semibold hover:bg-[#13264D] hover:text-white transition-all"
             >
               Call {siteConfig.phone}
             </Link>

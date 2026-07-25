@@ -27,7 +27,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#333333]">
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1614]">
                 Most Popular Shows
               </h2>
               <p className="mt-3 text-lg text-gray-500">
@@ -37,7 +37,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/shows"
-              className="hidden sm:inline-flex items-center gap-2 text-[#7B1A1A] hover:text-[#5A1212] font-semibold transition-colors"
+              className="hidden sm:inline-flex items-center gap-2 text-[#13264D] hover:text-[#0D1B38] font-semibold transition-colors"
             >
               View All Shows →
             </Link>
@@ -50,7 +50,7 @@ export default function HomePage() {
           <div className="mt-8 text-center sm:hidden">
             <Link
               href="/shows"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#8B6914] text-white rounded-lg font-semibold hover:bg-[#6B5210] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#C8102E] text-white rounded-lg font-semibold hover:bg-[#A50D26] transition-colors"
             >
               View All Shows →
             </Link>
@@ -59,7 +59,7 @@ export default function HomePage() {
       </section>
 
       {/* BOGO Deals Callout */}
-      <section className="py-12 sm:py-16 bg-gradient-to-r from-[#D4A843] to-[#D4A843]">
+      <section className="py-12 sm:py-16 bg-gradient-to-r from-[#E8C65A] to-[#E8C65A]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
@@ -77,7 +77,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/deals"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#D4A843] rounded-xl font-semibold text-lg hover:bg-gray-50 transition-colors shadow-lg whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#E8C65A] rounded-xl font-semibold text-lg hover:bg-gray-50 transition-colors shadow-lg whitespace-nowrap"
             >
               View All Deals
             </Link>
@@ -156,7 +156,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#333333]">
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1614]">
                 Top Branson Attractions
               </h2>
               <p className="mt-3 text-lg text-gray-500">
@@ -165,7 +165,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/attractions"
-              className="hidden sm:inline-flex items-center gap-2 text-[#7B1A1A] hover:text-[#5A1212] font-semibold transition-colors"
+              className="hidden sm:inline-flex items-center gap-2 text-[#13264D] hover:text-[#0D1B38] font-semibold transition-colors"
             >
               View All Attractions →
             </Link>
@@ -186,19 +186,19 @@ export default function HomePage() {
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     />
-                    <div className="absolute top-3 left-3 rounded-full bg-[#7B1A1A] px-3 py-1 text-xs font-semibold text-white capitalize">
+                    <div className="absolute top-3 left-3 rounded-full bg-[#13264D] px-3 py-1 text-xs font-semibold text-white capitalize">
                       {attraction.type.replace("-", " ")}
                     </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="font-bold text-[#333333] group-hover:text-[#7B1A1A] transition-colors">
+                    <h3 className="font-bold text-[#1A1614] group-hover:text-[#13264D] transition-colors">
                       {attraction.name}
                     </h3>
                     <p className="mt-1 text-sm text-gray-500 line-clamp-2">
                       {attraction.shortDescription}
                     </p>
                     <div className="mt-2 flex items-center justify-between">
-                      <span className="text-sm font-semibold text-[#8B6914]">
+                      <span className="text-sm font-semibold text-[#C8102E]">
                         From ${attraction.adultPrice}
                       </span>
                       <span className="text-sm text-gray-400">
@@ -213,7 +213,7 @@ export default function HomePage() {
           <div className="mt-8 text-center sm:hidden">
             <Link
               href="/attractions"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#7B1A1A] text-white rounded-lg font-semibold hover:bg-[#5A1212] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#13264D] text-white rounded-lg font-semibold hover:bg-[#0D1B38] transition-colors"
             >
               View All Attractions →
             </Link>
@@ -225,10 +225,10 @@ export default function HomePage() {
       <TrustBar />
 
       {/* Plan Your Entertainment */}
-      <section className="py-16 sm:py-20 bg-[#FAF8F5]">
+      <section className="py-16 sm:py-20 bg-[#F6F4EF]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#333333]">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1614]">
               Plan Your Branson Entertainment
             </h2>
             <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
@@ -241,12 +241,12 @@ export default function HomePage() {
               href="/shows/schedule"
               className="group rounded-2xl bg-white p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
             >
-              <div className="w-14 h-14 rounded-xl bg-[#7B1A1A] flex items-center justify-center mb-5">
+              <div className="w-14 h-14 rounded-xl bg-[#13264D] flex items-center justify-center mb-5">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#333333] mb-2 group-hover:text-[#7B1A1A] transition-colors">
+              <h3 className="text-xl font-bold text-[#1A1614] mb-2 group-hover:text-[#13264D] transition-colors">
                 Show Schedule
               </h3>
               <p className="text-gray-500">
@@ -257,10 +257,10 @@ export default function HomePage() {
               href="/deals"
               className="group rounded-2xl bg-white p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
             >
-              <div className="w-14 h-14 rounded-xl bg-[#D4A843] flex items-center justify-center mb-5">
+              <div className="w-14 h-14 rounded-xl bg-[#E8C65A] flex items-center justify-center mb-5">
                 <Tag className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-[#333333] mb-2 group-hover:text-[#D4A843] transition-colors">
+              <h3 className="text-xl font-bold text-[#1A1614] mb-2 group-hover:text-[#E8C65A] transition-colors">
                 Deals & Discounts
               </h3>
               <p className="text-gray-500">
@@ -271,12 +271,12 @@ export default function HomePage() {
               href="/plan-your-trip"
               className="group rounded-2xl bg-white p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
             >
-              <div className="w-14 h-14 rounded-xl bg-[#8B6914] flex items-center justify-center mb-5">
+              <div className="w-14 h-14 rounded-xl bg-[#C8102E] flex items-center justify-center mb-5">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#333333] mb-2 group-hover:text-[#8B6914] transition-colors">
+              <h3 className="text-xl font-bold text-[#1A1614] mb-2 group-hover:text-[#C8102E] transition-colors">
                 Plan Your Trip
               </h3>
               <p className="text-gray-500">
@@ -312,7 +312,7 @@ export default function HomePage() {
               </div>
               {/* Content side */}
               <div className="lg:w-1/2 p-8 sm:p-10 lg:p-12 flex flex-col justify-center bg-gradient-to-br from-[#1e3a5f] to-[#152d4a]">
-                <p className="text-[#D4A843] font-semibold text-sm uppercase tracking-wider mb-3">
+                <p className="text-[#E8C65A] font-semibold text-sm uppercase tracking-wider mb-3">
                   Where to Stay in Branson
                 </p>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
@@ -333,7 +333,7 @@ export default function HomePage() {
                     )
                   )}
                 </div>
-                <span className="inline-flex items-center gap-2 text-[#D4A843] font-semibold text-lg group-hover:gap-3 transition-all duration-300">
+                <span className="inline-flex items-center gap-2 text-[#E8C65A] font-semibold text-lg group-hover:gap-3 transition-all duration-300">
                   Browse Vacation Rentals
                   <svg
                     className="w-5 h-5"
@@ -359,7 +359,7 @@ export default function HomePage() {
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#333333]">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1614]">
               What Our Visitors Say
             </h2>
             <p className="mt-4 text-lg text-gray-500">
@@ -374,7 +374,7 @@ export default function HomePage() {
 
       {/* Final CTA */}
       <section className="py-20 sm:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#7B1A1A] to-[#5A1212]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#13264D] to-[#0D1B38]" />
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-5xl font-bold text-white">
             Ready to Experience Branson?
@@ -385,13 +385,13 @@ export default function HomePage() {
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/shows"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#8B6914] text-white rounded-xl font-semibold text-lg hover:bg-[#6B5210] transition-colors shadow-xl"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C8102E] text-white rounded-xl font-semibold text-lg hover:bg-[#A50D26] transition-colors shadow-xl"
             >
               Browse All Shows
             </Link>
             <Link
               href={`tel:${siteConfig.phoneRaw}`}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#7B1A1A] rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors shadow-xl"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#13264D] rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors shadow-xl"
             >
               Call {siteConfig.phone}
             </Link>
@@ -400,9 +400,9 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-16 sm:py-20 bg-[#FAF8F5]">
+      <section className="py-16 sm:py-20 bg-[#F6F4EF]">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#333333]">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1614]">
             Get Branson Deals in Your Inbox
           </h2>
           <p className="mt-3 text-gray-500">

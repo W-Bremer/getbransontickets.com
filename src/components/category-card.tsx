@@ -44,14 +44,14 @@ export function CategoryCard({
       className={cn("group", className)}
     >
       <Link href={`/shows/category/${slug}`} className="block">
-        <div className="relative overflow-hidden rounded-2xl border border-[#7B1A1A]/10 bg-white p-5 sm:p-6 transition-all duration-300 group-hover:scale-[1.02] group-hover:border-[#7B1A1A]/30 group-hover:shadow-xl group-hover:shadow-[#7B1A1A]/5">
-          <div className="mb-3 inline-flex rounded-xl bg-[#7B1A1A] p-3">
+        <div className="relative overflow-hidden rounded-2xl border border-[#13264D]/10 bg-white p-5 sm:p-6 transition-all duration-300 group-hover:scale-[1.02] group-hover:border-[#13264D]/30 group-hover:shadow-xl group-hover:shadow-[#13264D]/5">
+          <div className="mb-3 inline-flex rounded-xl bg-[#13264D] p-3">
             <Icon className="h-5 w-5 text-white" />
           </div>
-          <span className="absolute top-3 right-3 rounded-full bg-[#D4A843]/10 px-2 py-0.5 text-xs font-semibold text-[#D4A843]">
+          <span className="absolute top-3 right-3 rounded-full bg-[#E8C65A]/10 px-2 py-0.5 text-xs font-semibold text-[#E8C65A]">
             {showCount}
           </span>
-          <h3 className="text-sm sm:text-base font-bold text-[#333333] group-hover:text-[#7B1A1A] transition-colors leading-tight">
+          <h3 className="text-sm sm:text-base font-bold text-[#1A1614] group-hover:text-[#13264D] transition-colors leading-tight">
             {name}
           </h3>
           <p className="mt-1 text-xs text-gray-500 line-clamp-2 hidden sm:block">

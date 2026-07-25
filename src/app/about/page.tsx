@@ -1,210 +1,185 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Star, Users, Ticket, Shield } from "lucide-react";
+import { Phone, Mail, MapPin, CalendarCheck, ClipboardList, XCircle } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 import { shows } from "@/data/shows";
+import { attractions } from "@/data/attractions";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
-  title: `About Us | ${siteConfig.name} — Branson's Trusted Ticket Source`,
-  description: `Learn about ${siteConfig.name}, Branson's trusted source for show tickets and entertainment since ${siteConfig.foundedYear}. Over ${siteConfig.showsBooked.toLocaleString()} tickets booked.`,
+  title: "About us and how we check show schedules",
+  description: `How ${siteConfig.name} sources and verifies Branson show information, who to call, and what we do when a show closes or changes venue.`,
+  alternates: { canonical: `${siteConfig.url}/about` },
   openGraph: {
-    title: `About ${siteConfig.name}`,
-    description: `Branson's trusted source for show tickets and entertainment.`,
+    title: `About us`,
+    description: "How we verify Branson show schedules, and who to call.",
     url: `${siteConfig.url}/about`,
     type: "website",
     siteName: siteConfig.name,
   },
 };
 
-const team = [
-  {
-    name: "Sarah Mitchell",
-    role: "Founder & CEO",
-    bio: "Branson native with 15+ years in the entertainment industry. Sarah's passion for live shows drives everything we do.",
-    initials: "SM",
-  },
-  {
-    name: "David Chen",
-    role: "Head of Customer Experience",
-    bio: "Former theater manager who ensures every customer has an unforgettable Branson experience from booking to showtime.",
-    initials: "DC",
-  },
-  {
-    name: "Rachel Thompson",
-    role: "Show Relations Director",
-    bio: "Connects with every theater and performer in Branson to bring you exclusive deals and the latest show information.",
-    initials: "RT",
-  },
-  {
-    name: "Marcus Johnson",
-    role: "Travel & Content Specialist",
-    bio: "Writes our travel guides and show reviews. Has personally attended every show in Branson — some more than once.",
-    initials: "MJ",
-  },
+const removedInLastAudit = [
+  "Southern Raised, no longer in the Little Opry lineup",
+  "Brett Daniels, limited run ended March 8, 2026",
+  "Mountain Ruckus, never a Branson show",
+  "Cassandre's Carpenters show, replaced by a Christmas run",
 ];
 
-const stats = [
-  {
-    value: `${new Date().getFullYear() - siteConfig.foundedYear}+`,
-    label: "Years Serving Branson",
-    icon: Shield,
-  },
-  {
-    value: siteConfig.showsBooked.toLocaleString() + "+",
-    label: "Tickets Booked",
-    icon: Ticket,
-  },
-  {
-    value: siteConfig.averageRating.toString(),
-    label: "Average Rating",
-    icon: Star,
-  },
-  {
-    value: siteConfig.reviewCount.toLocaleString() + "+",
-    label: "Happy Customers",
-    icon: Users,
-  },
+const movedInLastAudit = [
+  ["SIX and Legends in Concert", "Pepsi Legends Theater"],
+  ["Pierce Arrow", "Reza Live Theatre"],
+  ["Patsy Cline & Friends, Rick Thomas, George Dyer, CJ Newsom", "Americana Theatre"],
+  ["The Baldknobbers", "Hughes Brothers Theatre"],
 ];
 
 export default function AboutPage() {
-  const aboutSchema = {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    name: `About ${siteConfig.name}`,
-    description: `Learn about ${siteConfig.name}, Branson's trusted source for show tickets.`,
-    url: `${siteConfig.url}/about`,
-    mainEntity: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      foundingDate: siteConfig.foundedYear.toString(),
-      url: siteConfig.url,
-      telephone: siteConfig.phone,
-    },
-  };
-
   return (
     <>
-      <JsonLd data={aboutSchema} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          name: `About ${siteConfig.name}`,
+          url: `${siteConfig.url}/about`,
+          description:
+            "How GetBransonTickets.com verifies Branson show schedules and venues.",
+          mainEntity: {
+            "@type": "LocalBusiness",
+            name: siteConfig.name,
+            url: siteConfig.url,
+            telephone: siteConfig.phone,
+            email: siteConfig.email,
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Branson",
+              addressRegion: "MO",
+              postalCode: "65616",
+              addressCountry: "US",
+            },
+          },
+        }}
+      />
 
-      {/* Header */}
-      <section className="bg-[#7B1A1A] pt-12 pb-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#13264D] pt-28 pb-14 sm:pt-32">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
               { label: "Home", href: "/" },
               { label: "About", href: "/about" },
             ]}
-            className="text-white/60 mb-6 [&_span]:text-white"
           />
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-heading">
-            About {siteConfig.name}
+          <h1 className="marquee mt-5 text-3xl text-white sm:text-5xl">
+            How we check what we sell
           </h1>
-          <p className="mt-4 text-lg text-white/70 max-w-2xl">
-            Your trusted guide to Branson&apos;s best live entertainment since{" "}
-            {siteConfig.foundedYear}.
+          <p className="mt-5 max-w-2xl text-lg text-white/80">
+            Branson schedules move constantly. Shows change theaters mid-season, close early, or
+            switch to a Christmas run in November. Here is how we keep this site honest about it.
           </p>
         </div>
       </section>
 
-      {/* Story */}
-      <section className="py-16 sm:py-20 bg-white">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading mb-6">
-            Our Story
-          </h2>
-          <div className="prose prose-lg max-w-none text-gray-700">
-            <p>
-              {siteConfig.name} was born from a simple idea: make it easy for
-              families to discover, compare, and book the best shows in Branson,
-              Missouri. As locals who grew up attending shows on the Strip, we
-              know firsthand how overwhelming it can be to choose from {shows.length}+
-              live performances.
-            </p>
-            <p>
-              We started by attending every single show in town, writing honest
-              reviews, and building relationships with theaters and performers
-              across Branson. Today, we&apos;re proud to be the go-to resource
-              for thousands of families planning their Branson entertainment.
-            </p>
-            <p>
-              Whether you&apos;re a first-time visitor or a Branson regular,
-              our team is here to help you find the perfect shows, secure the
-              best deals, and create unforgettable memories in the Live
-              Entertainment Capital of the World.
-            </p>
+      <section className="py-14 sm:py-18">
+        <div className="mx-auto max-w-4xl space-y-12 px-4 sm:px-6 lg:px-8">
+          <div>
+            <h2 className="marquee text-2xl text-[#13264D] sm:text-3xl">What we do</h2>
+            <div className="mt-5 space-y-4 text-lg leading-relaxed text-[#3D4354]">
+              <p>
+                We sell tickets to {shows.length} Branson shows and list {attractions.length}{" "}
+                attractions. We are based in Branson and we answer our own phone.
+              </p>
+              <p>
+                Most ticket sites copy their show data from each other, which is why you can still
+                find pages selling shows that closed two seasons ago. We check ours against the
+                venue.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Mission */}
-      <section className="py-16 sm:py-20 bg-[#faf8f5]">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading mb-6">
-            Our Mission
-          </h2>
-          <p className="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
-            To connect visitors with Branson&apos;s incredible live entertainment
-            by providing trusted reviews, unbeatable deals, and personalized
-            recommendations &mdash; making every Branson trip an unforgettable
-            experience.
-          </p>
-        </div>
-      </section>
-
-      {/* Trust Stats */}
-      <section className="py-16 sm:py-20 bg-[#7B1A1A]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white font-heading">
-              Trusted by Thousands
-            </h2>
-            <p className="mt-3 text-white/60">
-              Numbers that speak for themselves.
+          <div>
+            <h2 className="marquee text-2xl text-[#13264D] sm:text-3xl">Our last audit</h2>
+            <p className="mt-4 flex items-center gap-2 text-[#5C6478]">
+              <CalendarCheck className="h-5 w-5 text-[#C8102E]" />
+              Completed July 2026. Every listing was re-checked against the theater&apos;s own
+              box office calendar or ticketing system.
             </p>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="text-center p-6 rounded-2xl bg-white/5 border border-white/10"
-              >
-                <stat.icon className="w-8 h-8 text-[#d4a843] mx-auto mb-3" />
-                <div className="text-3xl sm:text-4xl font-bold text-white">
-                  {stat.value}
-                </div>
-                <div className="mt-1 text-sm text-white/60">{stat.label}</div>
+
+            <div className="mt-7 grid gap-6 sm:grid-cols-2">
+              <div className="border-t-2 border-[#C8102E] pt-4">
+                <h3 className="flex items-center gap-2 font-display text-base font-bold text-[#13264D]">
+                  <XCircle className="h-4 w-4 text-[#C8102E]" />
+                  Four shows we removed
+                </h3>
+                <ul className="mt-3 space-y-2 text-[#5C6478]">
+                  {removedInLastAudit.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
               </div>
-            ))}
+              <div className="border-t-2 border-[#13264D] pt-4">
+                <h3 className="flex items-center gap-2 font-display text-base font-bold text-[#13264D]">
+                  <ClipboardList className="h-4 w-4 text-[#13264D]" />
+                  Venues we corrected
+                </h3>
+                <ul className="mt-3 space-y-2 text-[#5C6478]">
+                  {movedInLastAudit.map(([who, where]) => (
+                    <li key={who}>
+                      <span className="text-[#13264D]">{who}</span> now at {where}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <p className="mt-6 text-[#5C6478]">
+              We also replaced every third-party aggregator link with the show&apos;s own website,
+              so you can always check our work against the source.
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* Team section removed */}
+          <div>
+            <h2 className="marquee text-2xl text-[#13264D] sm:text-3xl">
+              If something is still wrong
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-[#3D4354]">
+              Schedules change after we publish. If you spot a showtime that does not match the
+              theater, tell us and we will fix it the same day. That is genuinely useful to us.
+            </p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              <a
+                href={`tel:${siteConfig.phoneRaw}`}
+                className="flex items-center gap-3 border border-[#E4E2DC] bg-white p-4 transition-colors hover:border-[#C8102E]"
+              >
+                <Phone className="h-5 w-5 shrink-0 text-[#C8102E]" />
+                <span className="font-semibold text-[#13264D]">{siteConfig.phone}</span>
+              </a>
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="flex items-center gap-3 border border-[#E4E2DC] bg-white p-4 transition-colors hover:border-[#C8102E]"
+              >
+                <Mail className="h-5 w-5 shrink-0 text-[#C8102E]" />
+                <span className="truncate font-semibold text-[#13264D]">{siteConfig.email}</span>
+              </a>
+              <div className="flex items-center gap-3 border border-[#E4E2DC] bg-white p-4">
+                <MapPin className="h-5 w-5 shrink-0 text-[#C8102E]" />
+                <span className="font-semibold text-[#13264D]">{siteConfig.address}</span>
+              </div>
+            </div>
+          </div>
 
-      {/* CTA */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#d4a843] to-[#b8922e]">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white font-heading">
-            Ready to Experience Branson?
-          </h2>
-          <p className="mt-4 text-white/90 text-lg">
-            Let us help you find the perfect shows for your next Branson
-            vacation.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="border-t border-[#E4E2DC] pt-8">
+            <h2 className="marquee text-2xl text-[#13264D] sm:text-3xl">The Branson Passport</h2>
+            <p className="mt-4 text-lg leading-relaxed text-[#3D4354]">
+              Alongside tickets we publish a free local guide: where to eat that is not a chain,
+              what costs nothing, and what is on each season. It is free, there is no app, and
+              local businesses can join it at no cost.
+            </p>
             <Link
-              href="/shows"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#7B1A1A] text-white rounded-xl font-semibold text-lg hover:bg-[#5A1212] transition-colors"
+              href="/passport"
+              className="mt-5 inline-flex items-center rounded-sm bg-[#C8102E] px-6 py-3 font-display text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-[#A50D26]"
             >
-              Browse Shows
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#7B1A1A] rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors"
-            >
-              Contact Us
+              Open the Passport
             </Link>
           </div>
         </div>

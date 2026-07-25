@@ -22,7 +22,7 @@ export function TicketPricingTable({
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       {/* Header */}
-      <div className="bg-[#7B1A1A] px-5 py-3">
+      <div className="bg-[#13264D] px-5 py-3">
         <h3 className="text-lg font-bold text-white">
           {showName} — Ticket Prices
         </h3>
@@ -31,7 +31,7 @@ export function TicketPricingTable({
       {/* Table */}
       <table className="w-full text-left">
         <thead>
-          <tr className="border-b border-gray-200 bg-[#7B1A1A]/5 text-sm font-semibold text-[#333333]">
+          <tr className="border-b border-gray-200 bg-[#13264D]/5 text-sm font-semibold text-[#1A1614]">
             <th className="px-5 py-3">Ticket Type</th>
             <th className="px-5 py-3">Age</th>
             <th className="px-5 py-3 text-right">Price</th>
@@ -46,19 +46,19 @@ export function TicketPricingTable({
                 i < rows.length - 1 ? "border-b border-gray-100" : ""
               }
             >
-              <td className="px-5 py-3.5 font-medium text-[#333333]">
+              <td className="px-5 py-3.5 font-medium text-[#1A1614]">
                 {row.label}
               </td>
-              <td className="px-5 py-3.5 text-sm text-[#333333]/60">
+              <td className="px-5 py-3.5 text-sm text-[#1A1614]/60">
                 {row.age}
               </td>
-              <td className="px-5 py-3.5 text-right text-lg font-bold text-[#333333]">
+              <td className="px-5 py-3.5 text-right text-lg font-bold text-[#1A1614]">
                 ${row.price}
               </td>
               <td className="px-5 py-3.5 text-right">
                 <button
                   type="button"
-                  className="rounded-lg bg-[#8B6914] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#8B6914]/90"
+                  className="rounded-lg bg-[#C8102E] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#C8102E]/90"
                 >
                   Book
                 </button>
@@ -70,7 +70,7 @@ export function TicketPricingTable({
 
       {/* Footer note */}
       <div className="border-t border-gray-200 bg-gray-50 px-5 py-3">
-        <p className="text-xs text-[#333333]/50">
+        <p className="text-xs text-[#1A1614]/50">
           Group discounts available for parties of 10 or more. Contact us for
           special pricing. Children under 3 admitted free.
         </p>

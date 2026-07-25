@@ -47,7 +47,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#5A1212] text-white">
+    <footer className="bg-[#0D1B38] text-white">
       {/* Main footer */}
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-6">
         {/* Top section - brand + newsletter */}
@@ -79,11 +79,11 @@ export function Footer() {
               <input
                 type="email"
                 placeholder="Your email address"
-                className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-[#D4A843]/50 focus:outline-none focus:ring-1 focus:ring-[#D4A843]/50"
+                className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-[#E8C65A]/50 focus:outline-none focus:ring-1 focus:ring-[#E8C65A]/50"
               />
               <button
                 type="submit"
-                className="flex items-center gap-1 rounded-lg bg-[#8B6914] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#6B5210]"
+                className="flex items-center gap-1 rounded-lg bg-[#C8102E] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#A50D26]"
               >
                 Subscribe
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -96,7 +96,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {/* Shows */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#D4A843] uppercase">
+            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#E8C65A] uppercase">
               Shows
             </h4>
             <ul className="space-y-2.5">
@@ -115,7 +115,7 @@ export function Footer() {
 
           {/* Explore */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#D4A843] uppercase">
+            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#E8C65A] uppercase">
               Explore
             </h4>
             <ul className="space-y-2.5">
@@ -134,7 +134,7 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#D4A843] uppercase">
+            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#E8C65A] uppercase">
               Company
             </h4>
             <ul className="space-y-2.5">
@@ -153,20 +153,20 @@ export function Footer() {
 
           {/* Connect */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#D4A843] uppercase">
+            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#E8C65A] uppercase">
               Connect
             </h4>
             <div className="mb-4 space-y-3">
               <a
                 href={`tel:${siteConfig.phoneRaw}`}
-                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[#D4A843]"
+                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[#E8C65A]"
               >
                 <Phone className="h-4 w-4" />
                 {siteConfig.phone}
               </a>
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[#D4A843]"
+                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[#E8C65A]"
               >
                 <Mail className="h-4 w-4" />
                 {siteConfig.email}
@@ -185,7 +185,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/50 transition-colors hover:border-[#D4A843]/30 hover:bg-[#D4A843]/10 hover:text-[#D4A843]"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/50 transition-colors hover:border-[#E8C65A]/30 hover:bg-[#E8C65A]/10 hover:text-[#E8C65A]"
                   aria-label={social.label}
                 >
                   <social.icon className="h-4 w-4" />

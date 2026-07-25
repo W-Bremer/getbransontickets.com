@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/config";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export const metadata: Metadata = {
-  title: `Terms and Conditions | ${siteConfig.name}`,
+  title: `Terms and Conditions`,
   description:
     "Terms and conditions for using GetBransonTickets.com including ticket purchases, data collection, and promotional offers.",
 };
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <>
-      <section className="bg-[#7B1A1A] pt-12 pb-16">
+      <section className="bg-[#13264D] pt-12 pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -31,7 +31,7 @@ export default function TermsPage() {
       </section>
 
       <section className="py-12 sm:py-16 bg-white">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 prose prose-lg max-w-none prose-headings:text-[#7B1A1A] prose-headings:font-heading">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 prose prose-lg max-w-none prose-headings:text-[#13264D] prose-headings:font-heading">
           <h2>1. Acceptance of Terms</h2>
           <p>
             By accessing, browsing, or using the {siteConfig.name} website

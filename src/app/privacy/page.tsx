@@ -60,7 +60,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <div className="pt-24 sm:pt-28">
-      <section className="bg-gradient-to-br from-[#7B1A1A] to-[#5A1212] py-14 sm:py-16">
+      <section className="bg-gradient-to-br from-[#13264D] to-[#0D1B38] py-14 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Privacy Policy" }]} />
           <h1 className="mt-4 text-3xl font-bold text-white sm:text-5xl">Privacy Policy</h1>
@@ -77,7 +77,7 @@ export default function PrivacyPage() {
           </p>
           {sections.map((section) => (
             <div key={section.title}>
-              <h2 className="text-2xl font-bold text-[#333333]">{section.title}</h2>
+              <h2 className="text-2xl font-bold text-[#1A1614]">{section.title}</h2>
               <ul className="mt-4 list-disc space-y-2 pl-5 text-gray-600">
                 {section.body.map((line, i) => (
                   <li key={i}>{line}</li>

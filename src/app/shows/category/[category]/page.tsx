@@ -26,7 +26,7 @@ export async function generateMetadata({
   if (!cat) return { title: "Category Not Found" };
 
   return {
-    title: `Branson ${cat.name} Shows 2026 | Tickets & Schedule | ${siteConfig.name}`,
+    title: `Branson ${cat.name} Shows 2026 | Tickets & Schedule`,
     description: `Discover the best ${cat.name.toLowerCase()} shows in Branson, MO for 2026. ${cat.description}. Compare prices, read reviews, and book discount tickets online.`,
     openGraph: {
       title: `Branson ${cat.name} Shows 2026 | Tickets & Schedule`,
@@ -61,7 +61,7 @@ export default async function CategoryPage({
       <JsonLd data={collectionSchema} />
 
       {/* Header */}
-      <section className="bg-[#7B1A1A] pt-12 pb-16">
+      <section className="bg-[#13264D] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -109,7 +109,7 @@ export default async function CategoryPage({
       {/* Other Categories */}
       <section className="py-12 sm:py-16 bg-[#faf8f5]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#7B1A1A] font-heading mb-8">
+          <h2 className="text-2xl font-bold text-[#13264D] font-heading mb-8">
             Explore Other Categories
           </h2>
           <div className="flex flex-wrap gap-3">
@@ -119,7 +119,7 @@ export default async function CategoryPage({
                 <Link
                   key={c.slug}
                   href={`/shows/category/${c.slug}`}
-                  className="px-5 py-2.5 rounded-full bg-white border border-gray-200 text-[#7B1A1A] font-medium text-sm hover:border-[#d4a843] hover:text-[#d4a843] transition-colors"
+                  className="px-5 py-2.5 rounded-full bg-white border border-gray-200 text-[#13264D] font-medium text-sm hover:border-[#d4a843] hover:text-[#d4a843] transition-colors"
                 >
                   {c.name} ({shows.filter((s) => s.category.includes(c.slug)).length})
                 </Link>

@@ -45,14 +45,14 @@ export default function StickyBookingBar({
       <div className="flex items-center justify-between">
         <div>
           <p className="text-xs text-gray-500 leading-tight">{showName}</p>
-          <p className="text-lg font-bold text-[#333333]">
-            From <span className="text-[#8B6914]">${priceFrom}</span>
+          <p className="text-lg font-bold text-[#1A1614]">
+            From <span className="text-[#C8102E]">${priceFrom}</span>
           </p>
         </div>
         {isFeaturedPartner ? (
           <button
             onClick={scrollToBooking}
-            className="rounded-lg bg-[#8B6914] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#6B5210]"
+            className="rounded-lg bg-[#C8102E] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#A50D26]"
           >
             Book Now
           </button>
@@ -69,7 +69,7 @@ export default function StickyBookingBar({
         ) : (
           <button
             onClick={scrollToBooking}
-            className="rounded-lg bg-[#8B6914] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#6B5210]"
+            className="rounded-lg bg-[#C8102E] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#A50D26]"
           >
             Get Tickets
           </button>

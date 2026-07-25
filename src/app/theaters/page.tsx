@@ -9,7 +9,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
-  title: `All Branson Theaters & Venues 2026 | ${siteConfig.name}`,
+  title: `All Branson Theaters & Venues 2026`,
   description:
     "Explore every Branson theater and performance venue — from the iconic Clay Cooper Theatre to Sight & Sound's massive stage. Find shows, seating, directions, and more.",
   openGraph: {
@@ -63,7 +63,7 @@ export default function TheatersPage() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#5A1212] via-[#5A1212]/60 to-[#5A1212]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B38] via-[#0D1B38]/60 to-[#0D1B38]/30" />
         <div className="absolute bottom-0 left-0 right-0 pb-10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Breadcrumbs
@@ -85,7 +85,7 @@ export default function TheatersPage() {
       </section>
 
       {/* Stats Bar */}
-      <section className="bg-[#7B1A1A] border-t border-white/10 py-6">
+      <section className="bg-[#13264D] border-t border-white/10 py-6">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             <div>
@@ -141,13 +141,13 @@ export default function TheatersPage() {
                       </span>
                     </div>
                     {showCount > 0 && (
-                      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#d4a843] text-[#7B1A1A] text-xs font-bold">
+                      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#d4a843] text-[#13264D] text-xs font-bold">
                         {showCount} {showCount === 1 ? "Show" : "Shows"}
                       </div>
                     )}
                   </div>
                   <div className="p-5">
-                    <h2 className="text-lg font-bold text-[#7B1A1A] font-heading group-hover:text-[#d4a843] transition-colors">
+                    <h2 className="text-lg font-bold text-[#13264D] font-heading group-hover:text-[#d4a843] transition-colors">
                       {theater.name}
                     </h2>
                     <p className="mt-1 text-sm text-gray-500 flex items-center gap-1">
@@ -183,7 +183,7 @@ export default function TheatersPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#7B1A1A] font-heading">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#13264D] font-heading">
                 The 76 Country Boulevard Theater District
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
@@ -254,7 +254,7 @@ export default function TheatersPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-12 sm:py-16 bg-[#7B1A1A]">
+      <section className="py-12 sm:py-16 bg-[#13264D]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-white font-heading">
             Need Help Choosing a Show?
@@ -266,7 +266,7 @@ export default function TheatersPage() {
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href={`tel:${siteConfig.phoneRaw}`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#d4a843] text-[#7B1A1A] rounded-lg font-semibold hover:bg-[#e8c36a] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#d4a843] text-[#13264D] rounded-lg font-semibold hover:bg-[#e8c36a] transition-colors"
             >
               Call {siteConfig.phone}
             </Link>

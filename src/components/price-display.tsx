@@ -16,9 +16,9 @@ const sizeStyles = {
 };
 
 const variantStyles = {
-  teal: { label: "text-[#7B1A1A]", price: "text-[#333333]" },
-  green: { label: "text-[#8B6914]", price: "text-[#8B6914]" },
-  light: { label: "text-[#D4A843]", price: "text-white" },
+  teal: { label: "text-[#13264D]", price: "text-[#1A1614]" },
+  green: { label: "text-[#C8102E]", price: "text-[#C8102E]" },
+  light: { label: "text-[#E8C65A]", price: "text-white" },
 };
 
 export function PriceDisplay({

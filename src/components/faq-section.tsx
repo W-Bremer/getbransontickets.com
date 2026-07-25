@@ -36,15 +36,15 @@ export function FAQSection({ faqs, title = "Frequently Asked Questions" }: FAQSe
     <section className="py-8">
       <JsonLd data={faqSchema} />
 
-      <h2 className="text-2xl font-bold text-[#333333]">{title}</h2>
+      <h2 className="text-2xl font-bold text-[#1A1614]">{title}</h2>
 
       <Accordion className="mt-6">
         {faqs.map((faq, i) => (
           <AccordionItem key={i} value={i}>
-            <AccordionTrigger className="text-base font-semibold text-[#333333] hover:text-[#7B1A1A] hover:no-underline [&>svg]:text-[#7B1A1A]">
+            <AccordionTrigger className="text-base font-semibold text-[#1A1614] hover:text-[#13264D] hover:no-underline [&>svg]:text-[#13264D]">
               {faq.question}
             </AccordionTrigger>
-            <AccordionContent className="text-[#333333]/70 leading-relaxed">
+            <AccordionContent className="text-[#1A1614]/70 leading-relaxed">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>

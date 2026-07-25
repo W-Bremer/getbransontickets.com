@@ -1,16 +1,19 @@
 export const siteConfig = {
   name: "GetBransonTickets.com",
   shortName: "Get Branson Tickets",
-  tagline: "Your Guide to Branson's Best Live Entertainment",
-  description: "Discover and book tickets for the best shows, attractions, and entertainment in Branson, Missouri — the Live Entertainment Capital of the World.",
-  url: "https://getbransontickets.com",
+  tagline: "Branson Show Tickets and Local Advice",
+  description:
+    "Tickets to Branson shows and attractions, sold by people who live here. Showtimes verified against every box office, plus a free local guide to the rest of your trip.",
+  // Canonical host: the apex 301s to www, so every canonical, sitemap entry,
+  // and QR target must use www or it burns a redirect hop.
+  url: "https://www.getbransontickets.com",
   phone: "(417) 243-9629",
   phoneRaw: "14172439629",
   email: "info@getbransontickets.com",
   address: "Branson, MO 65616",
   foundedYear: 2024,
-  showsBooked: 125000,
-  reviewCount: 8500,
+  // Verified against the show catalog rather than asserted in copy. If you want
+  // sales or review totals on the site, put the real figures here first.
   averageRating: 4.8,
   socialLinks: {
     facebook: "https://facebook.com/getbransontickets",
@@ -20,17 +23,19 @@ export const siteConfig = {
   },
 } as const;
 
+// Descriptions are deliberately uneven: some carry a fact, some carry an
+// opinion. Keep them that way. Stacked hype adjectives read as filler.
 export const categories = [
-  { name: "All Shows", slug: "all", icon: "Theater", description: "Browse every show in Branson" },
-  { name: "Variety & Music", slug: "variety-music", icon: "Music", description: "High-energy variety and music performances" },
-  { name: "Comedy", slug: "comedy", icon: "Laugh", description: "Side-splitting comedy from Branson's funniest" },
-  { name: "Magic & Illusion", slug: "magic", icon: "Wand2", description: "World-class magic and illusion shows" },
-  { name: "Dinner Shows", slug: "dinner-shows", icon: "UtensilsCrossed", description: "Dinner and a show — the complete experience" },
-  { name: "Country & Gospel", slug: "country-gospel", icon: "Guitar", description: "Country music and gospel performances" },
-  { name: "Tribute Shows", slug: "tribute", icon: "Star", description: "Tributes to music legends" },
-  { name: "Family Shows", slug: "family", icon: "Users", description: "Fun for the whole family" },
-  { name: "Acrobats & Circus", slug: "acrobats", icon: "Dumbbell", description: "Jaw-dropping acrobatics and circus acts" },
-  { name: "Theatrical", slug: "theatrical", icon: "Drama", description: "Broadway-quality theatrical productions" },
+  { name: "All Shows", slug: "all", icon: "Theater", description: "Everything currently running in Branson." },
+  { name: "Variety & Music", slug: "variety-music", icon: "Music", description: "Branson's biggest category. Families who play a dozen instruments each, and bands that cover eight decades in two hours." },
+  { name: "Comedy", slug: "comedy", icon: "Laugh", description: "Clean stand-up, sketch, and one hypnotist. Most play matinees." },
+  { name: "Magic & Illusion", slug: "magic", icon: "Wand2", description: "Two full illusion shows, both evenings." },
+  { name: "Dinner Shows", slug: "dinner-shows", icon: "UtensilsCrossed", description: "Dinner is included in the ticket. Get there early, seating starts well before curtain." },
+  { name: "Country & Gospel", slug: "country-gospel", icon: "Guitar", description: "The music the town was built on." },
+  { name: "Tribute Shows", slug: "tribute", icon: "Star", description: "Patsy Cline, Dean Martin, Motown, and the 60s hits." },
+  { name: "Family Shows", slug: "family", icon: "Users", description: "Nothing you would have to explain to a seven-year-old." },
+  { name: "Acrobats & Circus", slug: "acrobats", icon: "Dumbbell", description: "The Shanghai acrobats, at the Mickey Gilley theatre." },
+  { name: "Theatrical", slug: "theatrical", icon: "Drama", description: "Sight & Sound's DAVID, and the outdoor drama up at Shepherd of the Hills." },
 ] as const;
 
 export const attractionTypes = [

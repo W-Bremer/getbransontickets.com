@@ -39,7 +39,7 @@ function StepIndicator({ current }: { current: Step }) {
             {i > 0 && (
               <div
                 className={`h-0.5 w-8 sm:w-16 ${
-                  isComplete ? "bg-[#8B6914]" : "bg-gray-200"
+                  isComplete ? "bg-[#C8102E]" : "bg-gray-200"
                 }`}
               />
             )}
@@ -47,10 +47,10 @@ function StepIndicator({ current }: { current: Step }) {
               <div
                 className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all ${
                   isComplete
-                    ? "bg-[#8B6914] text-white"
+                    ? "bg-[#C8102E] text-white"
                     : isActive
-                      ? "bg-[#7B1A1A] text-white ring-4 ring-[#7B1A1A]/20"
-                      : "bg-gray-100 text-[#333333]/40"
+                      ? "bg-[#13264D] text-white ring-4 ring-[#13264D]/20"
+                      : "bg-gray-100 text-[#1A1614]/40"
                 }`}
               >
                 {isComplete ? <Check className="h-5 w-5" /> : stepNum}
@@ -58,10 +58,10 @@ function StepIndicator({ current }: { current: Step }) {
               <span
                 className={`text-xs font-semibold whitespace-nowrap ${
                   isActive
-                    ? "text-[#7B1A1A]"
+                    ? "text-[#13264D]"
                     : isComplete
-                      ? "text-[#8B6914]"
-                      : "text-[#333333]/40"
+                      ? "text-[#C8102E]"
+                      : "text-[#1A1614]/40"
                 }`}
               >
                 {label}
@@ -99,16 +99,16 @@ function ContactInfoStep({
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#7B1A1A]/10">
-          <User className="h-5 w-5 text-[#7B1A1A]" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#13264D]/10">
+          <User className="h-5 w-5 text-[#13264D]" />
         </div>
-        <h2 className="text-xl font-bold text-[#333333]">
+        <h2 className="text-xl font-bold text-[#1A1614]">
           Contact Information
         </h2>
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-[#333333] mb-1.5">
+        <label className="block text-sm font-semibold text-[#1A1614] mb-1.5">
           Full Name *
         </label>
         <input
@@ -116,10 +116,10 @@ function ContactInfoStep({
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           placeholder="John Smith"
-          className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
+          className={`w-full rounded-lg border px-4 py-3 text-[#1A1614] placeholder:text-[#1A1614]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.name
               ? "border-red-300 focus:ring-red-200"
-              : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
+              : "border-gray-200 focus:border-[#13264D] focus:ring-[#13264D]/20"
           }`}
         />
         {errors.name && (
@@ -128,7 +128,7 @@ function ContactInfoStep({
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-[#333333] mb-1.5">
+        <label className="block text-sm font-semibold text-[#1A1614] mb-1.5">
           Email Address *
         </label>
         <input
@@ -136,10 +136,10 @@ function ContactInfoStep({
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           placeholder="john@example.com"
-          className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
+          className={`w-full rounded-lg border px-4 py-3 text-[#1A1614] placeholder:text-[#1A1614]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.email
               ? "border-red-300 focus:ring-red-200"
-              : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
+              : "border-gray-200 focus:border-[#13264D] focus:ring-[#13264D]/20"
           }`}
         />
         {errors.email && (
@@ -148,7 +148,7 @@ function ContactInfoStep({
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-[#333333] mb-1.5">
+        <label className="block text-sm font-semibold text-[#1A1614] mb-1.5">
           Phone Number *
         </label>
         <input
@@ -156,10 +156,10 @@ function ContactInfoStep({
           value={formData.phone}
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
           placeholder="(555) 123-4567"
-          className={`w-full rounded-lg border px-4 py-3 text-[#333333] placeholder:text-[#333333]/30 focus:outline-none focus:ring-2 transition-all ${
+          className={`w-full rounded-lg border px-4 py-3 text-[#1A1614] placeholder:text-[#1A1614]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.phone
               ? "border-red-300 focus:ring-red-200"
-              : "border-gray-200 focus:border-[#7B1A1A] focus:ring-[#7B1A1A]/20"
+              : "border-gray-200 focus:border-[#13264D] focus:ring-[#13264D]/20"
           }`}
         />
         {errors.phone && (
@@ -169,7 +169,7 @@ function ContactInfoStep({
 
       <button
         onClick={() => validate() && onNext()}
-        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#8B6914] py-4 text-lg font-semibold text-white hover:bg-[#8B6914]/90 transition-colors"
+        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#C8102E] py-4 text-lg font-semibold text-white hover:bg-[#C8102E]/90 transition-colors"
       >
         Continue to Payment
         <ArrowRight className="h-5 w-5" />
@@ -251,16 +251,16 @@ function StripePaymentForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#7B1A1A]/10">
-          <CreditCard className="h-5 w-5 text-[#7B1A1A]" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#13264D]/10">
+          <CreditCard className="h-5 w-5 text-[#13264D]" />
         </div>
-        <h2 className="text-xl font-bold text-[#333333]">
+        <h2 className="text-xl font-bold text-[#1A1614]">
           Payment Information
         </h2>
       </div>
 
-      <div className="rounded-lg bg-[#FAF8F5] p-3 flex items-center gap-2 text-sm text-[#333333]/60">
-        <ShieldCheck className="h-4 w-4 text-[#8B6914]" />
+      <div className="rounded-lg bg-[#F6F4EF] p-3 flex items-center gap-2 text-sm text-[#1A1614]/60">
+        <ShieldCheck className="h-4 w-4 text-[#C8102E]" />
         <span>Payments securely processed by Stripe</span>
       </div>
 
@@ -288,7 +288,7 @@ function StripePaymentForm({
           type="button"
           onClick={onBack}
           disabled={submitting}
-          className="flex items-center justify-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-4 font-semibold text-[#333333]/70 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-all disabled:opacity-50"
+          className="flex items-center justify-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-4 font-semibold text-[#1A1614]/70 hover:border-[#13264D] hover:text-[#13264D] transition-all disabled:opacity-50"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
@@ -296,7 +296,7 @@ function StripePaymentForm({
         <button
           type="submit"
           disabled={!stripe || !elements || submitting}
-          className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-[#8B6914] py-4 text-lg font-semibold text-white hover:bg-[#8B6914]/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-[#C8102E] py-4 text-lg font-semibold text-white hover:bg-[#C8102E]/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {submitting ? (
             <>
@@ -388,8 +388,8 @@ function PaymentStep({
     () => ({
       theme: "stripe",
       variables: {
-        colorPrimary: "#7B1A1A",
-        colorText: "#333333",
+        colorPrimary: "#13264D",
+        colorText: "#1A1614",
         fontFamily: "system-ui, sans-serif",
         borderRadius: "8px",
       },
@@ -405,7 +405,7 @@ function PaymentStep({
         </div>
         <button
           onClick={onBack}
-          className="flex items-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-3 font-semibold text-[#333333]/70 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-all"
+          className="flex items-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-3 font-semibold text-[#1A1614]/70 hover:border-[#13264D] hover:text-[#13264D] transition-all"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
@@ -417,8 +417,8 @@ function PaymentStep({
   if (!clientSecret) {
     return (
       <div className="flex flex-col items-center justify-center gap-3 py-16">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#7B1A1A] border-t-transparent" />
-        <p className="text-sm text-[#333333]/60">Preparing secure payment...</p>
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#13264D] border-t-transparent" />
+        <p className="text-sm text-[#1A1614]/60">Preparing secure payment...</p>
       </div>
     );
   }
@@ -455,48 +455,48 @@ function ConfirmationStep({
 
   return (
     <div className="text-center space-y-6">
-      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#8B6914]/10">
-        <Check className="h-10 w-10 text-[#8B6914]" />
+      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#C8102E]/10">
+        <Check className="h-10 w-10 text-[#C8102E]" />
       </div>
 
       <div>
-        <h2 className="text-2xl font-bold text-[#333333]">Booking Confirmed!</h2>
-        <p className="mt-2 text-[#333333]/60">
+        <h2 className="text-2xl font-bold text-[#1A1614]">Booking Confirmed!</h2>
+        <p className="mt-2 text-[#1A1614]/60">
           Thank you for your order, {formData.name.split(" ")[0]}!
         </p>
       </div>
 
-      <div className="rounded-xl bg-[#FAF8F5] p-6 text-left space-y-3">
+      <div className="rounded-xl bg-[#F6F4EF] p-6 text-left space-y-3">
         <div className="flex justify-between text-sm">
-          <span className="text-[#333333]/60">Order Number</span>
-          <span className="font-bold text-[#7B1A1A]">{orderNumber}</span>
+          <span className="text-[#1A1614]/60">Order Number</span>
+          <span className="font-bold text-[#13264D]">{orderNumber}</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-[#333333]/60">Items</span>
-          <span className="font-medium text-[#333333]">
+          <span className="text-[#1A1614]/60">Items</span>
+          <span className="font-medium text-[#1A1614]">
             {itemCount} ticket{itemCount !== 1 ? "s" : ""}
           </span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-[#333333]/60">Email</span>
-          <span className="font-medium text-[#333333]">{formData.email}</span>
+          <span className="text-[#1A1614]/60">Email</span>
+          <span className="font-medium text-[#1A1614]">{formData.email}</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-[#333333]/60">Phone</span>
-          <span className="font-medium text-[#333333]">{formData.phone}</span>
+          <span className="text-[#1A1614]/60">Phone</span>
+          <span className="font-medium text-[#1A1614]">{formData.phone}</span>
         </div>
         <div className="border-t border-gray-200 pt-3 flex justify-between">
-          <span className="font-semibold text-[#333333]">Total Charged</span>
-          <span className="text-xl font-bold text-[#333333]">
+          <span className="font-semibold text-[#1A1614]">Total Charged</span>
+          <span className="text-xl font-bold text-[#1A1614]">
             ${total.toFixed(2)}
           </span>
         </div>
       </div>
 
       {emailSent ? (
-        <p className="text-sm text-[#333333]/50">
+        <p className="text-sm text-[#1A1614]/50">
           Your show voucher has been sent to{" "}
-          <span className="font-medium text-[#333333]">{formData.email}</span>.
+          <span className="font-medium text-[#1A1614]">{formData.email}</span>.
           Please check your inbox — present the voucher at the box office to
           redeem your tickets.
         </p>
@@ -521,13 +521,13 @@ function ConfirmationStep({
       <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
         <Link
           href="/shows"
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#7B1A1A] px-6 py-3 font-semibold text-white hover:bg-[#5A1212] transition-colors"
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#13264D] px-6 py-3 font-semibold text-white hover:bg-[#0D1B38] transition-colors"
         >
           Browse More Shows
         </Link>
         <Link
           href="/"
-          className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-gray-200 px-6 py-3 font-semibold text-[#333333]/70 hover:border-[#7B1A1A] hover:text-[#7B1A1A] transition-all"
+          className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-gray-200 px-6 py-3 font-semibold text-[#1A1614]/70 hover:border-[#13264D] hover:text-[#13264D] transition-all"
         >
           Return Home
         </Link>
@@ -559,7 +559,7 @@ export default function CheckoutPage() {
   if (!mounted) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#7B1A1A] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#13264D] border-t-transparent" />
       </div>
     );
   }
@@ -569,7 +569,7 @@ export default function CheckoutPage() {
   if (items.length === 0 && step !== 3) {
     return (
       <>
-        <section className="bg-[#7B1A1A] pt-12 pb-16">
+        <section className="bg-[#13264D] pt-12 pb-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Breadcrumbs
               items={[
@@ -585,18 +585,18 @@ export default function CheckoutPage() {
         </section>
         <section className="py-20 bg-white">
           <div className="mx-auto max-w-lg px-4 text-center">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#FAF8F5]">
-              <ShoppingCart className="h-10 w-10 text-[#333333]/30" />
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#F6F4EF]">
+              <ShoppingCart className="h-10 w-10 text-[#1A1614]/30" />
             </div>
-            <h2 className="mt-6 text-2xl font-bold text-[#333333]">
+            <h2 className="mt-6 text-2xl font-bold text-[#1A1614]">
               Nothing to Check Out
             </h2>
-            <p className="mt-3 text-[#333333]/60">
+            <p className="mt-3 text-[#1A1614]/60">
               Add some shows or attractions to your cart first.
             </p>
             <Link
               href="/shows"
-              className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-[#8B6914] px-6 py-3 font-semibold text-white hover:bg-[#8B6914]/90 transition-colors"
+              className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-[#C8102E] px-6 py-3 font-semibold text-white hover:bg-[#C8102E]/90 transition-colors"
             >
               Browse Shows
               <ArrowRight className="h-4 w-4" />
@@ -667,7 +667,7 @@ export default function CheckoutPage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-[#7B1A1A] pt-12 pb-16">
+      <section className="bg-[#13264D] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
@@ -691,7 +691,7 @@ export default function CheckoutPage() {
       </div>
 
       {/* Content */}
-      <section className="py-10 sm:py-14 bg-[#FAF8F5]">
+      <section className="py-10 sm:py-14 bg-[#F6F4EF]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-3 lg:gap-8">
             {/* Form Area */}
@@ -728,7 +728,7 @@ export default function CheckoutPage() {
             {step !== 3 && (
               <div className="mt-8 lg:mt-0">
                 <div className="sticky top-24 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
-                  <h2 className="text-lg font-bold text-[#333333] mb-4">
+                  <h2 className="text-lg font-bold text-[#1A1614] mb-4">
                     Order Summary
                   </h2>
                   <div className="space-y-3 border-b border-gray-100 pb-4">
@@ -742,14 +742,14 @@ export default function CheckoutPage() {
                           className="space-y-0.5"
                         >
                           <div className="flex justify-between text-sm">
-                            <span className="text-[#333333] font-medium truncate mr-2">
+                            <span className="text-[#1A1614] font-medium truncate mr-2">
                               {item.name}
                             </span>
-                            <span className="font-semibold text-[#333333] whitespace-nowrap">
+                            <span className="font-semibold text-[#1A1614] whitespace-nowrap">
                               ${sub.toFixed(2)}
                             </span>
                           </div>
-                          <p className="text-xs text-[#333333]/40">
+                          <p className="text-xs text-[#1A1614]/40">
                             {item.adults} adult{item.adults !== 1 ? "s" : ""}
                             {item.children > 0 &&
                               `, ${item.children} child${item.children !== 1 ? "ren" : ""}`}
@@ -760,13 +760,13 @@ export default function CheckoutPage() {
                       );
                     })}
                   </div>
-                  <div className="mt-4 flex justify-between text-lg font-bold text-[#333333]">
+                  <div className="mt-4 flex justify-between text-lg font-bold text-[#1A1614]">
                     <span>Total</span>
                     <span>${total.toFixed(2)}</span>
                   </div>
                   <Link
                     href="/cart"
-                    className="mt-4 block text-center text-sm font-medium text-[#7B1A1A] hover:text-[#5A1212] transition-colors"
+                    className="mt-4 block text-center text-sm font-medium text-[#13264D] hover:text-[#0D1B38] transition-colors"
                   >
                     Edit Cart
                   </Link>

@@ -48,7 +48,7 @@ export default function AvailabilityGrid({
   return (
     <div className="rounded-xl border border-gray-200 bg-white overflow-hidden">
       <div className="border-b border-gray-200 bg-gray-50 px-5 py-3">
-        <h3 className="text-sm font-bold text-[#333333]">
+        <h3 className="text-sm font-bold text-[#1A1614]">
           Upcoming Availability &mdash; {showName}
         </h3>
       </div>
@@ -67,7 +67,7 @@ export default function AvailabilityGrid({
                   <th
                     key={i}
                     className={`px-2 py-3 text-center text-xs ${
-                      dark ? "text-gray-400" : "text-[#333333]"
+                      dark ? "text-gray-400" : "text-[#1A1614]"
                     }`}
                   >
                     <div className="font-semibold">{dayShort}</div>
@@ -80,7 +80,7 @@ export default function AvailabilityGrid({
           <tbody>
             {showTimes.map((time) => (
               <tr key={time} className="border-b border-gray-100 last:border-0">
-                <td className="px-4 py-3 font-medium text-[#333333]">{time}</td>
+                <td className="px-4 py-3 font-medium text-[#1A1614]">{time}</td>
                 {days.map((date, i) => {
                   const dark = isDark(date);
                   return (
@@ -90,7 +90,7 @@ export default function AvailabilityGrid({
                           N/A
                         </span>
                       ) : (
-                        <button className="inline-block rounded bg-[#8B6914] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#6B5210]">
+                        <button className="inline-block rounded bg-[#C8102E] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#A50D26]">
                           BOOK
                         </button>
                       )}

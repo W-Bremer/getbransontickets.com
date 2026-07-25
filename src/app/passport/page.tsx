@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Theater,
   FerrisWheel,
@@ -18,32 +19,34 @@ import {
   Store,
   ArrowRight,
   HandHeart,
-  CircleDollarSign,
+  Wallet,
 } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 import { passportCategories } from "@/data/passport";
-import { partners, getPartnerByRefCode } from "@/data/partners";
-import { getPartnerShows } from "@/data/shows";
-import { ShowCard } from "@/components/show-card";
+import { getPartnerByRefCode } from "@/data/partners";
+import { getFeaturedDeals } from "@/lib/featured-deals";
 import { PassportSignupForm } from "@/components/passport/passport-signup-form";
 import { QrCode } from "@/components/passport/qr-code";
+import { DealRail } from "@/components/passport/deal-rail";
+import { PhonePreview } from "@/components/passport/phone-preview";
+import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
-  title: `Branson Passport | Your Free Insider Guide to Branson`,
+  title: "Branson Passport: Free Local Guide and Deals",
   description:
-    "The free Branson Passport is your insider guide to Branson, Missouri: the best shows, local restaurants, coffee shops, free things to do, seasonal events, and exclusive partner deals.",
+    "A free guide to Branson from the people who sell its show tickets. Local restaurants and coffee, free things to do, the 2026 event calendar, and partner deals you won't find on the Strip.",
   keywords: [
     "branson passport",
-    "branson insider guide",
     "free branson guide",
     "branson deals",
     "things to do in branson",
     "branson local recommendations",
   ],
+  alternates: { canonical: `${siteConfig.url}/passport` },
   openGraph: {
-    title: "Branson Passport: Your Free Insider Guide to Branson",
+    title: "Branson Passport: Free Local Guide and Deals",
     description:
-      "Unlock exclusive deals, local favorites, and hidden gems all over Branson. Free for every visitor.",
+      "Local restaurants, free things to do, the event calendar, and partner deals. Free, no app needed.",
     url: `${siteConfig.url}/passport`,
     type: "website",
     siteName: siteConfig.name,
@@ -51,61 +54,61 @@ export const metadata: Metadata = {
 };
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  Theater: <Theater className="h-6 w-6" />,
-  FerrisWheel: <FerrisWheel className="h-6 w-6" />,
-  UtensilsCrossed: <UtensilsCrossed className="h-6 w-6" />,
-  Coffee: <Coffee className="h-6 w-6" />,
-  ShoppingBag: <ShoppingBag className="h-6 w-6" />,
-  Sparkles: <Sparkles className="h-6 w-6" />,
-  CalendarDays: <CalendarDays className="h-6 w-6" />,
-  Star: <Star className="h-6 w-6" />,
-  BadgePercent: <BadgePercent className="h-6 w-6" />,
+  Theater: <Theater className="h-6 w-6" strokeWidth={1.6} />,
+  FerrisWheel: <FerrisWheel className="h-6 w-6" strokeWidth={1.6} />,
+  UtensilsCrossed: <UtensilsCrossed className="h-6 w-6" strokeWidth={1.6} />,
+  Coffee: <Coffee className="h-6 w-6" strokeWidth={1.6} />,
+  ShoppingBag: <ShoppingBag className="h-6 w-6" strokeWidth={1.6} />,
+  Sparkles: <Sparkles className="h-6 w-6" strokeWidth={1.6} />,
+  CalendarDays: <CalendarDays className="h-6 w-6" strokeWidth={1.6} />,
+  Star: <Star className="h-6 w-6" strokeWidth={1.6} />,
+  BadgePercent: <BadgePercent className="h-6 w-6" strokeWidth={1.6} />,
 };
 
 const howItWorks = [
   {
-    icon: <QrCodeIcon className="h-6 w-6" />,
+    icon: <QrCodeIcon className="h-5 w-5" />,
     title: "Scan",
-    text: "Scan a Passport QR code at any participating hotel, restaurant, or shop around town.",
+    text: "Scan a Passport code at a hotel front desk, a restaurant counter, or a shop window.",
   },
   {
-    icon: <Compass className="h-6 w-6" />,
+    icon: <Compass className="h-5 w-5" />,
     title: "Explore",
-    text: "Browse exclusive deals, local favorites, and hidden gems picked by people who live here.",
+    text: "Browse where locals eat, what is free this week, and which shows are actually running.",
   },
   {
-    icon: <Heart className="h-6 w-6" />,
+    icon: <Heart className="h-5 w-5" />,
     title: "Enjoy",
-    text: "Redeem offers, book shows and attractions, and experience the best of Branson.",
+    text: "Redeem partner offers and book show and attraction tickets straight from the guide.",
   },
   {
-    icon: <Gift className="h-6 w-6" />,
-    title: "Earn Rewards",
-    text: "Branson Bucks rewards are on the way. Check in, earn points, unlock perks.",
-    comingSoon: true,
+    icon: <Gift className="h-5 w-5" />,
+    title: "Earn Branson Bucks",
+    text: "Check in around town to collect points toward free tickets. Launching for the 2027 season.",
+    soon: true,
   },
 ];
 
 const whyUse = [
   {
     icon: <BadgePercent className="h-5 w-5" />,
-    title: "Exclusive deals",
-    text: "Special discounts from partner businesses you won't find anywhere else.",
+    title: "Deals worth using",
+    text: "Offers negotiated with the businesses themselves, not scraped coupon codes.",
   },
   {
     icon: <Star className="h-5 w-5" />,
-    title: "Local favorites",
-    text: "Handpicked recommendations from locals, not an algorithm.",
+    title: "Checked by people here",
+    text: "Every showtime and address in this guide was verified against the venue in July 2026.",
   },
   {
-    icon: <CircleDollarSign className="h-5 w-5" />,
-    title: "Easy and free",
-    text: "100% free to use. No app to download, no catches, just great experiences.",
+    icon: <Wallet className="h-5 w-5" />,
+    title: "Free, and no app",
+    text: "It opens in your phone browser. Nothing to download, nothing to sign up for.",
   },
   {
     icon: <HandHeart className="h-5 w-5" />,
-    title: "Support local",
-    text: "Every scan supports local businesses and the Branson community.",
+    title: "Keeps money local",
+    text: "Independent Branson businesses, not the chains you can visit back home.",
   },
 ];
 
@@ -116,71 +119,116 @@ export default async function PassportPage({
 }) {
   const { ref } = await searchParams;
   const referrer = ref ? getPartnerByRefCode(ref) : undefined;
-  const dealPartners = partners.filter((p) => p.passportDeal);
-  const featuredShows = getPartnerShows().slice(0, 3);
+  const deals = getFeaturedDeals();
 
   return (
     <>
-      {/* Hero */}
-      <section className={`relative overflow-hidden bg-gradient-to-br from-[#13264D] via-[#1B355F] to-[#0D1B38] pt-28 pb-16 sm:pt-36 sm:pb-24`}>
-        <div className="pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "Branson Passport",
+          url: `${siteConfig.url}/passport`,
+          description:
+            "A free local guide to Branson, Missouri: restaurants, coffee, shopping, free things to do, seasonal events, and partner deals.",
+          isPartOf: { "@type": "WebSite", name: siteConfig.name, url: siteConfig.url },
+          publisher: {
+            "@type": "LocalBusiness",
+            name: siteConfig.name,
+            telephone: siteConfig.phone,
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Branson",
+              addressRegion: "MO",
+              postalCode: "65616",
+              addressCountry: "US",
+            },
+          },
+        }}
+      />
+
+      {/* ---------- Hero ---------- */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/Branson-strip.jpg"
+            alt="The Branson Strip at night, seen from above, with the Branson Ferris Wheel lit up"
+            fill
+            priority
+            sizes="100vw"
+            quality={80}
+            className="object-cover object-[70%_40%] lg:object-center"
+          />
+          {/* Keep the ferris wheel readable on the right; darken only far
+              enough on the left to carry the headline. */}
+          <div className="absolute inset-0 bg-[#0B1424]/35" />
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-[#0B1424] via-[#0B1424]/80 via-45% to-[#0B1424]/10"
+            aria-hidden="true"
+          />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 pt-28 pb-16 sm:px-6 sm:pt-36 sm:pb-24 lg:px-8">
           {referrer && (
-            <div className="mb-8 text-center lg:text-left">
-              <p className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-medium text-white">
-                <Star className="h-4 w-4 text-[#C8102E]" fill="currentColor" />
-                Welcome from {referrer.name}!
-              </p>
-            </div>
+            <p className="mb-7 inline-flex items-center gap-2 rounded-sm border border-white/25 bg-white/10 px-3.5 py-1.5 text-sm text-white backdrop-blur-sm">
+              <Star className="h-3.5 w-3.5 text-[#E8555F]" fill="currentColor" />
+              Shared with you by {referrer.name}
+            </p>
           )}
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-5">
-            <div className="text-center lg:col-span-3 lg:text-left">
-              <h1 className="font-sans text-4xl leading-tight font-black tracking-tight text-white uppercase sm:text-6xl">
+
+          <div className="grid items-center gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <h1 className="marquee text-[2.65rem] text-white sm:text-6xl lg:text-[4.2rem]">
                 Your{" "}
-                <span className={`inline-block -rotate-1 rounded-md bg-[#C8102E] px-3`}>Free</span>
+                <span className="inline-block -rotate-[1.2deg] bg-[#C8102E] px-3 pb-1">Free</span>
                 <br />
-                Branson
-                <br />
-                Passport
+                Branson Passport
               </h1>
-              <p className="mx-auto mt-6 max-w-xl text-lg text-white/85 sm:text-xl lg:mx-0">
-                Unlock exclusive deals, local favorites, and hidden gems all over Branson!
+              <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/85">
+                The guide we hand our own visitors. Where locals eat, what costs nothing, what is
+                on this season, and deals you only get by asking.
               </p>
-              <div className="mt-9 flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
+
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <a
                   href="#signup"
-                  className={`inline-flex items-center justify-center gap-2 rounded-lg bg-[#C8102E] px-8 py-4 text-lg font-bold text-white shadow-xl transition-colors hover:bg-[#A50D26]`}
+                  className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#C8102E] px-7 py-4 font-display text-base font-bold tracking-wide text-white uppercase transition-colors hover:bg-[#A50D26]"
                 >
                   <Smartphone className="h-5 w-5" />
-                  Get Your Free Passport
+                  Get your free Passport
                 </a>
                 <a
                   href="#how-it-works"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-white/10"
+                  className="inline-flex items-center justify-center gap-2 rounded-sm border border-white/45 px-7 py-4 font-display text-base font-bold tracking-wide text-white uppercase transition-colors hover:bg-white/10"
                 >
-                  How It Works
+                  How it works
                 </a>
               </div>
-              <p className="mt-6 text-sm font-semibold tracking-wide text-white/70">
+
+              <p className="ozark-serif mt-7 text-lg text-[#E8C65A]">
                 Scan. Explore. Save. Repeat.
               </p>
             </div>
 
             {/* QR card */}
-            <div className="mx-auto w-full max-w-xs lg:col-span-2">
-              <div className="rounded-3xl bg-white p-7 text-center shadow-2xl">
-                <p className={`text-lg leading-snug font-bold text-[#13264D] uppercase`}>
-                  Scan to Unlock
+            <div className="lg:col-span-5">
+              <div className="mx-auto w-full max-w-[310px] rotate-[0.8deg] rounded-md bg-white p-6 text-center shadow-[0_28px_60px_-18px_rgba(0,0,0,0.6)]">
+                <p className="font-display text-[15px] leading-snug font-extrabold tracking-wide text-[#13264D] uppercase">
+                  Scan to open
                   <br />
                   the Passport
                 </p>
-                <div className="mx-auto mt-5 w-44">
-                  <QrCode value={`${siteConfig.url}/passport`} className="[&>svg]:h-auto [&>svg]:w-full" />
+                <div className="mx-auto mt-4 w-48">
+                  <QrCode
+                    value={`${siteConfig.url}/passport`}
+                    className="[&>svg]:h-auto [&>svg]:w-full"
+                  />
                 </div>
-                <p className="mt-5 text-sm text-gray-500">Start exploring Branson in seconds!</p>
-                <p className="mt-3 flex items-center justify-center gap-2 text-xs text-gray-400">
-                  <Smartphone className="h-4 w-4" />
-                  Scan with your phone camera
+                <p className="mt-4 text-sm text-[#5C6478]">
+                  Point your phone camera at the code.
+                </p>
+                <p className="mt-3 border-t border-dashed border-[#D9D5CC] pt-3 font-mono text-[11px] tracking-tight text-[#9AA0AE]">
+                  getbransontickets.com/passport
                 </p>
               </div>
             </div>
@@ -188,110 +236,85 @@ export default async function PassportPage({
         </div>
       </section>
 
-      {/* Category icon row */}
-      <section className="relative z-10 -mt-8 pb-4">
+      {/* ---------- Category strip ---------- */}
+      <section className="border-b border-[#E4E2DC] bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-3 gap-2 rounded-2xl bg-white p-4 shadow-xl ring-1 ring-gray-100 sm:grid-cols-5 lg:grid-cols-9">
+          <ul className="grid grid-cols-3 divide-x divide-y divide-[#EDEBE5] sm:grid-cols-5 lg:grid-cols-9 lg:divide-y-0">
             {passportCategories.map((category) => (
-              <Link
-                key={category.slug}
-                href={category.href}
-                className="group flex flex-col items-center gap-2 rounded-xl px-2 py-3 text-center transition-colors hover:bg-[#F4F6FA]"
-              >
-                <span className={`text-[#13264D] transition-colors group-hover:text-[#C8102E]`}>
-                  {categoryIcons[category.icon]}
-                </span>
-                <span className={`text-[11px] leading-tight font-bold tracking-wide text-[#13264D] uppercase`}>
-                  {category.shortName}
-                </span>
-              </Link>
+              <li key={category.slug}>
+                <Link
+                  href={category.href}
+                  className="group flex h-full flex-col items-center justify-start gap-2.5 px-2 py-6 text-center transition-colors hover:bg-[#F6F4EF]"
+                >
+                  <span className="text-[#13264D] transition-colors group-hover:text-[#C8102E]">
+                    {categoryIcons[category.icon]}
+                  </span>
+                  <span className="font-display text-[11px] leading-tight font-bold tracking-wide text-[#13264D] uppercase">
+                    {category.shortName}
+                  </span>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* Featured deals */}
-      <section className="py-12 sm:py-16">
+      {/* ---------- Featured deals ---------- */}
+      <section className="bg-[#F6F4EF] py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 flex items-end justify-between">
-            <h2 className={`font-sans text-2xl font-black tracking-wide text-[#13264D] uppercase sm:text-3xl`}>
-              Featured Deals
-            </h2>
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <h2 className="marquee text-3xl text-[#13264D] sm:text-4xl">Featured deals</h2>
+              <p className="mt-2 text-[#5C6478]">
+                Current offers from Passport partners and Branson venues.
+              </p>
+            </div>
             <Link
               href="/passport/deals"
-              className={`inline-flex items-center gap-2 text-sm font-bold tracking-wide text-[#C8102E] uppercase transition-colors hover:text-[#A50D26]`}
+              className="inline-flex items-center gap-2 font-display text-sm font-bold tracking-wide text-[#C8102E] uppercase transition-colors hover:text-[#A50D26]"
             >
-              View All Deals
+              All deals
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {dealPartners.map((partner) => (
-              <Link
-                key={partner.id}
-                href={`/passport/partners/${partner.slug}`}
-                className="group flex flex-col rounded-2xl border border-gray-100 bg-white p-7 shadow-sm transition-shadow hover:shadow-lg"
-              >
-                <span className={`inline-flex w-fit items-center gap-1.5 rounded bg-[#C8102E] px-2.5 py-1 text-xs font-bold text-white uppercase`}>
-                  <BadgePercent className="h-3.5 w-3.5" />
-                  Passport Exclusive
-                </span>
-                <h3 className={`mt-4 text-xl font-bold text-[#13264D] transition-colors group-hover:text-[#C8102E]`}>
-                  {partner.name}
-                </h3>
-                <p className={`mt-2 font-semibold text-[#C8102E]`}>{partner.passportDeal}</p>
-                <p className="mt-2 text-sm text-gray-500">{partner.tagline}</p>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-14">
-            <div className="mb-8 flex items-end justify-between">
-              <h2 className={`font-sans text-2xl font-black tracking-wide text-[#13264D] uppercase sm:text-3xl`}>
-                Featured Shows
-              </h2>
-              <Link
-                href="/shows"
-                className={`inline-flex items-center gap-2 text-sm font-bold tracking-wide text-[#C8102E] uppercase transition-colors hover:text-[#A50D26]`}
-              >
-                All Shows
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {featuredShows.map((show, index) => (
-                <ShowCard key={show.slug} show={show} index={index} />
-              ))}
-            </div>
-          </div>
+          <DealRail deals={deals} />
         </div>
       </section>
 
-      {/* Branson Bucks teaser */}
-      <section className="py-6">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className={`flex flex-col items-center justify-between gap-8 overflow-hidden rounded-3xl bg-gradient-to-r from-[#13264D] to-[#1B355F] p-8 sm:p-10 lg:flex-row`}>
-            <div className="text-center lg:text-left">
-              <span className={`inline-block rounded bg-[#C8102E] px-2.5 py-1 text-xs font-bold tracking-wider text-white uppercase`}>
-                Coming Soon
+      {/* ---------- Branson Bucks ---------- */}
+      <section className="bg-[#13264D] py-14 sm:py-16">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 sm:px-6 lg:flex-row lg:px-8">
+          <PhonePreview className="shrink-0 scale-90 sm:scale-100" />
+          <div className="flex-1 text-center lg:text-left">
+            <span className="inline-block rounded-sm bg-[#C8102E] px-2.5 py-1 font-display text-[11px] font-bold tracking-widest text-white uppercase">
+              Coming for the 2027 season
+            </span>
+            <h2 className="marquee mt-4 text-3xl text-white sm:text-4xl">
+              Earn rewards with every visit
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-lg text-white/75 lg:mx-0">
+              Check in at partner businesses, collect Branson Bucks, and trade them for show
+              tickets. We are signing up partners now, so the map is worth watching.
+            </p>
+            <Link
+              href="/passport/join"
+              className="mt-7 inline-flex items-center gap-2 rounded-sm border border-white/40 px-6 py-3 font-display text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-white/10"
+            >
+              Put your business on the map
+            </Link>
+          </div>
+          <div className="hidden shrink-0 lg:block">
+            <div className="flex h-36 w-36 flex-col items-center justify-center rounded-full border-[3px] border-white/85 text-center">
+              <span className="font-display text-[10px] font-bold tracking-[0.28em] text-white/75 uppercase">
+                Branson
               </span>
-              <h2 className="font-sans mt-3 text-2xl font-black text-white uppercase sm:text-3xl">
-                Earn Rewards With Every Visit!
-              </h2>
-              <p className="mt-2 max-w-xl text-white/80">
-                Check in at participating locations, earn points, and unlock awesome rewards with
-                Branson Bucks.
-              </p>
-            </div>
-            <div className={`flex h-32 w-32 shrink-0 flex-col items-center justify-center rounded-full border-4 border-white/80 text-center`}>
-              <span className="text-[10px] font-bold tracking-widest text-white/80 uppercase">Branson</span>
-              <span className="text-xl leading-none font-black tracking-wide text-white uppercase">Bucks</span>
-              <span className="mt-1 flex gap-0.5">
+              <span className="marquee text-2xl text-white">Bucks</span>
+              <span className="mt-1 flex gap-1">
                 {[0, 1, 2].map((i) => (
-                  <Star key={i} className={`h-3 w-3 text-[#C8102E]`} fill="currentColor" />
+                  <Star key={i} className="h-3 w-3 text-[#E8555F]" fill="currentColor" />
                 ))}
               </span>
-              <span className="mt-1 text-[9px] font-semibold tracking-widest text-white/70 uppercase">
+              <span className="mt-1 font-display text-[8px] font-bold tracking-[0.2em] text-white/60 uppercase">
                 Earn · Redeem · Enjoy
               </span>
             </div>
@@ -299,64 +322,69 @@ export default async function PassportPage({
         </div>
       </section>
 
-      {/* How it works + why use */}
-      <section id="how-it-works" className="py-14 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-14 lg:grid-cols-2">
-            <div>
-              <h2 className={`mb-8 font-sans text-2xl font-black tracking-wide text-[#13264D] uppercase sm:text-3xl`}>
-                How It Works
-              </h2>
-              <ol className="space-y-6">
-                {howItWorks.map((step) => (
-                  <li key={step.title} className="flex items-start gap-4">
-                    <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-[#C8102E] text-[#C8102E]`}>
-                      {step.icon}
+      {/* ---------- How it works / why ---------- */}
+      <section id="how-it-works" className="py-16 sm:py-20">
+        <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+          <div>
+            <h2 className="marquee text-3xl text-[#13264D] sm:text-4xl">How it works</h2>
+            <ol className="mt-8 space-y-7">
+              {howItWorks.map((step, i) => (
+                <li key={step.title} className="flex gap-5">
+                  <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#13264D] text-white">
+                    {step.icon}
+                    <span className="absolute -top-1.5 -left-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#C8102E] font-display text-[10px] font-bold text-white">
+                      {i + 1}
                     </span>
-                    <div>
-                      <h3 className={`flex items-center gap-2 font-bold tracking-wide text-[#13264D] uppercase`}>
-                        {step.title}
-                        {step.comingSoon && (
-                          <span className={`rounded bg-[#C8102E]/10 px-1.5 py-0.5 text-[10px] font-bold text-[#C8102E] uppercase`}>
-                            Coming Soon
-                          </span>
-                        )}
-                      </h3>
-                      <p className="mt-1 text-gray-500">{step.text}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-            <div>
-              <h2 className={`mb-8 font-sans text-2xl font-black tracking-wide text-[#13264D] uppercase sm:text-3xl`}>
-                Why Use the Passport?
-              </h2>
-              <div className="space-y-4">
-                {whyUse.map((item) => (
-                  <div key={item.title} className="flex items-start gap-4 rounded-2xl bg-[#F4F6FA] p-5">
-                    <span className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#13264D] text-white`}>
-                      {item.icon}
-                    </span>
-                    <div>
-                      <h3 className={`font-bold text-[#13264D] uppercase`}>{item.title}</h3>
-                      <p className="mt-1 text-gray-500">{item.text}</p>
-                    </div>
+                  </span>
+                  <div>
+                    <h3 className="flex flex-wrap items-center gap-2 font-display text-lg font-bold text-[#13264D]">
+                      {step.title}
+                      {step.soon && (
+                        <span className="rounded-sm bg-[#C8102E]/10 px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-[#C8102E] uppercase">
+                          Soon
+                        </span>
+                      )}
+                    </h3>
+                    <p className="mt-1 text-[#5C6478]">{step.text}</p>
                   </div>
-                ))}
-              </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div>
+            <h2 className="marquee text-3xl text-[#13264D] sm:text-4xl">Why bother with it</h2>
+            <div className="mt-8 divide-y divide-[#E4E2DC] border-y border-[#E4E2DC]">
+              {whyUse.map((item) => (
+                <div key={item.title} className="flex gap-4 py-5">
+                  <span className="mt-0.5 text-[#C8102E]">{item.icon}</span>
+                  <div>
+                    <h3 className="font-display text-base font-bold text-[#13264D]">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 text-[#5C6478]">{item.text}</p>
+                  </div>
+                </div>
+              ))}
             </div>
+            <p className="mt-6 text-sm text-[#7A8194]">
+              Questions about any of it? Call us at{" "}
+              <a href={`tel:${siteConfig.phoneRaw}`} className="font-semibold text-[#C8102E] underline underline-offset-2">
+                {siteConfig.phone}
+              </a>
+              . A person in Branson picks up.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Signup */}
-      <section id="signup" className={`bg-gradient-to-br from-[#13264D] to-[#1B355F] py-16 sm:py-20`}>
+      {/* ---------- Signup ---------- */}
+      <section id="signup" className="relative isolate overflow-hidden bg-[#0B1424] py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <h2 className="font-sans text-3xl font-black text-white uppercase sm:text-4xl">Stay in the Loop</h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-white/80">
-            Be the first to know about new deals, seasonal events, and Branson updates, before and
-            during your trip.
+          <h2 className="marquee text-3xl text-white sm:text-4xl">Stay in the loop</h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-white/75">
+            Seasonal picks, new partner deals, and a heads-up when show schedules change. Usually
+            twice a month, never more.
           </p>
           <div className="mt-9">
             <PassportSignupForm />
@@ -364,32 +392,34 @@ export default async function PassportPage({
         </div>
       </section>
 
-      {/* Business CTA */}
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
-          <div className={`mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-[#13264D]`}>
+      {/* ---------- Business CTA ---------- */}
+      <section className="bg-[#F6F4EF] py-16 sm:py-20">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 px-4 sm:px-6 md:grid-cols-[auto_1fr]">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#13264D]">
             <Store className="h-7 w-7 text-white" />
           </div>
-          <h2 className={`text-3xl font-bold text-[#13264D] sm:text-4xl`}>
-            Own a Branson Business?
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-500">
-            Join the Passport free. Get your own listing, a unique QR code for your counter, and new
-            customers walking through your door.
-          </p>
-          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <Link
-              href="/passport/join"
-              className={`inline-flex items-center justify-center gap-2 rounded-lg bg-[#C8102E] px-8 py-4 text-lg font-bold text-white shadow-lg transition-colors hover:bg-[#A50D26]`}
-            >
-              Join Free
-            </Link>
-            <Link
-              href="/passport/partners"
-              className={`inline-flex items-center justify-center gap-2 rounded-lg border-2 border-[#13264D] px-8 py-4 text-lg font-semibold text-[#13264D] transition-colors hover:bg-[#F4F6FA]`}
-            >
-              Meet Our Partners
-            </Link>
+          <div>
+            <h2 className="marquee text-3xl text-[#13264D] sm:text-4xl">
+              Own a Branson business?
+            </h2>
+            <p className="mt-3 max-w-2xl text-lg text-[#5C6478]">
+              Join free. You get a listing, a QR code kit for your counter, and a report of how
+              many visitors you sent us. No fee, no contract.
+            </p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/passport/join"
+                className="inline-flex items-center justify-center rounded-sm bg-[#C8102E] px-7 py-3.5 font-display text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-[#A50D26]"
+              >
+                Join free
+              </Link>
+              <Link
+                href="/passport/partners"
+                className="inline-flex items-center justify-center rounded-sm border border-[#13264D] px-7 py-3.5 font-display text-sm font-bold tracking-wide text-[#13264D] uppercase transition-colors hover:bg-white"
+              >
+                See who is in
+              </Link>
+            </div>
           </div>
         </div>
       </section>

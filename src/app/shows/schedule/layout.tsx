@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: `Branson Show Schedule 2026 | Daily Showtimes & Availability | ${siteConfig.name}`,
+  title: `Branson Show Schedule 2026 | Daily Showtimes & Availability`,
   description:
     "View the complete Branson show schedule for 2026. Browse morning, afternoon, and evening showtimes. Plan your perfect day of live entertainment in Branson, Missouri.",
   openGraph: {

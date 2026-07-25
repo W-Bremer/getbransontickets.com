@@ -6,7 +6,7 @@ export default function NotFound() {
     <section className="py-24 sm:py-32">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
         <p className="text-7xl font-bold text-[#d4a843] font-heading">404</p>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-[#7B1A1A] font-heading">
+        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-[#13264D] font-heading">
           Page Not Found
         </h1>
         <p className="mt-4 text-lg text-gray-600 max-w-xl mx-auto">
@@ -24,7 +24,7 @@ export default function NotFound() {
           </Link>
           <Link
             href="/attractions"
-            className="px-6 py-3 bg-[#7B1A1A] text-white rounded-lg font-semibold hover:bg-[#5A1212] transition-colors text-center"
+            className="px-6 py-3 bg-[#13264D] text-white rounded-lg font-semibold hover:bg-[#0D1B38] transition-colors text-center"
           >
             Attractions
           </Link>
@@ -73,7 +73,7 @@ export default function NotFound() {
           </p>
           <Link
             href={`tel:${siteConfig.phoneRaw}`}
-            className="mt-2 inline-block text-xl font-bold text-[#7B1A1A] hover:text-[#d4a843] transition-colors"
+            className="mt-2 inline-block text-xl font-bold text-[#13264D] hover:text-[#d4a843] transition-colors"
           >
             {siteConfig.phone}
           </Link>

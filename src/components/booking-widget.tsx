@@ -117,18 +117,18 @@ export default function BookingWidget({
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-      <h3 className="mb-4 text-lg font-bold text-[#333333]">Book This Show</h3>
+      <h3 className="mb-4 text-lg font-bold text-[#1A1614]">Book This Show</h3>
 
       {/* Month navigation */}
       <div className="mb-2 flex items-center justify-between">
         <button onClick={prevMonth} className="rounded p-1 hover:bg-gray-100" aria-label="Previous month">
-          <ChevronLeft className="h-4 w-4 text-[#333333]" />
+          <ChevronLeft className="h-4 w-4 text-[#1A1614]" />
         </button>
-        <span className="text-sm font-semibold text-[#333333]">
+        <span className="text-sm font-semibold text-[#1A1614]">
           {MONTHS[currentMonth]} {currentYear}
         </span>
         <button onClick={nextMonth} className="rounded p-1 hover:bg-gray-100" aria-label="Next month">
-          <ChevronRight className="h-4 w-4 text-[#333333]" />
+          <ChevronRight className="h-4 w-4 text-[#1A1614]" />
         </button>
       </div>
 
@@ -156,8 +156,8 @@ export default function BookingWidget({
                 past
                   ? "cursor-not-allowed text-gray-300"
                   : isSelected
-                    ? "bg-[#7B1A1A] font-semibold text-white"
-                    : "text-[#333333] hover:bg-[#7B1A1A]/10"
+                    ? "bg-[#13264D] font-semibold text-white"
+                    : "text-[#1A1614] hover:bg-[#13264D]/10"
               }`}
             >
               {day}
@@ -173,7 +173,7 @@ export default function BookingWidget({
           <select
             value={selectedTime}
             onChange={(e) => setSelectedTime(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-[#333333] focus:border-[#7B1A1A] focus:ring-1 focus:ring-[#7B1A1A] focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-[#1A1614] focus:border-[#13264D] focus:ring-1 focus:ring-[#13264D] focus:outline-none"
           >
             {showTimes.map((t) => (
               <option key={t} value={t}>{t}</option>
@@ -185,11 +185,11 @@ export default function BookingWidget({
       {/* Guest selectors */}
       <div className="mb-4 space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-[#333333]">Adults</span>
+          <span className="text-sm text-[#1A1614]">Adults</span>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setAdults((a) => Math.max(1, a - 1))}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#7B1A1A] hover:text-[#7B1A1A]"
+              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
               aria-label="Remove adult"
             >
               <Minus className="h-3 w-3" />
@@ -197,7 +197,7 @@ export default function BookingWidget({
             <span className="w-6 text-center text-sm font-medium">{adults}</span>
             <button
               onClick={() => setAdults((a) => Math.min(10, a + 1))}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#7B1A1A] hover:text-[#7B1A1A]"
+              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
               aria-label="Add adult"
             >
               <Plus className="h-3 w-3" />
@@ -206,11 +206,11 @@ export default function BookingWidget({
         </div>
 
         <div className="flex items-center justify-between">
-          <span className="text-sm text-[#333333]">Children</span>
+          <span className="text-sm text-[#1A1614]">Children</span>
           <div className="flex items-center gap-2">
             <button
               onClick={() => handleChildrenChange(Math.max(0, children - 1))}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#7B1A1A] hover:text-[#7B1A1A]"
+              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
               aria-label="Remove child"
             >
               <Minus className="h-3 w-3" />
@@ -218,7 +218,7 @@ export default function BookingWidget({
             <span className="w-6 text-center text-sm font-medium">{children}</span>
             <button
               onClick={() => handleChildrenChange(Math.min(8, children + 1))}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#7B1A1A] hover:text-[#7B1A1A]"
+              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
               aria-label="Add child"
             >
               <Plus className="h-3 w-3" />
@@ -237,7 +237,7 @@ export default function BookingWidget({
                   <select
                     value={age}
                     onChange={(e) => setChildAge(i, Number(e.target.value))}
-                    className="w-full rounded border border-gray-300 px-2 py-1 text-xs focus:border-[#7B1A1A] focus:outline-none"
+                    className="w-full rounded border border-gray-300 px-2 py-1 text-xs focus:border-[#13264D] focus:outline-none"
                   >
                     {Array.from({ length: 18 }, (_, a) => (
                       <option key={a} value={a}>{a} yr{a !== 1 ? "s" : ""}</option>
@@ -262,7 +262,7 @@ export default function BookingWidget({
             <span>${children * pricePerChild}</span>
           </div>
         )}
-        <div className="mt-2 flex justify-between border-t border-gray-200 pt-2 font-bold text-[#333333]">
+        <div className="mt-2 flex justify-between border-t border-gray-200 pt-2 font-bold text-[#1A1614]">
           <span>Total</span>
           <span>${total}</span>
         </div>
@@ -272,7 +272,7 @@ export default function BookingWidget({
       <button
         onClick={handleSubmit}
         disabled={!selectedDate}
-        className="w-full rounded-lg bg-[#8B6914] py-3 text-sm font-bold text-white transition-colors hover:bg-[#6B5210] disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full rounded-lg bg-[#C8102E] py-3 text-sm font-bold text-white transition-colors hover:bg-[#A50D26] disabled:cursor-not-allowed disabled:opacity-50"
       >
         {selectedDate ? "Check Availability" : "Select a Date"}
       </button>

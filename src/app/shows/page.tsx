@@ -7,7 +7,7 @@ import { JsonLd } from "@/components/json-ld";
 import { ShowsListingClient } from "./shows-listing-client";
 
 export const metadata: Metadata = {
-  title: `Branson Shows 2026 | All Shows, Tickets & Schedules | ${siteConfig.name}`,
+  title: `Branson Shows 2026 | All Shows, Tickets & Schedules`,
   description:
     "Browse all 50+ Branson shows. Compare tickets, read reviews, and find the perfect show. Variety, comedy, magic, dinner shows, and more. Book online and save!",
   openGraph: {
@@ -33,7 +33,7 @@ export default function ShowsPage() {
   return (
     <>
       <JsonLd data={collectionSchema} />
-      <div className="bg-[#7B1A1A] py-16 sm:py-20">
+      <div className="bg-[#13264D] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Shows" }]} />
           <h1 className="mt-4 text-4xl sm:text-5xl font-bold text-white font-heading">

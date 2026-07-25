@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Archivo, Libre_Franklin, Fraunces } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { getPartnerShows } from "@/data/shows";
@@ -8,21 +8,32 @@ import { CartDrawer } from "@/components/cart-drawer";
 import { siteConfig } from "@/lib/config";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-sans",
+// Archivo carries the marquee headlines, Libre Franklin the reading text,
+// Fraunces the vintage-Ozarks accents. Deliberately not the default UI stack.
+const archivo = Archivo({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
   display: "swap",
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-heading",
+const libreFranklin = Libre_Franklin({
+  variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  axes: ["SOFT", "WONK"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteConfig.name} — ${siteConfig.tagline}`,
+    default: `${siteConfig.name}: ${siteConfig.tagline}`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -70,11 +81,19 @@ const jsonLd = {
     postalCode: "65616",
     addressCountry: "US",
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: siteConfig.averageRating,
-    reviewCount: siteConfig.reviewCount,
+  // No self-serving aggregateRating: we do not collect first-party reviews of
+  // the business, so asserting one would be fabricated markup.
+  areaServed: {
+    "@type": "City",
+    name: "Branson",
+    containedInPlace: { "@type": "State", name: "Missouri" },
   },
+  knowsAbout: [
+    "Branson live shows",
+    "Branson attractions",
+    "Branson show schedules",
+    "Table Rock Lake",
+  ],
   sameAs: [
     siteConfig.socialLinks.facebook,
     siteConfig.socialLinks.instagram,
@@ -97,7 +116,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
+        className={`${archivo.variable} ${libreFranklin.variable} ${fraunces.variable} font-sans antialiased`}
       >
         <Header
           partnerShows={getPartnerShows().map((s) => ({ name: s.name, slug: s.slug }))}

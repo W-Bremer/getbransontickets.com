@@ -56,8 +56,8 @@ export function AttractionsFilterClient({
                 onClick={() => setActiveType(type.slug)}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${
                   activeType === type.slug
-                    ? "bg-[#7B1A1A] text-white shadow-md"
-                    : "bg-[#FAF8F5] text-[#333333]/70 hover:bg-[#7B1A1A]/10 hover:text-[#7B1A1A]"
+                    ? "bg-[#13264D] text-white shadow-md"
+                    : "bg-[#F6F4EF] text-[#1A1614]/70 hover:bg-[#13264D]/10 hover:text-[#13264D]"
                 }`}
               >
                 {type.name}
@@ -67,11 +67,11 @@ export function AttractionsFilterClient({
 
           {/* Sort */}
           <div className="flex items-center gap-2">
-            <SlidersHorizontal className="h-4 w-4 text-[#333333]/50" />
+            <SlidersHorizontal className="h-4 w-4 text-[#1A1614]/50" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-[#333333] focus:border-[#7B1A1A] focus:outline-none focus:ring-1 focus:ring-[#7B1A1A]"
+              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-[#1A1614] focus:border-[#13264D] focus:outline-none focus:ring-1 focus:ring-[#13264D]"
             >
               <option value="popularity">Most Popular</option>
               <option value="rating">Highest Rated</option>
@@ -82,7 +82,7 @@ export function AttractionsFilterClient({
         </div>
 
         {/* Results Count */}
-        <p className="mb-6 text-sm text-[#333333]/60">
+        <p className="mb-6 text-sm text-[#1A1614]/60">
           Showing {filtered.length} attraction{filtered.length !== 1 ? "s" : ""}
         </p>
 
@@ -95,12 +95,12 @@ export function AttractionsFilterClient({
 
         {filtered.length === 0 && (
           <div className="py-16 text-center">
-            <p className="text-lg text-[#333333]/60">
+            <p className="text-lg text-[#1A1614]/60">
               No attractions found for this category.
             </p>
             <button
               onClick={() => setActiveType("all")}
-              className="mt-4 text-[#7B1A1A] font-semibold hover:underline"
+              className="mt-4 text-[#13264D] font-semibold hover:underline"
             >
               View all attractions
             </button>

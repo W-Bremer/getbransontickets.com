@@ -26,7 +26,7 @@ export function DealBanner({
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden bg-gradient-to-r from-[#8B6914] via-[#D4A843] to-[#8B6914]",
+        "relative w-full overflow-hidden bg-gradient-to-r from-[#C8102E] via-[#E8C65A] to-[#C8102E]",
         className
       )}
     >
@@ -47,7 +47,7 @@ export function DealBanner({
         <div className="flex items-center gap-2 shrink-0">
           <a
             href={ctaHref}
-            className="rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-[#7B1A1A] transition-all hover:bg-white/90 hover:scale-105"
+            className="rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-[#13264D] transition-all hover:bg-white/90 hover:scale-105"
           >
             {ctaText}
           </a>

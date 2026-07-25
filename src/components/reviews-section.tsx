@@ -47,7 +47,7 @@ export function ReviewsSection({
 
   return (
     <section className="py-8">
-      <h2 className="text-2xl font-bold text-[#333333]">
+      <h2 className="text-2xl font-bold text-[#1A1614]">
         Reviews for {showName}
       </h2>
 
@@ -55,7 +55,7 @@ export function ReviewsSection({
       <div className="mt-6 flex flex-col gap-8 sm:flex-row sm:items-start">
         {/* Big rating */}
         <div className="flex shrink-0 flex-col items-center rounded-xl bg-gray-50 px-8 py-6">
-          <span className="text-5xl font-bold text-[#333333]">
+          <span className="text-5xl font-bold text-[#1A1614]">
             {rating.toFixed(1)}
           </span>
           <div
@@ -66,7 +66,7 @@ export function ReviewsSection({
               <Star
                 key={`full-${i}`}
                 size={20}
-                className="fill-[#D4A843] text-[#D4A843]"
+                className="fill-[#E8C65A] text-[#E8C65A]"
               />
             ))}
             {hasHalf && (
@@ -74,14 +74,14 @@ export function ReviewsSection({
                 className="relative inline-block"
                 style={{ width: 20, height: 20 }}
               >
-                <Star size={20} className="absolute inset-0 text-[#D4A843]" />
+                <Star size={20} className="absolute inset-0 text-[#E8C65A]" />
                 <span
                   className="absolute inset-0 overflow-hidden"
                   style={{ width: "50%" }}
                 >
                   <Star
                     size={20}
-                    className="fill-[#D4A843] text-[#D4A843]"
+                    className="fill-[#E8C65A] text-[#E8C65A]"
                   />
                 </span>
               </span>
@@ -90,7 +90,7 @@ export function ReviewsSection({
               <Star
                 key={`empty-${i}`}
                 size={20}
-                className="text-[#D4A843]/30"
+                className="text-[#E8C65A]/30"
               />
             ))}
           </div>
@@ -103,12 +103,12 @@ export function ReviewsSection({
         <div className="flex-1 space-y-2">
           {distribution.map(({ star, count, pct }) => (
             <div key={star} className="flex items-center gap-3">
-              <span className="w-12 shrink-0 text-right text-sm font-medium text-[#333333]">
+              <span className="w-12 shrink-0 text-right text-sm font-medium text-[#1A1614]">
                 {star} star
               </span>
               <div className="h-3 flex-1 overflow-hidden rounded-full bg-gray-100">
                 <div
-                  className="h-full rounded-full bg-[#D4A843] transition-all duration-500"
+                  className="h-full rounded-full bg-[#E8C65A] transition-all duration-500"
                   style={{ width: `${pct}%` }}
                 />
               </div>
@@ -134,7 +134,7 @@ export function ReviewsSection({
             onClick={() =>
               setVisibleCount((prev) => prev + INITIAL_COUNT)
             }
-            className="rounded-lg border border-[#7B1A1A] px-6 py-2.5 text-sm font-semibold text-[#7B1A1A] transition-colors hover:bg-[#7B1A1A] hover:text-white"
+            className="rounded-lg border border-[#13264D] px-6 py-2.5 text-sm font-semibold text-[#13264D] transition-colors hover:bg-[#13264D] hover:text-white"
           >
             Show More Reviews
           </button>

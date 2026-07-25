@@ -53,12 +53,12 @@ export function CartDrawer() {
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
-          <h2 className="text-lg font-bold text-[#333333]">
+          <h2 className="text-lg font-bold text-[#1A1614]">
             Your Cart ({getItemCount()})
           </h2>
           <button
             onClick={closeCart}
-            className="rounded-full p-1 text-gray-500 hover:bg-gray-100 hover:text-[#333333]"
+            className="rounded-full p-1 text-gray-500 hover:bg-gray-100 hover:text-[#1A1614]"
             aria-label="Close cart"
           >
             <X className="h-5 w-5" />
@@ -70,7 +70,7 @@ export function CartDrawer() {
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <ShoppingBag className="mb-4 h-16 w-16 text-gray-300" />
-              <p className="mb-1 text-lg font-semibold text-[#333333]">
+              <p className="mb-1 text-lg font-semibold text-[#1A1614]">
                 Your cart is empty
               </p>
               <p className="text-sm text-gray-500">
@@ -91,7 +91,7 @@ export function CartDrawer() {
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className="text-sm font-bold text-[#333333]">
+                        <h3 className="text-sm font-bold text-[#1A1614]">
                           {item.name}
                         </h3>
                         <p className="mt-1 text-xs text-gray-500">
@@ -112,7 +112,7 @@ export function CartDrawer() {
                         <Trash2 className="h-4 w-4" />
                       </button>
                     </div>
-                    <div className="mt-2 text-right text-sm font-semibold text-[#333333]">
+                    <div className="mt-2 text-right text-sm font-semibold text-[#1A1614]">
                       ${subtotal.toFixed(2)}
                     </div>
                   </div>
@@ -126,21 +126,21 @@ export function CartDrawer() {
         {items.length > 0 && (
           <div className="border-t border-gray-200 px-5 py-4">
             <div className="mb-4 flex items-center justify-between">
-              <span className="text-base font-bold text-[#333333]">Total</span>
-              <span className="text-xl font-bold text-[#333333]">
+              <span className="text-base font-bold text-[#1A1614]">Total</span>
+              <span className="text-xl font-bold text-[#1A1614]">
                 ${getTotal().toFixed(2)}
               </span>
             </div>
             <Link
               href="/checkout"
               onClick={closeCart}
-              className="block w-full rounded-lg bg-[#8B6914] py-3 text-center text-sm font-bold text-white transition-colors hover:bg-[#6B5210]"
+              className="block w-full rounded-lg bg-[#C8102E] py-3 text-center text-sm font-bold text-white transition-colors hover:bg-[#A50D26]"
             >
               Proceed to Checkout
             </Link>
             <button
               onClick={closeCart}
-              className="mt-2 w-full py-2 text-center text-sm font-medium text-[#7B1A1A] hover:underline"
+              className="mt-2 w-full py-2 text-center text-sm font-medium text-[#13264D] hover:underline"
             >
               Continue Shopping
             </button>
