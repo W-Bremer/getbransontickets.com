@@ -10,6 +10,17 @@ export interface VoucherItem {
   theaterAddress?: string;
   pricePerAdult: number;
   pricePerChild: number;
+  /**
+   * Overrides the generated "<order>-01" code. Phone and box-office orders
+   * carry a voucher number issued by the theater, and the box office expects
+   * to see exactly that number.
+   */
+  voucherCode?: string;
+  /**
+   * Absolute URL to the show's logo. Must be publicly reachable over HTTPS:
+   * email clients will not render relative paths or data URIs.
+   */
+  logoUrl?: string;
 }
 
 export interface VoucherData {
@@ -38,7 +49,13 @@ function escapeHtml(str: string): string {
 
 function formatDate(dateStr: string): string {
   try {
-    const d = new Date(dateStr);
+    // "2026-08-04" parses as UTC midnight, which renders as the previous day
+    // in any US timezone. Build a local date so the voucher shows the day the
+    // customer is actually attending.
+    const dateOnly = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr.trim());
+    const d = dateOnly
+      ? new Date(Number(dateOnly[1]), Number(dateOnly[2]) - 1, Number(dateOnly[3]))
+      : new Date(dateStr);
     if (isNaN(d.getTime())) return dateStr;
     return d.toLocaleDateString("en-US", {
       weekday: "long",
@@ -52,7 +69,8 @@ function formatDate(dateStr: string): string {
 }
 
 function itemBlock(item: VoucherItem, index: number, orderNumber: string, customerName: string): string {
-  const voucherCode = `${orderNumber}-${String(index + 1).padStart(2, "0")}`;
+  const voucherCode =
+    item.voucherCode ?? `${orderNumber}-${String(index + 1).padStart(2, "0")}`;
   const quantity =
     item.adults +
     (item.children > 0 ? ` Adult${item.adults !== 1 ? "s" : ""}, ${item.children} Child${item.children !== 1 ? "ren" : ""}` : ` Adult${item.adults !== 1 ? "s" : ""}`);
@@ -83,6 +101,11 @@ function itemBlock(item: VoucherItem, index: number, orderNumber: string, custom
           <tr>
             <td valign="top" width="50%" style="padding-right:12px;font-family:Arial,sans-serif;color:${TEXT_DARK};">
               <div style="font-size:11px;font-weight:bold;letter-spacing:1px;color:${BRAND_MAROON};text-transform:uppercase;margin-bottom:8px;">Show Information</div>
+              ${
+                item.logoUrl
+                  ? `<img src="${escapeHtml(item.logoUrl)}" alt="${escapeHtml(item.name)}" width="200" style="display:block;width:200px;max-width:100%;height:auto;border:0;margin-bottom:10px;" />`
+                  : ""
+              }
               <div style="font-size:15px;font-weight:bold;margin-bottom:6px;">${escapeHtml(item.name)}</div>
               <div style="font-size:13px;color:#555;line-height:1.6;">
                 <strong>Date:</strong> ${escapeHtml(formatDate(item.date))}<br/>
@@ -138,7 +161,7 @@ export function renderVoucherEmail(data: VoucherData): { html: string; text: str
 
           <tr>
             <td style="padding:32px 32px 24px 32px;background:${BRAND_MAROON};color:#ffffff;text-align:center;">
-              <div style="font-size:14px;letter-spacing:3px;text-transform:uppercase;opacity:0.85;">${escapeHtml(siteConfig.shortName)}</div>
+              <img src="${siteConfig.url}/logo.png" alt="${escapeHtml(siteConfig.name)}" width="180" style="display:block;margin:0 auto 16px auto;width:180px;max-width:70%;height:auto;border:0;" />
               <div style="font-size:28px;font-weight:bold;margin-top:8px;">Booking Confirmed!</div>
               <div style="font-size:14px;margin-top:8px;opacity:0.9;">Thank you for your order, ${escapeHtml(data.customerName.split(" ")[0])}</div>
             </td>
@@ -217,7 +240,8 @@ export function renderVoucherEmail(data: VoucherData): { html: string; text: str
     "=== YOUR VOUCHERS ===",
   ];
   data.items.forEach((item, i) => {
-    const code = `${data.orderNumber}-${String(i + 1).padStart(2, "0")}`;
+    const code =
+      item.voucherCode ?? `${data.orderNumber}-${String(i + 1).padStart(2, "0")}`;
     textLines.push("");
     textLines.push(`-- Voucher ${i + 1}: ${item.name} --`);
     textLines.push(`Date: ${formatDate(item.date)}`);
