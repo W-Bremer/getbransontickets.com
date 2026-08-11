@@ -69,6 +69,15 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationData) {
 }
 
 /**
+ * Who gets the voucher work order. Both inboxes are on the domain's Google
+ * Workspace; either person can issue the voucher.
+ */
+const ALERT_RECIPIENTS = [
+  "contact@getbransontickets.com",
+  "xerious@getbransontickets.com",
+];
+
+/**
  * Tells the office an order needs a voucher issued. Deliberately plain text:
  * it is a work order, not marketing.
  */
@@ -104,8 +113,9 @@ export async function sendNewOrderAlert(data: OrderConfirmationData) {
 
   const result = await getResend().emails.send({
     from: fromAddress(),
-    // Set ORDER_ALERT_EMAIL to route these somewhere other than the shared inbox.
-    to: process.env.ORDER_ALERT_EMAIL || siteConfig.email,
+    // ORDER_ALERT_EMAIL overrides for local testing so dev orders never hit
+    // the real fulfillment inboxes.
+    to: process.env.ORDER_ALERT_EMAIL ? [process.env.ORDER_ALERT_EMAIL] : ALERT_RECIPIENTS,
     subject: `Voucher needed: ${data.orderNumber} (${data.customerName})`,
     text,
     html: `<pre style="font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.6;color:#1A1614;">${text

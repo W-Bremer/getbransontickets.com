@@ -44,7 +44,20 @@ export async function dispatchOrderConfirmation(
     metadata: { ...pi.metadata, [SENT_FLAG]: new Date().toISOString() },
   });
 
-  await sendOrderConfirmationEmail(order);
+  try {
+    await sendOrderConfirmationEmail(order);
+  } catch (err) {
+    // Release the claim so the webhook retry can attempt the send again.
+    // An empty string deletes the metadata key on Stripe's side.
+    try {
+      await stripe.paymentIntents.update(pi.id, {
+        metadata: { ...pi.metadata, [SENT_FLAG]: "" },
+      });
+    } catch (releaseErr) {
+      console.error("failed to release confirmation claim:", pi.id, releaseErr);
+    }
+    throw err;
+  }
 
   // Never let a failed internal alert surface as a customer-facing error.
   try {
