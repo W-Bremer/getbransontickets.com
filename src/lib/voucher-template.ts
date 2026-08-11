@@ -1,4 +1,5 @@
 import { siteConfig } from "./config";
+import { escapeHtml, formatDate } from "./email-format";
 
 export interface VoucherItem {
   name: string;
@@ -31,42 +32,19 @@ export interface VoucherData {
   confirmationNumber: string;
   items: VoucherItem[];
   totalAmount: number;
+  /**
+   * Hides the amount paid. Useful when the voucher is handed to a box office,
+   * which has no reason to see what the customer paid us.
+   */
+  hideTotalPaid?: boolean;
 }
 
-const BRAND_MAROON = "#7B1A1A";
-const BRAND_GOLD = "#8B6914";
-const TEXT_DARK = "#333333";
-const BG_CREAM = "#FAF8F5";
-
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-function formatDate(dateStr: string): string {
-  try {
-    // "2026-08-04" parses as UTC midnight, which renders as the previous day
-    // in any US timezone. Build a local date so the voucher shows the day the
-    // customer is actually attending.
-    const dateOnly = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr.trim());
-    const d = dateOnly
-      ? new Date(Number(dateOnly[1]), Number(dateOnly[2]) - 1, Number(dateOnly[3]))
-      : new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    return d.toLocaleDateString("en-US", {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
-}
+// Matches the site palette. The old maroon/gold belonged to the pre-2026
+// design and made the emails look like they came from a different company.
+const BRAND_MAROON = "#13264D";
+const BRAND_GOLD = "#C8102E";
+const TEXT_DARK = "#1A1614";
+const BG_CREAM = "#F6F4EF";
 
 function itemBlock(item: VoucherItem, index: number, orderNumber: string, customerName: string): string {
   const voucherCode =
@@ -157,7 +135,8 @@ export function renderVoucherEmail(data: VoucherData): { html: string; text: str
   <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:${BG_CREAM};">
     <tr>
       <td align="center" style="padding:32px 16px;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+        <!-- Fluid width: a fixed 600 makes phones scale the whole email down. -->
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
 
           <tr>
             <td style="padding:32px 32px 24px 32px;background:${BRAND_MAROON};color:#ffffff;text-align:center;">
@@ -169,21 +148,22 @@ export function renderVoucherEmail(data: VoucherData): { html: string; text: str
 
           <tr>
             <td style="padding:32px;">
+              <!-- Stacked, not side by side: two 22px values in one row collide
+                   on phone screens, and email clients can't be trusted with
+                   media queries. -->
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:${BG_CREAM};border-radius:8px;">
                 <tr>
-                  <td style="padding:20px;font-family:Arial,sans-serif;">
-                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                      <tr>
-                        <td style="color:${TEXT_DARK};">
-                          <div style="font-size:11px;color:#666;letter-spacing:1px;text-transform:uppercase;">Confirmation Number</div>
-                          <div style="font-size:22px;font-weight:bold;color:${BRAND_MAROON};margin-top:4px;font-family:Courier,monospace;">${escapeHtml(data.confirmationNumber)}</div>
-                        </td>
-                        <td align="right" style="color:${TEXT_DARK};">
-                          <div style="font-size:11px;color:#666;letter-spacing:1px;text-transform:uppercase;">Total Paid</div>
-                          <div style="font-size:22px;font-weight:bold;color:${TEXT_DARK};margin-top:4px;">$${data.totalAmount.toFixed(2)}</div>
-                        </td>
-                      </tr>
-                    </table>
+                  <td style="padding:20px;font-family:Arial,sans-serif;color:${TEXT_DARK};">
+                    <div style="font-size:11px;color:#666;letter-spacing:1px;text-transform:uppercase;">Confirmation Number</div>
+                    <div style="font-size:22px;font-weight:bold;color:${BRAND_MAROON};margin-top:4px;font-family:Courier,monospace;">${escapeHtml(data.confirmationNumber)}</div>
+                    ${
+                      data.hideTotalPaid
+                        ? ""
+                        : `<div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2ded6;">
+                      <div style="font-size:11px;color:#666;letter-spacing:1px;text-transform:uppercase;">Total Paid</div>
+                      <div style="font-size:22px;font-weight:bold;color:${TEXT_DARK};margin-top:4px;">$${data.totalAmount.toFixed(2)}</div>
+                    </div>`
+                    }
                   </td>
                 </tr>
               </table>
@@ -229,13 +209,13 @@ export function renderVoucherEmail(data: VoucherData): { html: string; text: str
 </html>`;
 
   const textLines: string[] = [
-    `${siteConfig.shortName} — Booking Confirmed`,
+    `${siteConfig.shortName}: Booking Confirmed`,
     "",
     `Thank you for your order, ${data.customerName}!`,
     "",
     `Confirmation Number: ${data.confirmationNumber}`,
     `Order Number: ${data.orderNumber}`,
-    `Total Paid: $${data.totalAmount.toFixed(2)}`,
+    ...(data.hideTotalPaid ? [] : [`Total Paid: $${data.totalAmount.toFixed(2)}`]),
     "",
     "=== YOUR VOUCHERS ===",
   ];

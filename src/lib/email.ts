@@ -1,5 +1,11 @@
 import { Resend } from "resend";
 import { renderVoucherEmail, type VoucherData } from "./voucher-template";
+import {
+  renderOrderConfirmationEmail,
+  VOUCHER_SLA_HOURS,
+  type OrderConfirmationData,
+} from "./order-confirmation-template";
+import { formatDate, formatQuantity } from "./email-format";
 import { siteConfig } from "./config";
 
 let resendClient: Resend | null = null;
@@ -15,17 +21,98 @@ function getResend(): Resend {
   return resendClient;
 }
 
+function fromAddress(): string {
+  return process.env.EMAIL_FROM ?? `${siteConfig.shortName} <onboarding@resend.dev>`;
+}
+
 export async function sendVoucherEmail(data: VoucherData) {
-  const from = process.env.EMAIL_FROM ?? `${siteConfig.shortName} <onboarding@resend.dev>`;
   const { html, text } = renderVoucherEmail(data);
 
   const result = await getResend().emails.send({
-    from,
+    from: fromAddress(),
     to: data.customerEmail,
-    subject: `Your Branson Show Voucher — Confirmation ${data.confirmationNumber}`,
+    subject: `Your Branson show voucher (confirmation ${data.confirmationNumber})`,
     html,
     text,
     replyTo: siteConfig.email,
+  });
+
+  if (result.error) {
+    throw new Error(`Resend error: ${result.error.message}`);
+  }
+
+  return result.data;
+}
+
+/**
+ * The receipt a customer gets the instant their card clears. Vouchers are
+ * issued manually afterwards, so this email exists to stop them wondering
+ * where their tickets are.
+ */
+export async function sendOrderConfirmationEmail(data: OrderConfirmationData) {
+  const { html, text } = renderOrderConfirmationEmail(data);
+
+  const result = await getResend().emails.send({
+    from: fromAddress(),
+    to: data.customerEmail,
+    subject: `Order confirmed (${data.orderNumber}). Your vouchers arrive within ${VOUCHER_SLA_HOURS} hours.`,
+    html,
+    text,
+    replyTo: siteConfig.email,
+  });
+
+  if (result.error) {
+    throw new Error(`Resend error: ${result.error.message}`);
+  }
+
+  return result.data;
+}
+
+/**
+ * Tells the office an order needs a voucher issued. Deliberately plain text:
+ * it is a work order, not marketing.
+ */
+export async function sendNewOrderAlert(data: OrderConfirmationData) {
+  const soonest = data.items
+    .map((i) => i.date)
+    .sort()
+    .at(0);
+
+  const lines = [
+    `NEW ORDER: ${data.orderNumber}`,
+    `Voucher due within ${VOUCHER_SLA_HOURS} hours.`,
+    "",
+    `Customer: ${data.customerName}`,
+    `Email:    ${data.customerEmail}`,
+    `Phone:    ${data.customerPhone || "not given"}`,
+    `Total:    $${data.totalAmount.toFixed(2)}`,
+    ...(soonest ? [`First show date: ${formatDate(soonest)}`] : []),
+    "",
+    "ITEMS",
+  ];
+
+  data.items.forEach((item) => {
+    lines.push("");
+    lines.push(`- ${item.name}`);
+    lines.push(`  ${[formatDate(item.date), item.time].filter(Boolean).join(" at ")}`);
+    if (item.theaterName) lines.push(`  ${item.theaterName}`);
+    lines.push(`  ${formatQuantity(item.adults, item.children)}`);
+    if (item.seatingTier) lines.push(`  Seating: ${item.seatingTier}`);
+  });
+
+  const text = lines.join("\n");
+
+  const result = await getResend().emails.send({
+    from: fromAddress(),
+    // Set ORDER_ALERT_EMAIL to route these somewhere other than the shared inbox.
+    to: process.env.ORDER_ALERT_EMAIL || siteConfig.email,
+    subject: `Voucher needed: ${data.orderNumber} (${data.customerName})`,
+    text,
+    html: `<pre style="font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.6;color:#1A1614;">${text
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")}</pre>`,
+    replyTo: data.customerEmail,
   });
 
   if (result.error) {
@@ -51,7 +138,7 @@ function escapeHtml(value: string): string {
 
 /** Plain internal notification to the site inbox (passport signups, partner applications). */
 export async function sendPassportNotification({ subject, lines }: PassportNotification) {
-  const from = process.env.EMAIL_FROM ?? `${siteConfig.shortName} <onboarding@resend.dev>`;
+  const from = fromAddress();
   const rows = lines
     .map(
       ([label, value]) =>

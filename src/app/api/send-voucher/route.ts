@@ -3,6 +3,11 @@ import { stripe } from "@/lib/stripe";
 import { sendVoucherEmail } from "@/lib/email";
 import { shows } from "@/data/shows";
 import { computeTotalCents, getServerPrices } from "@/lib/pricing";
+import {
+  confirmationNumberFor,
+  orderNumberFor,
+  unpackCartMetadata,
+} from "@/lib/order";
 import type { VoucherItem } from "@/lib/voucher-template";
 
 interface IncomingItem {
@@ -19,22 +24,24 @@ interface IncomingItem {
 
 interface SendVoucherBody {
   paymentIntentId: string;
-  customerName: string;
-  customerEmail: string;
-  customerPhone: string;
-  items: IncomingItem[];
+  customerName?: string;
+  customerEmail?: string;
+  customerPhone?: string;
+  /** Omit to rebuild the order from the PaymentIntent (the manual-send case). */
+  items?: IncomingItem[];
 }
 
+/**
+ * Issues the actual show voucher. Vouchers are sent by hand after the seats are
+ * confirmed with the theater, so this runs well after the customer's order
+ * confirmation went out. Post just a paymentIntentId and the order is rebuilt
+ * from Stripe.
+ */
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as SendVoucherBody;
 
-    if (
-      !body.paymentIntentId ||
-      !body.customerEmail ||
-      !body.customerName ||
-      !body.items?.length
-    ) {
+    if (!body.paymentIntentId) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -49,9 +56,48 @@ export async function POST(req: Request) {
       );
     }
 
+    const storedLines = unpackCartMetadata(paymentIntent.metadata ?? {});
+    const items: IncomingItem[] =
+      body.items?.length
+        ? body.items
+        : storedLines.map((line) => ({
+            id: line.id,
+            name: line.id,
+            date: line.date,
+            time: line.time,
+            adults: line.adults,
+            children: line.children,
+            seatingTier: line.seatingTier,
+            pricePerAdult: 0,
+            pricePerChild: 0,
+          }));
+
+    if (items.length === 0) {
+      return NextResponse.json(
+        { error: "No line items on this payment. Send them in the request body." },
+        { status: 400 }
+      );
+    }
+
+    const customerName = (body.customerName || paymentIntent.metadata?.customerName || "").trim();
+    const customerEmail = (
+      body.customerEmail ||
+      paymentIntent.metadata?.customerEmail ||
+      paymentIntent.receipt_email ||
+      ""
+    ).trim();
+    const customerPhone = (body.customerPhone || paymentIntent.metadata?.customerPhone || "").trim();
+
+    if (!customerName || !customerEmail) {
+      return NextResponse.json(
+        { error: "This payment has no customer name or email on file" },
+        { status: 400 }
+      );
+    }
+
     // A voucher must describe exactly what was paid for: recompute the total
     // from server-side prices and require it to match the captured amount.
-    const expectedCents = computeTotalCents(body.items);
+    const expectedCents = computeTotalCents(items);
     if (expectedCents === null || expectedCents !== paymentIntent.amount) {
       console.error("send-voucher amount mismatch:", {
         paymentIntentId: paymentIntent.id,
@@ -72,11 +118,12 @@ export async function POST(req: Request) {
       );
     }
 
-    const confirmationNumber = paymentIntent.id.replace(/^pi_/, "").slice(0, 16).toUpperCase();
-    const orderNumber = `BRN-${Date.now().toString(36).toUpperCase()}`;
+    // Same numbers the customer already has on their order confirmation.
+    const confirmationNumber = confirmationNumberFor(paymentIntent.id);
+    const orderNumber = orderNumberFor(paymentIntent.id);
     const totalAmount = paymentIntent.amount / 100;
 
-    const voucherItems: VoucherItem[] = body.items.map((item) => {
+    const voucherItems: VoucherItem[] = items.map((item) => {
       const show = shows.find((s) => s.slug === item.id);
       const prices = getServerPrices(item.id);
       return {
@@ -93,9 +140,9 @@ export async function POST(req: Request) {
     });
 
     await sendVoucherEmail({
-      customerName: body.customerName,
-      customerEmail: body.customerEmail,
-      customerPhone: body.customerPhone,
+      customerName,
+      customerEmail,
+      customerPhone,
       orderNumber,
       confirmationNumber,
       items: voucherItems,

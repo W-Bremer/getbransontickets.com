@@ -241,7 +241,7 @@ function StripePaymentForm({
       setErrorMessage(
         err instanceof Error
           ? err.message
-          : "Payment succeeded but we couldn't send your voucher email. We'll follow up shortly."
+          : "Payment succeeded but we couldn't send your confirmation email. We'll follow up shortly."
       );
       setSubmitting(false);
       setSubmitStage("idle");
@@ -301,7 +301,7 @@ function StripePaymentForm({
           {submitting ? (
             <>
               <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-              {submitStage === "emailing" ? "Sending voucher..." : "Processing..."}
+              {submitStage === "emailing" ? "Confirming order..." : "Processing..."}
             </>
           ) : (
             <>
@@ -328,6 +328,7 @@ function PaymentStep({
 }) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { name: customerName, email: customerEmail, phone: customerPhone } = formData;
 
   useEffect(() => {
     let cancelled = false;
@@ -338,14 +339,18 @@ function PaymentStep({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            // Stored on the intent so the order survives a closed tab.
+            customerName,
+            customerEmail,
+            customerPhone,
             items: items.map((item) => ({
               id: item.id,
               name: item.name,
               date: item.date,
+              time: item.time,
               adults: item.adults,
               children: item.children,
-              pricePerAdult: item.pricePerAdult,
-              pricePerChild: item.pricePerChild,
+              seatingTier: item.seatingTier,
             })),
           }),
         });
@@ -382,7 +387,7 @@ function PaymentStep({
     return () => {
       cancelled = true;
     };
-  }, [items]);
+  }, [items, customerName, customerEmail, customerPhone]);
 
   const appearance: Appearance = useMemo(
     () => ({
@@ -494,26 +499,44 @@ function ConfirmationStep({
       </div>
 
       {emailSent ? (
-        <p className="text-sm text-[#1A1614]/50">
-          Your show voucher has been sent to{" "}
-          <span className="font-medium text-[#1A1614]">{formData.email}</span>.
-          Please check your inbox — present the voucher at the box office to
-          redeem your tickets.
-        </p>
+        <div className="rounded-xl border-l-4 border-[#C8102E] bg-[#FDF3F4] p-5 text-left">
+          <p className="text-base font-bold text-[#C8102E]">
+            Your vouchers arrive within 12 hours
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-[#1A1614]/75">
+            We sent a receipt to{" "}
+            <span className="font-semibold text-[#1A1614]">{formData.email}</span>.
+            We book every seat through the theater by hand, so your show voucher
+            comes in a second email within 12 hours. That voucher is what the box
+            office scans, and there is nothing else you need to do before then.
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-[#1A1614]/75">
+            Attending today or tomorrow? Call{" "}
+            <a
+              href="tel:14172439629"
+              className="font-semibold text-[#C8102E] hover:underline"
+            >
+              (417) 243-9629
+            </a>{" "}
+            and we will move your voucher to the front of the line.
+          </p>
+        </div>
       ) : (
         <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-left">
           <p className="text-sm font-semibold text-amber-900">
-            Payment received — voucher email couldn&apos;t be sent automatically.
+            Payment received. Your confirmation email did not send automatically.
           </p>
           <p className="mt-1 text-xs text-amber-800">
-            Please screenshot this confirmation and email{" "}
+            Your order is safe and we can see it on our end. Screenshot this page
+            and email{" "}
             <a
               href="mailto:info@getbransontickets.com"
               className="underline font-medium"
             >
               info@getbransontickets.com
             </a>{" "}
-            with your order number. We&apos;ll send your voucher manually.
+            with your order number, or call (417) 243-9629. We will send your
+            voucher within 12 hours either way.
           </p>
         </div>
       )}
@@ -608,12 +631,13 @@ export default function CheckoutPage() {
   }
 
   async function handleCompleteBooking(paymentIntentId: string) {
-    const fallbackOrder = `BRN-${Date.now().toString(36).toUpperCase()}`;
+    const fallbackOrder = `BRN-${paymentIntentId.replace(/^pi_/, "").slice(-8).toUpperCase()}`;
     const snapshotTotal = total;
-    const snapshotCount = items.length;
+    // Tickets, not cart lines: one line for "2 adults, 1 child" is 3 tickets.
+    const snapshotCount = items.reduce((n, i) => n + i.adults + i.children, 0);
 
     try {
-      const res = await fetch("/api/send-voucher", {
+      const res = await fetch("/api/confirm-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -621,17 +645,6 @@ export default function CheckoutPage() {
           customerName: formData.name,
           customerEmail: formData.email,
           customerPhone: formData.phone,
-          items: items.map((item) => ({
-            id: item.id,
-            name: item.name,
-            date: item.date,
-            time: item.time,
-            adults: item.adults,
-            children: item.children,
-            seatingTier: item.seatingTier,
-            pricePerAdult: item.pricePerAdult,
-            pricePerChild: item.pricePerChild,
-          })),
         }),
       });
 

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
+import { dispatchOrderConfirmation } from "@/lib/fulfillment";
 
 export async function POST(req: Request) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -29,15 +30,25 @@ export async function POST(req: Request) {
     case "payment_intent.succeeded": {
       const pi = event.data.object as Stripe.PaymentIntent;
       console.log(
-        `[stripe] payment succeeded: ${pi.id} — $${(pi.amount / 100).toFixed(2)} ${pi.currency}`
+        `[stripe] payment succeeded: ${pi.id}, $${(pi.amount / 100).toFixed(2)} ${pi.currency}`
       );
-      // TODO: fulfill order — persist booking, send confirmation email, etc.
+
+      // Backstop for customers who close the tab before the browser confirms.
+      // dispatchOrderConfirmation is idempotent, so the usual case is a no-op.
+      try {
+        const result = await dispatchOrderConfirmation(pi);
+        console.log(`[stripe] confirmation for ${pi.id}: ${result.status}`);
+      } catch (err) {
+        console.error(`[stripe] confirmation failed for ${pi.id}:`, err);
+        // 500 so Stripe retries. The idempotency flag makes a retry safe.
+        return NextResponse.json({ error: "Confirmation failed" }, { status: 500 });
+      }
       break;
     }
     case "payment_intent.payment_failed": {
       const pi = event.data.object as Stripe.PaymentIntent;
       console.warn(
-        `[stripe] payment failed: ${pi.id} — ${pi.last_payment_error?.message ?? "unknown"}`
+        `[stripe] payment failed: ${pi.id}, ${pi.last_payment_error?.message ?? "unknown"}`
       );
       break;
     }
