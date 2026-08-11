@@ -25,7 +25,7 @@ export function TrustBar({ className }: { className?: string }) {
             {siteConfig.phone}
           </a>
           <p className="text-sm text-[#5C6478]">
-            Talk to someone in Branson before you book.
+            Questions about a show or an order? Give us a call.
           </p>
         </div>
 
@@ -54,9 +54,9 @@ export function TrustBar({ className }: { className?: string }) {
 
         <div className="flex flex-col gap-1.5 bg-[#F6F4EF] p-6">
           <MapPin className="h-5 w-5 text-[#C8102E]" strokeWidth={1.6} />
-          <p className="font-display text-lg font-bold text-[#13264D]">Branson, Missouri</p>
+          <p className="font-display text-lg font-bold text-[#13264D]">Based in Branson, Missouri</p>
           <p className="text-sm text-[#5C6478]">
-            We live here. The Passport is the guide we hand our own visitors.
+            A local company, not a national reseller.
           </p>
         </div>
       </div>

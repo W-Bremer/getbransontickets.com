@@ -1,13 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { siteConfig } from "@/lib/config";
 import { getPartnerShows } from "@/data/shows";
 import { attractions } from "@/data/attractions";
 // import { getPublishedPosts } from "@/data/blog"; // archived
 import { ShowCard } from "@/components/show-card";
 // import { CategoryCard } from "@/components/category-card";
 import { TrustBar } from "@/components/trust-bar";
-import { TestimonialCarousel } from "@/components/testimonial-carousel";
 // import { DealBanner } from "@/components/deal-banner";
 import { HeroSection } from "@/components/hero-section";
 import { NewsletterForm } from "@/components/passport/newsletter-form";
@@ -28,11 +26,10 @@ export default function HomePage() {
           <div className="flex items-end justify-between mb-10">
             <div>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1614]">
-                Most Popular Shows
+                Popular Shows in Branson
               </h2>
               <p className="mt-3 text-lg text-gray-500">
-                The shows everyone&apos;s talking about — book early, they sell
-                out fast.
+                Dates, prices, and seating on every listing.
               </p>
             </div>
             <Link
@@ -68,10 +65,10 @@ export default function HomePage() {
               </div>
               <div>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                  BOGO Deals & Discount Tickets
+                  Deals & Discount Tickets
                 </h2>
                 <p className="mt-1 text-white/80">
-                  Buy one, get one 50% off on select shows. Save big on your Branson vacation.
+                  Current offers on select shows, plus the lowest-priced tickets this season.
                 </p>
               </div>
             </div>
@@ -100,9 +97,8 @@ export default function HomePage() {
                 The Branson Passport
               </h2>
               <p className="mt-4 text-lg text-white/80">
-                More than tickets: your free insider guide to Branson. Where locals eat, what&apos;s
-                free to do, what&apos;s on this season, and exclusive deals from local partner
-                businesses.
+                A free guide to the rest of your trip: where to eat, what&apos;s free to do,
+                what&apos;s on this season, and offers from local partner businesses.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <Link
@@ -123,18 +119,18 @@ export default function HomePage() {
               {[
                 {
                   icon: <Compass className="h-6 w-6 text-[#E8555F]" />,
-                  title: "Insider Guide",
-                  text: "Local restaurants, coffee, shopping, and free things to do.",
+                  title: "Local Guide",
+                  text: "Restaurants, coffee, shopping, and free things to do.",
                 },
                 {
                   icon: <QrCode className="h-6 w-6 text-[#E8555F]" />,
                   title: "Scan Anywhere",
-                  text: "Passport QR codes at hotels and shops all over town.",
+                  text: "Passport QR codes at partner hotels and shops around town.",
                 },
                 {
                   icon: <BadgePercent className="h-6 w-6 text-[#E8555F]" />,
-                  title: "Exclusive Deals",
-                  text: "Partner-only offers you won't find anywhere else.",
+                  title: "Partner Offers",
+                  text: "Deals from local businesses, updated as partners join.",
                 },
               ].map((item) => (
                 <div
@@ -157,10 +153,11 @@ export default function HomePage() {
           <div className="flex items-end justify-between mb-10">
             <div>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1614]">
-                Top Branson Attractions
+                Things to Do Beyond the Shows
               </h2>
               <p className="mt-3 text-lg text-gray-500">
-                World-class theme parks, museums, and outdoor adventures beyond the shows.
+                Theme parks, museums, lake cruises, and mini golf. {attractions.length}{" "}
+                listings with prices for each.
               </p>
             </div>
             <Link
@@ -197,12 +194,10 @@ export default function HomePage() {
                     <p className="mt-1 text-sm text-gray-500 line-clamp-2">
                       {attraction.shortDescription}
                     </p>
-                    <div className="mt-2 flex items-center justify-between">
+                    {/* No star: attraction.rating has no citable source. */}
+                    <div className="mt-2">
                       <span className="text-sm font-semibold text-[#C8102E]">
                         From ${attraction.adultPrice}
-                      </span>
-                      <span className="text-sm text-gray-400">
-                        ★ {attraction.rating}
                       </span>
                     </div>
                   </div>
@@ -229,11 +224,11 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1614]">
-              Plan Your Branson Entertainment
+              Plan Your Days
             </h2>
             <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
-              With 40+ shows and {attractions.length}+ attractions,
-              every day in Branson is packed with entertainment.
+              Find what&apos;s playing, what&apos;s discounted, and how to fit it all
+              into your trip.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -250,7 +245,7 @@ export default function HomePage() {
                 Show Schedule
               </h3>
               <p className="text-gray-500">
-                See what&apos;s playing today, this week, or plan months ahead with our complete schedule.
+                See what&apos;s playing tonight, this week, or the week of your trip.
               </p>
             </Link>
             <Link
@@ -264,7 +259,7 @@ export default function HomePage() {
                 Deals & Discounts
               </h3>
               <p className="text-gray-500">
-                BOGO offers, family packages, and seasonal specials — save big on Branson entertainment.
+                Current offers on select shows and the lowest-priced tickets this season.
               </p>
             </Link>
             <Link
@@ -280,7 +275,7 @@ export default function HomePage() {
                 Plan Your Trip
               </h3>
               <p className="text-gray-500">
-                First time? Let us help you plan the perfect Branson entertainment itinerary.
+                First visit? See how shows, meals, and attractions fit into a day.
               </p>
             </Link>
           </div>
@@ -319,7 +314,8 @@ export default function HomePage() {
                   Branson Lakes Lodging
                 </h2>
                 <p className="text-white/80 text-lg leading-relaxed mb-6">
-                  Premium vacation rentals in the heart of Branson — villas, condos, and lake houses with hot tubs, game rooms, and stunning views. From $135/night with 24/7 support and local expertise.
+                  Vacation rentals in Branson: villas, condos, and lake houses with hot
+                  tubs, game rooms, and lake views. From $135/night.
                 </p>
                 <div className="flex flex-wrap gap-3 mb-8">
                   {["Lake Views", "Hot Tubs", "Game Rooms", "Private Docks"].map(
@@ -355,20 +351,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1614]">
-              What Our Visitors Say
-            </h2>
-            <p className="mt-4 text-lg text-gray-500">
-              Join thousands of happy families who booked their Branson entertainment with us.
-            </p>
-          </div>
-          <TestimonialCarousel />
-        </div>
-      </section>
+      {/* Testimonials removed until there are real reviews to show. Nothing
+          invented: no fabricated names, quotes, or star ratings. */}
 
       {/* Blog / Guides — archived, restore when ready */}
 
@@ -377,10 +361,11 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#13264D] to-[#0D1B38]" />
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-5xl font-bold text-white">
-            Ready to Experience Branson?
+            Find Your Show
           </h2>
           <p className="mt-6 text-xl text-white/80 max-w-2xl mx-auto">
-            Over 40 incredible shows, world-class attractions, and unforgettable memories await. Start planning your trip today.
+            Gospel, comedy, magic, dinner theater, and the big family variety shows.
+            Dates and prices are on every listing.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -390,10 +375,10 @@ export default function HomePage() {
               Browse All Shows
             </Link>
             <Link
-              href={`tel:${siteConfig.phoneRaw}`}
+              href="/shows/schedule"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#13264D] rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors shadow-xl"
             >
-              Call {siteConfig.phone}
+              View the Schedule
             </Link>
           </div>
         </div>
@@ -406,7 +391,7 @@ export default function HomePage() {
             Get Branson Deals in Your Inbox
           </h2>
           <p className="mt-3 text-gray-500">
-            Be the first to know about BOGO offers, new shows, and exclusive discounts.
+            New shows, current offers, and seasonal specials. An email now and then.
           </p>
           <NewsletterForm />
           <p className="mt-3 text-xs text-gray-400">No spam, ever. Unsubscribe anytime.</p>

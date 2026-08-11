@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Clock, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { RatingDisplay } from "@/components/rating-display";
 import type { Show } from "@/data/shows";
 
 interface ShowCardProps {
@@ -32,8 +31,8 @@ export function ShowCard({ show, index = 0, className }: ShowCardProps) {
   if (show.isNew2026) displayTags.push("New");
   if (show.mealIncluded) displayTags.push("Dinner");
   if (show.isLimitedEngagement) displayTags.push("Limited Engagement");
-  if (show.specialOffers.some((o) => o.toLowerCase().includes("bogo")))
-    displayTags.push("BOGO");
+  // No BOGO badge until specialOffers are verified against each theater's
+  // current promotions: the entries date from the original build.
   if (show.isFeatured && !show.isNew2026) displayTags.push("Most Popular");
 
   return (
@@ -101,13 +100,9 @@ export function ShowCard({ show, index = 0, className }: ShowCardProps) {
               <span className="capitalize">{show.timeOfDay}</span>
             </div>
 
-            <div className="mt-2.5">
-              <RatingDisplay
-                rating={show.rating}
-                reviewCount={show.reviewCount}
-                size="sm"
-              />
-            </div>
+            {/* Ratings removed: show.rating / show.reviewCount are invented
+                values from the original build, not reviews we hold. Restore
+                only with a real, citable source. */}
 
             <p className="mt-2 text-sm text-gray-500 line-clamp-2 leading-relaxed">
               {show.shortDescription}

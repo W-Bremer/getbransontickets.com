@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: "GetBransonTickets.com",
   shortName: "Get Branson Tickets",
-  tagline: "Branson Show Tickets and Local Advice",
+  tagline: "Branson Show Tickets and Things to Do",
   description:
-    "Tickets to Branson shows and attractions, sold by people who live here. Showtimes verified against every box office, plus a free local guide to the rest of your trip.",
+    "Compare and book tickets to Branson live shows and attractions. Verified showtimes, dates and prices on every listing, and one checkout for the whole trip.",
   // Canonical host: the apex 301s to www, so every canonical, sitemap entry,
   // and QR target must use www or it burns a redirect hop.
   url: "https://www.getbransontickets.com",
