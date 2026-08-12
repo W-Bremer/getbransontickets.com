@@ -70,12 +70,15 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationData) {
 
 /**
  * Who gets the voucher work order. Both inboxes are on the domain's Google
- * Workspace; either person can issue the voucher.
+ * Workspace; either person can issue the voucher. William's personal address
+ * rides along as cc (visible, not bcc) so any of the three can reply-all and
+ * the others see the order is handled.
  */
 const ALERT_RECIPIENTS = [
   "contact@getbransontickets.com",
   "xerious@getbransontickets.com",
 ];
+const ALERT_CC = ["williambremer9@gmail.com"];
 
 /**
  * Tells the office an order needs a voucher issued. Deliberately plain text:
@@ -114,8 +117,9 @@ export async function sendNewOrderAlert(data: OrderConfirmationData) {
   const result = await getResend().emails.send({
     from: fromAddress(),
     // ORDER_ALERT_EMAIL overrides for local testing so dev orders never hit
-    // the real fulfillment inboxes.
+    // the real fulfillment inboxes (and skips the cc for the same reason).
     to: process.env.ORDER_ALERT_EMAIL ? [process.env.ORDER_ALERT_EMAIL] : ALERT_RECIPIENTS,
+    ...(process.env.ORDER_ALERT_EMAIL ? {} : { cc: ALERT_CC }),
     subject: `Voucher needed: ${data.orderNumber} (${data.customerName})`,
     text,
     html: `<pre style="font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.6;color:#1A1614;">${text
