@@ -4,7 +4,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   MapPin,
-  Star,
   Phone,
   ExternalLink,
   CheckCircle2,
@@ -41,7 +40,7 @@ export async function generateMetadata({
 
   return {
     title: `${attraction.name} Branson 2026 | Tickets from $${attraction.adultPrice}`,
-    description: `${attraction.shortDescription} Tickets from $${attraction.adultPrice}. Rated ${attraction.rating}/5 stars (${attraction.reviewCount.toLocaleString()} reviews). Hours, pricing, photos & FAQs.`,
+    description: `${attraction.shortDescription} Tickets from $${attraction.adultPrice}. Hours, pricing, photos & FAQs.`,
     keywords: attraction.targetKeywords,
     alternates: { canonical: `${siteConfig.url}/attractions/${attraction.slug}` },
     openGraph: {
@@ -177,26 +176,9 @@ export default async function AttractionDetailPage({
             <p className="mt-2 text-lg text-[#E8C65A] font-medium">
               {attraction.tagline}
             </p>
-            <div className="mt-3 flex items-center gap-2">
-              <div className="flex items-center gap-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-5 h-5 ${
-                      i < Math.round(attraction.rating)
-                        ? "fill-[#E8C65A] text-[#E8C65A]"
-                        : "text-white/30"
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-white font-semibold">
-                {attraction.rating}
-              </span>
-              <span className="text-white/70">
-                ({attraction.reviewCount.toLocaleString()} reviews)
-              </span>
-            </div>
+            {/* Ratings removed: attraction.rating / attraction.reviewCount
+                were invented values from the original build, not reviews we
+                hold. Restore only with a real, citable source. */}
           </div>
         </div>
       </div>
@@ -500,14 +482,6 @@ export default async function AttractionDetailPage({
                   </div>
 
                   <div className="mt-6 space-y-3 text-sm">
-                    <div className="flex justify-between text-[#1A1614]/70">
-                      <span>Rating</span>
-                      <span className="flex items-center gap-1 font-medium text-[#1A1614]">
-                        <Star className="w-4 h-4 fill-[#E8C65A] text-[#E8C65A]" />
-                        {attraction.rating} (
-                        {attraction.reviewCount.toLocaleString()})
-                      </span>
-                    </div>
                     <div className="flex justify-between text-[#1A1614]/70">
                       <span>Type</span>
                       <span className="font-medium text-[#1A1614] capitalize">

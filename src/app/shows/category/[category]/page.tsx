@@ -27,7 +27,8 @@ export async function generateMetadata({
 
   return {
     title: `Branson ${cat.name} Shows 2026 | Tickets & Schedule`,
-    description: `Discover the best ${cat.name.toLowerCase()} shows in Branson, MO for 2026. ${cat.description}. Compare prices, read reviews, and book discount tickets online.`,
+    description: `Discover the best ${cat.name.toLowerCase()} shows in Branson, MO for 2026. ${cat.description}. Compare prices and schedules, and book tickets online.`,
+    alternates: { canonical: `/shows/category/${category}` },
     openGraph: {
       title: `Branson ${cat.name} Shows 2026 | Tickets & Schedule`,
       description: `Discover the best ${cat.name.toLowerCase()} shows in Branson, MO for 2026. ${cat.description}.`,

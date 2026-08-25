@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getPartnerShows } from "@/data/shows";
@@ -10,6 +11,10 @@ import { TrustBar } from "@/components/trust-bar";
 import { HeroSection } from "@/components/hero-section";
 import { NewsletterForm } from "@/components/passport/newsletter-form";
 import { Tag, Percent, Compass, QrCode, BadgePercent } from "lucide-react";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   const partnerShows = getPartnerShows();

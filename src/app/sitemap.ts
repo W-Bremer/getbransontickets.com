@@ -30,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/attractions`, lastModified: CONTENT_UPDATED.attractions, priority: 0.9 },
     { url: `${baseUrl}/passport`, lastModified: CONTENT_UPDATED.passport, priority: 0.9 },
     { url: `${baseUrl}/deals`, lastModified: CONTENT_UPDATED.shows, priority: 0.8 },
+    { url: `${baseUrl}/shows/deals`, lastModified: CONTENT_UPDATED.shows, priority: 0.7 },
     { url: `${baseUrl}/shows/schedule`, lastModified: CONTENT_UPDATED.shows, priority: 0.8 },
     { url: `${baseUrl}/theaters`, lastModified: CONTENT_UPDATED.theaters, priority: 0.7 },
     { url: `${baseUrl}/plan-your-trip`, lastModified: CONTENT_UPDATED.passport, priority: 0.7 },

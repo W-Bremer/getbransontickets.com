@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Star, Tag, ChevronRight, Phone, ExternalLink } from "lucide-react";
+import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Tag, Phone, ExternalLink } from "lucide-react";
 import { shows, getShowBySlug, getPartnerShows } from "@/data/shows";
 import { theaters } from "@/data/theaters";
 import { siteConfig } from "@/lib/config";
 import { getSeasonDates } from "@/lib/season";
+import { getUpcomingPerformances } from "@/lib/performances";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { RatingDisplay } from "@/components/rating-display";
 import { PriceDisplay } from "@/components/price-display";
 import { ShowCard } from "@/components/show-card";
 import { JsonLd } from "@/components/json-ld";
@@ -20,6 +20,10 @@ export async function generateStaticParams() {
   return shows.map((show) => ({ slug: show.slug }));
 }
 
+// The Event markup covers a rolling window of upcoming performances; without
+// revalidation the window would freeze at whatever day the site last deployed.
+export const revalidate = 86400;
+
 export async function generateMetadata({
   params,
 }: {
@@ -30,11 +34,11 @@ export async function generateMetadata({
   if (!show) return { title: "Show Not Found" };
 
   return {
-    title: `${show.name} Branson Tickets 2026 | Discount Tickets & Schedule`,
-    description: `Get ${show.name} tickets in Branson, MO. ${show.shortDescription} Book online & save! ★ ${show.rating} rated. Tickets from $${show.priceFrom}.`,
+    title: `${show.name} Branson Tickets 2026 | Showtimes & Schedule`,
+    description: `Get ${show.name} tickets in Branson, MO. ${show.shortDescription} Tickets from $${show.priceFrom}.`,
     alternates: { canonical: `${siteConfig.url}/shows/${show.slug}` },
     openGraph: {
-      title: `${show.name} Branson Tickets 2026 | Discount Tickets & Schedule`,
+      title: `${show.name} Branson Tickets 2026 | Showtimes & Schedule`,
       description: `Get ${show.name} tickets in Branson, MO. ${show.shortDescription}`,
       url: `${siteConfig.url}/shows/${show.slug}`,
       type: "website",
@@ -65,16 +69,13 @@ export default async function ShowDetailPage({
 
   const season = getSeasonDates(show);
 
-  const eventSchema = {
-    "@context": "https://schema.org",
-    // startDate is required for Event rich results; without it the whole
-    // block is ignored by Google.
-    "@type": "Event",
+  const performances = getUpcomingPerformances(show);
+
+  const eventDetails = {
     name: show.name,
     description: show.shortDescription,
     url: `${siteConfig.url}/shows/${show.slug}`,
     image: show.imageUrl,
-    ...(season ? { startDate: season.startDate, endDate: season.endDate } : {}),
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     organizer: {
@@ -99,7 +100,6 @@ export default async function ShowDetailPage({
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
       url: `${siteConfig.url}/shows/${show.slug}`,
-      ...(season ? { validFrom: season.startDate } : {}),
     },
     performer: {
       "@type": "PerformingGroup",
@@ -107,7 +107,37 @@ export default async function ShowDetailPage({
     },
   };
 
-  const ratingSchema = {
+  // One Event per performance: search engines match ticket sellers to a
+  // specific date-time instance, so a season-range Event can never join the
+  // ticket panels. The season-range fallback only applies to shows whose
+  // season hasn't started yet (startDate is still required for eligibility);
+  // a show that is mid-season yet fully dark (e.g. a long pause in
+  // darkDateRanges) gets no Event markup at all, since a season range would
+  // advertise performances that aren't happening.
+  const seasonNotStarted =
+    season !== null && season.startDate > new Date().toISOString().slice(0, 10);
+  const eventSchema =
+    performances.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@graph": performances.map((p) => ({
+            "@type": "Event",
+            ...eventDetails,
+            startDate: p.startDate,
+            endDate: p.endDate,
+          })),
+        }
+      : seasonNotStarted
+        ? {
+            "@context": "https://schema.org",
+            "@type": "Event",
+            ...eventDetails,
+            startDate: season.startDate,
+            endDate: season.endDate,
+          }
+        : null;
+
+  const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: `${show.name} Tickets`,
@@ -123,8 +153,8 @@ export default async function ShowDetailPage({
 
   return (
     <>
-      <JsonLd data={eventSchema} />
-      <JsonLd data={ratingSchema} />
+      {eventSchema && <JsonLd data={eventSchema} />}
+      <JsonLd data={productSchema} />
 
       {/* Hero */}
       <div className="relative h-[50vh] min-h-[400px]">
@@ -172,23 +202,9 @@ export default async function ShowDetailPage({
               {show.name}
             </h1>
             <p className="mt-2 text-lg text-white/90 font-medium">{show.tagline}</p>
-            <div className="mt-3 flex items-center gap-4">
-              <div className="flex items-center gap-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-5 h-5 ${
-                      i < Math.round(show.rating)
-                        ? "text-[#E8C65A] fill-[#E8C65A]"
-                        : "text-white/40"
-                    }`}
-                  />
-                ))}
-                <span className="ml-2 text-white font-semibold">
-                  {show.rating} ({show.reviewCount.toLocaleString()} reviews)
-                </span>
-              </div>
-            </div>
+            {/* Ratings removed: show.rating / show.reviewCount were invented
+                values from the original build, not reviews we hold. Restore
+                only with a real, citable source. */}
           </div>
         </div>
       </div>
@@ -245,12 +261,11 @@ export default async function ShowDetailPage({
                   ageRecommendation: show.ageRecommendation,
                   showTimes: show.showTimes,
                   darkDays: show.darkDays,
+                  isFeaturedPartner: show.isFeaturedPartner,
                   seasonStart: show.seasonStart,
                   seasonEnd: show.seasonEnd,
                   priceFrom: show.priceFrom,
                   priceTo: show.priceTo,
-                  rating: show.rating,
-                  reviewCount: show.reviewCount,
                   specialOffers: show.specialOffers,
                   mealIncluded: show.mealIncluded,
                   mealType: show.mealType,
@@ -277,7 +292,6 @@ export default async function ShowDetailPage({
                           pricePerAdult={show.priceFrom}
                           pricePerChild={show.childPriceFrom ?? Math.round(show.priceFrom * 0.6)}
                           imageUrl={show.imageUrl}
-                          showTimes={show.showTimes}
                         />
                       </div>
                     </div>
@@ -326,13 +340,6 @@ export default async function ShowDetailPage({
 
                 {/* Sidebar quick info */}
                 <div className="rounded-xl border border-gray-200 p-5 bg-white space-y-3 text-sm">
-                  <div className="flex justify-between text-gray-600">
-                    <span>Rating</span>
-                    <span className="flex items-center gap-1 font-medium text-[#1A1614]">
-                      <Star className="w-4 h-4 text-[#E8C65A] fill-[#E8C65A]" />
-                      {show.rating} ({show.reviewCount.toLocaleString()} reviews)
-                    </span>
-                  </div>
                   <div className="flex justify-between text-gray-600">
                     <span>Duration</span>
                     <span className="font-medium text-[#1A1614]">{show.duration}</span>

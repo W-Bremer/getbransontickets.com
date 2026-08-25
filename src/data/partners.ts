@@ -62,6 +62,24 @@ export const partners: PassportPartner[] = [
     isFeatured: true,
     joined: "2026-07",
   },
+  {
+    id: "mudslingers",
+    slug: "mudslingers-coffee",
+    name: "Mudslingers Coffee",
+    refCode: "MUD01",
+    category: "coffee",
+    tagline: "Fresh-made coffee on Highway 248",
+    description:
+      "A locally owned coffee truck at Carson's Country RV Park on Highway 248, a few minutes from the shows. Signature lattes and mochas made with Ghirardelli chocolate, Lotus plant-based energy drinks, fruit smoothies, and a kids menu, all made to order at the window. Rated 5.0 on Google by its customers.",
+    passportDeal: "Show your Branson Passport at the window for 5% off your coffee order.",
+    area: "Highway 248",
+    address: "2166 State Hwy 248, Branson, MO 65616",
+    url: "https://www.mudslingerscoffeebranson.com",
+    phone: "(406) 422-8143",
+    imageUrl: "/mudslingers-coffee.jpg",
+    isFeatured: true,
+    joined: "2026-08",
+  },
 ];
 
 export function getPartnerByRefCode(code: string): PassportPartner | undefined {

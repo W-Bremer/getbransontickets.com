@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: `Terms and Conditions`,
   description:
     "Terms and conditions for using GetBransonTickets.com including ticket purchases, data collection, and promotional offers.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

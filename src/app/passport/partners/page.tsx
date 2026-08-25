@@ -8,6 +8,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export const metadata: Metadata = {
   title: `Passport Partners | Local Branson Businesses`,
+  alternates: { canonical: "/passport/partners" },
   description:
     "Meet the local Branson businesses in the Branson Passport network: lodging, restaurants, shows, and shops offering insider recommendations and exclusive deals.",
   openGraph: {
@@ -113,7 +114,7 @@ export default function PartnersPage() {
               Partner With the Passport
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-500">
-              It costs nothing to join, and your guests get a better trip.
+              Join for $60 a month, and your guests get a better trip.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -132,7 +133,7 @@ export default function PartnersPage() {
               href="/passport/join"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#C8102E] px-8 py-4 text-lg font-semibold text-white shadow-lg transition-colors hover:bg-[#A50D26]"
             >
-              Join Free
+              Become a Partner
             </Link>
           </div>
         </div>

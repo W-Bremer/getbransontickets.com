@@ -6,7 +6,7 @@ import { SlidersHorizontal, X } from "lucide-react";
 import type { Show } from "@/data/shows";
 import type { categories } from "@/lib/config";
 
-type SortOption = "popular" | "price-low" | "price-high" | "rating" | "name";
+type SortOption = "featured" | "price-low" | "price-high" | "name";
 
 interface ShowsListingClientProps {
   shows: Show[];
@@ -15,7 +15,7 @@ interface ShowsListingClientProps {
 
 export function ShowsListingClient({ shows, categories }: ShowsListingClientProps) {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [sortBy, setSortBy] = useState<SortOption>("popular");
+  const [sortBy, setSortBy] = useState<SortOption>("featured");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100]);
   const [timeOfDay, setTimeOfDay] = useState<string>("all");
   const [mealOnly, setMealOnly] = useState(false);
@@ -56,19 +56,21 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
       );
     }
 
-    // Sort
+    // Sort. The old "popular" and "rating" options ordered by
+    // show.reviewCount / show.rating, invented values from the original
+    // build. "Featured" puts curated partner shows first and keeps catalog
+    // order for the rest.
     switch (sortBy) {
-      case "popular":
-        filtered.sort((a, b) => b.reviewCount - a.reviewCount);
+      case "featured":
+        filtered.sort(
+          (a, b) => (a.featuredOrder ?? 999) - (b.featuredOrder ?? 999)
+        );
         break;
       case "price-low":
         filtered.sort((a, b) => a.priceFrom - b.priceFrom);
         break;
       case "price-high":
         filtered.sort((a, b) => b.priceFrom - a.priceFrom);
-        break;
-      case "rating":
-        filtered.sort((a, b) => b.rating - a.rating);
         break;
       case "name":
         filtered.sort((a, b) => a.name.localeCompare(b.name));
@@ -126,8 +128,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
               onChange={(e) => setSortBy(e.target.value as SortOption)}
               className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-[#13264D]"
             >
-              <option value="popular">Most Popular</option>
-              <option value="rating">Highest Rated</option>
+              <option value="featured">Featured</option>
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
               <option value="name">A — Z</option>

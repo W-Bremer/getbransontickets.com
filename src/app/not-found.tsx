@@ -69,7 +69,7 @@ export default function NotFound() {
 
         <div className="mt-10 p-6 rounded-xl bg-[#faf8f5] border border-gray-100 max-w-md mx-auto">
           <p className="text-sm text-gray-600">
-            Need help? Call our Branson entertainment experts:
+            Need help? Give us a call:
           </p>
           <Link
             href={`tel:${siteConfig.phoneRaw}`}

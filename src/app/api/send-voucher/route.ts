@@ -8,6 +8,7 @@ import {
   orderNumberFor,
   unpackCartMetadata,
 } from "@/lib/order";
+import { isOfficeRequest } from "@/lib/office-auth";
 import type { VoucherItem } from "@/lib/voucher-template";
 
 interface IncomingItem {
@@ -20,6 +21,8 @@ interface IncomingItem {
   seatingTier?: string;
   pricePerAdult: number;
   pricePerChild: number;
+  /** Theater-issued voucher number. Omit for the generated "<order>-01" code. */
+  voucherCode?: string;
 }
 
 interface SendVoucherBody {
@@ -29,6 +32,8 @@ interface SendVoucherBody {
   customerPhone?: string;
   /** Omit to rebuild the order from the PaymentIntent (the manual-send case). */
   items?: IncomingItem[];
+  /** Sends again even though a voucher already went out (fixing a mistake). */
+  force?: boolean;
 }
 
 /**
@@ -39,6 +44,11 @@ interface SendVoucherBody {
  */
 export async function POST(req: Request) {
   try {
+    // Office staff only: this sends mail to the customer on file.
+    if (!isOfficeRequest(req)) {
+      return NextResponse.json({ error: "Not authorized" }, { status: 401 });
+    }
+
     const body = (await req.json()) as SendVoucherBody;
 
     if (!body.paymentIntentId) {
@@ -110,8 +120,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // One voucher per payment: refuse replays.
-    if (paymentIntent.metadata?.voucherSentAt) {
+    // One voucher per payment: refuse replays unless the office forces it.
+    if (paymentIntent.metadata?.voucherSentAt && !body.force) {
       return NextResponse.json(
         { error: "A voucher was already sent for this payment" },
         { status: 409 }
@@ -136,6 +146,7 @@ export async function POST(req: Request) {
         pricePerAdult: prices?.adult ?? item.pricePerAdult,
         pricePerChild: prices?.child ?? item.pricePerChild,
         theaterAddress: show?.theaterAddress,
+        voucherCode: item.voucherCode?.trim() || undefined,
       };
     });
 

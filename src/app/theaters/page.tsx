@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Users, Star, Calendar, ChevronRight } from "lucide-react";
+import { MapPin, Users, Calendar, ChevronRight } from "lucide-react";
 import { theaters } from "@/data/theaters";
 import { shows } from "@/data/shows";
 import { siteConfig } from "@/lib/config";
@@ -10,6 +10,7 @@ import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
   title: `All Branson Theaters & Venues 2026`,
+  alternates: { canonical: "/theaters" },
   description:
     "Explore every Branson theater and performance venue — from the iconic Clay Cooper Theatre to Sight & Sound's massive stage. Find shows, seating, directions, and more.",
   openGraph: {
@@ -133,13 +134,9 @@ export default function TheatersPage() {
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-3 left-3 flex items-center gap-1.5 text-white text-sm">
-                      <Star className="w-4 h-4 text-[#d4a843] fill-[#d4a843]" />
-                      <span className="font-semibold">{theater.rating}</span>
-                      <span className="text-white/70">
-                        ({theater.reviewCount.toLocaleString()})
-                      </span>
-                    </div>
+                    {/* Ratings removed: theater.rating / theater.reviewCount
+                        were invented values from the original build. Restore
+                        only with a real, citable source. */}
                     {showCount > 0 && (
                       <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#d4a843] text-[#13264D] text-xs font-bold">
                         {showCount} {showCount === 1 ? "Show" : "Shows"}
@@ -260,8 +257,8 @@ export default function TheatersPage() {
             Need Help Choosing a Show?
           </h2>
           <p className="mt-3 text-white/60">
-            Our Branson entertainment experts know every theater and every show.
-            Call us for personalized recommendations.
+            Tell us what you like and we'll point you to the right show and
+            theater.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
             <Link

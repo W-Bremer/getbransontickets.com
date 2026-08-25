@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: `Refund Policy`,
   description:
     "Refund and cancellation policy for tickets purchased through GetBransonTickets.com. Learn about cancellation windows, no-show policies, and refund procedures.",
+  alternates: { canonical: "/refund-policy" },
 };
 
 export default function RefundPolicyPage() {

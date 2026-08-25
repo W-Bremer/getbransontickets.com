@@ -82,7 +82,7 @@ export function PassportSignupForm() {
       </button>
       {status === "error" && (
         <p className="text-sm text-white">
-          Something went wrong. Please try again, or email us at info@getbransontickets.com.
+          Something went wrong. Please try again, or email us at contact@getbransontickets.com.
         </p>
       )}
       <p className="text-xs text-white/50">Free forever. No spam. Unsubscribe anytime.</p>

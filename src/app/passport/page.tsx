@@ -403,15 +403,15 @@ export default async function PassportPage({
               Own a Branson business?
             </h2>
             <p className="mt-3 max-w-2xl text-lg text-[#5C6478]">
-              Join free. You get a listing, a QR code kit for your counter, and a report of how
-              many visitors you sent us. No fee, no contract.
+              Join for $60 a month. You get a listing, a QR code kit for your counter, and a
+              report of how many visitors you sent us. No contract, cancel anytime.
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/passport/join"
                 className="inline-flex items-center justify-center rounded-sm bg-[#C8102E] px-7 py-3.5 font-display text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-[#A50D26]"
               >
-                Join free
+                Become a partner
               </Link>
               <Link
                 href="/passport/partners"

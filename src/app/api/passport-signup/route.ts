@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 import { sendPassportNotification } from "@/lib/email";
 import { REF_COOKIE } from "@/lib/passport";
+import { recordPassportSignup, recordPartnerApplication } from "@/lib/passport-events";
 
 const visitorSchema = z.object({
   type: z.literal("visitor"),
@@ -16,6 +17,8 @@ const visitorSchema = z.object({
 
 const partnerSchema = z.object({
   type: z.literal("partner"),
+  // "paid-signup" = the private $60/mo enrollment page; absent = the free application form
+  source: z.string().max(60).optional(),
   businessName: z.string().min(2).max(200),
   contactName: z.string().min(2).max(120),
   email: z.string().email().max(200),
@@ -48,6 +51,24 @@ export async function POST(req: Request) {
   console.log(JSON.stringify(record));
 
   after(async () => {
+    // Durable copy for the /office/passport dashboard (QR attribution).
+    if (parsed.type === "visitor") {
+      await recordPassportSignup({
+        ref,
+        email: parsed.email,
+        phone: parsed.phone || undefined,
+        smsOptIn: parsed.smsOptIn,
+        at: record.at,
+      });
+    } else {
+      await recordPartnerApplication({
+        businessName: parsed.businessName,
+        email: parsed.email,
+        source: parsed.source,
+        at: record.at,
+      });
+    }
+
     try {
       if (parsed.type === "visitor") {
         await sendPassportNotification({
@@ -60,9 +81,16 @@ export async function POST(req: Request) {
           ],
         });
       } else {
+        const paid = parsed.source === "paid-signup";
+        const business = parsed.businessName.replace(/[\r\n]+/g, " ");
         await sendPassportNotification({
-          subject: `Passport partner application: ${parsed.businessName.replace(/[\r\n]+/g, " ")}`,
+          subject: paid
+            ? `Paid partner signup ($60/mo): ${business}`
+            : `Passport partner application: ${business}`,
           lines: [
+            ...(paid
+              ? ([["Heads up", "Paid signup page. Add to the Passport within 7 days of payment."]] as [string, string][])
+              : []),
             ["Business", parsed.businessName],
             ["Contact", parsed.contactName],
             ["Email", parsed.email],

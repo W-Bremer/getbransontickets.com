@@ -139,7 +139,7 @@ export function PartnerJoinForm() {
       </button>
       {status === "error" && (
         <p className="text-sm text-[#C04E0C]">
-          Something went wrong. Please try again, or email us at info@getbransontickets.com.
+          Something went wrong. Please try again, or email us at contact@getbransontickets.com.
         </p>
       )}
     </form>

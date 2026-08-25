@@ -7,6 +7,8 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        // Internal fulfillment desk. Pages also carry noindex meta.
+        disallow: "/office",
       },
     ],
     sitemap: `${siteConfig.url}/sitemap.xml`,

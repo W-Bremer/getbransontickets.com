@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Star } from "lucide-react";
+import { MapPin } from "lucide-react";
 import type { Attraction } from "@/data/attractions";
 
 const typeLabels: Record<Attraction["type"], string> = {
@@ -14,37 +14,6 @@ const typeLabels: Record<Attraction["type"], string> = {
   entertainment: "Entertainment",
   "mini-golf": "Mini Golf",
 };
-
-function StarRating({ rating, reviewCount }: { rating: number; reviewCount: number }) {
-  const fullStars = Math.floor(rating);
-  const hasHalf = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
-  const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
-
-  return (
-    <div className="flex items-center gap-1">
-      <div className="flex items-center" aria-label={`${rating} out of 5 stars`}>
-        {Array.from({ length: fullStars }).map((_, i) => (
-          <Star key={`full-${i}`} size={14} className="fill-[#E8C65A] text-[#E8C65A]" />
-        ))}
-        {hasHalf && (
-          <span className="relative inline-block" style={{ width: 14, height: 14 }}>
-            <Star size={14} className="absolute inset-0 text-[#E8C65A]" />
-            <span className="absolute inset-0 overflow-hidden" style={{ width: "50%" }}>
-              <Star size={14} className="fill-[#E8C65A] text-[#E8C65A]" />
-            </span>
-          </span>
-        )}
-        {Array.from({ length: emptyStars }).map((_, i) => (
-          <Star key={`empty-${i}`} size={14} className="text-[#E8C65A]/30" />
-        ))}
-      </div>
-      <span className="text-xs font-semibold text-[#E8C65A]">{rating.toFixed(1)}</span>
-      <span className="text-xs text-[#1A1614]/60">
-        ({reviewCount.toLocaleString()} reviews)
-      </span>
-    </div>
-  );
-}
 
 interface AttractionCardProps {
   attraction: Attraction;
@@ -88,9 +57,9 @@ export function AttractionCard({ attraction, className }: AttractionCardProps) {
               {attraction.name}
             </h3>
 
-            <div className="mt-1.5">
-              <StarRating rating={attraction.rating} reviewCount={attraction.reviewCount} />
-            </div>
+            {/* Ratings removed: attraction.rating / attraction.reviewCount
+                were invented values from the original build, not reviews we
+                hold. Restore only with a real, citable source. */}
 
             <p className="mt-2 text-sm leading-relaxed text-[#1A1614]/60 line-clamp-2">
               {attraction.shortDescription}

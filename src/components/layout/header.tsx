@@ -36,7 +36,7 @@ const navLinks = [
   { label: "Passport", href: "/passport" },
   { label: "Deals", href: "/deals" },
   { label: "Schedule", href: "/shows/schedule" },
-  { label: "Plan Your Trip", href: "/plan-your-trip" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {

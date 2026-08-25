@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  Check,
   CreditCard,
   User,
   ShieldCheck,
@@ -21,58 +21,8 @@ import type { Appearance } from "@stripe/stripe-js";
 import { useCartStore, type CartItem } from "@/stores/cart";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { getStripe } from "@/lib/stripe-client";
-
-type Step = 1 | 2 | 3;
-
-const stepLabels = ["Contact Info", "Payment", "Confirmation"];
-
-function StepIndicator({ current }: { current: Step }) {
-  return (
-    <div className="flex items-center justify-center gap-0">
-      {stepLabels.map((label, i) => {
-        const stepNum = (i + 1) as Step;
-        const isActive = stepNum === current;
-        const isComplete = stepNum < current;
-
-        return (
-          <div key={label} className="flex items-center">
-            {i > 0 && (
-              <div
-                className={`h-0.5 w-8 sm:w-16 ${
-                  isComplete ? "bg-[#C8102E]" : "bg-gray-200"
-                }`}
-              />
-            )}
-            <div className="flex flex-col items-center gap-1.5">
-              <div
-                className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all ${
-                  isComplete
-                    ? "bg-[#C8102E] text-white"
-                    : isActive
-                      ? "bg-[#13264D] text-white ring-4 ring-[#13264D]/20"
-                      : "bg-gray-100 text-[#1A1614]/40"
-                }`}
-              >
-                {isComplete ? <Check className="h-5 w-5" /> : stepNum}
-              </div>
-              <span
-                className={`text-xs font-semibold whitespace-nowrap ${
-                  isActive
-                    ? "text-[#13264D]"
-                    : isComplete
-                      ? "text-[#C8102E]"
-                      : "text-[#1A1614]/40"
-                }`}
-              >
-                {label}
-              </span>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+import { StepIndicator, type Step } from "./step-indicator";
+import { COMPLETED_ORDER_KEY } from "./confirmation/confirmation-client";
 
 function ContactInfoStep({
   onNext,
@@ -444,123 +394,9 @@ function PaymentStep({
   );
 }
 
-function ConfirmationStep({
-  formData,
-  total,
-  itemCount,
-  orderNumber,
-  emailSent,
-}: {
-  formData: { name: string; email: string; phone: string };
-  total: number;
-  itemCount: number;
-  orderNumber: string;
-  emailSent: boolean;
-}) {
-
-  return (
-    <div className="text-center space-y-6">
-      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#C8102E]/10">
-        <Check className="h-10 w-10 text-[#C8102E]" />
-      </div>
-
-      <div>
-        <h2 className="text-2xl font-bold text-[#1A1614]">Booking Confirmed!</h2>
-        <p className="mt-2 text-[#1A1614]/60">
-          Thank you for your order, {formData.name.split(" ")[0]}!
-        </p>
-      </div>
-
-      <div className="rounded-xl bg-[#F6F4EF] p-6 text-left space-y-3">
-        <div className="flex justify-between text-sm">
-          <span className="text-[#1A1614]/60">Order Number</span>
-          <span className="font-bold text-[#13264D]">{orderNumber}</span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-[#1A1614]/60">Items</span>
-          <span className="font-medium text-[#1A1614]">
-            {itemCount} ticket{itemCount !== 1 ? "s" : ""}
-          </span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-[#1A1614]/60">Email</span>
-          <span className="font-medium text-[#1A1614]">{formData.email}</span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-[#1A1614]/60">Phone</span>
-          <span className="font-medium text-[#1A1614]">{formData.phone}</span>
-        </div>
-        <div className="border-t border-gray-200 pt-3 flex justify-between">
-          <span className="font-semibold text-[#1A1614]">Total Charged</span>
-          <span className="text-xl font-bold text-[#1A1614]">
-            ${total.toFixed(2)}
-          </span>
-        </div>
-      </div>
-
-      {emailSent ? (
-        <div className="rounded-xl border-l-4 border-[#C8102E] bg-[#FDF3F4] p-5 text-left">
-          <p className="text-base font-bold text-[#C8102E]">
-            Your vouchers arrive within 12 hours
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-[#1A1614]/75">
-            We sent a receipt to{" "}
-            <span className="font-semibold text-[#1A1614]">{formData.email}</span>.
-            We book every seat through the theater by hand, so your show voucher
-            comes in a second email within 12 hours. That voucher is what the box
-            office scans, and there is nothing else you need to do before then.
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-[#1A1614]/75">
-            Attending today or tomorrow? Call{" "}
-            <a
-              href="tel:14172439629"
-              className="font-semibold text-[#C8102E] hover:underline"
-            >
-              (417) 243-9629
-            </a>{" "}
-            and we will move your voucher to the front of the line.
-          </p>
-        </div>
-      ) : (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-left">
-          <p className="text-sm font-semibold text-amber-900">
-            Payment received. Your confirmation email did not send automatically.
-          </p>
-          <p className="mt-1 text-xs text-amber-800">
-            Your order is safe and we can see it on our end. Screenshot this page
-            and email{" "}
-            <a
-              href="mailto:info@getbransontickets.com"
-              className="underline font-medium"
-            >
-              info@getbransontickets.com
-            </a>{" "}
-            with your order number, or call (417) 243-9629. We will send your
-            voucher within 12 hours either way.
-          </p>
-        </div>
-      )}
-
-      <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
-        <Link
-          href="/shows"
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#13264D] px-6 py-3 font-semibold text-white hover:bg-[#0D1B38] transition-colors"
-        >
-          Browse More Shows
-        </Link>
-        <Link
-          href="/"
-          className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-gray-200 px-6 py-3 font-semibold text-[#1A1614]/70 hover:border-[#13264D] hover:text-[#13264D] transition-all"
-        >
-          Return Home
-        </Link>
-      </div>
-    </div>
-  );
-}
-
 export default function CheckoutPage() {
-  const { items, getTotal, clearCart } = useCartStore();
+  const router = useRouter();
+  const { items, getTotal } = useCartStore();
   const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<Step>(1);
   const [formData, setFormData] = useState({
@@ -568,13 +404,6 @@ export default function CheckoutPage() {
     email: "",
     phone: "",
   });
-  const [completedOrder, setCompletedOrder] = useState<{
-    orderNumber: string;
-    total: number;
-    itemCount: number;
-    emailSent: boolean;
-  } | null>(null);
-
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -589,7 +418,7 @@ export default function CheckoutPage() {
 
   const total = getTotal();
 
-  if (items.length === 0 && step !== 3) {
+  if (items.length === 0) {
     return (
       <>
         <section className="bg-[#13264D] pt-12 pb-16">
@@ -636,6 +465,9 @@ export default function CheckoutPage() {
     // Tickets, not cart lines: one line for "2 adults, 1 child" is 3 tickets.
     const snapshotCount = items.reduce((n, i) => n + i.adults + i.children, 0);
 
+    let orderNumber = fallbackOrder;
+    let emailSent = false;
+
     try {
       const res = await fetch("/api/confirm-order", {
         method: "POST",
@@ -650,31 +482,31 @@ export default function CheckoutPage() {
 
       if (res.ok) {
         const data = (await res.json()) as { orderNumber: string };
-        setCompletedOrder({
-          orderNumber: data.orderNumber,
-          total: snapshotTotal,
-          itemCount: snapshotCount,
-          emailSent: true,
-        });
-      } else {
-        setCompletedOrder({
-          orderNumber: fallbackOrder,
-          total: snapshotTotal,
-          itemCount: snapshotCount,
-          emailSent: false,
-        });
+        orderNumber = data.orderNumber;
+        emailSent = true;
       }
     } catch {
-      setCompletedOrder({
-        orderNumber: fallbackOrder,
-        total: snapshotTotal,
-        itemCount: snapshotCount,
-        emailSent: false,
-      });
+      // Payment already succeeded; fall through with the fallback order
+      // number so the customer still reaches the confirmation page.
     }
 
-    clearCart();
-    setStep(3);
+    // Handed off via sessionStorage, not the URL, so customer details
+    // stay out of query strings and analytics logs. The confirmation
+    // page clears the cart once it picks this up.
+    sessionStorage.setItem(
+      COMPLETED_ORDER_KEY,
+      JSON.stringify({
+        orderNumber,
+        total: snapshotTotal,
+        itemCount: snapshotCount,
+        emailSent,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+      })
+    );
+
+    router.push("/checkout/confirmation");
   }
 
   return (
@@ -725,21 +557,11 @@ export default function CheckoutPage() {
                     formData={formData}
                   />
                 )}
-                {step === 3 && completedOrder && (
-                  <ConfirmationStep
-                    formData={formData}
-                    total={completedOrder.total}
-                    itemCount={completedOrder.itemCount}
-                    orderNumber={completedOrder.orderNumber}
-                    emailSent={completedOrder.emailSent}
-                  />
-                )}
               </div>
             </div>
 
             {/* Cart Summary Sidebar */}
-            {step !== 3 && (
-              <div className="mt-8 lg:mt-0">
+            <div className="mt-8 lg:mt-0">
                 <div className="sticky top-24 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
                   <h2 className="text-lg font-bold text-[#1A1614] mb-4">
                     Order Summary
@@ -784,8 +606,7 @@ export default function CheckoutPage() {
                     Edit Cart
                   </Link>
                 </div>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </section>

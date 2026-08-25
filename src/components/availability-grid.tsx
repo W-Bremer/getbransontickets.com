@@ -1,15 +1,29 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface AvailabilityGridProps {
+  /** Slug for the live schedule lookup; only sellable shows have one served. */
+  slug?: string;
+  isSellable?: boolean;
   showTimes: string[];
   showName: string;
   pricePerAdult: number;
   darkDays?: string[];
 }
 
+interface ScheduleResponse {
+  dates: { date: string; times: string[] }[];
+}
+
+const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+const isoOf = (date: Date) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
 export default function AvailabilityGrid({
+  slug,
+  isSellable = false,
   showTimes,
   showName,
   pricePerAdult,
@@ -26,16 +40,44 @@ export default function AvailabilityGrid({
     return result;
   }, []);
 
+  // Sellable shows render the real performance calendar (same source as the
+  // booking widget); others fall back to the weekly pattern for display.
+  const [availability, setAvailability] = useState<Map<string, string[]> | null>(null);
+  useEffect(() => {
+    if (!isSellable || !slug) return;
+    let cancelled = false;
+    fetch(`/api/schedule/${slug}`)
+      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((data: ScheduleResponse) => {
+        if (!cancelled) {
+          setAvailability(new Map(data.dates.map((d) => [d.date, d.times])));
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [isSellable, slug]);
+
   const darkDayNames = useMemo(
     () => new Set(darkDays.map((d) => d.toLowerCase())),
     [darkDays]
   );
 
-  const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const patternDark = (date: Date) =>
+    darkDayNames.has(DAY_NAMES[date.getDay()].toLowerCase());
 
-  const isDark = (date: Date) => {
-    const dayName = DAY_NAMES[date.getDay()].toLowerCase();
-    return darkDayNames.has(dayName);
+  /** null = no performance that day; list = times playing. */
+  const timesFor = (date: Date): string[] | null => {
+    if (isSellable && availability) {
+      const times = availability.get(isoOf(date));
+      return times && times.length > 0 ? times : null;
+    }
+    return patternDark(date) ? null : showTimes;
+  };
+
+  const scrollToBooking = () => {
+    document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const formatHeader = (date: Date) => {
@@ -58,11 +100,11 @@ export default function AvailabilityGrid({
           <thead>
             <tr className="border-b border-gray-200">
               <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">
-                Show Time
+                Date
               </th>
               {days.map((date, i) => {
                 const { dayShort, dateStr } = formatHeader(date);
-                const dark = isDark(date);
+                const dark = timesFor(date) === null;
                 return (
                   <th
                     key={i}
@@ -78,27 +120,37 @@ export default function AvailabilityGrid({
             </tr>
           </thead>
           <tbody>
-            {showTimes.map((time) => (
-              <tr key={time} className="border-b border-gray-100 last:border-0">
-                <td className="px-4 py-3 font-medium text-[#1A1614]">{time}</td>
-                {days.map((date, i) => {
-                  const dark = isDark(date);
-                  return (
-                    <td key={i} className="px-2 py-3 text-center">
-                      {dark ? (
-                        <span className="inline-block rounded bg-gray-100 px-3 py-1.5 text-xs text-gray-400">
-                          N/A
-                        </span>
-                      ) : (
-                        <button className="inline-block rounded bg-[#C8102E] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#A50D26]">
-                          BOOK
-                        </button>
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
+            <tr>
+              <td className="px-4 py-3 font-medium text-[#1A1614]">Show times</td>
+              {days.map((date, i) => {
+                const times = timesFor(date);
+                return (
+                  <td key={i} className="px-2 py-3 text-center align-top">
+                    {times === null ? (
+                      <span className="inline-block rounded bg-gray-100 px-3 py-1.5 text-xs text-gray-400">
+                        N/A
+                      </span>
+                    ) : (
+                      <div className="flex flex-col items-center gap-1">
+                        {times.map((t) => (
+                          <span key={t} className="text-xs font-semibold text-[#1A1614]">
+                            {t}
+                          </span>
+                        ))}
+                        {isSellable && (
+                          <button
+                            onClick={scrollToBooking}
+                            className="inline-block rounded bg-[#C8102E] px-3 py-1 text-xs font-bold text-white transition-colors hover:bg-[#A50D26]"
+                          >
+                            BOOK
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </td>
+                );
+              })}
+            </tr>
           </tbody>
         </table>
       </div>

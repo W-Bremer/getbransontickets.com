@@ -5,13 +5,14 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PartnerJoinForm } from "@/components/passport/partner-join-form";
 
 export const metadata: Metadata = {
-  title: `Join the Branson Passport | Free for Local Businesses`,
+  title: `Join the Branson Passport | $60/Month for Local Businesses`,
+  alternates: { canonical: "/passport/join" },
   description:
-    "Join the Branson Passport free. Get a listing in Branson's insider guide, your own QR code, and trackable referrals for your business.",
+    "Join the Branson Passport for $60 a month. Get a listing in Branson's insider guide, your own QR code, and trackable referrals for your business.",
   openGraph: {
-    title: "Join the Branson Passport, Free for Local Businesses",
+    title: "Join the Branson Passport: $60 a Month for Local Businesses",
     description:
-      "A free listing, your own QR code, and new customers. Join Branson's insider guide.",
+      "A listing in Branson's insider guide, your own QR code, and new customers for $60 a month.",
     url: `${siteConfig.url}/passport/join`,
     type: "website",
     siteName: siteConfig.name,
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
 const benefits = [
   {
     icon: <BadgeCheck className="h-5 w-5 text-[#C8102E]" />,
-    text: "Free forever. No fees, no contracts, no catch.",
+    text: "$60 a month. No contracts, cancel anytime.",
   },
   {
     icon: <Users className="h-5 w-5 text-[#C8102E]" />,
@@ -54,7 +55,7 @@ export default function JoinPage() {
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-white/80">
             The Branson Passport is the free insider guide we hand every visitor. Partner
-            businesses get listed, get a QR code, and get customers. It costs nothing.
+            businesses get listed, get a QR code, and get customers for $60 a month.
           </p>
         </div>
       </section>

@@ -13,22 +13,22 @@ const faqCategories = [
       {
         question: "How do I book show tickets through GetBransonTickets.com?",
         answer:
-          "You can book tickets directly on our website by browsing shows, selecting your preferred date and time, and completing the checkout process. You can also call us at 1-800-555-SHOW and one of our entertainment experts will help you book.",
+          "You can book tickets directly on our website by browsing shows, selecting your preferred date and time, and completing checkout. You can also call us at (417) 243-9629 and we'll book it for you over the phone.",
       },
       {
         question: "Can I cancel or change my ticket reservation?",
         answer:
-          "Yes! Most shows allow cancellations or changes up to 24 hours before the performance. Some limited engagement shows may have stricter policies. Contact us and we'll help you make any changes.",
+          "Cancellation windows vary by theater. Many shows allow a full refund or rescheduling up to 24 hours before showtime, and some theaters only require 2 hours notice. See our Refund Policy for the exact window for each theater, or contact us and we'll help with changes.",
       },
       {
         question: "Do I need to print my tickets?",
         answer:
-          "Most Branson theaters accept digital tickets on your phone. After booking, you'll receive a confirmation email with your tickets. We recommend arriving 15-30 minutes early to pick up your seats.",
+          "Most Branson theaters accept digital tickets on your phone. After booking you'll receive an order confirmation right away, and your tickets follow by email, typically within 12 hours. We recommend arriving 15 to 30 minutes before showtime.",
       },
       {
         question: "Are group discounts available?",
         answer:
-          "Yes! Groups of 10 or more can receive special pricing on most Branson shows. Call us at 1-800-555-SHOW to discuss group rates and available packages.",
+          "Some Branson theaters offer group rates. Sight & Sound, for example, has group pricing for parties of 15 or more. Call us at (417) 243-9629 and we'll check group options for the shows you want to see.",
       },
     ],
   },
@@ -38,7 +38,7 @@ const faqCategories = [
       {
         question: "What is the most popular show in Branson?",
         answer:
-          "The Haygoods is consistently Branson's #1 most-attended show, drawing over 7 million fans with their high-energy variety performance featuring 20+ instruments, lasers, and pyrotechnics. However, Branson has 50+ shows and the 'best' show depends on your personal preferences.",
+          "The Haygoods is one of Branson's most popular shows, a high-energy variety performance featuring 20+ instruments, lasers, and pyrotechnics. But Branson has dozens of shows running at any time, and the best one depends on what you like.",
       },
       {
         question: "How long do Branson shows typically last?",
@@ -63,17 +63,12 @@ const faqCategories = [
       {
         question: "What kind of deals do you offer?",
         answer:
-          "We offer a variety of deals including BOGO (buy one, get one free) tickets, kids-free specials, family packages, early bird discounts, and seasonal promotions. Check our Deals page for current offers.",
+          "Deals change through the year. Current offers include BOGO promotions on select shows, family passes, and dollar-off deals from Branson theaters. Check our Deals page for what's available right now.",
       },
       {
         question: "How do BOGO offers work?",
         answer:
           "With BOGO deals, you purchase one full-price ticket and receive a second ticket free. Some BOGO offers apply to specific dates or show times. Check the deal details on each show listing for specifics.",
-      },
-      {
-        question: "Do you price match?",
-        answer:
-          "We work directly with Branson theaters to offer competitive pricing. If you find a lower published price for the same show, date, and seat category, contact us and we'll do our best to match it.",
       },
     ],
   },
@@ -270,7 +265,7 @@ export default function FAQPage() {
             Still Have Questions?
           </h2>
           <p className="mt-3 text-gray-600">
-            Our Branson entertainment experts are happy to help.
+            Call or message us and we'll get you an answer.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
             <Link

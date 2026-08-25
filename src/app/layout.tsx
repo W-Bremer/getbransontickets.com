@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import { Archivo, Libre_Franklin, Fraunces } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -127,6 +129,13 @@ export default function RootLayout({
         <Footer />
         <PhoneBar />
         <CartDrawer />
+        <Analytics />
+        <Script
+          src="https://widgets.leadconnectorhq.com/loader.js"
+          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+          data-widget-id="6a7bcb4770d2c2478c5ee9cf"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

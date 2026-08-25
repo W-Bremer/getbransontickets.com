@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Tag, Ticket, Users, Sparkles, Star } from "lucide-react";
+import { Tag, Ticket, Sparkles } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 import { shows } from "@/data/shows";
 import { attractions } from "@/data/attractions";
@@ -9,22 +9,20 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
-  title: `Branson Discount Tickets & Deals 2026 | Save Big`,
+  title: `Branson Discount Tickets & Deals 2026`,
+  alternates: { canonical: "/deals" },
   description:
-    "Find the best Branson discount tickets and deals for 2026. BOGO show offers, cheap Branson show tickets, attraction discounts, and family packages. Save on your Branson vacation.",
+    "Find Branson discount tickets and deals for 2026. Current theater offers, BOGO deals on select shows, and the lowest-priced shows and attractions.",
   keywords: [
     "branson discount tickets",
     "cheap branson show tickets",
     "branson deals",
-    "branson coupons",
     "branson show deals",
-    "branson vacation deals",
-    "branson family packages",
   ],
   openGraph: {
     title: "Branson Discount Tickets & Deals 2026",
     description:
-      "BOGO shows, discount tickets, and family packages. Save big on Branson entertainment.",
+      "Current theater offers, BOGO deals on select shows, and the lowest-priced shows and attractions in Branson.",
     url: `${siteConfig.url}/deals`,
     type: "website",
     siteName: siteConfig.name,
@@ -42,48 +40,18 @@ export default function DealsPage() {
     .sort((a, b) => a.priceFrom - b.priceFrom)
     .slice(0, 6);
 
-  // Best value attractions (lowest price with high rating)
+  // Lowest-priced attractions by adult ticket. The old sort divided price by
+  // attraction.rating, an invented value from the original build.
   const valuAttractions = [...attractions]
-    .sort((a, b) => a.adultPrice / a.rating - b.adultPrice / b.rating)
+    .sort((a, b) => a.adultPrice - b.adultPrice)
     .slice(0, 6);
-
-  // Family packages (combine a show + attraction)
-  const familyPackages = [
-    {
-      name: "Theme Park & Show Combo",
-      description:
-        "Silver Dollar City admission plus an evening show. A full day of Branson entertainment for the whole family.",
-      items: ["Silver Dollar City", "The Haygoods"],
-      originalPrice: 130,
-      dealPrice: 109,
-      savings: 21,
-    },
-    {
-      name: "Aquarium & Dinner Show",
-      description:
-        "Explore the Aquarium at the Boardwalk then enjoy a dinner show. Perfect for families with young children.",
-      items: ["Aquarium at the Boardwalk", "Dolly Parton's Stampede"],
-      originalPrice: 100,
-      dealPrice: 84,
-      savings: 16,
-    },
-    {
-      name: "Outdoor Adventure Package",
-      description:
-        "Ride the ducks and zip through the treetops. An action-packed day for thrill-seekers visiting Branson.",
-      items: ["Ride the Ducks", "Shepherd of the Hills"],
-      originalPrice: 70,
-      dealPrice: 56,
-      savings: 14,
-    },
-  ];
 
   const dealsSchema = {
     "@context": "https://schema.org",
     "@type": "OfferCatalog",
     name: "Branson Discount Tickets & Deals 2026",
     description:
-      "Discount show tickets, BOGO offers, and family packages for Branson, Missouri entertainment.",
+      "Discount show tickets and current theater offers for Branson, Missouri entertainment.",
     url: `${siteConfig.url}/deals`,
     numberOfItems: bogoShows.length + discountShows.length,
   };
@@ -112,8 +80,8 @@ export default function DealsPage() {
             Branson Discount Tickets &amp; Deals 2026
           </h1>
           <p className="mt-4 text-lg text-white/80 max-w-2xl">
-            Save on the best shows and attractions in Branson. BOGO offers,
-            discount tickets, family packages, and more.
+            Save on shows and attractions in Branson. Current theater offers,
+            the lowest-priced show tickets, and the lowest-priced attractions.
           </p>
         </div>
       </section>
@@ -129,8 +97,9 @@ export default function DealsPage() {
               </h2>
             </div>
             <p className="text-[#1A1614]/60 mb-8 max-w-xl">
-              Buy one, get one deals on select Branson shows. Limited-time
-              offers — book now before they sell out.
+              Buy one, get one offers on select Branson shows. Offers are set
+              by each theater and can change, so check the show page for
+              current dates and details.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {bogoShows.map((show) => (
@@ -173,15 +142,6 @@ export default function DealsPage() {
                       <p className="mt-1 text-sm text-[#1A1614]/60">
                         {show.theater}
                       </p>
-                      <div className="mt-2 flex items-center gap-1">
-                        <Star className="w-4 h-4 fill-[#E8C65A] text-[#E8C65A]" />
-                        <span className="text-sm font-semibold text-[#1A1614]">
-                          {show.rating}
-                        </span>
-                        <span className="text-sm text-[#1A1614]/50">
-                          ({show.reviewCount.toLocaleString()})
-                        </span>
-                      </div>
                       <div className="mt-3 space-y-1">
                         {show.specialOffers.map((offer, i) => (
                           <p
@@ -215,7 +175,7 @@ export default function DealsPage() {
           </div>
           <p className="text-[#1A1614]/60 mb-8 max-w-xl">
             Great entertainment doesn&apos;t have to break the bank. These
-            top-rated shows offer the best value in Branson.
+            shows have the lowest ticket prices in Branson.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {discountShows.map((show) => (
@@ -251,15 +211,6 @@ export default function DealsPage() {
                     <p className="mt-1 text-sm text-[#1A1614]/60 line-clamp-2">
                       {show.shortDescription}
                     </p>
-                    <div className="mt-2 flex items-center gap-1">
-                      <Star className="w-4 h-4 fill-[#E8C65A] text-[#E8C65A]" />
-                      <span className="text-sm font-semibold text-[#1A1614]">
-                        {show.rating}
-                      </span>
-                      <span className="text-sm text-[#1A1614]/50">
-                        ({show.reviewCount.toLocaleString()})
-                      </span>
-                    </div>
                   </div>
                 </div>
               </Link>
@@ -274,12 +225,12 @@ export default function DealsPage() {
           <div className="flex items-center gap-3 mb-2">
             <Tag className="h-6 w-6 text-[#E8C65A]" />
             <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1614] font-heading">
-              Top Attraction Deals
+              Lowest-Priced Attractions
             </h2>
           </div>
           <p className="text-[#1A1614]/60 mb-8 max-w-xl">
-            The best-value attractions in Branson — top-rated experiences at
-            great prices.
+            The lowest-priced attractions in Branson, ranked by adult ticket
+            price.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {valuAttractions.map((attr) => (
@@ -300,7 +251,7 @@ export default function DealsPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                     <div className="absolute top-3 left-3">
                       <span className="rounded-full bg-[#E8C65A] px-3 py-1 text-xs font-bold text-white">
-                        Best Value
+                        Low Price
                       </span>
                     </div>
                     <div className="absolute bottom-3 right-3 rounded-xl bg-[#0D1B38]/85 px-3 py-1.5 backdrop-blur-md">
@@ -319,80 +270,9 @@ export default function DealsPage() {
                     <p className="mt-1 text-sm text-[#1A1614]/60 line-clamp-2">
                       {attr.shortDescription}
                     </p>
-                    <div className="mt-2 flex items-center gap-1">
-                      <Star className="w-4 h-4 fill-[#E8C65A] text-[#E8C65A]" />
-                      <span className="text-sm font-semibold text-[#1A1614]">
-                        {attr.rating}
-                      </span>
-                      <span className="text-sm text-[#1A1614]/50">
-                        ({attr.reviewCount.toLocaleString()})
-                      </span>
-                    </div>
                   </div>
                 </div>
               </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Family Packages */}
-      <section className="py-12 sm:py-16 bg-[#F6F4EF]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 mb-2">
-            <Users className="h-6 w-6 text-[#C8102E]" />
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1614] font-heading">
-              Family Packages
-            </h2>
-          </div>
-          <p className="text-[#1A1614]/60 mb-8 max-w-xl">
-            Save when you bundle shows and attractions. These curated packages
-            make planning your Branson trip easy.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {familyPackages.map((pkg) => (
-              <div
-                key={pkg.name}
-                className="rounded-2xl bg-white border border-gray-100 shadow-md overflow-hidden"
-              >
-                <div className="bg-[#13264D] px-6 py-4">
-                  <h3 className="text-lg font-bold text-white">{pkg.name}</h3>
-                </div>
-                <div className="p-6">
-                  <p className="text-sm text-[#1A1614]/70 leading-relaxed">
-                    {pkg.description}
-                  </p>
-                  <div className="mt-4 space-y-2">
-                    {pkg.items.map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-center gap-2 text-sm"
-                      >
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#C8102E]" />
-                        <span className="text-[#1A1614] font-medium">
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-6 flex items-end gap-3">
-                    <div>
-                      <span className="text-sm text-[#1A1614]/50 line-through">
-                        ${pkg.originalPrice}
-                      </span>
-                      <div className="text-3xl font-bold text-[#1A1614]">
-                        ${pkg.dealPrice}
-                      </div>
-                    </div>
-                    <span className="rounded-full bg-[#E8C65A]/10 px-3 py-1 text-xs font-bold text-[#E8C65A]">
-                      Save ${pkg.savings}
-                    </span>
-                  </div>
-                  <button className="mt-5 w-full rounded-lg bg-[#C8102E] py-3 text-sm font-semibold text-white hover:bg-[#C8102E]/90 transition-colors">
-                    Book Package
-                  </button>
-                </div>
-              </div>
             ))}
           </div>
         </div>

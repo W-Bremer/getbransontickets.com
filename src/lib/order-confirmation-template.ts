@@ -26,6 +26,8 @@ export interface OrderConfirmationData {
   orderNumber: string;
   items: ConfirmationItem[];
   totalAmount: number;
+  /** Lets the office alert link straight to the voucher desk. Never rendered to the customer. */
+  paymentIntentId?: string;
 }
 
 const NAVY = "#13264D";

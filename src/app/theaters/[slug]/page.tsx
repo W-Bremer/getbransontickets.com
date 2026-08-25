@@ -6,9 +6,7 @@ import {
   MapPin,
   Phone,
   Globe,
-  Users,
   Calendar,
-  Star,
   ChevronRight,
   Armchair,
   Car,
@@ -19,7 +17,6 @@ import { theaters, getTheaterBySlug } from "@/data/theaters";
 import { shows } from "@/data/shows";
 import { siteConfig } from "@/lib/config";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { RatingDisplay } from "@/components/rating-display";
 import { ShowCard } from "@/components/show-card";
 import { JsonLd } from "@/components/json-ld";
 
@@ -129,15 +126,12 @@ export default async function TheaterDetailPage({
                 {theater.tagline}
               </p>
 
-              <div className="mt-4 flex items-center gap-4">
-                <RatingDisplay
-                  rating={theater.rating}
-                  reviewCount={theater.reviewCount}
-                />
-              </div>
+              {/* Ratings removed: theater.rating / theater.reviewCount were
+                  invented values from the original build, not reviews we
+                  hold. Restore only with a real, citable source. */}
 
               {/* Quick Facts */}
-              <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-gray-50">
                   <Armchair className="w-5 h-5 text-[#d4a843]" />
                   <div>
@@ -168,15 +162,6 @@ export default async function TheaterDetailPage({
                     <div className="text-xs text-gray-500">Established</div>
                     <div className="font-semibold text-[#13264D]">
                       {theater.yearBuilt}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-gray-50">
-                  <Star className="w-5 h-5 text-[#d4a843] fill-[#d4a843]" />
-                  <div>
-                    <div className="text-xs text-gray-500">Rating</div>
-                    <div className="font-semibold text-[#13264D]">
-                      {theater.rating} / 5.0
                     </div>
                   </div>
                 </div>
@@ -347,13 +332,6 @@ export default async function TheaterDetailPage({
                       <span className="text-gray-600">Shows Playing</span>
                       <span className="font-medium text-[#13264D]">
                         {theaterShows.length}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Rating</span>
-                      <span className="flex items-center gap-1 font-medium text-[#13264D]">
-                        <Star className="w-3.5 h-3.5 text-[#d4a843] fill-[#d4a843]" />
-                        {theater.rating}
                       </span>
                     </div>
                   </div>

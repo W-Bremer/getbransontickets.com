@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: `Frequently Asked Questions`,
+  title: "Branson Show FAQs | Booking, Tickets & Trip Questions",
   description:
-    "Get answers to common questions about booking Branson show tickets, attractions, parking, group discounts, and planning your Branson, Missouri vacation.",
-  openGraph: {
-    title: "Branson Show & Attraction FAQs",
-    description:
-      "Get answers to common questions about booking Branson show tickets, attractions, and planning your vacation.",
-  },
+    "Answers to common questions about booking Branson show tickets: cancellations, digital tickets, group rates, deals, and planning your trip.",
+  alternates: { canonical: "/faq" },
 };
 
-export default function FAQLayout({ children }: { children: React.ReactNode }) {
+export default function FaqLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

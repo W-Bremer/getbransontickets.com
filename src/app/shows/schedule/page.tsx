@@ -185,8 +185,7 @@ export default function SchedulePage() {
             Need Help Planning Your Schedule?
           </h2>
           <p className="mt-4 text-gray-600">
-            Our Branson entertainment experts can help you build the perfect
-            itinerary for your trip.
+            Call us and we'll help you build a show schedule for your trip.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link

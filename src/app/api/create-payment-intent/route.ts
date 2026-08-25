@@ -4,6 +4,9 @@ import { stripe } from "@/lib/stripe";
 import { REF_COOKIE } from "@/lib/passport";
 import { computeTotalCents } from "@/lib/pricing";
 import { packCartMetadata, type CartLine } from "@/lib/order";
+import { getShowBySlug } from "@/data/shows";
+import { effectiveSchedule, loadOverrides, timesForDate } from "@/lib/showtimes";
+import { formatDate } from "@/lib/email-format";
 
 interface IncomingItem {
   id: string;
@@ -50,6 +53,40 @@ export async function POST(req: Request) {
         { error: "Order total is below the minimum charge amount" },
         { status: 400 }
       );
+    }
+
+    // Every item's date must be a performance the show actually plays
+    // (weekly pattern plus office overrides). The booking calendar enforces
+    // this client-side; this is the backstop so a stale cart or crafted
+    // request cannot buy a date with no show. Fails open on a storage
+    // hiccup: blocking every sale is worse than skipping the date check.
+    try {
+      const overrides = await loadOverrides();
+      for (const item of items) {
+        const show = getShowBySlug(item.id);
+        if (!show) continue;
+        const schedule = effectiveSchedule(show, overrides.overrides[show.slug]);
+        const times = timesForDate(schedule, item.date);
+        if (times.length === 0) {
+          return NextResponse.json(
+            {
+              error: `${show.name} does not have a performance on ${formatDate(item.date)}. Please remove it from your cart and pick an available date.`,
+            },
+            { status: 400 }
+          );
+        }
+        const itemTime = item.time?.trim();
+        if (itemTime && !times.some((t) => t === itemTime)) {
+          return NextResponse.json(
+            {
+              error: `${show.name} plays at ${times.join(" and ")} on ${formatDate(item.date)}, not ${item.time}. Please remove it from your cart and pick an available time.`,
+            },
+            { status: 400 }
+          );
+        }
+      }
+    } catch (err) {
+      console.error("create-payment-intent date validation skipped:", err);
     }
 
     // Passport partner referral attribution (set by /p/[code] QR links)

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Star, MapPin, ChevronRight, Clock, Users, CalendarDays, Tag, UtensilsCrossed } from "lucide-react";
+import { MapPin, ChevronRight, Clock, Users, CalendarDays, Tag, UtensilsCrossed } from "lucide-react";
 import { TabNavigation } from "@/components/tab-navigation";
 import AvailabilityGrid from "@/components/availability-grid";
 import { FAQSection } from "@/components/faq-section";
@@ -17,12 +17,11 @@ interface ShowData {
   ageRecommendation: string;
   showTimes: string[];
   darkDays: string[];
+  isFeaturedPartner: boolean;
   seasonStart: string;
   seasonEnd: string;
   priceFrom: number;
   priceTo: number;
-  rating: number;
-  reviewCount: number;
   specialOffers: string[];
   mealIncluded: boolean;
   mealType: string | null;
@@ -35,77 +34,22 @@ interface ShowDetailClientProps {
   theaterSlug?: string;
 }
 
-// Mock reviews generator
-function generateMockReviews(showName: string) {
-  return [
-    {
-      name: "Sarah M.",
-      location: "Kansas City, MO",
-      rating: 5,
-      date: "February 2026",
-      title: "Absolutely incredible experience!",
-      body: `We saw ${showName} on our family trip to Branson and it was the highlight of our vacation. The talent on stage was unbelievable and the production quality rivals anything we've seen in Nashville or Vegas. Already planning to come back next year!`,
-    },
-    {
-      name: "Robert T.",
-      location: "Dallas, TX",
-      rating: 5,
-      date: "January 2026",
-      title: "Don't miss this show!",
-      body: `This was our third time seeing ${showName} and it somehow gets better every year. The energy, the musicianship, the whole atmosphere -- just top-notch entertainment. We brought friends this time and they were blown away.`,
-    },
-    {
-      name: "Jennifer L.",
-      location: "Springfield, MO",
-      rating: 4,
-      date: "December 2025",
-      title: "Great show, great value",
-      body: `We had a wonderful time at ${showName}. The performers are incredibly talented and you can tell they love what they do. Seats were comfortable and the venue was clean. Only wish it was a little longer! Highly recommend for families.`,
-    },
-    {
-      name: "Mike & Karen W.",
-      location: "Oklahoma City, OK",
-      rating: 5,
-      date: "November 2025",
-      title: "Best show in Branson!",
-      body: `We've been coming to Branson for 15 years and have seen dozens of shows. ${showName} is hands down one of the best. From start to finish it was non-stop entertainment. The booking process was easy and our seats were perfect.`,
-    },
-    {
-      name: "Patricia D.",
-      location: "Little Rock, AR",
-      rating: 5,
-      date: "October 2025",
-      title: "Worth every penny",
-      body: `What an amazing show! ${showName} exceeded all my expectations. The performers are world-class and the whole production is polished and professional. This was our first trip to Branson and we'll definitely be back.`,
-    },
-    {
-      name: "David K.",
-      location: "Tulsa, OK",
-      rating: 4,
-      date: "September 2025",
-      title: "Fantastic family entertainment",
-      body: `Took our kids (ages 8 and 12) and everyone loved it. ${showName} has something for every age group. The kids were dancing in their seats! Great clean fun that the whole family can enjoy together.`,
-    },
-  ];
-}
-
 export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
   const isDinnerShow = show.category.includes("dinner-shows");
 
+  // No Reviews tab: the reviews it showed were generated placeholder text,
+  // not reviews we hold. Restore only with real, citable guest reviews.
   const baseTabs = [
     { id: "details", label: "Details" },
     { id: "schedule", label: "Schedule" },
-    { id: "reviews", label: "Reviews" },
     { id: "location", label: "Location" },
   ];
 
   if (isDinnerShow) {
-    baseTabs.splice(3, 0, { id: "menu", label: "Menu" });
+    baseTabs.splice(2, 0, { id: "menu", label: "Menu" });
   }
 
   const [activeTab, setActiveTab] = useState("details");
-
-  const reviews = generateMockReviews(show.name);
 
   return (
     <div>
@@ -233,6 +177,8 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
               available performances.
             </p>
             <AvailabilityGrid
+              slug={show.slug}
+              isSellable={show.isFeaturedPartner}
               showTimes={show.showTimes}
               showName={show.name}
               pricePerAdult={show.priceFrom}
@@ -247,99 +193,6 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                   <> The show is dark (no performances) on {show.darkDays.join(", ")}.</>
                 )}
               </p>
-            </div>
-          </div>
-        )}
-
-        {/* ===== Reviews Tab ===== */}
-        {activeTab === "reviews" && (
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-2xl font-bold text-[#1A1614] font-heading">
-                Guest Reviews
-              </h2>
-              <div className="mt-3 flex items-center gap-4">
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-6 h-6 ${
-                        i < Math.round(show.rating)
-                          ? "text-[#E8C65A] fill-[#E8C65A]"
-                          : "text-gray-300"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="text-lg font-bold text-[#1A1614]">{show.rating}</span>
-                <span className="text-gray-500">
-                  Based on {show.reviewCount.toLocaleString()} reviews
-                </span>
-              </div>
-            </div>
-
-            {/* Rating Breakdown */}
-            <div className="rounded-xl bg-[#F6F4EF] border border-gray-100 p-6">
-              <h3 className="text-sm font-bold text-[#1A1614] mb-3">Rating Breakdown</h3>
-              {[5, 4, 3, 2, 1].map((stars) => {
-                const pct =
-                  stars === 5
-                    ? 78
-                    : stars === 4
-                      ? 15
-                      : stars === 3
-                        ? 5
-                        : stars === 2
-                          ? 1
-                          : 1;
-                return (
-                  <div key={stars} className="flex items-center gap-3 mb-2">
-                    <span className="text-sm text-gray-600 w-12">{stars} star</span>
-                    <div className="flex-1 h-2.5 bg-gray-200 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-[#E8C65A] rounded-full"
-                        style={{ width: `${pct}%` }}
-                      />
-                    </div>
-                    <span className="text-sm text-gray-500 w-10 text-right">{pct}%</span>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Individual Reviews */}
-            <div className="space-y-6">
-              {reviews.map((review, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl border border-gray-200 p-6 bg-white hover:shadow-sm transition-shadow"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <div className="flex items-center gap-1 mb-1">
-                        {Array.from({ length: 5 }).map((_, j) => (
-                          <Star
-                            key={j}
-                            className={`w-4 h-4 ${
-                              j < review.rating
-                                ? "text-[#E8C65A] fill-[#E8C65A]"
-                                : "text-gray-300"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <h4 className="font-bold text-[#1A1614]">{review.title}</h4>
-                    </div>
-                    <span className="text-xs text-gray-400">{review.date}</span>
-                  </div>
-                  <p className="text-gray-700 text-sm leading-relaxed">{review.body}</p>
-                  <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
-                    <span className="font-medium text-[#1A1614]">{review.name}</span>
-                    <span>&middot;</span>
-                    <span>{review.location}</span>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         )}

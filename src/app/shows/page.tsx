@@ -8,12 +8,13 @@ import { ShowsListingClient } from "./shows-listing-client";
 
 export const metadata: Metadata = {
   title: `Branson Shows 2026 | All Shows, Tickets & Schedules`,
+  alternates: { canonical: "/shows" },
   description:
-    "Browse all 50+ Branson shows. Compare tickets, read reviews, and find the perfect show. Variety, comedy, magic, dinner shows, and more. Book online and save!",
+    "Browse live Branson shows with verified schedules and prices on every listing. Variety, comedy, magic, dinner shows, and more, with one checkout for the whole trip.",
   openGraph: {
     title: `Branson Shows 2026 | All Shows, Tickets & Schedules`,
     description:
-      "Browse all 50+ Branson shows. Compare tickets, read reviews, and find the perfect show.",
+      "Browse all 50+ Branson shows. Compare tickets, schedules, and prices to find the perfect show.",
     url: `${siteConfig.url}/shows`,
     type: "website",
     siteName: siteConfig.name,

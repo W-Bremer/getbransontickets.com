@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { ChevronLeft, ChevronRight, Minus, Plus, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
 
 interface BookingWidgetProps {
@@ -10,7 +10,13 @@ interface BookingWidgetProps {
   pricePerAdult: number;
   pricePerChild: number;
   imageUrl?: string;
-  showTimes: string[];
+}
+
+interface ScheduleResponse {
+  slug: string;
+  bookingDisabled: boolean;
+  scheduleNote: string | null;
+  dates: { date: string; times: string[] }[];
 }
 
 const MONTHS = [
@@ -19,22 +25,51 @@ const MONTHS = [
 ];
 const DAYS_OF_WEEK = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
+const pad = (n: number) => String(n).padStart(2, "0");
+
 export default function BookingWidget({
   showId,
   showName,
   pricePerAdult,
   pricePerChild,
   imageUrl,
-  showTimes,
 }: BookingWidgetProps) {
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedTime, setSelectedTime] = useState(showTimes[0] || "");
+  /** ISO "YYYY-MM-DD"; string on purpose so month browsing cannot desync it. */
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState("");
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [childAges, setChildAges] = useState<number[]>([]);
+
+  // The dates a customer can actually book: the show's real performance
+  // calendar (weekly pattern, dark days, seasonal pauses, sold-out dates)
+  // served by /api/schedule/[slug]. Until it loads, no date is clickable.
+  const [availability, setAvailability] = useState<Map<string, string[]> | null>(null);
+  const [bookingDisabled, setBookingDisabled] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        const res = await fetch(`/api/schedule/${showId}`);
+        if (!res.ok) throw new Error(`schedule ${res.status}`);
+        const data = (await res.json()) as ScheduleResponse;
+        if (cancelled) return;
+        setAvailability(new Map(data.dates.map((d) => [d.date, d.times])));
+        setBookingDisabled(data.bookingDisabled);
+      } catch {
+        if (!cancelled) setLoadFailed(true);
+      }
+    }
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [showId]);
 
   const addItem = useCartStore((s) => s.addItem);
   const openCart = useCartStore((s) => s.openCart);
@@ -48,12 +83,24 @@ export default function BookingWidget({
     return days;
   }, [currentMonth, currentYear]);
 
+  const dateStrOf = (day: number) =>
+    `${currentYear}-${pad(currentMonth + 1)}-${pad(day)}`;
+
   const isPast = (day: number) => {
     const d = new Date(currentYear, currentMonth, day);
     const t = new Date();
     t.setHours(0, 0, 0, 0);
     return d < t;
   };
+
+  const monthHasDates = useMemo(() => {
+    if (!availability) return true;
+    const prefix = `${currentYear}-${pad(currentMonth + 1)}-`;
+    for (const date of availability.keys()) {
+      if (date.startsWith(prefix)) return true;
+    }
+    return false;
+  }, [availability, currentMonth, currentYear]);
 
   const prevMonth = () => {
     if (currentMonth === 0) {
@@ -72,6 +119,16 @@ export default function BookingWidget({
       setCurrentMonth((m) => m + 1);
     }
   };
+
+  const selectDate = (dateStr: string) => {
+    setSelectedDate(dateStr);
+    const times = availability?.get(dateStr) ?? [];
+    setSelectedTime((prev) => (times.includes(prev) ? prev : times[0] ?? ""));
+  };
+
+  const timesForSelected = selectedDate
+    ? (availability?.get(selectedDate) ?? [])
+    : [];
 
   const handleChildrenChange = (newCount: number) => {
     setChildren(newCount);
@@ -92,15 +149,13 @@ export default function BookingWidget({
   };
 
   const handleSubmit = () => {
-    if (!selectedDate) return;
-
-    const dateStr = `${currentYear}-${String(selectedDate.getMonth() + 1).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(2, "0")}`;
+    if (!selectedDate || !selectedTime) return;
 
     addItem({
       type: "show",
       id: showId,
       name: showName,
-      date: dateStr,
+      date: selectedDate,
       time: selectedTime,
       adults,
       children,
@@ -114,6 +169,18 @@ export default function BookingWidget({
   };
 
   const total = adults * pricePerAdult + children * pricePerChild;
+
+  if (bookingDisabled) {
+    return (
+      <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <h3 className="mb-2 text-lg font-bold text-[#1A1614]">Book This Show</h3>
+        <p className="text-sm text-gray-600">
+          Online booking for this show is paused while we confirm the schedule
+          with the theater. Please call us and we will get you seats.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
@@ -133,27 +200,24 @@ export default function BookingWidget({
       </div>
 
       {/* Day grid */}
-      <div className="mb-4 grid grid-cols-7 gap-1 text-center text-xs">
+      <div className="mb-2 grid grid-cols-7 gap-1 text-center text-xs">
         {DAYS_OF_WEEK.map((d) => (
           <div key={d} className="py-1 font-medium text-gray-500">{d}</div>
         ))}
         {calendarDays.map((day, i) => {
           if (day === null) return <div key={`e-${i}`} />;
-          const date = new Date(currentYear, currentMonth, day);
-          const past = isPast(day);
-          const isSelected =
-            selectedDate &&
-            selectedDate.getDate() === day &&
-            selectedDate.getMonth() === currentMonth &&
-            selectedDate.getFullYear() === currentYear;
+          const dateStr = dateStrOf(day);
+          const hasShow = !!availability?.get(dateStr)?.length;
+          const disabled = isPast(day) || !hasShow;
+          const isSelected = selectedDate === dateStr;
 
           return (
             <button
               key={day}
-              disabled={past}
-              onClick={() => setSelectedDate(date)}
+              disabled={disabled}
+              onClick={() => selectDate(dateStr)}
               className={`rounded py-1.5 text-sm transition-colors ${
-                past
+                disabled
                   ? "cursor-not-allowed text-gray-300"
                   : isSelected
                     ? "bg-[#13264D] font-semibold text-white"
@@ -166,8 +230,18 @@ export default function BookingWidget({
         })}
       </div>
 
+      <div className="mb-4 min-h-[1rem] text-center text-xs text-gray-500">
+        {loadFailed
+          ? "We could not load show dates. Please refresh the page, or call us to book."
+          : !availability
+            ? "Loading available dates..."
+            : !monthHasDates
+              ? "No performances this month. Try another month."
+              : null}
+      </div>
+
       {/* Show time */}
-      {showTimes.length > 1 && (
+      {selectedDate && timesForSelected.length > 1 && (
         <div className="mb-4">
           <label className="mb-1 block text-xs font-medium text-gray-600">Show Time</label>
           <select
@@ -175,11 +249,16 @@ export default function BookingWidget({
             onChange={(e) => setSelectedTime(e.target.value)}
             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-[#1A1614] focus:border-[#13264D] focus:ring-1 focus:ring-[#13264D] focus:outline-none"
           >
-            {showTimes.map((t) => (
+            {timesForSelected.map((t) => (
               <option key={t} value={t}>{t}</option>
             ))}
           </select>
         </div>
+      )}
+      {selectedDate && timesForSelected.length === 1 && (
+        <p className="mb-4 text-sm text-gray-600">
+          Show time: <span className="font-semibold text-[#1A1614]">{timesForSelected[0]}</span>
+        </p>
       )}
 
       {/* Guest selectors */}
@@ -271,7 +350,7 @@ export default function BookingWidget({
       {/* Submit button */}
       <button
         onClick={handleSubmit}
-        disabled={!selectedDate}
+        disabled={!selectedDate || !selectedTime}
         className="w-full rounded-lg bg-[#C8102E] py-3 text-sm font-bold text-white transition-colors hover:bg-[#A50D26] disabled:cursor-not-allowed disabled:opacity-50"
       >
         {selectedDate ? "Check Availability" : "Select a Date"}

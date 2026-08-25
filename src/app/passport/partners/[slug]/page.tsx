@@ -22,6 +22,7 @@ export async function generateMetadata({
   return {
     title: `${partner.name} | Branson Passport Partner`,
     description: `${partner.tagline}. ${partner.name} is a Branson Passport partner.`,
+    alternates: { canonical: `/passport/partners/${partner.slug}` },
     openGraph: {
       title: `${partner.name} | Branson Passport Partner`,
       description: partner.tagline,

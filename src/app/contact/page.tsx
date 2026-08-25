@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, Clock } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
-  title: `Contact Us | ${siteConfig.name} — Get Help Booking Branson Shows`,
+  title: `Contact Us | Get Help Booking Branson Shows`,
   description: `Contact ${siteConfig.name} for help booking Branson show tickets. Call ${siteConfig.phone} or send us a message. We're here to help plan your Branson entertainment.`,
+  alternates: { canonical: "/contact" },
   openGraph: {
     title: `Contact us`,
     description: `Get help booking Branson show tickets. Call ${siteConfig.phone} or send us a message.`,
@@ -158,7 +159,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-bold text-[#13264D]">Call Us</h3>
                     <p className="text-sm text-gray-500 mt-0.5">
-                      Speak with a Branson entertainment expert
+                      Talk to a real person about shows and tickets
                     </p>
                     <Link
                       href={`tel:${siteConfig.phoneRaw}`}
@@ -184,19 +185,6 @@ export default function ContactPage() {
                     >
                       {siteConfig.email}
                     </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 p-5 rounded-xl bg-[#faf8f5] border border-gray-100">
-                  <div className="w-12 h-12 rounded-xl bg-[#13264D] flex items-center justify-center shrink-0">
-                    <MapPin className="w-6 h-6 text-[#d4a843]" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-[#13264D]">Visit Us</h3>
-                    <p className="text-sm text-gray-500 mt-0.5">
-                      Located in the heart of Branson
-                    </p>
-                    <p className="mt-2 text-gray-700">{siteConfig.address}</p>
                   </div>
                 </div>
 

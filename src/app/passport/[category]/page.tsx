@@ -29,6 +29,7 @@ export async function generateMetadata({
   return {
     title: `${cat.name} | Branson Passport`,
     description: `${cat.description} Part of the free Branson Passport insider guide.`,
+    alternates: { canonical: `/passport/${cat.slug}` },
     openGraph: {
       title: `${cat.name} | Branson Passport`,
       description: cat.description,

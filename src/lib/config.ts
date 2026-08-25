@@ -9,7 +9,7 @@ export const siteConfig = {
   url: "https://www.getbransontickets.com",
   phone: "(417) 243-9629",
   phoneRaw: "14172439629",
-  email: "info@getbransontickets.com",
+  email: "contact@getbransontickets.com",
   address: "Branson, MO 65616",
   foundedYear: 2024,
   // Verified against the show catalog rather than asserted in copy. If you want

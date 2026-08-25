@@ -22,7 +22,8 @@ function getResend(): Resend {
 }
 
 function fromAddress(): string {
-  return process.env.EMAIL_FROM ?? `${siteConfig.shortName} <onboarding@resend.dev>`;
+  // || not ??: an empty EMAIL_FROM (dev envs) must also fall back.
+  return process.env.EMAIL_FROM || `${siteConfig.shortName} <onboarding@resend.dev>`;
 }
 
 export async function sendVoucherEmail(data: VoucherData) {
@@ -93,6 +94,9 @@ export async function sendNewOrderAlert(data: OrderConfirmationData) {
   const lines = [
     `NEW ORDER: ${data.orderNumber}`,
     `Voucher due within ${VOUCHER_SLA_HOURS} hours.`,
+    ...(data.paymentIntentId
+      ? [`Send it here: ${siteConfig.url}/office/orders/${data.paymentIntentId}`]
+      : []),
     "",
     `Customer: ${data.customerName}`,
     `Email:    ${data.customerEmail}`,
@@ -136,6 +140,37 @@ export async function sendNewOrderAlert(data: OrderConfirmationData) {
   return result.data;
 }
 
+/**
+ * The daily showtimes digest to the office (William and Z). Same recipient
+ * pattern as order alerts: ORDER_ALERT_EMAIL overrides for local testing so
+ * dev runs never hit the real inboxes.
+ */
+export async function sendShowtimesDigestEmail({
+  subject,
+  text,
+}: {
+  subject: string;
+  text: string;
+}) {
+  const result = await getResend().emails.send({
+    from: fromAddress(),
+    to: process.env.ORDER_ALERT_EMAIL ? [process.env.ORDER_ALERT_EMAIL] : ALERT_RECIPIENTS,
+    ...(process.env.ORDER_ALERT_EMAIL ? {} : { cc: ALERT_CC }),
+    subject,
+    text,
+    html: `<pre style="font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.6;color:#1A1614;">${text
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")}</pre>`,
+  });
+
+  if (result.error) {
+    throw new Error(`Resend error: ${result.error.message}`);
+  }
+
+  return result.data;
+}
+
 export interface PassportNotification {
   subject: string;
   lines: [string, string][];
@@ -150,7 +185,7 @@ function escapeHtml(value: string): string {
     .replaceAll("'", "&#39;");
 }
 
-/** Plain internal notification to the site inbox (passport signups, partner applications). */
+/** Plain internal notification to the office inboxes (passport signups, partner applications). */
 export async function sendPassportNotification({ subject, lines }: PassportNotification) {
   const from = fromAddress();
   const rows = lines
@@ -162,7 +197,7 @@ export async function sendPassportNotification({ subject, lines }: PassportNotif
 
   const result = await getResend().emails.send({
     from,
-    to: siteConfig.email,
+    to: ALERT_RECIPIENTS,
     subject,
     html: `<div style="font-family:sans-serif;max-width:520px;"><h2 style="color:#7B1A1A;">${escapeHtml(subject)}</h2><table>${rows}</table></div>`,
     text: lines.map(([label, value]) => `${label}: ${value}`).join("\n"),

@@ -118,5 +118,6 @@ export function confirmationFromPaymentIntent(
     items: hydrateLines(lines),
     // Always the amount Stripe actually captured, never a recomputed figure.
     totalAmount: pi.amount / 100,
+    paymentIntentId: pi.id,
   };
 }

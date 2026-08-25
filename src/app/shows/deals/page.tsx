@@ -7,13 +7,14 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
-  title: `Branson Show Deals & Discounts 2026 | Save on Tickets`,
+  title: `Branson Show Deals & Discounts 2026`,
+  alternates: { canonical: "/shows/deals" },
   description:
-    "Find the best Branson show deals for 2026. BOGO offers, kids-free specials, family packages, and seasonal discounts on top-rated Branson entertainment.",
+    "Find current Branson show deals for 2026. BOGO offers, family passes, kids' ticket offers, and dinner show packages from Branson theaters.",
   openGraph: {
     title: "Branson Show Deals & Discounts 2026",
     description:
-      "Find the best Branson show deals for 2026. BOGO offers, kids-free specials, and family packages.",
+      "Find current Branson show deals for 2026. BOGO offers, family passes, and dinner show packages.",
     url: `${siteConfig.url}/shows/deals`,
     type: "website",
     siteName: siteConfig.name,
@@ -26,7 +27,10 @@ export default function DealsPage() {
   );
   const kidsFreeShows = shows.filter((s) =>
     s.specialOffers.some(
-      (o) => o.toLowerCase().includes("kid") || o.toLowerCase().includes("child")
+      (o) =>
+        o.toLowerCase().includes("kid") ||
+        o.toLowerCase().includes("child") ||
+        o.toLowerCase().includes("family pass")
     )
   );
   const familyShows = shows.filter(
@@ -42,7 +46,7 @@ export default function DealsPage() {
     "@type": "OfferCatalog",
     name: "Branson Show Deals & Discounts 2026",
     description:
-      "Current deals and discounts on Branson shows including BOGO, kids-free, and family packages.",
+      "Current deals and discounts on Branson shows including BOGO offers, family passes, and dinner show packages.",
     url: `${siteConfig.url}/shows/deals`,
   };
 
@@ -65,8 +69,8 @@ export default function DealsPage() {
             Branson Show Deals & Discounts 2026
           </h1>
           <p className="mt-4 text-lg text-white/70 max-w-2xl">
-            Save big on Branson&apos;s best entertainment. Find BOGO offers, family
-            packages, kids-free deals, and seasonal specials.
+            Current offers on Branson shows. BOGO deals, family passes, kids&apos;
+            ticket offers, and dinner show packages.
           </p>
         </div>
       </section>
@@ -114,8 +118,8 @@ export default function DealsPage() {
               </h2>
             </div>
             <p className="text-gray-600 mb-8 max-w-2xl">
-              Double the fun at half the price. These shows are currently offering
-              buy-one-get-one-free tickets.
+              These theaters currently advertise buy one, get one offers. See
+              each show page for how the offer works and which tickets qualify.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {bogoShows.map((show, index) => (
@@ -132,15 +136,15 @@ export default function DealsPage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3 mb-8">
               <span className="px-4 py-1.5 rounded-full bg-sky-100 text-sky-800 text-sm font-bold uppercase tracking-wider">
-                Kids Free
+                Family
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-[#13264D] font-heading">
-                Kids Go Free Specials
+                Kids &amp; Family Ticket Offers
               </h2>
             </div>
             <p className="text-gray-600 mb-8 max-w-2xl">
-              Bring the whole family without breaking the bank. These shows let kids
-              attend free with a paying adult.
+              Family passes and kids&apos; ticket offers at these shows. See each
+              show page for prices and details.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {kidsFreeShows.map((show, index) => (
@@ -208,8 +212,8 @@ export default function DealsPage() {
             Can&apos;t Find What You&apos;re Looking For?
           </h2>
           <p className="mt-4 text-white/70 text-lg">
-            Call our Branson entertainment experts for personalized recommendations
-            and exclusive phone-only deals.
+            Call us and we'll help you find the right show and any current
+            offers that fit your dates.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link

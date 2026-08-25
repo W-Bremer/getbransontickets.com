@@ -1,12 +1,11 @@
 import { shows } from "@/data/shows";
-import { attractions } from "@/data/attractions";
 import { partners } from "@/data/partners";
 import type { FeaturedDeal } from "@/data/passport";
 
 /**
- * The deal rail on the Passport. Partner-exclusive offers lead, then real
- * show and attraction offers pulled from the catalog so the rail never shows
- * an offer we cannot honor.
+ * The deal rail on the Passport. Partner-exclusive offers lead, then show
+ * offers pulled from the catalog so the rail never shows an offer we cannot
+ * honor.
  */
 export function getFeaturedDeals(limit = 8): FeaturedDeal[] {
   const partnerDeals: FeaturedDeal[] = partners
@@ -34,20 +33,10 @@ export function getFeaturedDeals(limit = 8): FeaturedDeal[] {
       priceFrom: s.priceFrom,
     }));
 
-  const attractionDeals: FeaturedDeal[] = attractions
-    .filter((a) => a.rating >= 4.5 && a.imageUrl)
-    .slice(0, 3)
-    .map((a) => ({
-      name: a.name,
-      href: `/attractions/${a.slug}`,
-      imageUrl: a.imageUrl,
-      imageAlt: a.imageAlt,
-      badge: `${a.rating} stars`,
-      blurb: a.shortDescription,
-      priceFrom: a.adultPrice,
-    }));
-
-  return [...partnerDeals, ...showDeals, ...attractionDeals].slice(0, limit);
+  // No attraction rail entries: they were selected and badged by
+  // attraction.rating, an invented value from the original build, and
+  // attractions carry no verified offers to honor.
+  return [...partnerDeals, ...showDeals].slice(0, limit);
 }
 
 /** Trims catalog offer text down to something that fits on a badge. */

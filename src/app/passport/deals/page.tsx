@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export const metadata: Metadata = {
   title: `Passport Deals | Exclusive Branson Offers`,
+  alternates: { canonical: "/passport/deals" },
   description:
     "Exclusive Branson deals from Passport partner businesses, plus BOGO show offers and discount tickets.",
   openGraph: {

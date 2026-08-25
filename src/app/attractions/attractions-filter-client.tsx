@@ -5,7 +5,7 @@ import { SlidersHorizontal } from "lucide-react";
 import { AttractionCard } from "@/components/attraction-card";
 import type { Attraction } from "@/data/attractions";
 
-type SortOption = "popularity" | "price-low" | "price-high" | "rating";
+type SortOption = "popularity" | "price-low" | "price-high";
 
 interface AttractionsFilterClientProps {
   attractions: Attraction[];
@@ -20,11 +20,14 @@ export function AttractionsFilterClient({
   const [sortBy, setSortBy] = useState<SortOption>("popularity");
 
   const filtered = useMemo(() => {
-    let list =
+    const list =
       activeType === "all"
         ? [...attractions]
         : attractions.filter((a) => a.type === activeType);
 
+    // No "Highest Rated" sort: attraction.rating was an invented value from
+    // the original build. "popularity" orders by search volume, which is
+    // real keyword data and is never shown as a claim.
     switch (sortBy) {
       case "popularity":
         list.sort((a, b) => b.searchVolume - a.searchVolume);
@@ -34,9 +37,6 @@ export function AttractionsFilterClient({
         break;
       case "price-high":
         list.sort((a, b) => b.adultPrice - a.adultPrice);
-        break;
-      case "rating":
-        list.sort((a, b) => b.rating - a.rating);
         break;
     }
 
@@ -74,7 +74,6 @@ export function AttractionsFilterClient({
               className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-[#1A1614] focus:border-[#13264D] focus:outline-none focus:ring-1 focus:ring-[#13264D]"
             >
               <option value="popularity">Most Popular</option>
-              <option value="rating">Highest Rated</option>
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
             </select>

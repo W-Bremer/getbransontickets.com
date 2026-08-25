@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
   title: `Plan Your Branson Trip 2026 | Itineraries & Travel Guide`,
+  alternates: { canonical: "/plan-your-trip" },
   description:
     "Plan the perfect Branson vacation with our trip planning guide. Sample itineraries for 2-4 day trips, seasonal tips, and expert recommendations for shows and attractions.",
   openGraph: {

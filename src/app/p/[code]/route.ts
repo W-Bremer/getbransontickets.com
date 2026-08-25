@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { after } from "next/server";
 import { getPartnerByRefCode } from "@/data/partners";
 import { REF_COOKIE, REF_COOKIE_MAX_AGE } from "@/lib/passport";
+import { recordPassportScan } from "@/lib/passport-events";
 
 // Partner QR / tracking link: getbransontickets.com/p/<refCode>
 // Sets a 30-day attribution cookie, records the scan, and lands the
@@ -40,8 +41,19 @@ export async function GET(
       referer: req.headers.get("referer") ?? undefined,
       at: new Date().toISOString(),
     };
-    // Searchable in Vercel runtime logs; webhook forwarding is optional.
+    // Searchable in Vercel runtime logs; the durable copy goes to Blob for
+    // the /office/passport dashboard.
     console.log(JSON.stringify(scan));
+
+    after(async () => {
+      await recordPassportScan({
+        refCode: partner.refCode,
+        partner: partner.slug,
+        userAgent: scan.userAgent,
+        referer: scan.referer,
+        at: scan.at,
+      });
+    });
 
     const webhook = process.env.PASSPORT_TRACKING_WEBHOOK_URL;
     if (webhook) {

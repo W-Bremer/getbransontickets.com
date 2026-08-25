@@ -7,8 +7,9 @@ import { AttractionsFilterClient } from "./attractions-filter-client";
 
 export const metadata: Metadata = {
   title: `Branson Attractions & Things to Do 2026`,
+  alternates: { canonical: "/attractions" },
   description:
-    "Discover the best Branson attractions for 2026. Theme parks, museums, outdoor adventures, water parks & more. Find tickets, hours, and reviews for top things to do in Branson, Missouri.",
+    "Discover the best Branson attractions for 2026. Theme parks, museums, outdoor adventures, water parks & more. Find tickets, hours, and prices for top things to do in Branson, Missouri.",
   keywords: [
     "branson attractions",
     "things to do in branson",
