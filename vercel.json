@@ -1,8 +1,4 @@
 {
-  "projectSettings": {
-    "framework": "nextjs",
-    "nodeVersion": "24.x"
-  },
   "crons": [
     {
       "path": "/api/revalidate-blog",
