@@ -26,7 +26,7 @@ export default function RefundPolicyPage() {
             Refund &amp; Cancellation Policy
           </h1>
           <p className="mt-3 text-white/70">
-            Last updated: April 16, 2026
+            Last updated: August 26, 2026
           </p>
         </div>
       </section>
@@ -98,6 +98,66 @@ export default function RefundPolicyPage() {
             <li>
               <strong>Less than 24 hours before show time:</strong> No refund
               available.
+            </li>
+            <li>
+              <strong>No-shows:</strong> Full ticket price will be charged with
+              no refund.
+            </li>
+          </ul>
+
+          <h3>Clay Cooper Theatre Shows</h3>
+          <p>
+            Includes: Clay Cooper&apos;s Country Express, The Haygoods, and Hot
+            Rods &amp; High Heels.
+          </p>
+          <ul>
+            <li>
+              <strong>24+ hours before show time:</strong> Full refund or
+              rescheduling available.
+            </li>
+            <li>
+              <strong>Less than 24 hours before show time:</strong> No refund
+              available. You will be charged the full ticket price.
+            </li>
+            <li>
+              <strong>No-shows:</strong> Full ticket price will be charged with
+              no refund.
+            </li>
+          </ul>
+
+          <h3>The SIX Show at Pepsi Legends Theater</h3>
+          <ul>
+            <li>
+              <strong>2+ hours before show time:</strong> Full refund or
+              rescheduling available at no charge.
+            </li>
+            <li>
+              <strong>Less than 2 hours before show time:</strong> No refund
+              available. You will be charged the full ticket price.
+            </li>
+            <li>
+              <strong>No-shows:</strong> Full ticket price will be charged with
+              no refund.
+            </li>
+          </ul>
+
+          <h3>King&apos;s Castle Theatre Shows</h3>
+          <p>
+            Includes: Spirit of America and Branson&apos;s Christmas Wonderland.
+          </p>
+          <ul>
+            <li>
+              <strong>48+ hours before show time:</strong> Full refund or
+              rescheduling available.
+            </li>
+            <li>
+              <strong>Less than 48 hours before show time:</strong> No refund
+              available. You will be charged the full ticket price.
+            </li>
+            <li>
+              <strong>Printed tickets:</strong> Once tickets for a specific
+              performance have been printed at the box office, all sales are
+              final and no exchanges are possible.
             </li>
             <li>
               <strong>No-shows:</strong> Full ticket price will be charged with

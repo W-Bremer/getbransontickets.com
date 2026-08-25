@@ -64,7 +64,7 @@ export function getUpcomingPerformances(
   const entries = show.showTimes
     .map(parseShowTime)
     .filter((e): e is TimeEntry => e !== null);
-  if (entries.length === 0) return [];
+  if (entries.length === 0 && !show.extraPerformances?.length) return [];
 
   const durationHours = parseFloat(show.duration) || 2;
   const darkDayNums = new Set(
@@ -80,21 +80,34 @@ export function getUpcomingPerformances(
     // Noon UTC avoids any DST edge when deriving the calendar date and weekday.
     const cal = new Date(Date.UTC(y, m - 1, d + i, 12));
     const dateStr = cal.toISOString().slice(0, 10);
-    if (dateStr < season.startDate || dateStr > season.endDate) continue;
-
     const weekday = cal.getUTCDay();
-    if (darkDayNums.has(weekday)) continue;
-    if (show.darkDateRanges?.some((r) => dateStr >= r.start && dateStr <= r.end)) continue;
-    if (
-      show.seasonalDarkWeekdays?.some(
+
+    const dark =
+      dateStr < season.startDate ||
+      dateStr > season.endDate ||
+      darkDayNums.has(weekday) ||
+      (show.darkDateRanges?.some((r) => dateStr >= r.start && dateStr <= r.end) ?? false) ||
+      (show.seasonalDarkWeekdays?.some(
         (r) => r.day === DAY_NAMES[weekday] && dateStr >= r.start && dateStr <= r.end
-      )
-    )
-      continue;
+      ) ??
+        false);
+
+    // Extra performances are explicit dates and play even where the weekly
+    // pattern is dark; the booking engine applies them the same way.
+    const dayEntries = dark
+      ? []
+      : entries.filter((t) => t.day === null || t.day === weekday);
+    for (const extra of show.extraPerformances ?? []) {
+      if (extra.date !== dateStr) continue;
+      for (const raw of extra.times) {
+        const entry = parseShowTime(raw);
+        if (entry) dayEntries.push(entry);
+      }
+    }
+    if (dayEntries.length === 0) continue;
 
     const offset = chicagoOffset(cal);
-    for (const t of entries) {
-      if (t.day !== null && t.day !== weekday) continue;
+    for (const t of dayEntries) {
       const startDate = `${dateStr}T${pad(t.hour)}:${pad(t.minute)}:00${offset}`;
       if (seen.has(startDate)) continue;
       seen.add(startDate);
