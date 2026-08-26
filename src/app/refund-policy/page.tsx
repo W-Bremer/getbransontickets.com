@@ -165,6 +165,22 @@ export default function RefundPolicyPage() {
             </li>
           </ul>
 
+          <h3>Hamners&apos; Variety Theater Shows</h3>
+          <ul>
+            <li>
+              <strong>72+ hours before show time:</strong> Full refund or
+              rescheduling available.
+            </li>
+            <li>
+              <strong>Less than 72 hours before show time:</strong> No refund
+              available. You will be charged the full ticket price.
+            </li>
+            <li>
+              <strong>No-shows:</strong> Full ticket price will be charged with
+              no refund.
+            </li>
+          </ul>
+
           <h2>How to Request a Cancellation or Refund</h2>
           <p>
             To cancel a reservation or request a refund, please contact us as
