@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { getPartnerShows } from "@/data/shows";
 import { PhoneBar } from "@/components/layout/phone-bar";
 import { CartDrawer } from "@/components/cart-drawer";
+import { GoogleAdsTag } from "@/components/google-ads-tag";
 import { siteConfig } from "@/lib/config";
 import "./globals.css";
 
@@ -130,6 +131,7 @@ export default function RootLayout({
         <PhoneBar />
         <CartDrawer />
         <Analytics />
+        <GoogleAdsTag />
         <Script
           src="https://widgets.leadconnectorhq.com/loader.js"
           data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"

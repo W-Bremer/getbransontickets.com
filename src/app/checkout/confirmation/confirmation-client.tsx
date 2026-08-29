@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { reportAdsPageView } from "@/components/google-ads-tag";
 import { StepIndicator } from "../step-indicator";
 
 // Written by /checkout right before it navigates here. Kept in
@@ -44,6 +45,15 @@ export function ConfirmationClient() {
 
     setOrder(parsed);
     clearCart();
+
+    // The Google Ads Purchase conversion counts page views of this URL, so
+    // it is reported here, only for verified orders, with the order value
+    // and number attached.
+    reportAdsPageView("/checkout/confirmation", {
+      value: parsed.total,
+      currency: "USD",
+      transaction_id: parsed.orderNumber,
+    });
   }, [router, clearCart]);
 
   if (!order) {
