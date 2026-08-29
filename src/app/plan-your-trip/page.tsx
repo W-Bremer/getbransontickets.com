@@ -31,7 +31,7 @@ const itineraries = [
         activities: [
           "Morning: Arrive and check into your hotel on the Strip",
           "Afternoon: Explore Branson Landing for shopping and lunch",
-          "Evening: See The Haygoods — Branson's #1 show",
+          "Evening: See The Haygoods",
         ],
       },
       {
@@ -52,16 +52,16 @@ const itineraries = [
         label: "Day 1",
         activities: [
           "Morning: Check in and grab breakfast on the Strip",
-          "Afternoon: Afternoon variety show — great for all ages",
+          "Afternoon: Afternoon variety show, great for all ages",
           "Evening: Evening show with the family",
         ],
       },
       {
         label: "Day 2",
         activities: [
-          "Morning: Silver Dollar City — arrive early for shorter lines",
+          "Morning: Silver Dollar City, arrive early for shorter lines",
           "Afternoon: Silver Dollar City rides and live entertainment",
-          "Evening: Dinner show — combine dinner and entertainment",
+          "Evening: Dinner show, combine dinner and entertainment",
         ],
       },
       {
@@ -69,20 +69,20 @@ const itineraries = [
         activities: [
           "Morning: Table Rock Lake boat tour or fishing",
           "Afternoon: Go-karts, mini golf, or the Titanic Museum",
-          "Evening: Farewell show — see a magic or comedy performance",
+          "Evening: Farewell show, see a magic or comedy performance",
         ],
       },
     ],
   },
   {
     title: "4-Day Ultimate Branson Experience",
-    description: "See it all — shows, attractions, nature, and shopping.",
+    description: "See it all, shows, attractions, nature, and shopping.",
     days: [
       {
         label: "Day 1",
         activities: [
           "Morning: Arrive and explore the 76 Strip",
-          "Afternoon: Matinee show — start your trip with entertainment",
+          "Afternoon: Matinee show, start your trip with entertainment",
           "Evening: Dinner at a local restaurant, evening show",
         ],
       },
@@ -97,9 +97,9 @@ const itineraries = [
       {
         label: "Day 3",
         activities: [
-          "Morning: Table Rock Lake — kayak, pontoon, or scenic cruise",
+          "Morning: Table Rock Lake, kayak, pontoon, or scenic cruise",
           "Afternoon: Titanic Museum or Hollywood Wax Museum",
-          "Evening: Acrobatics show — like Amazing Acrobats of Shanghai",
+          "Evening: Acrobatics show, like Amazing Acrobats of Shanghai",
         ],
       },
       {
@@ -107,7 +107,7 @@ const itineraries = [
         activities: [
           "Morning: Branson Scenic Railway or zip line adventure",
           "Afternoon: Shopping at Branson Landing and Tanger Outlets",
-          "Evening: Grand finale show — The Haygoods or your top pick",
+          "Evening: Grand finale show, The Haygoods or your top pick",
         ],
       },
     ],
@@ -120,7 +120,7 @@ const seasonalTips = [
     icon: Flower,
     color: "bg-pink-100 text-pink-800",
     tips: [
-      "Show season kicks off — catch opening night specials",
+      "Show season kicks off, catch opening night specials",
       "Pleasant weather in the 60s-70s, perfect for outdoor attractions",
       "Fewer crowds mean shorter waits and easier parking",
       "Great time for couples and smaller groups",
@@ -131,7 +131,7 @@ const seasonalTips = [
     icon: Sun,
     color: "bg-amber-100 text-amber-800",
     tips: [
-      "Peak season — all shows are running full schedules",
+      "Peak season, all shows are running full schedules",
       "Book popular shows 2-3 weeks in advance",
       "Table Rock Lake activities are in full swing",
       "Silver Dollar City runs extended summer hours",
@@ -153,7 +153,7 @@ const seasonalTips = [
     icon: Snowflake,
     color: "bg-blue-100 text-blue-800",
     tips: [
-      "Christmas shows are a Branson specialty — book early",
+      "Christmas shows are a Branson specialty, book early",
       "Silver Dollar City's Festival of Lights is world-famous",
       "Holiday dinner shows are especially popular",
       "Cozy atmosphere with holiday decorations everywhere",
@@ -211,7 +211,7 @@ export default function PlanYourTripPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <Link
               href="/shows"
-              className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#d4a843] transition-colors"
+              className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#E8C65A] transition-colors"
             >
               <div className="text-2xl font-bold text-[#13264D]">
                 {shows.length}+
@@ -220,21 +220,21 @@ export default function PlanYourTripPage() {
             </Link>
             <Link
               href="/shows/deals"
-              className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#d4a843] transition-colors"
+              className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#E8C65A] transition-colors"
             >
               <div className="text-2xl font-bold text-[#13264D]">BOGO</div>
               <div className="text-sm text-gray-600">Deals Available</div>
             </Link>
             <Link
               href="/attractions"
-              className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#d4a843] transition-colors"
+              className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#E8C65A] transition-colors"
             >
               <div className="text-2xl font-bold text-[#13264D]">20+</div>
               <div className="text-sm text-gray-600">Attractions</div>
             </Link>
             <Link
               href="/shows/schedule"
-              className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#d4a843] transition-colors"
+              className="p-4 rounded-xl bg-[#faf8f5] border border-gray-100 text-center hover:border-[#E8C65A] transition-colors"
             >
               <div className="text-2xl font-bold text-[#13264D]">7</div>
               <div className="text-sm text-gray-600">Days of Fun</div>
@@ -274,7 +274,7 @@ export default function PlanYourTripPage() {
                   {itinerary.days.map((day) => (
                     <div key={day.label} className="p-6">
                       <div className="flex items-center gap-3 mb-3">
-                        <Calendar className="w-5 h-5 text-[#d4a843]" />
+                        <Calendar className="w-5 h-5 text-[#E8C65A]" />
                         <h4 className="font-bold text-[#13264D]">
                           {day.label}
                         </h4>
@@ -283,7 +283,7 @@ export default function PlanYourTripPage() {
                         {day.activities.map((activity) => (
                           <li
                             key={activity}
-                            className="text-gray-600 text-sm pl-8 relative before:absolute before:left-3 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#d4a843]"
+                            className="text-gray-600 text-sm pl-8 relative before:absolute before:left-3 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#E8C65A]"
                           >
                             {activity}
                           </li>
@@ -330,7 +330,7 @@ export default function PlanYourTripPage() {
                   {season.tips.map((tip) => (
                     <li
                       key={tip}
-                      className="text-sm text-gray-600 pl-5 relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#d4a843]"
+                      className="text-sm text-gray-600 pl-5 relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#E8C65A]"
                     >
                       {tip}
                     </li>
@@ -354,7 +354,7 @@ export default function PlanYourTripPage() {
               <p className="text-sm text-gray-600">
                 Fly into Springfield-Branson National Airport (SGF), about 45
                 minutes north. Branson Airport (BKG) has limited direct flights.
-                Most visitors drive — Branson is an easy road trip from cities
+                Most visitors drive, Branson is an easy road trip from cities
                 across the Midwest.
               </p>
             </div>
@@ -389,7 +389,7 @@ export default function PlanYourTripPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#d4a843] to-[#b8922e]">
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#E8C65A] to-[#C04E0C]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-white font-heading">
             Ready to Start Booking?

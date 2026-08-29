@@ -131,7 +131,7 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
               <option value="featured">Featured</option>
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
-              <option value="name">A — Z</option>
+              <option value="name">A, Z</option>
             </select>
           </div>
         </div>

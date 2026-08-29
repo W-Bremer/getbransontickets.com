@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <section className="py-24 sm:py-32">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-        <p className="text-7xl font-bold text-[#d4a843] font-heading">404</p>
+        <p className="text-7xl font-bold text-[#E8C65A] font-heading">404</p>
         <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-[#13264D] font-heading">
           Page Not Found
         </h1>
@@ -18,7 +18,7 @@ export default function NotFound() {
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto">
           <Link
             href="/shows"
-            className="px-6 py-3 bg-[#d4a843] text-white rounded-lg font-semibold hover:bg-[#b8922e] transition-colors text-center"
+            className="px-6 py-3 bg-[#E8C65A] text-white rounded-lg font-semibold hover:bg-[#C04E0C] transition-colors text-center"
           >
             Browse Shows
           </Link>
@@ -33,35 +33,35 @@ export default function NotFound() {
         <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm">
           <Link
             href="/"
-            className="text-[#d4a843] hover:text-[#b8922e] font-medium transition-colors"
+            className="text-[#E8C65A] hover:text-[#C04E0C] font-medium transition-colors"
           >
             Home
           </Link>
           <span className="text-gray-300">|</span>
           <Link
             href="/shows/deals"
-            className="text-[#d4a843] hover:text-[#b8922e] font-medium transition-colors"
+            className="text-[#E8C65A] hover:text-[#C04E0C] font-medium transition-colors"
           >
             Deals
           </Link>
           <span className="text-gray-300">|</span>
           <Link
             href="/shows/schedule"
-            className="text-[#d4a843] hover:text-[#b8922e] font-medium transition-colors"
+            className="text-[#E8C65A] hover:text-[#C04E0C] font-medium transition-colors"
           >
             Schedule
           </Link>
           <span className="text-gray-300">|</span>
           <Link
             href="/plan-your-trip"
-            className="text-[#d4a843] hover:text-[#b8922e] font-medium transition-colors"
+            className="text-[#E8C65A] hover:text-[#C04E0C] font-medium transition-colors"
           >
             Plan Your Trip
           </Link>
           <span className="text-gray-300">|</span>
           <Link
             href="/contact"
-            className="text-[#d4a843] hover:text-[#b8922e] font-medium transition-colors"
+            className="text-[#E8C65A] hover:text-[#C04E0C] font-medium transition-colors"
           >
             Contact
           </Link>
@@ -73,7 +73,7 @@ export default function NotFound() {
           </p>
           <Link
             href={`tel:${siteConfig.phoneRaw}`}
-            className="mt-2 inline-block text-xl font-bold text-[#13264D] hover:text-[#d4a843] transition-colors"
+            className="mt-2 inline-block text-xl font-bold text-[#13264D] hover:text-[#E8C65A] transition-colors"
           >
             {siteConfig.phone}
           </Link>

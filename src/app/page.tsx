@@ -301,7 +301,7 @@ export default function HomePage() {
               <div className="relative lg:w-1/2 h-64 sm:h-80 lg:h-auto min-h-[320px] overflow-hidden">
                 <Image
                   src="/branson-lakes-lodging.jpg"
-                  alt="Premium vacation rental with lake view in Branson, Missouri — Branson Lakes Lodging"
+                  alt="Premium vacation rental with lake view in Branson, Missouri, from Branson Lakes Lodging"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 50vw"

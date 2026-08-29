@@ -76,7 +76,7 @@ export default function DealsPage() {
       </section>
 
       {/* Deal Alert CTA */}
-      <section className="bg-gradient-to-r from-[#d4a843] to-[#b8922e] py-8">
+      <section className="bg-gradient-to-r from-[#E8C65A] to-[#C04E0C] py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
@@ -218,7 +218,7 @@ export default function DealsPage() {
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href={`tel:${siteConfig.phoneRaw}`}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#d4a843] text-white rounded-xl font-semibold text-lg hover:bg-[#b8922e] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#E8C65A] text-white rounded-xl font-semibold text-lg hover:bg-[#C04E0C] transition-colors"
             >
               Call {siteConfig.phone}
             </Link>

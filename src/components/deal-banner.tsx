@@ -13,7 +13,7 @@ interface DealBannerProps {
 }
 
 export function DealBanner({
-  headline = "BOGO Deals Available — Buy One, Get One 50% Off Select Shows!",
+  headline = "BOGO Deals Available, Buy One, Get One 50% Off Select Shows!",
   description,
   ctaText = "View Deals",
   ctaHref = "/deals",

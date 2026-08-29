@@ -92,7 +92,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
       <div className="relative w-full max-w-2xl mx-4 rounded-2xl bg-white shadow-2xl overflow-hidden">
         {/* Search input */}
         <div className="flex items-center gap-3 border-b border-gray-100 px-5 py-4">
-          <Search className="h-5 w-5 text-[#d4a843] shrink-0" />
+          <Search className="h-5 w-5 text-[#E8C65A] shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -147,7 +147,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                         </span>
                       </div>
                     </div>
-                    <span className="shrink-0 text-sm font-bold text-[#d4a843]">
+                    <span className="shrink-0 text-sm font-bold text-[#E8C65A]">
                       ${show.priceFrom}
                     </span>
                   </button>

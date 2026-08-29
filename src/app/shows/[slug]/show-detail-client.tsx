@@ -107,7 +107,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                   <CalendarDays className="w-5 h-5 text-[#13264D]" />
                   <div>
                     <span className="text-sm text-gray-500">Season: </span>
-                    <span className="text-sm font-semibold text-[#1A1614]">{show.seasonStart} – {show.seasonEnd}</span>
+                    <span className="text-sm font-semibold text-[#1A1614]">{show.seasonStart} to {show.seasonEnd}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -278,11 +278,11 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#13264D] mt-2 shrink-0" />
-                  Free parking is available at the theater. Arrive 30 minutes early for best seating.
+                  Parking is available at the theater. Arrive 30 minutes early for best seating.
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#13264D] mt-2 shrink-0" />
-                  The theater is wheelchair accessible with designated parking spots near the entrance.
+                  Contact the theater or call us for accessible seating options.
                 </li>
               </ul>
             </div>
@@ -308,8 +308,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
               </div>
               <p className="text-sm text-gray-600">
                 The {show.mealType?.toLowerCase()} menu features a selection of home-style entrees,
-                sides, and desserts. Vegetarian and gluten-free options are available upon request.
-                Please inform staff of any dietary restrictions when you arrive.
+                sides, and desserts. Ask the theater about dietary accommodations.
               </p>
               <div className="mt-4 p-4 rounded-lg bg-[#E8C65A]/5 border border-[#E8C65A]/20">
                 <p className="text-sm text-[#C04E0C] font-medium">

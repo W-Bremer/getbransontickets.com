@@ -53,7 +53,7 @@ const faqCategories = [
       {
         question: "What should I wear to a Branson show?",
         answer:
-          "Branson shows are casual and comfortable. There's no dress code — jeans and comfortable clothing are perfectly fine. For dinner shows, some guests prefer to dress up a bit, but it's not required.",
+          "Branson shows are casual and comfortable. There's no dress code, jeans and comfortable clothing are perfectly fine. For dinner shows, some guests prefer to dress up a bit, but it's not required.",
       },
     ],
   },
@@ -83,7 +83,7 @@ const faqCategories = [
       {
         question: "How many shows can I see in one day?",
         answer:
-          "Most visitors can comfortably see 2-3 shows per day — a morning or afternoon show and an evening performance. If you add a dinner show, you can potentially see 3 shows. We recommend not over-scheduling so you can enjoy other Branson attractions too.",
+          "Most visitors can comfortably see 2-3 shows per day, a morning or afternoon show and an evening performance. If you add a dinner show, you can potentially see 3 shows. We recommend not over-scheduling so you can enjoy other Branson attractions too.",
       },
       {
         question: "Where should I stay in Branson?",
@@ -168,7 +168,7 @@ export default function FAQPage() {
       <section className="bg-[#13264D] pt-12 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav className="text-sm text-white/60 mb-6">
-            <Link href="/" className="hover:text-[#d4a843] transition-colors">
+            <Link href="/" className="hover:text-[#E8C65A] transition-colors">
               Home
             </Link>
             <span className="mx-2">/</span>
@@ -270,7 +270,7 @@ export default function FAQPage() {
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#d4a843] text-white rounded-lg font-semibold hover:bg-[#b8922e] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#E8C65A] text-white rounded-lg font-semibold hover:bg-[#C04E0C] transition-colors"
             >
               Contact Us
             </Link>

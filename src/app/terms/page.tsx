@@ -37,7 +37,7 @@ export default function TermsPage() {
           <p>
             By accessing, browsing, or using the {siteConfig.name} website
             (&quot;Site&quot;), located at{" "}
-            <Link href="/" className="text-[#d4a843]">
+            <Link href="/" className="text-[#E8C65A]">
               {siteConfig.url}
             </Link>
             , or by purchasing any tickets, products, or services through the
@@ -61,7 +61,7 @@ export default function TermsPage() {
           <h2>3. Ticket Purchases</h2>
           <p>
             All ticket sales are final unless otherwise specified in our{" "}
-            <Link href="/refund-policy" className="text-[#d4a843]">
+            <Link href="/refund-policy" className="text-[#E8C65A]">
               Refund Policy
             </Link>
             . Prices listed on the Site are inclusive of all applicable taxes
@@ -114,7 +114,7 @@ export default function TermsPage() {
               communications from {siteConfig.name} by contacting us at{" "}
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="text-[#d4a843]"
+                className="text-[#E8C65A]"
               >
                 {siteConfig.email}
               </a>
@@ -226,14 +226,14 @@ export default function TermsPage() {
               Email:{" "}
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="text-[#d4a843]"
+                className="text-[#E8C65A]"
               >
                 {siteConfig.email}
               </a>
             </li>
             <li>
               Phone:{" "}
-              <a href={`tel:${siteConfig.phoneRaw}`} className="text-[#d4a843]">
+              <a href={`tel:${siteConfig.phoneRaw}`} className="text-[#E8C65A]">
                 {siteConfig.phone}
               </a>
             </li>

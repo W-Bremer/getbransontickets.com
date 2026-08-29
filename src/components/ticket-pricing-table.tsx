@@ -13,7 +13,7 @@ export function TicketPricingTable({
 }: TicketPricingTableProps) {
   const rows = [
     { label: "Adult", age: "13+", price: adultPrice },
-    { label: "Child", age: "3–12", price: childPrice },
+    { label: "Child", age: "3-12", price: childPrice },
     ...(seniorPrice !== undefined
       ? [{ label: "Senior", age: "65+", price: seniorPrice }]
       : []),
@@ -24,7 +24,7 @@ export function TicketPricingTable({
       {/* Header */}
       <div className="bg-[#13264D] px-5 py-3">
         <h3 className="text-lg font-bold text-white">
-          {showName} — Ticket Prices
+          {showName}, Ticket Prices
         </h3>
       </div>
 

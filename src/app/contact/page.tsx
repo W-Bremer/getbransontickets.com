@@ -85,7 +85,7 @@ export default function ContactPage() {
                     id="name"
                     name="name"
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#13264D]"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#E8C65A] focus:border-transparent text-[#13264D]"
                     placeholder="Your full name"
                   />
                 </div>
@@ -101,7 +101,7 @@ export default function ContactPage() {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#13264D]"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#E8C65A] focus:border-transparent text-[#13264D]"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -117,7 +117,7 @@ export default function ContactPage() {
                     type="tel"
                     id="phone"
                     name="phone"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#13264D]"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#E8C65A] focus:border-transparent text-[#13264D]"
                     placeholder="(555) 123-4567"
                   />
                 </div>
@@ -133,13 +133,13 @@ export default function ContactPage() {
                     name="message"
                     rows={5}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d4a843] focus:border-transparent text-[#13264D] resize-none"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#E8C65A] focus:border-transparent text-[#13264D] resize-none"
                     placeholder="How can we help you?"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-4 bg-[#d4a843] hover:bg-[#b8922e] text-white rounded-xl font-semibold text-lg transition-colors shadow-lg"
+                  className="w-full py-4 bg-[#E8C65A] hover:bg-[#C04E0C] text-white rounded-xl font-semibold text-lg transition-colors shadow-lg"
                 >
                   Send Message
                 </button>
@@ -154,7 +154,7 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <div className="flex items-start gap-4 p-5 rounded-xl bg-[#faf8f5] border border-gray-100">
                   <div className="w-12 h-12 rounded-xl bg-[#13264D] flex items-center justify-center shrink-0">
-                    <Phone className="w-6 h-6 text-[#d4a843]" />
+                    <Phone className="w-6 h-6 text-[#E8C65A]" />
                   </div>
                   <div>
                     <h3 className="font-bold text-[#13264D]">Call Us</h3>
@@ -163,7 +163,7 @@ export default function ContactPage() {
                     </p>
                     <Link
                       href={`tel:${siteConfig.phoneRaw}`}
-                      className="mt-2 inline-block text-lg font-semibold text-[#d4a843] hover:text-[#b8922e] transition-colors"
+                      className="mt-2 inline-block text-lg font-semibold text-[#E8C65A] hover:text-[#C04E0C] transition-colors"
                     >
                       {siteConfig.phone}
                     </Link>
@@ -172,7 +172,7 @@ export default function ContactPage() {
 
                 <div className="flex items-start gap-4 p-5 rounded-xl bg-[#faf8f5] border border-gray-100">
                   <div className="w-12 h-12 rounded-xl bg-[#13264D] flex items-center justify-center shrink-0">
-                    <Mail className="w-6 h-6 text-[#d4a843]" />
+                    <Mail className="w-6 h-6 text-[#E8C65A]" />
                   </div>
                   <div>
                     <h3 className="font-bold text-[#13264D]">Email Us</h3>
@@ -181,7 +181,7 @@ export default function ContactPage() {
                     </p>
                     <a
                       href={`mailto:${siteConfig.email}`}
-                      className="mt-2 inline-block text-lg font-semibold text-[#d4a843] hover:text-[#b8922e] transition-colors"
+                      className="mt-2 inline-block text-lg font-semibold text-[#E8C65A] hover:text-[#C04E0C] transition-colors"
                     >
                       {siteConfig.email}
                     </a>
@@ -190,7 +190,7 @@ export default function ContactPage() {
 
                 <div className="flex items-start gap-4 p-5 rounded-xl bg-[#faf8f5] border border-gray-100">
                   <div className="w-12 h-12 rounded-xl bg-[#13264D] flex items-center justify-center shrink-0">
-                    <Clock className="w-6 h-6 text-[#d4a843]" />
+                    <Clock className="w-6 h-6 text-[#E8C65A]" />
                   </div>
                   <div>
                     <h3 className="font-bold text-[#13264D]">Business Hours</h3>
@@ -229,7 +229,7 @@ export default function ContactPage() {
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/shows"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#d4a843] text-white rounded-lg font-semibold hover:bg-[#b8922e] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#E8C65A] text-white rounded-lg font-semibold hover:bg-[#C04E0C] transition-colors"
             >
               Browse Shows
             </Link>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: `All Branson Theaters & Venues 2026`,
   alternates: { canonical: "/theaters" },
   description:
-    "Explore every Branson theater and performance venue — from the iconic Clay Cooper Theatre to Sight & Sound's massive stage. Find shows, seating, directions, and more.",
+    "Explore every Branson theater and performance venue, from the iconic Clay Cooper Theatre to Sight & Sound's massive stage. Find shows, seating, directions, and more.",
   openGraph: {
     title: "All Branson Theaters & Venues 2026",
     description:
@@ -78,7 +78,7 @@ export default function TheatersPage() {
             </h1>
             <p className="mt-3 text-lg text-white/70 max-w-2xl">
               Discover {theaters.length} world-class theaters and performance venues
-              across Branson — from intimate 210-seat stages to the massive 3,000-seat
+              across Branson, from intimate 210-seat stages to the massive 3,000-seat
               Mansion Theatre. Every theater has its own personality and charm.
             </p>
           </div>
@@ -90,23 +90,23 @@ export default function TheatersPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             <div>
-              <div className="text-2xl font-bold text-[#d4a843] font-heading">
+              <div className="text-2xl font-bold text-[#E8C65A] font-heading">
                 {theaters.length}+
               </div>
               <div className="text-sm text-white/60">Theaters & Venues</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-[#d4a843] font-heading">
+              <div className="text-2xl font-bold text-[#E8C65A] font-heading">
                 {theaters.reduce((sum, t) => sum + t.seatingCapacity, 0).toLocaleString()}+
               </div>
               <div className="text-sm text-white/60">Total Seats</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-[#d4a843] font-heading">50+</div>
+              <div className="text-2xl font-bold text-[#E8C65A] font-heading">50+</div>
               <div className="text-sm text-white/60">Live Shows</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-[#d4a843] font-heading">1959</div>
+              <div className="text-2xl font-bold text-[#E8C65A] font-heading">1959</div>
               <div className="text-sm text-white/60">First Theater Opened</div>
             </div>
           </div>
@@ -138,13 +138,13 @@ export default function TheatersPage() {
                         were invented values from the original build. Restore
                         only with a real, citable source. */}
                     {showCount > 0 && (
-                      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#d4a843] text-[#13264D] text-xs font-bold">
+                      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#E8C65A] text-[#13264D] text-xs font-bold">
                         {showCount} {showCount === 1 ? "Show" : "Shows"}
                       </div>
                     )}
                   </div>
                   <div className="p-5">
-                    <h2 className="text-lg font-bold text-[#13264D] font-heading group-hover:text-[#d4a843] transition-colors">
+                    <h2 className="text-lg font-bold text-[#13264D] font-heading group-hover:text-[#E8C65A] transition-colors">
                       {theater.name}
                     </h2>
                     <p className="mt-1 text-sm text-gray-500 flex items-center gap-1">
@@ -165,7 +165,7 @@ export default function TheatersPage() {
                           Est. {theater.yearBuilt}
                         </span>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-[#d4a843] group-hover:translate-x-1 transition-transform" />
+                      <ChevronRight className="w-4 h-4 text-[#E8C65A] group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </Link>
@@ -185,7 +185,7 @@ export default function TheatersPage() {
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 Most of Branson&apos;s theaters are concentrated along the famous 76
-                Country Boulevard — a stretch of road known simply as &quot;The Strip.&quot;
+                Country Boulevard, a stretch of road known simply as &quot;The Strip.&quot;
                 This iconic entertainment corridor runs through the heart of Branson and
                 is lined with theaters, restaurants, shops, and attractions. From Clay
                 Cooper Theatre on the west end to Presleys&apos; on the east, you can
@@ -201,7 +201,7 @@ export default function TheatersPage() {
               <div className="mt-6">
                 <Link
                   href="/shows"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#d4a843] text-white rounded-lg font-semibold hover:bg-[#b8922e] transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#E8C65A] text-white rounded-lg font-semibold hover:bg-[#C04E0C] transition-colors"
                 >
                   Browse All Shows
                   <ChevronRight className="w-4 h-4" />
@@ -263,7 +263,7 @@ export default function TheatersPage() {
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href={`tel:${siteConfig.phoneRaw}`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#d4a843] text-[#13264D] rounded-lg font-semibold hover:bg-[#e8c36a] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#E8C65A] text-[#13264D] rounded-lg font-semibold hover:bg-[#e8c36a] transition-colors"
             >
               Call {siteConfig.phone}
             </Link>

@@ -61,7 +61,7 @@ export default function StickyBookingBar({
             href={externalUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg bg-[#d4a843] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#b8922e] flex items-center gap-1.5"
+            className="rounded-lg bg-[#E8C65A] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#C04E0C] flex items-center gap-1.5"
           >
             Official Site
             <ExternalLink className="w-3.5 h-3.5" />

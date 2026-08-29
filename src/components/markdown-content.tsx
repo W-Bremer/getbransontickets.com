@@ -61,7 +61,7 @@ export function MarkdownContent({ content }: { content: string }) {
             return (
               <Link
                 href={href}
-                className="text-[#d4a843] font-medium underline underline-offset-2 hover:text-[#b8922e] transition-colors"
+                className="text-[#E8C65A] font-medium underline underline-offset-2 hover:text-[#C04E0C] transition-colors"
               >
                 {children}
               </Link>
@@ -72,14 +72,14 @@ export function MarkdownContent({ content }: { content: string }) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#d4a843] font-medium underline underline-offset-2 hover:text-[#b8922e] transition-colors"
+              className="text-[#E8C65A] font-medium underline underline-offset-2 hover:text-[#C04E0C] transition-colors"
             >
               {children}
             </a>
           );
         },
         blockquote: ({ children }) => (
-          <blockquote className="border-l-4 border-[#d4a843] pl-5 my-6 bg-[#faf8f5] py-4 pr-4 rounded-r-lg italic text-gray-600">
+          <blockquote className="border-l-4 border-[#E8C65A] pl-5 my-6 bg-[#faf8f5] py-4 pr-4 rounded-r-lg italic text-gray-600">
             {children}
           </blockquote>
         ),

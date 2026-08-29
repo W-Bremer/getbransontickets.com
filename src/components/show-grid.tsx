@@ -20,7 +20,7 @@ export function ShowGrid({
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
         <div className="rounded-full bg-[#13264D]/5 p-6 mb-4">
-          <Ticket className="h-10 w-10 text-[#d4a843]/50" />
+          <Ticket className="h-10 w-10 text-[#E8C65A]/50" />
         </div>
         <p className="text-lg font-medium text-muted-foreground">
           {emptyMessage}

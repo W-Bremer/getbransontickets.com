@@ -234,7 +234,7 @@ export default async function ShowDetailPage({
                   <div>
                     <div className="text-xs text-gray-500">Season</div>
                     <div className="font-semibold text-[#1A1614]">
-                      {show.seasonStart} – {show.seasonEnd}
+                      {show.seasonStart} to {show.seasonEnd}
                     </div>
                   </div>
                 </div>
@@ -311,7 +311,7 @@ export default async function ShowDetailPage({
                             href={show.externalUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full flex items-center justify-center gap-2 py-3 bg-[#d4a843] text-white rounded-xl font-semibold hover:bg-[#b8922e] transition-colors"
+                            className="w-full flex items-center justify-center gap-2 py-3 bg-[#E8C65A] text-white rounded-xl font-semibold hover:bg-[#C04E0C] transition-colors"
                           >
                             Visit Official Website
                             <ExternalLink className="w-4 h-4" />

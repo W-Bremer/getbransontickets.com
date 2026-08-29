@@ -42,7 +42,7 @@ export function PriceDisplay({
           ${formatPrice(priceFrom)}
         </span>
         {priceTo && priceTo !== priceFrom && (
-          <span className={cn(variant === "light" ? "text-white/60" : "text-gray-400", styles.range)}>– ${formatPrice(priceTo)}</span>
+          <span className={cn(variant === "light" ? "text-white/60" : "text-gray-400", styles.range)}>to ${formatPrice(priceTo)}</span>
         )}
       </div>
       {showPerPerson && (

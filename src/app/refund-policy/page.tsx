@@ -189,7 +189,7 @@ export default function RefundPolicyPage() {
           <ul>
             <li>
               <strong>Phone:</strong>{" "}
-              <a href={`tel:${siteConfig.phoneRaw}`} className="text-[#d4a843]">
+              <a href={`tel:${siteConfig.phoneRaw}`} className="text-[#E8C65A]">
                 {siteConfig.phone}
               </a>{" "}
               (available during business hours)
@@ -198,7 +198,7 @@ export default function RefundPolicyPage() {
               <strong>Email:</strong>{" "}
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="text-[#d4a843]"
+                className="text-[#E8C65A]"
               >
                 {siteConfig.email}
               </a>
@@ -287,14 +287,14 @@ export default function RefundPolicyPage() {
               Email:{" "}
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="text-[#d4a843]"
+                className="text-[#E8C65A]"
               >
                 {siteConfig.email}
               </a>
             </li>
             <li>
               Phone:{" "}
-              <a href={`tel:${siteConfig.phoneRaw}`} className="text-[#d4a843]">
+              <a href={`tel:${siteConfig.phoneRaw}`} className="text-[#E8C65A]">
                 {siteConfig.phone}
               </a>
             </li>
@@ -305,7 +305,7 @@ export default function RefundPolicyPage() {
             <p className="text-sm text-gray-600">
               By purchasing tickets through {siteConfig.name}, you acknowledge
               that you have read and agree to this Refund Policy as well as our{" "}
-              <Link href="/terms" className="text-[#d4a843] font-medium">
+              <Link href="/terms" className="text-[#E8C65A] font-medium">
                 Terms and Conditions
               </Link>
               .

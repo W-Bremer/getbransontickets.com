@@ -98,7 +98,7 @@ export default async function CategoryPage({
               </p>
               <Link
                 href="/shows"
-                className="mt-4 inline-flex items-center gap-2 px-6 py-3 bg-[#d4a843] text-white rounded-lg font-semibold hover:bg-[#b8922e] transition-colors"
+                className="mt-4 inline-flex items-center gap-2 px-6 py-3 bg-[#E8C65A] text-white rounded-lg font-semibold hover:bg-[#C04E0C] transition-colors"
               >
                 Browse All Shows
               </Link>
@@ -120,7 +120,7 @@ export default async function CategoryPage({
                 <Link
                   key={c.slug}
                   href={`/shows/category/${c.slug}`}
-                  className="px-5 py-2.5 rounded-full bg-white border border-gray-200 text-[#13264D] font-medium text-sm hover:border-[#d4a843] hover:text-[#d4a843] transition-colors"
+                  className="px-5 py-2.5 rounded-full bg-white border border-gray-200 text-[#13264D] font-medium text-sm hover:border-[#E8C65A] hover:text-[#E8C65A] transition-colors"
                 >
                   {c.name} ({shows.filter((s) => s.category.includes(c.slug)).length})
                 </Link>
