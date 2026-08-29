@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Tag, Phone, ExternalLink } from "lucide-react";
+import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Phone, ExternalLink } from "lucide-react";
 import { shows, getShowBySlug, getPartnerShows } from "@/data/shows";
 import { theaters } from "@/data/theaters";
 import { siteConfig } from "@/lib/config";
@@ -177,15 +177,6 @@ export default async function ShowDetailPage({
               ]}
             />
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              {show.specialOffers.map((offer) => (
-                <span
-                  key={offer}
-                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#C8102E] text-white text-sm font-medium"
-                >
-                  <Tag className="w-3 h-3" />
-                  {offer}
-                </span>
-              ))}
               {show.mealIncluded && (
                 <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#E8C65A] text-white text-sm font-medium">
                   <UtensilsCrossed className="w-3 h-3" />
@@ -266,7 +257,6 @@ export default async function ShowDetailPage({
                   seasonEnd: show.seasonEnd,
                   priceFrom: show.priceFrom,
                   priceTo: show.priceTo,
-                  specialOffers: show.specialOffers,
                   mealIncluded: show.mealIncluded,
                   mealType: show.mealType,
                   faqs: show.faqs,
@@ -345,17 +335,6 @@ export default async function ShowDetailPage({
                     <span>Duration</span>
                     <span className="font-medium text-[#1A1614]">{show.duration}</span>
                   </div>
-                  <div className="flex justify-between text-gray-600">
-                    <span>Show Times</span>
-                    <span className="font-medium text-[#1A1614]">
-                      {show.showTimes.join(", ")}
-                    </span>
-                  </div>
-                  {show.scheduleNote && (
-                    <p className="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2">
-                      {show.scheduleNote}
-                    </p>
-                  )}
                   {show.mealIncluded && (
                     <div className="flex justify-between text-gray-600">
                       <span>Meal</span>
@@ -363,17 +342,6 @@ export default async function ShowDetailPage({
                     </div>
                   )}
                 </div>
-
-                {show.specialOffers.length > 0 && (
-                  <div className="p-4 rounded-lg bg-[#C8102E]/10 border border-[#C8102E]/20">
-                    <p className="text-sm font-semibold text-[#C8102E]">Special Offers</p>
-                    {show.specialOffers.map((offer) => (
-                      <p key={offer} className="text-sm text-[#C8102E]/80 mt-1">
-                        {offer}
-                      </p>
-                    ))}
-                  </div>
-                )}
               </div>
             </div>
           </div>

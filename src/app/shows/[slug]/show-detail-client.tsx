@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { MapPin, ChevronRight, Clock, Users, CalendarDays, Tag, UtensilsCrossed } from "lucide-react";
+import { MapPin, ChevronRight, Clock, Users, CalendarDays, UtensilsCrossed } from "lucide-react";
 import { TabNavigation } from "@/components/tab-navigation";
 import AvailabilityGrid from "@/components/availability-grid";
 import { FAQSection } from "@/components/faq-section";
@@ -23,7 +23,6 @@ interface ShowData {
   seasonEnd: string;
   priceFrom: number;
   priceTo: number;
-  specialOffers: string[];
   mealIncluded: boolean;
   mealType: string | null;
   faqs: { question: string; answer: string }[];
@@ -155,29 +154,14 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
               </div>
             </div>
 
-            {/* Special Offers */}
-            {show.specialOffers.length > 0 && (
-              <div className="rounded-xl bg-[#C8102E]/5 border border-[#C8102E]/20 p-6">
-                <h3 className="text-lg font-bold text-[#C8102E] mb-3 flex items-center gap-2">
-                  <Tag className="w-5 h-5" />
-                  Special Offers
-                </h3>
-                <ul className="space-y-2">
-                  {show.specialOffers.map((offer) => (
-                    <li key={offer} className="flex items-center gap-2 text-[#1A1614]">
-                      <span className="w-2 h-2 rounded-full bg-[#C8102E] shrink-0" />
-                      {offer}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {/* No Special Offers section: theater promos route buyers to the
+                box office instead of our checkout (removed 2026-08-29). */}
 
             {/* FAQs */}
             {show.faqs.length > 0 && (
               <FAQSection
                 faqs={show.faqs}
-                title={`${show.name} — Frequently Asked Questions`}
+                title={`${show.name} Frequently Asked Questions`}
               />
             )}
           </div>
