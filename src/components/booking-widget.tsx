@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
+import { formatPrice } from "@/lib/utils";
 
 interface BookingWidgetProps {
   showId: string;
@@ -332,18 +333,18 @@ export default function BookingWidget({
       {/* Price summary */}
       <div className="mb-4 rounded-lg bg-gray-50 p-3 text-sm">
         <div className="flex justify-between text-gray-600">
-          <span>{adults} Adult{adults !== 1 ? "s" : ""} x ${pricePerAdult}</span>
-          <span>${adults * pricePerAdult}</span>
+          <span>{adults} Adult{adults !== 1 ? "s" : ""} x ${formatPrice(pricePerAdult)}</span>
+          <span>${formatPrice(adults * pricePerAdult)}</span>
         </div>
         {children > 0 && (
           <div className="flex justify-between text-gray-600">
-            <span>{children} Child{children !== 1 ? "ren" : ""} x ${pricePerChild}</span>
-            <span>${children * pricePerChild}</span>
+            <span>{children} Child{children !== 1 ? "ren" : ""} x ${formatPrice(pricePerChild)}</span>
+            <span>${formatPrice(children * pricePerChild)}</span>
           </div>
         )}
         <div className="mt-2 flex justify-between border-t border-gray-200 pt-2 font-bold text-[#1A1614]">
           <span>Total</span>
-          <span>${total}</span>
+          <span>${formatPrice(total)}</span>
         </div>
       </div>
 

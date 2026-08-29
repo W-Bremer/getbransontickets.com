@@ -271,6 +271,7 @@ export default async function ShowDetailPage({
                   mealType: show.mealType,
                   faqs: show.faqs,
                   category: show.category,
+                  galleryImages: show.galleryImages,
                 }}
                 theaterSlug={showTheater?.slug}
               />

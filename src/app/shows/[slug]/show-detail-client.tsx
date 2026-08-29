@@ -6,6 +6,7 @@ import { MapPin, ChevronRight, Clock, Users, CalendarDays, Tag, UtensilsCrossed 
 import { TabNavigation } from "@/components/tab-navigation";
 import AvailabilityGrid from "@/components/availability-grid";
 import { FAQSection } from "@/components/faq-section";
+import { PhotoGallery } from "@/components/photo-gallery";
 
 interface ShowData {
   name: string;
@@ -27,6 +28,7 @@ interface ShowData {
   mealType: string | null;
   faqs: { question: string; answer: string }[];
   category: string[];
+  galleryImages?: string[];
 }
 
 interface ShowDetailClientProps {
@@ -68,6 +70,21 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                 <p>{show.description}</p>
               </div>
             </div>
+
+            {/* Photos */}
+            {show.galleryImages && show.galleryImages.length > 0 && (
+              <div>
+                <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
+                  Photos
+                </h2>
+                <PhotoGallery
+                  images={show.galleryImages.map((src, i) => ({
+                    src,
+                    alt: `${show.name} photo ${i + 1}`,
+                  }))}
+                />
+              </div>
+            )}
 
             {/* Quick Facts Card */}
             <div className="rounded-xl bg-[#F6F4EF] border border-gray-100 p-6">

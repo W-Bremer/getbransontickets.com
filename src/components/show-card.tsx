@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Clock, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import type { Show } from "@/data/shows";
 
 interface ShowCardProps {
@@ -77,7 +77,7 @@ export function ShowCard({ show, index = 0, className }: ShowCardProps) {
             <div className="absolute bottom-3 right-3 rounded-xl bg-white/95 px-3 py-1.5 backdrop-blur-md shadow-sm">
               <span className="text-xs font-medium text-[#13264D]">From</span>
               <span className="ml-1 text-lg font-bold text-[#1A1614]">
-                ${show.priceFrom}
+                ${formatPrice(show.priceFrom)}
               </span>
             </div>
           </div>
