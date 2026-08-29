@@ -18,10 +18,15 @@ import { getShowBySlug } from "@/data/shows";
 import { siteConfig } from "@/lib/config";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { ShowCrossSell } from "@/components/show-cross-sell";
 import { QuickInfoBar } from "@/components/quick-info-bar";
 import { TicketPricingTable } from "@/components/ticket-pricing-table";
 import { PhotoGallery } from "@/components/photo-gallery";
 import { FAQSection } from "@/components/faq-section";
+
+// The show cross-sell rail picks shows playing in the next 30 days, so the
+// page re-renders daily to keep that window rolling without a redeploy.
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
   return attractions.map((a) => ({ slug: a.slug }));
@@ -314,7 +319,7 @@ export default async function AttractionDetailPage({
               {attraction.faqs.length > 0 && (
                 <FAQSection
                   faqs={attraction.faqs}
-                  title={`${attraction.name} — Frequently Asked Questions`}
+                  title={`${attraction.name} Frequently Asked Questions`}
                 />
               )}
 
@@ -450,6 +455,11 @@ export default async function AttractionDetailPage({
             {/* Sidebar */}
             <div className="mt-10 lg:mt-0">
               <div className="sticky top-24 space-y-6">
+                {/* On-site next step: we don't sell attraction tickets, so
+                    give search visitors a bookable path before the external
+                    link sends them away. */}
+                <ShowCrossSell preferredSlugs={attraction.relatedShowSlugs} />
+
                 {/* Booking Card */}
                 <div className="rounded-2xl border border-gray-200 shadow-lg p-6 bg-white">
                   <div className="text-center">
@@ -467,9 +477,10 @@ export default async function AttractionDetailPage({
                       href={attraction.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full py-4 bg-[#C8102E] hover:bg-[#C8102E]/90 text-white rounded-xl font-semibold text-lg transition-colors shadow-lg cursor-pointer text-center"
+                      className="flex w-full items-center justify-center gap-2 py-4 bg-[#13264D] hover:bg-[#0D1B38] text-white rounded-xl font-semibold text-lg transition-colors shadow-lg cursor-pointer text-center"
                     >
-                      Get Tickets
+                      Get Tickets at Official Site
+                      <ExternalLink className="h-4 w-4" />
                     </a>
                   </div>
                   <div className="mt-3">
@@ -511,34 +522,6 @@ export default async function AttractionDetailPage({
                   </div>
                 </div>
 
-                {/* Quick Links */}
-                <div className="rounded-xl bg-[#F6F4EF] p-4 space-y-2">
-                  <a
-                    href={attraction.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm font-medium text-[#13264D] hover:text-[#0D1B38] transition-colors"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Official Website
-                  </a>
-                  <a
-                    href={attraction.mapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm font-medium text-[#13264D] hover:text-[#0D1B38] transition-colors"
-                  >
-                    <MapPin className="h-4 w-4" />
-                    View on Map
-                  </a>
-                  <a
-                    href={`tel:${attraction.phone.replace(/[^0-9+]/g, "")}`}
-                    className="flex items-center gap-2 text-sm font-medium text-[#13264D] hover:text-[#0D1B38] transition-colors"
-                  >
-                    <Phone className="h-4 w-4" />
-                    {attraction.phone}
-                  </a>
-                </div>
               </div>
             </div>
           </div>

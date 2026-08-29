@@ -34,11 +34,11 @@ export async function generateMetadata({
   if (!theater) return { title: "Theater Not Found" };
 
   return {
-    title: `${theater.name} — Shows, Seating & Directions`,
-    description: `${theater.name} in Branson, MO — ${theater.shortDescription} ${theater.seatingCapacity} seats. See current shows, get directions, and book tickets.`,
+    title: `${theater.name}: Shows, Seating & Directions`,
+    description: `${theater.name} in Branson, MO. ${theater.shortDescription} ${theater.seatingCapacity} seats. See current shows, get directions, and book tickets.`,
     alternates: { canonical: `${siteConfig.url}/theaters/${theater.slug}` },
     openGraph: {
-      title: `${theater.name} — Branson Theater Guide`,
+      title: `${theater.name} | Branson Theater Guide`,
       description: theater.shortDescription,
       url: `${siteConfig.url}/theaters/${theater.slug}`,
       type: "website",
@@ -122,7 +122,7 @@ export default async function TheaterDetailPage({
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#13264D] font-heading">
                 {theater.name}
               </h1>
-              <p className="mt-3 text-xl text-[#d4a843] font-medium">
+              <p className="mt-3 text-xl text-[#E8C65A] font-medium">
                 {theater.tagline}
               </p>
 
@@ -133,7 +133,7 @@ export default async function TheaterDetailPage({
               {/* Quick Facts */}
               <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-gray-50">
-                  <Armchair className="w-5 h-5 text-[#d4a843]" />
+                  <Armchair className="w-5 h-5 text-[#E8C65A]" />
                   <div>
                     <div className="text-xs text-gray-500">Capacity</div>
                     <div className="font-semibold text-[#13264D]">
@@ -142,7 +142,7 @@ export default async function TheaterDetailPage({
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-gray-50">
-                  <MapPin className="w-5 h-5 text-[#d4a843]" />
+                  <MapPin className="w-5 h-5 text-[#E8C65A]" />
                   <div>
                     <div className="text-xs text-gray-500">Location</div>
                     <div className="font-semibold text-[#13264D] text-sm">
@@ -157,7 +157,7 @@ export default async function TheaterDetailPage({
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-gray-50">
-                  <Calendar className="w-5 h-5 text-[#d4a843]" />
+                  <Calendar className="w-5 h-5 text-[#E8C65A]" />
                   <div>
                     <div className="text-xs text-gray-500">Established</div>
                     <div className="font-semibold text-[#13264D]">
@@ -166,6 +166,27 @@ export default async function TheaterDetailPage({
                   </div>
                 </div>
               </div>
+
+              {/* Shows first: venue searchers convert on what's playing, so
+                  the bookable lineup sits above the building details. */}
+              {theaterShows.length > 0 && (
+                <div id="shows" className="mt-10 scroll-mt-24">
+                  <h2 className="text-2xl font-bold text-[#13264D] font-heading mb-2">
+                    Shows at {theater.name}
+                  </h2>
+                  <p className="text-gray-600 mb-6">
+                    {theaterShows.length} show
+                    {theaterShows.length !== 1 ? "s" : ""} currently performing
+                    at this theater. Tickets and showtimes are on each show
+                    page.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {theaterShows.map((show, index) => (
+                      <ShowCard key={show.slug} show={show} index={index} />
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Description */}
               <div className="mt-10">
@@ -199,14 +220,14 @@ export default async function TheaterDetailPage({
               <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="p-6 rounded-xl bg-gray-50 border border-gray-100">
                   <div className="flex items-center gap-2 mb-3">
-                    <Car className="w-5 h-5 text-[#d4a843]" />
+                    <Car className="w-5 h-5 text-[#E8C65A]" />
                     <h3 className="font-semibold text-[#13264D]">Parking</h3>
                   </div>
                   <p className="text-sm text-gray-600">{theater.parking}</p>
                 </div>
                 <div className="p-6 rounded-xl bg-gray-50 border border-gray-100">
                   <div className="flex items-center gap-2 mb-3">
-                    <Accessibility className="w-5 h-5 text-[#d4a843]" />
+                    <Accessibility className="w-5 h-5 text-[#E8C65A]" />
                     <h3 className="font-semibold text-[#13264D]">Accessibility</h3>
                   </div>
                   <p className="text-sm text-gray-600">{theater.accessibility}</p>
@@ -252,7 +273,7 @@ export default async function TheaterDetailPage({
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 text-[#d4a843] hover:text-[#b8922e] font-medium text-sm"
+                    className="mt-3 inline-flex items-center gap-1 text-[#E8C65A] hover:text-[#C04E0C] font-medium text-sm"
                   >
                     Get Directions on Google Maps{" "}
                     <ChevronRight className="w-4 h-4" />
@@ -272,30 +293,30 @@ export default async function TheaterDetailPage({
                   <div className="space-y-4">
                     <a
                       href={`tel:${theater.phone.replace(/[^0-9]/g, "")}`}
-                      className="flex items-center gap-3 text-gray-700 hover:text-[#d4a843] transition-colors"
+                      className="flex items-center gap-3 text-gray-700 hover:text-[#13264D] transition-colors"
                     >
-                      <Phone className="w-5 h-5 text-[#d4a843]" />
+                      <Phone className="w-5 h-5 text-[#E8C65A]" />
                       <span className="font-medium">{theater.phone}</span>
                     </a>
                     <a
                       href={theater.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 text-gray-700 hover:text-[#d4a843] transition-colors"
+                      className="flex items-center gap-3 text-gray-700 hover:text-[#13264D] transition-colors"
                     >
-                      <Globe className="w-5 h-5 text-[#d4a843]" />
+                      <Globe className="w-5 h-5 text-[#E8C65A]" />
                       <span className="font-medium">Official Website</span>
                     </a>
                     <div className="flex items-start gap-3 text-gray-700">
-                      <MapPin className="w-5 h-5 text-[#d4a843] shrink-0 mt-0.5" />
+                      <MapPin className="w-5 h-5 text-[#E8C65A] shrink-0 mt-0.5" />
                       <span className="text-sm">{theater.address}</span>
                     </div>
                   </div>
 
                   <div className="mt-6">
                     <Link
-                      href="/shows"
-                      className="w-full flex items-center justify-center gap-2 py-3 bg-[#d4a843] text-white rounded-xl font-semibold hover:bg-[#b8922e] transition-colors"
+                      href={theaterShows.length > 0 ? "#shows" : "/shows"}
+                      className="w-full flex items-center justify-center gap-2 py-3 bg-[#C8102E] text-white rounded-xl font-semibold hover:bg-[#a60d26] transition-colors"
                     >
                       Book Show Tickets
                     </Link>
@@ -340,25 +361,6 @@ export default async function TheaterDetailPage({
             </div>
           </div>
 
-          {/* Shows at This Theater */}
-          {theaterShows.length > 0 && (
-            <div className="mt-16 pt-12 border-t border-gray-200">
-              <h2 className="text-2xl font-bold text-[#13264D] font-heading mb-2">
-                Shows at {theater.name}
-              </h2>
-              <p className="text-gray-600 mb-8">
-                {theaterShows.length} show
-                {theaterShows.length !== 1 ? "s" : ""} currently performing at
-                this theater.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {theaterShows.map((show, index) => (
-                  <ShowCard key={show.slug} show={show} index={index} />
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Other Theaters */}
           <div className="mt-16 pt-12 border-t border-gray-200">
             <h2 className="text-2xl font-bold text-[#13264D] font-heading mb-8">
@@ -381,7 +383,7 @@ export default async function TheaterDetailPage({
                     />
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-[#13264D] group-hover:text-[#d4a843] transition-colors">
+                    <h3 className="font-semibold text-[#13264D] group-hover:text-[#C8102E] transition-colors">
                       {t.name}
                     </h3>
                     <p className="mt-1 text-sm text-gray-500">
