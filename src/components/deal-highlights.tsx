@@ -1,4 +1,4 @@
-import { BadgePercent, Baby, Check, Users } from "lucide-react";
+import { BadgePercent, Baby, Check } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 
 interface DealHighlightsProps {
@@ -28,13 +28,6 @@ export function DealHighlights({
     ? Math.round((1 - (childPriceFrom as number) / priceFrom) * 100)
     : 0;
 
-  // Family-of-4 bundle math: what 2 adults + 2 kids actually pay at checkout
-  // vs. what four adult seats would cost. Real arithmetic, not a fake markdown.
-  const showBundle = childPriceFrom !== undefined && childPriceFrom < priceFrom;
-  const bundlePrice = showBundle ? 2 * priceFrom + 2 * (childPriceFrom as number) : 0;
-  const fourAdults = 4 * priceFrom;
-  const bundleSavings = fourAdults - bundlePrice;
-
   return (
     <div className={className}>
       {/* Deal chips — only claims backed by the price data render */}
@@ -63,32 +56,6 @@ export function DealHighlights({
           </span>
         )}
       </div>
-
-      {/* Family bundle */}
-      {showBundle && bundleSavings > 0 && (
-        <div className="mt-3 rounded-lg border border-[#E8C65A]/50 bg-[#E8C65A]/10 p-3">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 shrink-0 text-[#C04E0C]" />
-              <span className="text-sm font-semibold text-[#1A1614]">
-                Family of 4 &middot; 2 adults + 2 kids
-              </span>
-            </div>
-            <div className="text-right">
-              <span className="mr-1.5 text-xs text-gray-400 line-through">
-                ${formatPrice(fourAdults)}
-              </span>
-              <span className="text-base font-bold text-[#C8102E]">
-                ${formatPrice(bundlePrice)}
-              </span>
-            </div>
-          </div>
-          <p className="mt-1 text-xs font-medium text-[#C04E0C]">
-            Save ${formatPrice(bundleSavings)} vs. four adult seats — kids{" "}
-            {kidsFree ? "go free" : "pay the kids' rate"}.
-          </p>
-        </div>
-      )}
 
       {/* Value line — matches the guarantees made at checkout */}
       <ul className="mt-3 space-y-1 text-xs text-gray-600">
