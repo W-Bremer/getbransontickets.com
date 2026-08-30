@@ -39,6 +39,15 @@ export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // The open menu ends in its own call button, and it can stretch to the very
+  // bottom of a phone screen — flag the state globally so the fixed bottom
+  // bars (gold call bar, sticky booking bar) and the chat bubble step aside
+  // instead of stacking a second call button on top of the menu's.
+  useEffect(() => {
+    document.documentElement.classList.toggle("mobile-nav-open", mobileOpen);
+    return () => document.documentElement.classList.remove("mobile-nav-open");
+  }, [mobileOpen]);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {

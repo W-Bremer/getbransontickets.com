@@ -55,7 +55,7 @@ export default function StickyBookingBar({
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-[55] border-t border-gray-200 bg-white px-4 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] transition-transform duration-300 md:hidden ${
+      className={`fixed bottom-0 left-0 right-0 z-[55] border-t border-gray-200 bg-white px-4 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] transition-transform duration-300 md:hidden [.mobile-nav-open_&]:translate-y-full ${
         widgetInView ? "translate-y-full" : "translate-y-0"
       }`}
     >

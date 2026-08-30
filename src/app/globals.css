@@ -174,6 +174,15 @@
   }
 }
 
+/* While the mobile nav menu is open (class set by the Header), the chat
+   bubble would float over the menu's own call button — hide the whole widget.
+   Scoped to below lg to match the menu's own visibility. */
+@media (max-width: 1023px) {
+  .mobile-nav-open chat-widget {
+    display: none;
+  }
+}
+
 /* Hide scrollbars on horizontal chip/tab rows while keeping them scrollable. */
 .scrollbar-none {
   scrollbar-width: none;
