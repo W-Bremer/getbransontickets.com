@@ -2,11 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { shows } from "@/data/shows";
 import { attractions } from "@/data/attractions";
-import { TripPlanner } from "@/components/trip-planner";
 
 export function HeroSection() {
   return (
-    <section className="relative flex min-h-[78vh] flex-col justify-end overflow-hidden lg:min-h-[86vh] lg:justify-center">
+    <section className="relative flex min-h-[52vh] flex-col justify-end overflow-hidden sm:min-h-[62vh] lg:min-h-[78vh] lg:justify-center">
       <div className="absolute inset-0">
         <Image
           src="/Branson-strip.jpg"
@@ -25,38 +24,32 @@ export function HeroSection() {
 
       {/* Mobile stacks upward from the bottom, so the top padding is what keeps
           the headline from sliding under the fixed header. */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pt-28 pb-6 sm:px-6 sm:pt-32 sm:pb-12 lg:px-8 lg:pt-0 lg:pb-0">
-        <div className="grid items-center gap-6 lg:grid-cols-5 lg:gap-12">
-          <div className="lg:col-span-3">
-            <h1 className="marquee text-[2rem] text-white sm:text-5xl lg:text-[3.6rem]">
-              Branson show tickets,
-              <br />
-              <span className="text-[#E8C65A]">all in one place.</span>
-            </h1>
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pt-24 pb-8 sm:px-6 sm:pt-32 sm:pb-12 lg:px-8 lg:pt-0 lg:pb-0">
+        <div className="max-w-2xl">
+          <h1 className="marquee text-[2rem] text-white sm:text-5xl lg:text-[3.6rem]">
+            Branson show tickets,
+            <br />
+            <span className="text-[#E8C65A]">all in one place.</span>
+          </h1>
 
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
-              Compare {shows.length} live shows and {attractions.length} attractions.
-              Check showtimes, pick your dates, and book the whole trip in one checkout.
-            </p>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+            Compare {shows.length} live shows and {attractions.length} attractions.
+            Check showtimes, pick your dates, and book the whole trip in one checkout.
+          </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link
-                href="/shows"
-                className="inline-flex items-center rounded-sm bg-[#C8102E] px-6 py-3.5 font-display text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-[#A50D26]"
-              >
-                Browse all shows
-              </Link>
-              <Link
-                href="/shows/schedule"
-                className="inline-flex items-center rounded-sm border border-white/45 px-6 py-3.5 font-display text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-white/10"
-              >
-                See the schedule
-              </Link>
-            </div>
-          </div>
-
-          <div className="lg:col-span-2">
-            <TripPlanner className="bg-white shadow-[0_24px_60px_-20px_rgba(0,0,0,0.65)]" />
+          <div className="mt-7 flex flex-wrap items-center gap-3">
+            <Link
+              href="/shows"
+              className="inline-flex items-center rounded-sm bg-[#C8102E] px-6 py-3.5 font-display text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-[#A50D26]"
+            >
+              Browse all shows
+            </Link>
+            <Link
+              href="/shows/schedule"
+              className="inline-flex items-center rounded-sm border border-white/45 px-6 py-3.5 font-display text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-white/10"
+            >
+              See the schedule
+            </Link>
           </div>
         </div>
       </div>

@@ -45,9 +45,17 @@ export function CartDrawer() {
         />
       )}
 
-      {/* Drawer */}
+      {/* Drawer. The clipping wrapper keeps the closed (translated-off) panel
+          from widening the page — without it, mobile browsers grow the layout
+          viewport to fit the off-canvas panel and a gap opens on the right. */}
       <div
-        className={`fixed top-0 right-0 z-50 flex h-full w-full max-w-md flex-col bg-white shadow-xl transition-transform duration-300 ${
+        className={`pointer-events-none fixed inset-0 z-50 overflow-hidden transition-[visibility] duration-300 ${
+          isOpen ? "" : "invisible"
+        }`}
+        aria-hidden={!isOpen}
+      >
+      <div
+        className={`pointer-events-auto absolute top-0 right-0 flex h-full w-full max-w-md flex-col bg-white shadow-xl transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -146,6 +154,7 @@ export function CartDrawer() {
             </button>
           </div>
         )}
+      </div>
       </div>
     </>
   );

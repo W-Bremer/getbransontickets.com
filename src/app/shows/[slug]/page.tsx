@@ -10,6 +10,8 @@ import { getSeasonDates } from "@/lib/season";
 import { getUpcomingPerformances } from "@/lib/performances";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PriceDisplay } from "@/components/price-display";
+import { DealHighlights } from "@/components/deal-highlights";
+import { formatPrice } from "@/lib/utils";
 import { ShowCard } from "@/components/show-card";
 import { JsonLd } from "@/components/json-ld";
 import BookingWidget from "@/components/booking-widget";
@@ -156,8 +158,9 @@ export default async function ShowDetailPage({
       {eventSchema && <JsonLd data={eventSchema} />}
       <JsonLd data={productSchema} />
 
-      {/* Hero */}
-      <div className="relative h-[50vh] min-h-[400px]">
+      {/* Hero. Short on phones so the booking panel below it starts above the
+          fold — buying shouldn't require scrolling past a screen of photo. */}
+      <div className="relative h-[32svh] min-h-[240px] sm:h-[42vh] sm:min-h-[340px] lg:h-[50vh] lg:min-h-[400px]">
         <Image
           src={show.imageUrl}
           alt={show.imageAlt}
@@ -167,32 +170,39 @@ export default async function ShowDetailPage({
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#13264D] via-[#0D1B38]/50 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 pb-8">
+        <div className="absolute bottom-0 left-0 right-0 pb-5 sm:pb-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Breadcrumbs
-              items={[
-                { label: "Home", href: "/" },
-                { label: "Shows", href: "/shows" },
-                { label: show.name },
-              ]}
-            />
-            <div className="mt-4 flex flex-wrap items-center gap-3">
+            <div className="hidden sm:block">
+              <Breadcrumbs
+                items={[
+                  { label: "Home", href: "/" },
+                  { label: "Shows", href: "/shows" },
+                  { label: show.name },
+                ]}
+              />
+            </div>
+            <div className="mt-0 sm:mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
               {show.mealIncluded && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#E8C65A] text-white text-sm font-medium">
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#E8C65A] text-white text-xs sm:text-sm font-medium">
                   <UtensilsCrossed className="w-3 h-3" />
                   {show.mealType} Included
                 </span>
               )}
               {show.isNew2026 && (
-                <span className="px-3 py-1 rounded-full bg-white/20 text-white text-sm font-medium backdrop-blur-sm">
+                <span className="px-3 py-1 rounded-full bg-white/20 text-white text-xs sm:text-sm font-medium backdrop-blur-sm">
                   New for 2026!
                 </span>
               )}
+              {show.childPriceFrom === 0 && (
+                <span className="px-3 py-1 rounded-full bg-[#C8102E] text-white text-xs sm:text-sm font-bold uppercase tracking-wide">
+                  Kids&apos; tickets free
+                </span>
+              )}
             </div>
-            <h1 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-heading drop-shadow-md">
+            <h1 className="mt-2 sm:mt-3 text-2xl sm:text-4xl lg:text-5xl font-bold text-white font-heading drop-shadow-md">
               {show.name}
             </h1>
-            <p className="mt-2 text-lg text-white/90 font-medium">{show.tagline}</p>
+            <p className="mt-1.5 sm:mt-2 text-base sm:text-lg text-white/90 font-medium">{show.tagline}</p>
             {/* Ratings removed: show.rating / show.reviewCount were invented
                 values from the original build, not reviews we hold. Restore
                 only with a real, citable source. */}
@@ -202,10 +212,129 @@ export default async function ShowDetailPage({
 
       {/* Main Content */}
       <div className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-          <div className="lg:grid lg:grid-cols-3 lg:gap-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
+          {/* Booking renders first in the DOM so it sits directly under the
+              hero on phones; the lg grid moves it into the right column. */}
+          <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-12">
+            {/* Booking column */}
+            <div className="lg:col-start-3 lg:row-start-1">
+              <div id="booking-widget" className="lg:sticky lg:top-24 space-y-6">
+                {show.isFeaturedPartner ? (
+                  <>
+                    <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
+                      <div className="bg-[#13264D] px-5 py-4">
+                        <div className="flex items-end justify-between gap-3">
+                          <div>
+                            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#E8C65A]">
+                              Tickets from
+                            </span>
+                            <div className="flex items-baseline gap-1.5">
+                              <span className="text-3xl font-bold leading-none text-white">
+                                ${formatPrice(show.priceFrom)}
+                              </span>
+                              <span className="text-sm text-white/70">/ adult</span>
+                            </div>
+                          </div>
+                          <div className="pb-0.5 text-right">
+                            {show.childPriceFrom === 0 ? (
+                              <span className="inline-block rounded-md bg-[#C8102E] px-2.5 py-1.5 text-xs font-bold tracking-wide text-white uppercase">
+                                Kids free
+                              </span>
+                            ) : show.childPriceFrom !== undefined &&
+                              show.childPriceFrom < show.priceFrom ? (
+                              <>
+                                <div className="text-[11px] font-semibold uppercase tracking-wider text-white/60">
+                                  Kids
+                                </div>
+                                <div className="text-xl font-bold leading-tight text-[#E8C65A]">
+                                  ${formatPrice(show.childPriceFrom)}
+                                </div>
+                              </>
+                            ) : null}
+                          </div>
+                        </div>
+                        <p className="mt-1.5 text-[11px] text-white/60">
+                          Taxes included &middot; no checkout fees
+                        </p>
+                      </div>
+                      <DealHighlights
+                        priceFrom={show.priceFrom}
+                        childPriceFrom={show.childPriceFrom}
+                        studentPriceFrom={show.studentPriceFrom}
+                        kidsFreeUnderAge={show.kidsFreeUnderAge}
+                        className="px-4 pt-4"
+                      />
+                      <div className="p-1 pt-3">
+                        <BookingWidget
+                          showId={show.slug}
+                          showName={show.name}
+                          pricePerAdult={show.priceFrom}
+                          pricePerChild={show.childPriceFrom ?? Math.round(show.priceFrom * 0.6)}
+                          imageUrl={show.imageUrl}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Call to book */}
+                    <Link
+                      href={`tel:${siteConfig.phoneRaw}`}
+                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#13264D] text-[#13264D] rounded-xl font-semibold hover:bg-[#13264D] hover:text-white transition-all"
+                    >
+                      <Phone className="w-4 h-4" />
+                      Call {siteConfig.phone}
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
+                      <div className="bg-[#13264D] px-6 py-4">
+                        <PriceDisplay priceFrom={show.priceFrom} priceTo={show.priceTo} variant="light" />
+                      </div>
+                      <div className="p-6 space-y-4">
+                        <p className="text-sm text-gray-600 text-center">
+                          Tickets for this show are available directly from the venue.
+                        </p>
+                        {show.externalUrl && (
+                          <a
+                            href={show.externalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full flex items-center justify-center gap-2 py-3 bg-[#E8C65A] text-white rounded-xl font-semibold hover:bg-[#C04E0C] transition-colors"
+                          >
+                            Visit Official Website
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        )}
+                        <Link
+                          href={`tel:${siteConfig.phoneRaw}`}
+                          className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#13264D] text-[#13264D] rounded-xl font-semibold hover:bg-[#13264D] hover:text-white transition-all"
+                        >
+                          <Phone className="w-4 h-4" />
+                          Questions? Call {siteConfig.phone}
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {/* Sidebar quick info */}
+                <div className="hidden lg:block rounded-xl border border-gray-200 p-5 bg-white space-y-3 text-sm">
+                  <div className="flex justify-between text-gray-600">
+                    <span>Duration</span>
+                    <span className="font-medium text-[#1A1614]">{show.duration}</span>
+                  </div>
+                  {show.mealIncluded && (
+                    <div className="flex justify-between text-gray-600">
+                      <span>Meal</span>
+                      <span className="font-medium text-[#C8102E]">{show.mealType} Included</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
             {/* Left Content */}
-            <div className="lg:col-span-2">
+            <div className="mt-10 lg:mt-0 lg:col-span-2 lg:col-start-1 lg:row-start-1">
               {/* Quick Facts */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-[#F6F4EF]">
@@ -262,87 +391,10 @@ export default async function ShowDetailPage({
                   faqs: show.faqs,
                   category: show.category,
                   galleryImages: show.galleryImages,
+                  videoUrl: show.videoUrl,
                 }}
                 theaterSlug={showTheater?.slug}
               />
-            </div>
-
-            {/* Sidebar */}
-            <div className="mt-10 lg:mt-0">
-              <div id="booking-widget" className="sticky top-24 space-y-6">
-                {show.isFeaturedPartner ? (
-                  <>
-                    <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
-                      <div className="bg-[#13264D] px-6 py-4">
-                        <PriceDisplay priceFrom={show.priceFrom} priceTo={show.priceTo} variant="light" />
-                      </div>
-                      <div className="p-1">
-                        <BookingWidget
-                          showId={show.slug}
-                          showName={show.name}
-                          pricePerAdult={show.priceFrom}
-                          pricePerChild={show.childPriceFrom ?? Math.round(show.priceFrom * 0.6)}
-                          imageUrl={show.imageUrl}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Call to book */}
-                    <Link
-                      href={`tel:${siteConfig.phoneRaw}`}
-                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#13264D] text-[#13264D] rounded-xl font-semibold hover:bg-[#13264D] hover:text-white transition-all"
-                    >
-                      <Phone className="w-4 h-4" />
-                      Call {siteConfig.phone}
-                    </Link>
-                  </>
-                ) : (
-                  <>
-                    <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
-                      <div className="bg-[#13264D] px-6 py-4">
-                        <PriceDisplay priceFrom={show.priceFrom} priceTo={show.priceTo} variant="light" />
-                      </div>
-                      <div className="p-6 space-y-4">
-                        <p className="text-sm text-gray-600 text-center">
-                          Tickets for this show are available directly from the venue.
-                        </p>
-                        {show.externalUrl && (
-                          <a
-                            href={show.externalUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full flex items-center justify-center gap-2 py-3 bg-[#E8C65A] text-white rounded-xl font-semibold hover:bg-[#C04E0C] transition-colors"
-                          >
-                            Visit Official Website
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        )}
-                        <Link
-                          href={`tel:${siteConfig.phoneRaw}`}
-                          className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#13264D] text-[#13264D] rounded-xl font-semibold hover:bg-[#13264D] hover:text-white transition-all"
-                        >
-                          <Phone className="w-4 h-4" />
-                          Questions? Call {siteConfig.phone}
-                        </Link>
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {/* Sidebar quick info */}
-                <div className="rounded-xl border border-gray-200 p-5 bg-white space-y-3 text-sm">
-                  <div className="flex justify-between text-gray-600">
-                    <span>Duration</span>
-                    <span className="font-medium text-[#1A1614]">{show.duration}</span>
-                  </div>
-                  {show.mealIncluded && (
-                    <div className="flex justify-between text-gray-600">
-                      <span>Meal</span>
-                      <span className="font-medium text-[#C8102E]">{show.mealType} Included</span>
-                    </div>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
 
@@ -363,7 +415,13 @@ export default async function ShowDetailPage({
       </div>
 
       {/* Sticky mobile booking bar */}
-      <StickyBookingBar priceFrom={show.priceFrom} showName={show.name} isFeaturedPartner={show.isFeaturedPartner} externalUrl={show.externalUrl} />
+      <StickyBookingBar
+        priceFrom={show.priceFrom}
+        childPriceFrom={show.childPriceFrom}
+        showName={show.name}
+        isFeaturedPartner={show.isFeaturedPartner}
+        externalUrl={show.externalUrl}
+      />
     </>
   );
 }

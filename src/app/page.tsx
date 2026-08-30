@@ -3,12 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { getPartnerShows } from "@/data/shows";
 import { attractions } from "@/data/attractions";
+import { categories } from "@/lib/config";
 // import { getPublishedPosts } from "@/data/blog"; // archived
-import { ShowCard } from "@/components/show-card";
 // import { CategoryCard } from "@/components/category-card";
 import { TrustBar } from "@/components/trust-bar";
 // import { DealBanner } from "@/components/deal-banner";
 import { HeroSection } from "@/components/hero-section";
+import { HomeShowsBrowser, type BrowsableShow } from "@/components/home-shows-browser";
 import { NewsletterForm } from "@/components/passport/newsletter-form";
 import { Tag, Percent, Compass, QrCode, BadgePercent } from "lucide-react";
 
@@ -16,9 +17,48 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+/** Chip labels stay short enough for one scrollable row on a phone. */
+const chipLabels: Record<string, string> = {
+  "variety-music": "Variety & Music",
+  tribute: "Tributes",
+  "country-gospel": "Country & Gospel",
+  comedy: "Comedy",
+  family: "Family",
+  magic: "Magic",
+  acrobats: "Acrobats",
+  "dinner-shows": "Dinner Shows",
+  theatrical: "Theatrical",
+};
+
 export default function HomePage() {
   const partnerShows = getPartnerShows();
   const topAttractions = attractions.slice(0, 4);
+
+  // Only the fields the browser renders — not the full 130KB catalog entries.
+  const browsableShows: BrowsableShow[] = partnerShows.map((s) => ({
+    slug: s.slug,
+    name: s.name,
+    imageUrl: s.imageUrl,
+    imageAlt: s.imageAlt,
+    priceFrom: s.priceFrom,
+    childPriceFrom: s.childPriceFrom,
+    theater: s.theater,
+    duration: s.duration,
+    timeOfDay: s.timeOfDay,
+    shortDescription: s.shortDescription,
+    isNew2026: s.isNew2026,
+    mealIncluded: s.mealIncluded,
+    isLimitedEngagement: s.isLimitedEngagement,
+    isFeatured: s.isFeatured,
+    isFeaturedPartner: s.isFeaturedPartner,
+    category: s.category,
+  }));
+
+  const filterCategories: [string, string][] = categories
+    .filter(
+      (c) => c.slug !== "all" && partnerShows.some((s) => s.category.includes(c.slug))
+    )
+    .map((c) => [c.slug, chipLabels[c.slug] ?? c.name]);
 
   return (
     <>
@@ -28,7 +68,7 @@ export default function HomePage() {
       {/* Popular Shows */}
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-10">
+          <div className="flex items-end justify-between mb-6 sm:mb-8">
             <div>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1614]">
                 Popular Shows in Branson
@@ -44,11 +84,7 @@ export default function HomePage() {
               View All Shows →
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {partnerShows.map((show, index) => (
-              <ShowCard key={show.slug} show={show} index={index} />
-            ))}
-          </div>
+          <HomeShowsBrowser shows={browsableShows} categories={filterCategories} />
           <div className="mt-8 text-center sm:hidden">
             <Link
               href="/shows"

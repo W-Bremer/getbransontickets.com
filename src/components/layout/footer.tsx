@@ -8,7 +8,6 @@ import {
   Instagram,
   Twitter,
   Youtube,
-  ArrowRight,
 } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 import { getPartnerShows } from "@/data/shows";
@@ -50,46 +49,20 @@ export function Footer() {
     <footer className="bg-[#0D1B38] text-white">
       {/* Main footer */}
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-6">
-        {/* Top section - brand + newsletter */}
-        <div className="mb-12 flex flex-col gap-8 border-b border-white/10 pb-12 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <Link href="/" className="mb-4 flex items-center gap-2.5">
-              <Image
-                src="/logo.png"
-                alt="Get Branson Tickets"
-                width={200}
-                height={56}
-                className="h-12 w-auto"
-              />
-            </Link>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-white/60">
-              {siteConfig.description}
-            </p>
-          </div>
-
-          {/* Newsletter */}
-          <div className="max-w-sm shrink-0">
-            <h3 className="mb-2 text-lg font-semibold">
-              Stay in the Spotlight
-            </h3>
-            <p className="mb-3 text-sm text-white/50">
-              Get exclusive deals and show updates delivered to your inbox.
-            </p>
-            <form className="flex gap-2" action="#">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-[#E8C65A]/50 focus:outline-none focus:ring-1 focus:ring-[#E8C65A]/50"
-              />
-              <button
-                type="submit"
-                className="flex items-center gap-1 rounded-lg bg-[#C8102E] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#A50D26]"
-              >
-                Subscribe
-                <ArrowRight className="h-3.5 w-3.5" />
-              </button>
-            </form>
-          </div>
+        {/* Top section - brand */}
+        <div className="mb-12 border-b border-white/10 pb-12">
+          <Link href="/" className="mb-4 flex items-center gap-2.5">
+            <Image
+              src="/logo.png"
+              alt="Get Branson Tickets"
+              width={200}
+              height={56}
+              className="h-12 w-auto"
+            />
+          </Link>
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/60">
+            {siteConfig.description}
+          </p>
         </div>
 
         {/* Link columns */}
@@ -164,12 +137,15 @@ export function Footer() {
                 <Phone className="h-4 w-4" />
                 {siteConfig.phone}
               </a>
+              {/* The address is one unbreakable token; without a break rule it
+                  paints past the viewport on phones and the browser widens the
+                  layout viewport — the right-edge gap bug. */}
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-[#E8C65A]"
+                className="flex items-start gap-2 text-sm text-white/60 transition-colors hover:text-[#E8C65A]"
               >
-                <Mail className="h-4 w-4" />
-                {siteConfig.email}
+                <Mail className="h-4 w-4 shrink-0 mt-0.5" />
+                <span className="min-w-0 [overflow-wrap:anywhere]">{siteConfig.email}</span>
               </a>
               <div className="flex items-center gap-2 text-sm text-white/60">
                 <MapPin className="h-4 w-4 shrink-0" />

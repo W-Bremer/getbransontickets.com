@@ -28,6 +28,7 @@ interface ShowData {
   faqs: { question: string; answer: string }[];
   category: string[];
   galleryImages?: string[];
+  videoUrl?: string;
 }
 
 interface ShowDetailClientProps {
@@ -69,6 +70,25 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                 <p>{show.description}</p>
               </div>
             </div>
+
+            {/* Official promo video */}
+            {show.videoUrl && (
+              <div>
+                <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
+                  See the Show
+                </h2>
+                <div className="relative aspect-video overflow-hidden rounded-xl border border-gray-100 bg-black shadow-md">
+                  <iframe
+                    src={show.videoUrl}
+                    title={`${show.name} official video`}
+                    className="absolute inset-0 h-full w-full"
+                    loading="lazy"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Photos */}
             {show.galleryImages && show.galleryImages.length > 0 && (
@@ -247,25 +267,18 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
               </div>
             </div>
 
-            {/* Map placeholder */}
+            {/* Map preview — the keyless Google Maps embed endpoint */}
             <div className="rounded-xl border border-gray-200 overflow-hidden">
-              <div className="bg-gray-100 h-64 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="w-10 h-10 text-[#13264D] mx-auto mb-2" />
-                  <p className="text-sm text-gray-500">{show.theater}</p>
-                  <p className="text-xs text-gray-400 mt-1">{show.theaterAddress}</p>
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      show.theaterAddress
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-3 text-sm font-medium text-[#13264D] hover:text-[#0D1B38]"
-                  >
-                    Open in Google Maps
-                  </a>
-                </div>
-              </div>
+              <iframe
+                src={`https://www.google.com/maps?q=${encodeURIComponent(
+                  `${show.theater}, ${show.theaterAddress}`
+                )}&output=embed`}
+                title={`Map to ${show.theater}`}
+                className="h-72 w-full border-0 sm:h-80"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
             </div>
 
             {/* Getting There */}

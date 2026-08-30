@@ -6,9 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Menu, Search, Phone, ChevronDown, X,
-  Music, Laugh, Wand2, UtensilsCrossed, Guitar,
-  Star, Users, Dumbbell, Drama, Ticket,
+  Menu, Search, Phone, ChevronDown, X, Ticket,
 } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 import { CartIcon } from "@/components/cart-icon";
@@ -18,18 +16,6 @@ export interface HeaderShowLink {
   name: string;
   slug: string;
 }
-
-const categoryIcons: Record<string, React.ReactNode> = {
-  "variety-music": <Music className="h-4 w-4" />,
-  comedy: <Laugh className="h-4 w-4" />,
-  magic: <Wand2 className="h-4 w-4" />,
-  "dinner-shows": <UtensilsCrossed className="h-4 w-4" />,
-  "country-gospel": <Guitar className="h-4 w-4" />,
-  tribute: <Star className="h-4 w-4" />,
-  family: <Users className="h-4 w-4" />,
-  acrobats: <Dumbbell className="h-4 w-4" />,
-  theatrical: <Drama className="h-4 w-4" />,
-};
 
 const navLinks = [
   { label: "Attractions", href: "/attractions" },
@@ -200,7 +186,9 @@ export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {
               transition={{ duration: 0.3 }}
               className="overflow-hidden border-t border-white/10 lg:hidden"
             >
-              <div className="mx-auto max-w-7xl px-4 py-4 space-y-1">
+              {/* The menu is taller than the phone screen once every partner
+                  show is listed, so it scrolls inside the fixed header. */}
+              <div className="mx-auto max-w-7xl space-y-1 overflow-y-auto overscroll-contain px-4 py-4 max-h-[calc(100dvh-5.5rem)] pb-[max(1rem,env(safe-area-inset-bottom))]">
                 <Link
                   href="/shows"
                   onClick={() => setMobileOpen(false)}

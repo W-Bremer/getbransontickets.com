@@ -7,8 +7,28 @@ import { Clock, MapPin } from "lucide-react";
 import { cn, formatPrice } from "@/lib/utils";
 import type { Show } from "@/data/shows";
 
+/** The slice of Show the card renders — lets list pages ship trimmed data. */
+export type ShowCardData = Pick<
+  Show,
+  | "slug"
+  | "name"
+  | "imageUrl"
+  | "imageAlt"
+  | "priceFrom"
+  | "childPriceFrom"
+  | "theater"
+  | "duration"
+  | "timeOfDay"
+  | "shortDescription"
+  | "isNew2026"
+  | "mealIncluded"
+  | "isLimitedEngagement"
+  | "isFeatured"
+  | "isFeaturedPartner"
+>;
+
 interface ShowCardProps {
-  show: Show;
+  show: ShowCardData;
   index?: number;
   className?: string;
 }
@@ -20,6 +40,7 @@ const tagColors: Record<string, string> = {
   "Limited Engagement": "bg-[#C04E0C] text-white",
   "Family Friendly": "bg-sky-500/90 text-white",
   "Most Popular": "bg-[#E8C65A] text-white",
+  "Kids Free": "bg-[#C8102E] text-white",
 };
 
 function getTagStyle(tag: string) {
@@ -31,6 +52,8 @@ export function ShowCard({ show, index = 0, className }: ShowCardProps) {
   if (show.isNew2026) displayTags.push("New");
   if (show.mealIncluded) displayTags.push("Dinner");
   if (show.isLimitedEngagement) displayTags.push("Limited Engagement");
+  // Real pricing fact, not a promo: our checkout charges $0 per child.
+  if (show.isFeaturedPartner && show.childPriceFrom === 0) displayTags.push("Kids Free");
   // No BOGO badge until specialOffers are verified against each theater's
   // current promotions: the entries date from the original build.
   if (show.isFeatured && !show.isNew2026) displayTags.push("Most Popular");

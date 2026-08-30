@@ -1,9 +1,21 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { Phone } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 
 export function PhoneBar() {
+  const pathname = usePathname();
+
+  // Show detail pages carry their own sticky booking bar (with a call
+  // button), so the global call bar would just stack on top of it.
+  const parts = pathname.split("/").filter(Boolean);
+  const isShowDetail =
+    parts.length === 2 &&
+    parts[0] === "shows" &&
+    !["schedule", "deals", "category"].includes(parts[1]);
+  if (isShowDetail) return null;
+
   return (
     <div className="fixed right-0 bottom-0 left-0 z-50 md:hidden">
       <a

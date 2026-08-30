@@ -279,6 +279,18 @@ export default async function TheaterDetailPage({
                     <ChevronRight className="w-4 h-4" />
                   </a>
                 </div>
+                <div className="mt-4 rounded-xl border border-gray-200 overflow-hidden">
+                  <iframe
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(
+                      `${theater.name}, ${theater.address}`
+                    )}&output=embed`}
+                    title={`Map to ${theater.name}`}
+                    className="h-72 w-full border-0 sm:h-80"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                </div>
               </div>
             </div>
 

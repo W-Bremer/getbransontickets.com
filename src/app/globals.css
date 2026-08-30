@@ -146,6 +146,9 @@
   }
   html {
     @apply font-sans;
+    /* Safety net for the mobile right-edge gap: any stray element wider than
+       the viewport gets clipped instead of growing the layout viewport. */
+    overflow-x: clip;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display), "Helvetica Neue", sans-serif;
@@ -169,6 +172,15 @@
     appearance: none;
     min-height: 0;
   }
+}
+
+/* Hide scrollbars on horizontal chip/tab rows while keeping them scrollable. */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
 /* Partner counter cards are printed on real paper: keep the ink. */

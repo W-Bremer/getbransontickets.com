@@ -392,14 +392,29 @@ export default function BookingWidget({
         </div>
         {children > 0 && (
           <div className="flex justify-between text-gray-600">
-            <span>{children} Child{children !== 1 ? "ren" : ""} x ${formatPrice(pricePerChild)}</span>
-            <span>${formatPrice(children * pricePerChild)}</span>
+            {pricePerChild === 0 ? (
+              <>
+                <span>{children} Child{children !== 1 ? "ren" : ""}</span>
+                <span className="font-bold text-emerald-700 uppercase">Free</span>
+              </>
+            ) : (
+              <>
+                <span>{children} Child{children !== 1 ? "ren" : ""} x ${formatPrice(pricePerChild)}</span>
+                <span>${formatPrice(children * pricePerChild)}</span>
+              </>
+            )}
           </div>
         )}
         <div className="mt-2 flex justify-between border-t border-gray-200 pt-2 font-bold text-[#1A1614]">
           <span>Total</span>
           <span>${formatPrice(total)}</span>
         </div>
+        {children > 0 && pricePerChild < pricePerAdult && (
+          <p className="mt-1.5 text-right text-xs font-semibold text-emerald-700">
+            You save ${formatPrice(children * (pricePerAdult - pricePerChild))} vs. adult
+            pricing for the kids
+          </p>
+        )}
       </div>
 
       {/* Availability + reserve */}
