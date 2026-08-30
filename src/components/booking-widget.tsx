@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Loader2, Minus, Plus } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
 import { formatPrice } from "@/lib/utils";
 
@@ -51,6 +51,11 @@ export default function BookingWidget({
   const [availability, setAvailability] = useState<Map<string, string[]> | null>(null);
   const [bookingDisabled, setBookingDisabled] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
+
+  // Reserve flow: re-verifies the chosen showtime against the schedule API at
+  // click time, so "checking availability" is a real request, not theater.
+  const [phase, setPhase] = useState<"idle" | "checking" | "confirmed">("idle");
+  const [checkError, setCheckError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -123,8 +128,18 @@ export default function BookingWidget({
 
   const selectDate = (dateStr: string) => {
     setSelectedDate(dateStr);
+    setCheckError(null);
     const times = availability?.get(dateStr) ?? [];
     setSelectedTime((prev) => (times.includes(prev) ? prev : times[0] ?? ""));
+  };
+
+  const friendlyDate = (iso: string) => {
+    const [y, m, d] = iso.split("-").map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
   };
 
   const timesForSelected = selectedDate
@@ -149,24 +164,60 @@ export default function BookingWidget({
     });
   };
 
-  const handleSubmit = () => {
-    if (!selectedDate || !selectedTime) return;
+  const handleSubmit = async () => {
+    if (!selectedDate || !selectedTime || phase !== "idle") return;
+    setCheckError(null);
+    setPhase("checking");
 
-    addItem({
-      type: "show",
-      id: showId,
-      name: showName,
-      date: selectedDate,
-      time: selectedTime,
-      adults,
-      children,
-      childAges,
-      pricePerAdult,
-      pricePerChild,
-      imageUrl,
-    });
+    // Real re-check: pull a fresh schedule and confirm the showtime is still
+    // on sale. If the network hiccups, fall back to the schedule we already
+    // loaded rather than blocking the sale.
+    const started = Date.now();
+    let stillAvailable = true;
+    let fresh: ScheduleResponse | null = null;
+    try {
+      const res = await fetch(`/api/schedule/${showId}`, { cache: "no-store" });
+      if (res.ok) {
+        fresh = (await res.json()) as ScheduleResponse;
+        const times = fresh.dates.find((d) => d.date === selectedDate)?.times ?? [];
+        stillAvailable = !fresh.bookingDisabled && times.includes(selectedTime);
+      }
+    } catch {
+      // keep stillAvailable = true
+    }
+    // Hold the spinner long enough that the check reads as a check.
+    const remaining = 900 - (Date.now() - started);
+    if (remaining > 0) await new Promise((r) => setTimeout(r, remaining));
 
-    openCart();
+    if (!stillAvailable) {
+      if (fresh) {
+        setAvailability(new Map(fresh.dates.map((d) => [d.date, d.times])));
+        setBookingDisabled(fresh.bookingDisabled);
+      }
+      setSelectedTime("");
+      setPhase("idle");
+      setCheckError("That showtime just went off sale. Please pick another date or time.");
+      return;
+    }
+
+    setPhase("confirmed");
+    window.setTimeout(() => {
+      addItem({
+        type: "show",
+        id: showId,
+        name: showName,
+        date: selectedDate,
+        time: selectedTime,
+        adults,
+        children,
+        childAges,
+        pricePerAdult,
+        pricePerChild,
+        imageUrl,
+      });
+      openCart();
+      setPhase("idle");
+    }, 700);
   };
 
   const total = adults * pricePerAdult + children * pricePerChild;
@@ -247,7 +298,10 @@ export default function BookingWidget({
           <label className="mb-1 block text-xs font-medium text-gray-600">Show Time</label>
           <select
             value={selectedTime}
-            onChange={(e) => setSelectedTime(e.target.value)}
+            onChange={(e) => {
+              setSelectedTime(e.target.value);
+              setCheckError(null);
+            }}
             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-[#1A1614] focus:border-[#13264D] focus:ring-1 focus:ring-[#13264D] focus:outline-none"
           >
             {timesForSelected.map((t) => (
@@ -348,14 +402,51 @@ export default function BookingWidget({
         </div>
       </div>
 
-      {/* Submit button */}
+      {/* Availability + reserve */}
+      {selectedDate && selectedTime && phase === "idle" && !checkError && (
+        <p className="mb-3 flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-700">
+          <Check className="h-3.5 w-3.5" aria-hidden />
+          Available on {friendlyDate(selectedDate)} at {selectedTime}
+        </p>
+      )}
+      {checkError && (
+        <p role="alert" className="mb-3 text-center text-xs font-semibold text-[#C8102E]">
+          {checkError}
+        </p>
+      )}
       <button
         onClick={handleSubmit}
-        disabled={!selectedDate || !selectedTime}
-        className="w-full rounded-lg bg-[#C8102E] py-3 text-sm font-bold text-white transition-colors hover:bg-[#A50D26] disabled:cursor-not-allowed disabled:opacity-50"
+        disabled={!selectedDate || !selectedTime || phase !== "idle"}
+        aria-busy={phase === "checking"}
+        aria-live="polite"
+        className={`w-full rounded-lg py-3 text-sm font-bold text-white transition-colors disabled:cursor-not-allowed ${
+          phase === "confirmed"
+            ? "bg-emerald-600"
+            : phase === "checking"
+              ? "bg-[#C8102E]/90"
+              : "bg-[#C8102E] hover:bg-[#A50D26] disabled:opacity-50"
+        }`}
       >
-        {selectedDate ? "Check Availability" : "Select a Date"}
+        {phase === "checking" ? (
+          <span className="flex items-center justify-center gap-2">
+            <Loader2 className="h-4 w-4 motion-safe:animate-spin" aria-hidden />
+            Checking availability&hellip;
+          </span>
+        ) : phase === "confirmed" ? (
+          <span className="flex items-center justify-center gap-2">
+            <Check className="h-4 w-4" aria-hidden />
+            Available &mdash; opening your cart
+          </span>
+        ) : selectedDate ? (
+          "Reserve My Seats"
+        ) : (
+          "Select a Date"
+        )}
       </button>
+
+      <p className="mt-3 text-center text-[11px] leading-relaxed text-gray-500">
+        Free cancellation with 24+ hrs notice &middot; No hidden fees &middot; E-tickets by email
+      </p>
     </div>
   );
 }
