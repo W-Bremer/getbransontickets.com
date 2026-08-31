@@ -14,6 +14,9 @@ interface BookingWidgetProps {
   imageUrl?: string;
   /** Kids at or under this age enter free and need no ticket, so the child selector starts above it. */
   kidsFreeUnderAge?: number;
+  /** Preselect a performance (booking popup opened from a specific date/time button). */
+  initialDate?: string;
+  initialTime?: string;
 }
 
 interface ScheduleResponse {
@@ -38,14 +41,21 @@ export default function BookingWidget({
   pricePerChild,
   imageUrl,
   kidsFreeUnderAge,
+  initialDate,
+  initialTime,
 }: BookingWidgetProps) {
   const router = useRouter();
   const today = new Date();
-  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
-  const [currentYear, setCurrentYear] = useState(today.getFullYear());
+  const initialParts = initialDate?.split("-").map(Number);
+  const [currentMonth, setCurrentMonth] = useState(
+    initialParts ? initialParts[1] - 1 : today.getMonth()
+  );
+  const [currentYear, setCurrentYear] = useState(
+    initialParts ? initialParts[0] : today.getFullYear()
+  );
   /** ISO "YYYY-MM-DD"; string on purpose so month browsing cannot desync it. */
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedDate, setSelectedDate] = useState<string | null>(initialDate ?? null);
+  const [selectedTime, setSelectedTime] = useState(initialTime ?? "");
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [childAges, setChildAges] = useState<number[]>([]);
@@ -70,8 +80,22 @@ export default function BookingWidget({
         if (!res.ok) throw new Error(`schedule ${res.status}`);
         const data = (await res.json()) as ScheduleResponse;
         if (cancelled) return;
-        setAvailability(new Map(data.dates.map((d) => [d.date, d.times])));
+        const map = new Map(data.dates.map((d) => [d.date, d.times]));
+        setAvailability(map);
         setBookingDisabled(data.bookingDisabled);
+        // A preselected performance (popup opened from a date button) gets
+        // validated against the live schedule; anything stale is cleared so
+        // the customer picks again rather than reserving a dead showtime.
+        if (initialDate) {
+          const times = map.get(initialDate);
+          if (!times || times.length === 0) {
+            setSelectedDate(null);
+            setSelectedTime("");
+          } else if (!initialTime || !times.includes(initialTime)) {
+            setSelectedTime(times[0]);
+          }
+          return;
+        }
         // Open on the first month that can actually be booked. At a month
         // boundary (or during a seasonal pause) the current month renders as
         // a wall of grayed-out days and every visitor has to know to click
@@ -93,7 +117,7 @@ export default function BookingWidget({
     return () => {
       cancelled = true;
     };
-  }, [showId]);
+  }, [showId, initialDate, initialTime]);
 
   // Checkout is the very next page for most buyers; have it warm.
   useEffect(() => {

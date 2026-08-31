@@ -15,6 +15,7 @@ import { formatPrice } from "@/lib/utils";
 import { ShowCard } from "@/components/show-card";
 import { JsonLd } from "@/components/json-ld";
 import BookingWidget from "@/components/booking-widget";
+import { BookingModal } from "@/components/booking-modal";
 import StickyBookingBar from "@/components/sticky-booking-bar";
 import { GoogleReviews } from "@/components/google-reviews";
 import { getPlaceSnapshot } from "@/lib/google-places";
@@ -428,6 +429,7 @@ export default async function ShowDetailPage({
                   seasonEnd: show.seasonEnd,
                   priceFrom: show.priceFrom,
                   priceTo: show.priceTo,
+                  childPriceFrom: show.childPriceFrom,
                   mealIncluded: show.mealIncluded,
                   mealType: show.mealType,
                   faqs: show.faqs,
@@ -457,6 +459,18 @@ export default async function ShowDetailPage({
           )}
         </div>
       </div>
+
+      {/* Booking popup — every "Book Now" button on the page opens it */}
+      {show.isFeaturedPartner && (
+        <BookingModal
+          showId={show.slug}
+          showName={show.name}
+          pricePerAdult={show.priceFrom}
+          pricePerChild={show.childPriceFrom ?? Math.round(show.priceFrom * 0.6)}
+          imageUrl={show.imageUrl}
+          kidsFreeUnderAge={show.kidsFreeUnderAge}
+        />
+      )}
 
       {/* Sticky mobile booking bar */}
       <StickyBookingBar

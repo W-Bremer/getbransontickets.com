@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { openBooking } from "@/components/book-now-button";
 
 interface AvailabilityGridProps {
   /** Slug for the live schedule lookup; only sellable shows have one served. */
@@ -76,9 +77,10 @@ export default function AvailabilityGrid({
     return patternDark(date) ? null : showTimes;
   };
 
-  const scrollToBooking = () => {
-    document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" });
-  };
+  // Opens the booking popup with that day preselected. The old behavior
+  // scrolled to the calendar and forgot which day was clicked, so the
+  // customer had to find it all over again.
+  const bookDay = (date: Date) => openBooking({ date: isoOf(date) });
 
   const formatHeader = (date: Date) => {
     const dayShort = date.toLocaleDateString("en-US", { weekday: "short" });
@@ -139,7 +141,7 @@ export default function AvailabilityGrid({
                         ))}
                         {isSellable && (
                           <button
-                            onClick={scrollToBooking}
+                            onClick={() => bookDay(date)}
                             className="inline-block rounded bg-[#C8102E] px-3 py-1 text-xs font-bold text-white transition-colors hover:bg-[#A50D26]"
                           >
                             BOOK

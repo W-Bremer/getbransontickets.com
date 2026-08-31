@@ -5,8 +5,10 @@ import Link from "next/link";
 import { MapPin, ChevronRight, Clock, Users, CalendarDays, UtensilsCrossed } from "lucide-react";
 import { TabNavigation } from "@/components/tab-navigation";
 import AvailabilityGrid from "@/components/availability-grid";
+import { BookingCtaBanner } from "@/components/booking-cta-banner";
 import { FAQSection } from "@/components/faq-section";
 import { PhotoGallery } from "@/components/photo-gallery";
+import UpcomingTimesList from "@/components/upcoming-times-list";
 
 interface ShowData {
   name: string;
@@ -23,6 +25,7 @@ interface ShowData {
   seasonEnd: string;
   priceFrom: number;
   priceTo: number;
+  childPriceFrom?: number;
   mealIncluded: boolean;
   mealType: string | null;
   faqs: { question: string; answer: string }[];
@@ -72,6 +75,16 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
                 <p>{show.description}</p>
               </div>
             </div>
+
+            {/* First in-content booking prompt: the reader just finished the
+                pitch — don't make them hunt for where to act on it. */}
+            {show.isFeaturedPartner && (
+              <BookingCtaBanner
+                heading="Ready to see it live?"
+                priceFrom={show.priceFrom}
+                childPriceFrom={show.childPriceFrom}
+              />
+            )}
 
             {/* Official promo video */}
             {show.videoUrl && (
@@ -155,30 +168,45 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
               )}
             </div>
 
-            {/* Show Times */}
-            <div>
-              <h3 className="text-lg font-bold text-[#1A1614] mb-4">Show Times</h3>
-              <div className="p-6 rounded-xl bg-[#F6F4EF] border border-gray-100">
-                <div className="flex flex-wrap gap-3">
-                  {show.showTimes.map((time) => (
-                    <span
-                      key={time}
-                      className="px-4 py-2 rounded-lg bg-[#13264D] text-white font-medium"
-                    >
-                      {time}
-                    </span>
-                  ))}
-                </div>
-                {show.darkDays.length > 0 && (
-                  <p className="mt-3 text-sm text-gray-500">
-                    Dark days: {show.darkDays.join(", ")}
-                  </p>
-                )}
+            {/* Show Times. Sellable shows get the bookable date list — the
+                old static time chips looked like buttons and did nothing,
+                which is exactly what trips up older visitors. */}
+            {show.isFeaturedPartner ? (
+              <div>
+                <h3 className="text-lg font-bold text-[#1A1614] mb-1">Show Times</h3>
+                <p className="mb-4 text-sm text-gray-600">
+                  Pick a date &mdash; every button below is a real, on-sale showtime.
+                </p>
+                <UpcomingTimesList slug={show.slug} />
                 <p className="mt-2 text-sm text-gray-500">
                   Season: {show.seasonStart} through {show.seasonEnd}
                 </p>
               </div>
-            </div>
+            ) : (
+              <div>
+                <h3 className="text-lg font-bold text-[#1A1614] mb-4">Show Times</h3>
+                <div className="p-6 rounded-xl bg-[#F6F4EF] border border-gray-100">
+                  <div className="flex flex-wrap gap-3">
+                    {show.showTimes.map((time) => (
+                      <span
+                        key={time}
+                        className="px-4 py-2 rounded-lg bg-[#13264D] text-white font-medium"
+                      >
+                        {time}
+                      </span>
+                    ))}
+                  </div>
+                  {show.darkDays.length > 0 && (
+                    <p className="mt-3 text-sm text-gray-500">
+                      Dark days: {show.darkDays.join(", ")}
+                    </p>
+                  )}
+                  <p className="mt-2 text-sm text-gray-500">
+                    Season: {show.seasonStart} through {show.seasonEnd}
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* No Special Offers section: theater promos route buyers to the
                 box office instead of our checkout (removed 2026-08-29). */}
@@ -188,6 +216,16 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
               <FAQSection
                 faqs={show.faqs}
                 title={`${show.name} Frequently Asked Questions`}
+              />
+            )}
+
+            {/* Closing booking prompt for the thorough readers who made it
+                all the way down. */}
+            {show.isFeaturedPartner && (
+              <BookingCtaBanner
+                heading="Ready when you are."
+                priceFrom={show.priceFrom}
+                childPriceFrom={show.childPriceFrom}
               />
             )}
           </div>
