@@ -26,6 +26,10 @@ import type {
 } from "@stripe/stripe-js";
 import { useCartStore, type CartItem } from "@/stores/cart";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import {
+  CONVERSION_LABELS,
+  reportAdsConversion,
+} from "@/components/google-ads-tag";
 import { getStripe } from "@/lib/stripe-client";
 import { StepIndicator, type Step } from "./step-indicator";
 import { COMPLETED_ORDER_KEY } from "./confirmation/confirmation-client";
@@ -447,6 +451,15 @@ export default function CheckoutPage() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Secondary funnel signal for Ads: a real begin-checkout (cart has items).
+  // Once per checkout visit, not per re-render.
+  useEffect(() => {
+    if (mounted && items.length > 0) {
+      reportAdsConversion(CONVERSION_LABELS.beginCheckout);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted]);
 
   useEffect(() => {
     if (!mounted || items.length === 0) return;

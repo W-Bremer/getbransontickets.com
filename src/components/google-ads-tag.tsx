@@ -77,11 +77,6 @@ export function GoogleAdsTag() {
     lastReported.current = pathname;
     if (SELF_REPORTING.some((p) => pathname.startsWith(p))) return;
     reportAdsPageView(pathname);
-    // Secondary funnel signal: reaching checkout. Cheap to record, and it
-    // gives the low-volume campaign an early optimization signal.
-    if (pathname === "/checkout") {
-      reportAdsConversion(CONVERSION_LABELS.beginCheckout);
-    }
   }, [pathname]);
 
   // Phone taps are a real conversion path for this audience, but a tel: link
