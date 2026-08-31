@@ -6,7 +6,11 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { reportAdsPageView } from "@/components/google-ads-tag";
+import {
+  CONVERSION_LABELS,
+  reportAdsConversion,
+  reportAdsPageView,
+} from "@/components/google-ads-tag";
 import { StepIndicator } from "../step-indicator";
 
 // Written by /checkout right before it navigates here. Kept in
@@ -46,9 +50,16 @@ export function ConfirmationClient() {
     setOrder(parsed);
     clearCart();
 
-    // The Google Ads Purchase conversion counts page views of this URL, so
-    // it is reported here, only for verified orders, with the order value
-    // and number attached.
+    // Two conversions report here, only for verified orders. The event
+    // conversion is the primary goal and carries the real order value
+    // (URL-based conversions can't ingest value); transaction_id dedupes a
+    // refresh of this page. The page_view still feeds the legacy URL-based
+    // Purchase action until it's retired in the Ads UI.
+    reportAdsConversion(CONVERSION_LABELS.purchase, {
+      value: parsed.total,
+      currency: "USD",
+      transaction_id: parsed.orderNumber,
+    });
     reportAdsPageView("/checkout/confirmation", {
       value: parsed.total,
       currency: "USD",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Check, ChevronLeft, ChevronRight, Loader2, Minus, Plus } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
 import { formatPrice } from "@/lib/utils";
@@ -11,6 +12,8 @@ interface BookingWidgetProps {
   pricePerAdult: number;
   pricePerChild: number;
   imageUrl?: string;
+  /** Kids at or under this age enter free and need no ticket, so the child selector starts above it. */
+  kidsFreeUnderAge?: number;
 }
 
 interface ScheduleResponse {
@@ -34,7 +37,9 @@ export default function BookingWidget({
   pricePerAdult,
   pricePerChild,
   imageUrl,
+  kidsFreeUnderAge,
 }: BookingWidgetProps) {
+  const router = useRouter();
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
@@ -67,6 +72,19 @@ export default function BookingWidget({
         if (cancelled) return;
         setAvailability(new Map(data.dates.map((d) => [d.date, d.times])));
         setBookingDisabled(data.bookingDisabled);
+        // Open on the first month that can actually be booked. At a month
+        // boundary (or during a seasonal pause) the current month renders as
+        // a wall of grayed-out days and every visitor has to know to click
+        // the next-month arrow; jump for them instead.
+        if (data.dates.length > 0) {
+          const now = new Date();
+          const currentPrefix = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-`;
+          if (!data.dates.some((d) => d.date.startsWith(currentPrefix))) {
+            const [y, m] = data.dates[0].date.split("-").map(Number);
+            setCurrentYear(y);
+            setCurrentMonth(m - 1);
+          }
+        }
       } catch {
         if (!cancelled) setLoadFailed(true);
       }
@@ -77,8 +95,12 @@ export default function BookingWidget({
     };
   }, [showId]);
 
+  // Checkout is the very next page for most buyers; have it warm.
+  useEffect(() => {
+    router.prefetch("/checkout");
+  }, [router]);
+
   const addItem = useCartStore((s) => s.addItem);
-  const openCart = useCartStore((s) => s.openCart);
 
   const calendarDays = useMemo(() => {
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -142,15 +164,51 @@ export default function BookingWidget({
     });
   };
 
+  // One-tap date+time shortcuts for the next few performances. Most buyers
+  // book tonight or the next day or two while they're in town; the chips cut
+  // the calendar-hunt down to a single tap. Data comes straight from the
+  // schedule API, so a chip can only ever offer a real, on-sale showtime.
+  const quickPicks = useMemo(() => {
+    if (!availability) return [];
+    return [...availability.entries()]
+      .slice(0, 3)
+      .map(([date, times]) => ({ date, time: times[0] }));
+  }, [availability]);
+
+  const localIso = (d: Date) =>
+    `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+  const quickLabel = (pick: { date: string; time: string }) => {
+    const now = new Date();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    if (pick.date === localIso(now)) {
+      const hour = parseInt(pick.time, 10);
+      const evening = /PM$/i.test(pick.time) && hour >= 5 && hour !== 12;
+      return evening ? "Tonight" : "Today";
+    }
+    if (pick.date === localIso(tomorrow)) return "Tomorrow";
+    return friendlyDate(pick.date);
+  };
+
+  const selectQuickPick = (pick: { date: string; time: string }) => {
+    const [y, m] = pick.date.split("-").map(Number);
+    setCurrentYear(y);
+    setCurrentMonth(m - 1);
+    setSelectedDate(pick.date);
+    setSelectedTime(pick.time);
+    setCheckError(null);
+  };
+
   const timesForSelected = selectedDate
     ? (availability?.get(selectedDate) ?? [])
     : [];
 
   const handleChildrenChange = (newCount: number) => {
     setChildren(newCount);
+    const defaultAge = Math.max(5, (kidsFreeUnderAge ?? -1) + 1);
     setChildAges((prev) => {
       if (newCount > prev.length) {
-        return [...prev, ...Array(newCount - prev.length).fill(5)];
+        return [...prev, ...Array(newCount - prev.length).fill(defaultAge)];
       }
       return prev.slice(0, newCount);
     });
@@ -201,6 +259,9 @@ export default function BookingWidget({
     }
 
     setPhase("confirmed");
+    // Straight to checkout: for a single-show buyer the cart drawer was one
+    // extra tap plus a "Continue Shopping" escape hatch. Checkout itself
+    // offers "Add another show" for multi-show trips.
     window.setTimeout(() => {
       addItem({
         type: "show",
@@ -215,8 +276,7 @@ export default function BookingWidget({
         pricePerChild,
         imageUrl,
       });
-      openCart();
-      setPhase("idle");
+      router.push("/checkout");
     }, 700);
   };
 
@@ -237,6 +297,32 @@ export default function BookingWidget({
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <h3 className="mb-4 text-lg font-bold text-[#1A1614]">Book This Show</h3>
+
+      {/* Next-available shortcuts */}
+      {quickPicks.length > 0 && (
+        <div className="mb-4">
+          <span className="text-xs font-medium text-gray-500">Next available</span>
+          <div className="mt-1.5 flex flex-wrap gap-1.5">
+            {quickPicks.map((pick) => {
+              const isActive =
+                selectedDate === pick.date && selectedTime === pick.time;
+              return (
+                <button
+                  key={pick.date}
+                  onClick={() => selectQuickPick(pick)}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+                    isActive
+                      ? "border-[#13264D] bg-[#13264D] text-white"
+                      : "border-gray-300 text-[#1A1614] hover:border-[#13264D] hover:text-[#13264D]"
+                  }`}
+                >
+                  {quickLabel(pick)} &middot; {pick.time}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Month navigation */}
       <div className="mb-2 flex items-center justify-between">
@@ -360,26 +446,39 @@ export default function BookingWidget({
           </div>
         </div>
 
-        {/* Child age dropdowns */}
+        {/* Child age dropdowns. Ages at or under the free cutoff aren't
+            offered: those kids enter free without a ticket, and offering the
+            age here would quietly charge full child price for them. */}
         {children > 0 && (
           <div className="space-y-2 rounded-lg bg-gray-50 p-3">
             <span className="text-xs font-medium text-gray-500">Child Ages</span>
             <div className="grid grid-cols-2 gap-2">
-              {childAges.map((age, i) => (
-                <div key={i} className="flex items-center gap-1.5">
-                  <span className="text-xs text-gray-500">#{i + 1}</span>
-                  <select
-                    value={age}
-                    onChange={(e) => setChildAge(i, Number(e.target.value))}
-                    className="w-full rounded border border-gray-300 px-2 py-1 text-xs focus:border-[#13264D] focus:outline-none"
-                  >
-                    {Array.from({ length: 18 }, (_, a) => (
-                      <option key={a} value={a}>{a} yr{a !== 1 ? "s" : ""}</option>
-                    ))}
-                  </select>
-                </div>
-              ))}
+              {childAges.map((age, i) => {
+                const minAge = (kidsFreeUnderAge ?? -1) + 1;
+                return (
+                  <div key={i} className="flex items-center gap-1.5">
+                    <span className="text-xs text-gray-500">#{i + 1}</span>
+                    <select
+                      value={Math.max(age, minAge)}
+                      onChange={(e) => setChildAge(i, Number(e.target.value))}
+                      className="w-full rounded border border-gray-300 px-2 py-1 text-xs focus:border-[#13264D] focus:outline-none"
+                    >
+                      {Array.from({ length: 18 - minAge }, (_, a) => {
+                        const val = a + minAge;
+                        return (
+                          <option key={val} value={val}>{val} yr{val !== 1 ? "s" : ""}</option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                );
+              })}
             </div>
+            {kidsFreeUnderAge !== undefined && (
+              <p className="text-[11px] leading-relaxed text-gray-500">
+                Ages {kidsFreeUnderAge} &amp; under attend free &mdash; no ticket needed.
+              </p>
+            )}
           </div>
         )}
       </div>
@@ -450,7 +549,7 @@ export default function BookingWidget({
         ) : phase === "confirmed" ? (
           <span className="flex items-center justify-center gap-2">
             <Check className="h-4 w-4" aria-hidden />
-            Available &mdash; opening your cart
+            Available &mdash; taking you to checkout
           </span>
         ) : selectedDate ? (
           "Reserve My Seats"

@@ -35,6 +35,32 @@ export async function dispatchOrderConfirmation(
     customerPhone: overrides?.customerPhone?.trim() || base.customerPhone,
   };
 
+  // Wallet payments (Apple Pay / Google Pay / Link) create the intent before
+  // any contact info exists, so if the buyer closes the tab the metadata has
+  // no email. The wallet did hand Stripe billing details on the charge —
+  // recover them so the webhook backstop can still confirm and alert.
+  if (!order.customerEmail) {
+    try {
+      const chargeId =
+        typeof pi.latest_charge === "string" ? pi.latest_charge : pi.latest_charge?.id;
+      if (chargeId) {
+        const charge = await stripe.charges.retrieve(chargeId);
+        const billing = charge.billing_details;
+        if (billing.email) {
+          order.customerEmail = billing.email;
+          if (order.customerName === "Customer" && billing.name) {
+            order.customerName = billing.name;
+          }
+          if (!order.customerPhone && billing.phone) {
+            order.customerPhone = billing.phone;
+          }
+        }
+      }
+    } catch (err) {
+      console.error("billing-details fallback failed:", pi.id, err);
+    }
+  }
+
   if (!order.customerEmail) return { status: "no-items" };
 
   // Claim the send before doing it. A duplicate confirmation is worse than a

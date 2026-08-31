@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -10,28 +10,182 @@ import {
   ArrowLeft,
   ArrowRight,
   ShoppingCart,
+  Plus,
 } from "lucide-react";
 import {
   Elements,
+  ExpressCheckoutElement,
   PaymentElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import type { Appearance } from "@stripe/stripe-js";
+import type {
+  Appearance,
+  StripeExpressCheckoutElementConfirmEvent,
+  StripeExpressCheckoutElementReadyEvent,
+} from "@stripe/stripe-js";
 import { useCartStore, type CartItem } from "@/stores/cart";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { getStripe } from "@/lib/stripe-client";
 import { StepIndicator, type Step } from "./step-indicator";
 import { COMPLETED_ORDER_KEY } from "./confirmation/confirmation-client";
 
+interface ContactInfo {
+  name: string;
+  email: string;
+  phone: string;
+}
+
+const appearance: Appearance = {
+  theme: "stripe",
+  variables: {
+    colorPrimary: "#13264D",
+    colorText: "#1A1614",
+    fontFamily: "system-ui, sans-serif",
+    borderRadius: "8px",
+  },
+};
+
+function itemsPayload(items: CartItem[]) {
+  return items.map((item) => ({
+    id: item.id,
+    name: item.name,
+    date: item.date,
+    time: item.time,
+    adults: item.adults,
+    children: item.children,
+    seatingTier: item.seatingTier,
+  }));
+}
+
+function expectedCents(items: CartItem[]) {
+  return items.reduce(
+    (sum, item) =>
+      sum +
+      Math.round(item.pricePerAdult * 100) * item.adults +
+      Math.round(item.pricePerChild * 100) * item.children,
+    0
+  );
+}
+
+/**
+ * One-tap wallets (Apple Pay / Google Pay / Link) ahead of the contact form.
+ * The wallet supplies name, email, and phone, so a wallet buyer never types.
+ * Redirect-based express methods are excluded: this flow finishes in-page.
+ */
+function ExpressCheckoutSection({
+  onSuccess,
+}: {
+  onSuccess: (paymentIntentId: string, contact: ContactInfo) => Promise<void>;
+}) {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [available, setAvailable] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const onReady = (event: StripeExpressCheckoutElementReadyEvent) => {
+    setAvailable(!!event.availablePaymentMethods);
+  };
+
+  const onConfirm = async (event: StripeExpressCheckoutElementConfirmEvent) => {
+    if (!stripe || !elements || processing) return;
+    setProcessing(true);
+    setErrorMessage(null);
+
+    // The wallet's own values win inside Stripe; this just fills any gaps.
+    const contact: ContactInfo = {
+      name: event.billingDetails?.name ?? "",
+      email: event.billingDetails?.email ?? "",
+      phone: event.billingDetails?.phone ?? "",
+    };
+
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      redirect: "if_required",
+      confirmParams: {
+        payment_method_data: {
+          billing_details: {
+            name: contact.name,
+            email: contact.email,
+            phone: contact.phone,
+          },
+        },
+      },
+    });
+
+    if (error) {
+      setErrorMessage(error.message ?? "Payment failed. Please try again.");
+      setProcessing(false);
+      return;
+    }
+    if (!paymentIntent) {
+      setErrorMessage("Payment did not complete. Please try again.");
+      setProcessing(false);
+      return;
+    }
+
+    try {
+      await onSuccess(paymentIntent.id, contact);
+    } catch (err) {
+      setErrorMessage(
+        err instanceof Error
+          ? err.message
+          : "Payment succeeded but we couldn't send your confirmation email. We'll follow up shortly."
+      );
+      setProcessing(false);
+    }
+  };
+
+  return (
+    <div className={available ? "mb-6" : "hidden"}>
+      <ExpressCheckoutElement
+        options={{
+          buttonHeight: 48,
+          buttonType: { applePay: "book", googlePay: "book" },
+          paymentMethods: {
+            paypal: "never",
+            amazonPay: "never",
+            klarna: "never",
+          },
+          emailRequired: true,
+          phoneNumberRequired: true,
+        }}
+        onReady={onReady}
+        onConfirm={onConfirm}
+      />
+      {processing && (
+        <p className="mt-3 flex items-center justify-center gap-2 text-sm text-[#1A1614]/60">
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#13264D] border-t-transparent" />
+          Completing your booking...
+        </p>
+      )}
+      {errorMessage && (
+        <div className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600">
+          {errorMessage}
+        </div>
+      )}
+      <div className="mt-5 flex items-center gap-3">
+        <div className="h-px flex-1 bg-gray-200" />
+        <span className="text-xs font-medium uppercase tracking-wide text-gray-400">
+          Or enter your details
+        </span>
+        <div className="h-px flex-1 bg-gray-200" />
+      </div>
+    </div>
+  );
+}
+
 function ContactInfoStep({
   onNext,
   formData,
   setFormData,
+  disabled,
 }: {
   onNext: () => void;
-  formData: { name: string; email: string; phone: string };
-  setFormData: (d: { name: string; email: string; phone: string }) => void;
+  formData: ContactInfo;
+  setFormData: (d: ContactInfo) => void;
+  disabled?: boolean;
 }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -63,6 +217,7 @@ function ContactInfoStep({
         </label>
         <input
           type="text"
+          autoComplete="name"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           placeholder="John Smith"
@@ -83,6 +238,8 @@ function ContactInfoStep({
         </label>
         <input
           type="email"
+          autoComplete="email"
+          inputMode="email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           placeholder="john@example.com"
@@ -103,6 +260,8 @@ function ContactInfoStep({
         </label>
         <input
           type="tel"
+          autoComplete="tel"
+          inputMode="tel"
           value={formData.phone}
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
           placeholder="(555) 123-4567"
@@ -119,7 +278,8 @@ function ContactInfoStep({
 
       <button
         onClick={() => validate() && onNext()}
-        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#C8102E] py-4 text-lg font-semibold text-white hover:bg-[#C8102E]/90 transition-colors"
+        disabled={disabled}
+        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#C8102E] py-4 text-lg font-semibold text-white hover:bg-[#C8102E]/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
       >
         Continue to Payment
         <ArrowRight className="h-5 w-5" />
@@ -217,6 +377,8 @@ function StripePaymentForm({
       <PaymentElement
         options={{
           layout: "tabs",
+          // Wallets already have their own buttons on the contact step.
+          wallets: { applePay: "never", googlePay: "never" },
           defaultValues: {
             billingDetails: {
               name: contactName,
@@ -265,62 +427,46 @@ function StripePaymentForm({
   );
 }
 
-function PaymentStep({
-  onBack,
-  onSuccess,
-  items,
-  formData,
-}: {
-  onBack: () => void;
-  onSuccess: (paymentIntentId: string) => Promise<void>;
-  items: CartItem[];
-  formData: { name: string; email: string; phone: string };
-}) {
+export default function CheckoutPage() {
+  const router = useRouter();
+  const { items, getTotal } = useCartStore();
+  const [mounted, setMounted] = useState(false);
+  const [step, setStep] = useState<Step>(1);
+  const [formData, setFormData] = useState<ContactInfo>({
+    name: "",
+    email: "",
+    phone: "",
+  });
+  // The PaymentIntent is created as soon as checkout loads — before any
+  // contact info exists — so the express wallet buttons can render on step 1.
+  // Contact details are stamped onto the intent when the card path advances,
+  // and always travel with confirm-order after payment.
   const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const { name: customerName, email: customerEmail, phone: customerPhone } = formData;
+  const [intentError, setIntentError] = useState<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
+    setMounted(true);
+  }, []);
 
-    async function createIntent() {
+  useEffect(() => {
+    if (!mounted || items.length === 0) return;
+    let cancelled = false;
+    setClientSecret(null);
+    setIntentError(null);
+
+    (async () => {
       try {
         const res = await fetch("/api/create-payment-intent", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            // Stored on the intent so the order survives a closed tab.
-            customerName,
-            customerEmail,
-            customerPhone,
-            items: items.map((item) => ({
-              id: item.id,
-              name: item.name,
-              date: item.date,
-              time: item.time,
-              adults: item.adults,
-              children: item.children,
-              seatingTier: item.seatingTier,
-            })),
-          }),
+          body: JSON.stringify({ items: itemsPayload(items) }),
         });
-
         if (!res.ok) {
-          const body = (await res.json().catch(() => ({}))) as {
-            error?: string;
-          };
+          const body = (await res.json().catch(() => ({}))) as { error?: string };
           throw new Error(body.error ?? "Unable to start payment");
         }
-
         const data = (await res.json()) as { clientSecret: string; amount: number };
-        const expectedCents = items.reduce(
-          (sum, item) =>
-            sum +
-            Math.round(item.pricePerAdult * 100) * item.adults +
-            Math.round(item.pricePerChild * 100) * item.children,
-          0
-        );
-        if (data.amount !== expectedCents) {
+        if (data.amount !== expectedCents(items)) {
           throw new Error(
             "Prices have been updated since you added these items. Please empty your cart and add them again."
           );
@@ -328,85 +474,15 @@ function PaymentStep({
         if (!cancelled) setClientSecret(data.clientSecret);
       } catch (err) {
         if (!cancelled) {
-          setError(err instanceof Error ? err.message : "Unable to start payment");
+          setIntentError(err instanceof Error ? err.message : "Unable to start payment");
         }
       }
-    }
+    })();
 
-    createIntent();
     return () => {
       cancelled = true;
     };
-  }, [items, customerName, customerEmail, customerPhone]);
-
-  const appearance: Appearance = useMemo(
-    () => ({
-      theme: "stripe",
-      variables: {
-        colorPrimary: "#13264D",
-        colorText: "#1A1614",
-        fontFamily: "system-ui, sans-serif",
-        borderRadius: "8px",
-      },
-    }),
-    []
-  );
-
-  if (error) {
-    return (
-      <div className="space-y-4">
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
-          {error}
-        </div>
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-3 font-semibold text-[#1A1614]/70 hover:border-[#13264D] hover:text-[#13264D] transition-all"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </div>
-    );
-  }
-
-  if (!clientSecret) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-3 py-16">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#13264D] border-t-transparent" />
-        <p className="text-sm text-[#1A1614]/60">Preparing secure payment...</p>
-      </div>
-    );
-  }
-
-  return (
-    <Elements
-      stripe={getStripe()}
-      options={{ clientSecret, appearance }}
-    >
-      <StripePaymentForm
-        onBack={onBack}
-        onSuccess={onSuccess}
-        contactEmail={formData.email}
-        contactName={formData.name}
-        contactPhone={formData.phone}
-      />
-    </Elements>
-  );
-}
-
-export default function CheckoutPage() {
-  const router = useRouter();
-  const { items, getTotal } = useCartStore();
-  const [mounted, setMounted] = useState(false);
-  const [step, setStep] = useState<Step>(1);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-  });
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  }, [mounted, items]);
 
   if (!mounted) {
     return (
@@ -459,7 +535,8 @@ export default function CheckoutPage() {
     );
   }
 
-  async function handleCompleteBooking(paymentIntentId: string) {
+  async function handleCompleteBooking(paymentIntentId: string, contact?: ContactInfo) {
+    const who = contact ?? formData;
     const fallbackOrder = `BRN-${paymentIntentId.replace(/^pi_/, "").slice(-8).toUpperCase()}`;
     const snapshotTotal = total;
     // Tickets, not cart lines: one line for "2 adults, 1 child" is 3 tickets.
@@ -474,9 +551,9 @@ export default function CheckoutPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           paymentIntentId,
-          customerName: formData.name,
-          customerEmail: formData.email,
-          customerPhone: formData.phone,
+          customerName: who.name,
+          customerEmail: who.email,
+          customerPhone: who.phone,
         }),
       });
 
@@ -500,13 +577,34 @@ export default function CheckoutPage() {
         total: snapshotTotal,
         itemCount: snapshotCount,
         emailSent,
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
+        name: who.name,
+        email: who.email,
+        phone: who.phone,
       })
     );
 
     router.push("/checkout/confirmation");
+  }
+
+  function handleContactContinue() {
+    // Stamp contact details onto the intent so the webhook backstop and the
+    // Stripe receipt know who bought, even if this tab closes mid-payment.
+    // Fire-and-forget: checkout must not wait on it.
+    const paymentIntentId = clientSecret?.split("_secret")[0];
+    if (paymentIntentId) {
+      fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          paymentIntentId,
+          customerName: formData.name,
+          customerEmail: formData.email,
+          customerPhone: formData.phone,
+          items: itemsPayload(items),
+        }),
+      }).catch(() => {});
+    }
+    setStep(2);
   }
 
   return (
@@ -542,21 +640,59 @@ export default function CheckoutPage() {
             {/* Form Area */}
             <div className="lg:col-span-2">
               <div className="rounded-2xl bg-white p-6 sm:p-8 shadow-sm border border-gray-100">
+                {intentError && (
+                  <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+                    {intentError}
+                  </div>
+                )}
                 {step === 1 && (
-                  <ContactInfoStep
-                    onNext={() => setStep(2)}
-                    formData={formData}
-                    setFormData={setFormData}
-                  />
+                  <>
+                    {clientSecret && (
+                      <Elements
+                        key={`express-${clientSecret}`}
+                        stripe={getStripe()}
+                        options={{ clientSecret, appearance }}
+                      >
+                        <ExpressCheckoutSection onSuccess={handleCompleteBooking} />
+                      </Elements>
+                    )}
+                    <ContactInfoStep
+                      onNext={handleContactContinue}
+                      formData={formData}
+                      setFormData={setFormData}
+                      disabled={!!intentError}
+                    />
+                  </>
                 )}
-                {step === 2 && (
-                  <PaymentStep
-                    onBack={() => setStep(1)}
-                    onSuccess={handleCompleteBooking}
-                    items={items}
-                    formData={formData}
-                  />
-                )}
+                {step === 2 &&
+                  (clientSecret ? (
+                    <Elements
+                      key={`payment-${clientSecret}`}
+                      stripe={getStripe()}
+                      options={{ clientSecret, appearance }}
+                    >
+                      <StripePaymentForm
+                        onBack={() => setStep(1)}
+                        onSuccess={handleCompleteBooking}
+                        contactEmail={formData.email}
+                        contactName={formData.name}
+                        contactPhone={formData.phone}
+                      />
+                    </Elements>
+                  ) : !intentError ? (
+                    <div className="flex flex-col items-center justify-center gap-3 py-16">
+                      <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#13264D] border-t-transparent" />
+                      <p className="text-sm text-[#1A1614]/60">Preparing secure payment...</p>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setStep(1)}
+                      className="flex items-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-3 font-semibold text-[#1A1614]/70 hover:border-[#13264D] hover:text-[#13264D] transition-all"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Back
+                    </button>
+                  ))}
               </div>
             </div>
 
@@ -590,6 +726,7 @@ export default function CheckoutPage() {
                               `, ${item.children} child${item.children !== 1 ? "ren" : ""}`}
                             {" | "}
                             {item.date}
+                            {item.time && ` at ${item.time}`}
                           </p>
                         </div>
                       );
@@ -600,8 +737,15 @@ export default function CheckoutPage() {
                     <span>${total.toFixed(2)}</span>
                   </div>
                   <Link
+                    href="/shows"
+                    className="mt-4 flex items-center justify-center gap-1.5 text-center text-sm font-medium text-[#13264D] hover:text-[#0D1B38] transition-colors"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    Add another show
+                  </Link>
+                  <Link
                     href="/cart"
-                    className="mt-4 block text-center text-sm font-medium text-[#13264D] hover:text-[#0D1B38] transition-colors"
+                    className="mt-2 block text-center text-sm font-medium text-[#1A1614]/50 hover:text-[#13264D] transition-colors"
                   >
                     Edit Cart
                   </Link>

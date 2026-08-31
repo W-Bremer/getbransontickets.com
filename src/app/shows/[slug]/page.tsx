@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Phone, ExternalLink } from "lucide-react";
+import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Phone, ExternalLink, Star } from "lucide-react";
 import { shows, getShowBySlug, getPartnerShows } from "@/data/shows";
 import { theaters } from "@/data/theaters";
 import { siteConfig } from "@/lib/config";
@@ -16,6 +16,7 @@ import { ShowCard } from "@/components/show-card";
 import { JsonLd } from "@/components/json-ld";
 import BookingWidget from "@/components/booking-widget";
 import StickyBookingBar from "@/components/sticky-booking-bar";
+import { WatchVideoLink } from "@/components/watch-video-link";
 import { ShowDetailClient } from "./show-detail-client";
 
 export async function generateStaticParams() {
@@ -203,6 +204,12 @@ export default async function ShowDetailPage({
               {show.name}
             </h1>
             <p className="mt-1.5 sm:mt-2 text-base sm:text-lg text-white/90 font-medium">{show.tagline}</p>
+            {/* Instant venue confirmation: a large share of ad clicks search
+                the theater's name, not the show's. */}
+            <p className="mt-1 flex items-center gap-1.5 text-xs sm:text-sm text-white/75">
+              <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              {show.theater} &middot; Branson, MO
+            </p>
             {/* Ratings removed: show.rating / show.reviewCount were invented
                 values from the original build, not reviews we hold. Restore
                 only with a real, citable source. */}
@@ -256,6 +263,24 @@ export default async function ShowDetailPage({
                         <p className="mt-1.5 text-[11px] text-white/60">
                           Taxes included &middot; no checkout fees
                         </p>
+                        {/* Real Google rating — value + count live in shows.ts
+                            with the verification date; render only when set. */}
+                        {show.googleRating !== undefined &&
+                          show.googleReviewCount !== undefined &&
+                          show.googleReviewsUrl && (
+                            <a
+                              href={show.googleReviewsUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-2 inline-flex items-center gap-1.5 text-xs text-white/85 hover:text-white"
+                            >
+                              <Star className="h-3.5 w-3.5 fill-[#E8C65A] text-[#E8C65A]" aria-hidden />
+                              <span className="font-bold text-white">{show.googleRating}</span>
+                              <span className="underline decoration-white/40 underline-offset-2">
+                                {show.googleReviewCount} Google reviews
+                              </span>
+                            </a>
+                          )}
                       </div>
                       <DealHighlights
                         priceFrom={show.priceFrom}
@@ -264,6 +289,7 @@ export default async function ShowDetailPage({
                         kidsFreeUnderAge={show.kidsFreeUnderAge}
                         className="px-4 pt-4"
                       />
+                      {show.videoUrl && <WatchVideoLink className="px-4 pt-3" />}
                       <div className="p-1 pt-3">
                         <BookingWidget
                           showId={show.slug}
@@ -271,6 +297,7 @@ export default async function ShowDetailPage({
                           pricePerAdult={show.priceFrom}
                           pricePerChild={show.childPriceFrom ?? Math.round(show.priceFrom * 0.6)}
                           imageUrl={show.imageUrl}
+                          kidsFreeUnderAge={show.kidsFreeUnderAge}
                         />
                       </div>
                     </div>

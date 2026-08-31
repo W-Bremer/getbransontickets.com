@@ -242,6 +242,21 @@ export function chicagoToday(now = new Date()): string {
   return chicagoDate.format(now);
 }
 
+const chicagoClock = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/Chicago",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: false,
+});
+
+/** Minutes since midnight in Branson. Some engines render midnight as "24". */
+function chicagoMinutesNow(now: Date): number {
+  const parts = chicagoClock.formatToParts(now);
+  const h = Number(parts.find((p) => p.type === "hour")?.value ?? 0) % 24;
+  const m = Number(parts.find((p) => p.type === "minute")?.value ?? 0);
+  return h * 60 + m;
+}
+
 /** Weekday index (0 = Sunday) for an ISO date, DST-safe via noon UTC. */
 function weekdayOf(dateStr: string): number {
   const [y, m, d] = dateStr.split("-").map(Number);
@@ -307,6 +322,13 @@ export function timesForDate(
     const soTime = so.slice(10).trim();
     if (!soTime) return [];
     times = times.filter((t) => !sameTime(t, soTime));
+  }
+
+  // A performance stops selling at its start time: without this, tonight's
+  // 7:30 PM stays buyable at 11 PM (calendar and payment validation both).
+  if (dateStr === chicagoToday(now)) {
+    const nowMinutes = chicagoMinutesNow(now);
+    times = times.filter((t) => (timeMinutes(t) ?? 0) > nowMinutes);
   }
 
   return times.sort((a, b) => (timeMinutes(a) ?? 0) - (timeMinutes(b) ?? 0));

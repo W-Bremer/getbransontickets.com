@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { MapPin, ChevronRight, Clock, Users, CalendarDays, UtensilsCrossed } from "lucide-react";
 import { TabNavigation } from "@/components/tab-navigation";
@@ -53,6 +53,21 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
 
   const [activeTab, setActiveTab] = useState("details");
 
+  // The booking panel's "Watch the show" button. The player only exists on
+  // the Details tab, so switch first, then scroll once it has rendered.
+  useEffect(() => {
+    const onWatch = () => {
+      setActiveTab("details");
+      window.setTimeout(() => {
+        document
+          .getElementById("show-video")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 60);
+    };
+    window.addEventListener("gbt:watch-video", onWatch);
+    return () => window.removeEventListener("gbt:watch-video", onWatch);
+  }, []);
+
   return (
     <div>
       <TabNavigation tabs={baseTabs} activeTab={activeTab} onTabChange={setActiveTab} />
@@ -73,7 +88,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
 
             {/* Official promo video */}
             {show.videoUrl && (
-              <div>
+              <div id="show-video" className="scroll-mt-24">
                 <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
                   See the Show
                 </h2>

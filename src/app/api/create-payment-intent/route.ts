@@ -23,6 +23,8 @@ interface Body {
   customerName?: string;
   customerEmail?: string;
   customerPhone?: string;
+  /** When set, stamp contact details onto this existing intent instead of creating one. */
+  paymentIntentId?: string;
 }
 
 /** Stripe caps a metadata value at 500 characters. */
@@ -102,6 +104,36 @@ export async function POST(req: Request) {
     }));
 
     const customerEmail = trim(body.customerEmail);
+
+    // Update mode: checkout creates the intent before the buyer has typed
+    // anything (the express wallet buttons need it), then stamps contact
+    // details here once the card path collects them. The amount must match
+    // what the intent already locked in, so a crafted update can't relabel a
+    // cheap intent as a more expensive cart.
+    if (body.paymentIntentId) {
+      const existing = await stripe.paymentIntents.retrieve(body.paymentIntentId);
+      if (existing.amount !== totalCents) {
+        return NextResponse.json(
+          { error: "Cart no longer matches this payment" },
+          { status: 409 }
+        );
+      }
+      const updated = await stripe.paymentIntents.update(body.paymentIntentId, {
+        ...(customerEmail ? { receipt_email: customerEmail } : {}),
+        metadata: {
+          referralPartner,
+          itemCount: String(items.length),
+          customerName: trim(body.customerName),
+          customerEmail,
+          customerPhone: trim(body.customerPhone, 40),
+          ...packCartMetadata(lines),
+        },
+      });
+      return NextResponse.json({
+        clientSecret: updated.client_secret,
+        amount: updated.amount,
+      });
+    }
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalCents,
