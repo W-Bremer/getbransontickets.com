@@ -16,7 +16,8 @@ import { ShowCard } from "@/components/show-card";
 import { JsonLd } from "@/components/json-ld";
 import BookingWidget from "@/components/booking-widget";
 import StickyBookingBar from "@/components/sticky-booking-bar";
-import { WatchVideoLink } from "@/components/watch-video-link";
+import { GoogleReviews } from "@/components/google-reviews";
+import { getPlaceSnapshot } from "@/lib/google-places";
 import { ShowDetailClient } from "./show-detail-client";
 
 export async function generateStaticParams() {
@@ -73,6 +74,12 @@ export default async function ShowDetailPage({
   const season = getSeasonDates(show);
 
   const performances = getUpcomingPerformances(show);
+
+  // Live Google rating + curated 5-star quotes, refreshed with the page's
+  // ISR window. Falls back to the hand-verified static values in shows.ts.
+  const place = show.googlePlaceId ? await getPlaceSnapshot(show.googlePlaceId) : null;
+  const googleRating = place?.rating ?? show.googleRating;
+  const googleReviewCount = place?.reviewCount ?? show.googleReviewCount;
 
   const eventDetails = {
     name: show.name,
@@ -223,9 +230,14 @@ export default async function ShowDetailPage({
           {/* Booking renders first in the DOM so it sits directly under the
               hero on phones; the lg grid moves it into the right column. */}
           <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-12">
-            {/* Booking column */}
+            {/* Booking column. The sticky panel is capped at the viewport so
+                the Reserve button is always reachable — on shorter screens the
+                panel scrolls internally instead of running past the fold. */}
             <div className="lg:col-start-3 lg:row-start-1">
-              <div id="booking-widget" className="lg:sticky lg:top-24 space-y-6">
+              <div
+                id="booking-widget"
+                className="lg:sticky lg:top-24 space-y-6 lg:space-y-3 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:overscroll-contain lg:pb-1 lg:pr-1"
+              >
                 {show.isFeaturedPartner ? (
                   <>
                     <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
@@ -263,10 +275,10 @@ export default async function ShowDetailPage({
                         <p className="mt-1.5 text-[11px] text-white/60">
                           Taxes included &middot; no checkout fees
                         </p>
-                        {/* Real Google rating — value + count live in shows.ts
-                            with the verification date; render only when set. */}
-                        {show.googleRating !== undefined &&
-                          show.googleReviewCount !== undefined &&
+                        {/* Real Google rating — live via Places when a place
+                            id is set, else the verified values in shows.ts. */}
+                        {googleRating !== undefined &&
+                          googleReviewCount !== undefined &&
                           show.googleReviewsUrl && (
                             <a
                               href={show.googleReviewsUrl}
@@ -275,9 +287,9 @@ export default async function ShowDetailPage({
                               className="mt-2 inline-flex items-center gap-1.5 text-xs text-white/85 hover:text-white"
                             >
                               <Star className="h-3.5 w-3.5 fill-[#E8C65A] text-[#E8C65A]" aria-hidden />
-                              <span className="font-bold text-white">{show.googleRating}</span>
+                              <span className="font-bold text-white">{googleRating}</span>
                               <span className="underline decoration-white/40 underline-offset-2">
-                                {show.googleReviewCount} Google reviews
+                                {googleReviewCount} Google reviews
                               </span>
                             </a>
                           )}
@@ -289,7 +301,6 @@ export default async function ShowDetailPage({
                         kidsFreeUnderAge={show.kidsFreeUnderAge}
                         className="px-4 pt-4"
                       />
-                      {show.videoUrl && <WatchVideoLink className="px-4 pt-3" />}
                       <div className="p-1 pt-3">
                         <BookingWidget
                           showId={show.slug}
@@ -302,13 +313,22 @@ export default async function ShowDetailPage({
                       </div>
                     </div>
 
-                    {/* Call to book */}
+                    {/* Call to book — full button on phones (calls dominate
+                        there); a slim line on desktop where sticky-panel
+                        height is the scarce resource. */}
                     <Link
                       href={`tel:${siteConfig.phoneRaw}`}
-                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#13264D] text-[#13264D] rounded-xl font-semibold hover:bg-[#13264D] hover:text-white transition-all"
+                      className="w-full flex lg:hidden items-center justify-center gap-2 py-3 border-2 border-[#13264D] text-[#13264D] rounded-xl font-semibold hover:bg-[#13264D] hover:text-white transition-all"
                     >
                       <Phone className="w-4 h-4" />
                       Call {siteConfig.phone}
+                    </Link>
+                    <Link
+                      href={`tel:${siteConfig.phoneRaw}`}
+                      className="hidden lg:flex items-center justify-center gap-1.5 text-sm font-semibold text-[#13264D] hover:text-[#C8102E] transition-colors"
+                    >
+                      <Phone className="w-3.5 h-3.5" />
+                      Prefer to book by phone? {siteConfig.phone}
                     </Link>
                   </>
                 ) : (
@@ -344,19 +364,9 @@ export default async function ShowDetailPage({
                   </>
                 )}
 
-                {/* Sidebar quick info */}
-                <div className="hidden lg:block rounded-xl border border-gray-200 p-5 bg-white space-y-3 text-sm">
-                  <div className="flex justify-between text-gray-600">
-                    <span>Duration</span>
-                    <span className="font-medium text-[#1A1614]">{show.duration}</span>
-                  </div>
-                  {show.mealIncluded && (
-                    <div className="flex justify-between text-gray-600">
-                      <span>Meal</span>
-                      <span className="font-medium text-[#C8102E]">{show.mealType} Included</span>
-                    </div>
-                  )}
-                </div>
+                {/* The duration/meal quick-info box that used to sit here
+                    duplicated the Quick Facts tiles and pushed the sticky
+                    panel past the viewport; removed to keep the panel whole. */}
               </div>
             </div>
 
@@ -396,6 +406,18 @@ export default async function ShowDetailPage({
                 </div>
               </div>
 
+              {/* Curated 5-star Google quotes, high on the page where the
+                  buying decision happens; the aggregate link keeps context. */}
+              {place && googleRating !== undefined && googleReviewCount !== undefined && (
+                <GoogleReviews
+                  reviews={place.reviews}
+                  rating={googleRating}
+                  reviewCount={googleReviewCount}
+                  reviewsUrl={show.googleReviewsUrl}
+                  className="mb-10"
+                />
+              )}
+
               {/* Tabbed Content Section */}
               <ShowDetailClient
                 show={{
@@ -418,6 +440,8 @@ export default async function ShowDetailPage({
                   faqs: show.faqs,
                   category: show.category,
                   galleryImages: show.galleryImages,
+                  galleryImageAlts: show.galleryImageAlts,
+                  galleryNote: show.galleryNote,
                   videoUrl: show.videoUrl,
                 }}
                 theaterSlug={showTheater?.slug}

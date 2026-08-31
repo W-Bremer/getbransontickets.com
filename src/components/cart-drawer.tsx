@@ -1,17 +1,28 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { X, ShoppingBag, Trash2 } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
 
 export function CartDrawer() {
   const isOpen = useCartStore((s) => s.isOpen);
-  const items = useCartStore((s) => s.items);
+  const storedItems = useCartStore((s) => s.items);
   const closeCart = useCartStore((s) => s.closeCart);
   const removeItem = useCartStore((s) => s.removeItem);
   const getTotal = useCartStore((s) => s.getTotal);
   const getItemCount = useCartStore((s) => s.getItemCount);
+
+  // The cart rehydrates from localStorage, which the server can't see;
+  // rendering it during hydration mismatches the SSR HTML for anyone who
+  // arrives with items and forces a full client re-render. Content fills in
+  // after mount instead (the drawer is closed at that point anyway).
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  const items = mounted ? storedItems : [];
+  const count = mounted ? getItemCount() : 0;
 
   // Lock body scroll when open
   useEffect(() => {
@@ -62,7 +73,7 @@ export function CartDrawer() {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
           <h2 className="text-lg font-bold text-[#1A1614]">
-            Your Cart ({getItemCount()})
+            Your Cart ({count})
           </h2>
           <button
             onClick={closeCart}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { MapPin, ChevronRight, Clock, Users, CalendarDays, UtensilsCrossed } from "lucide-react";
 import { TabNavigation } from "@/components/tab-navigation";
@@ -28,6 +28,8 @@ interface ShowData {
   faqs: { question: string; answer: string }[];
   category: string[];
   galleryImages?: string[];
+  galleryImageAlts?: string[];
+  galleryNote?: string;
   videoUrl?: string;
 }
 
@@ -52,21 +54,6 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
   }
 
   const [activeTab, setActiveTab] = useState("details");
-
-  // The booking panel's "Watch the show" button. The player only exists on
-  // the Details tab, so switch first, then scroll once it has rendered.
-  useEffect(() => {
-    const onWatch = () => {
-      setActiveTab("details");
-      window.setTimeout(() => {
-        document
-          .getElementById("show-video")
-          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 60);
-    };
-    window.addEventListener("gbt:watch-video", onWatch);
-    return () => window.removeEventListener("gbt:watch-video", onWatch);
-  }, []);
 
   return (
     <div>
@@ -108,13 +95,17 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
             {/* Photos */}
             {show.galleryImages && show.galleryImages.length > 0 && (
               <div>
-                <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-4">
+                <h2 className="text-2xl font-bold text-[#1A1614] font-heading mb-1">
                   Photos
                 </h2>
+                {show.galleryNote && (
+                  <p className="mb-4 text-xs text-gray-500">{show.galleryNote}</p>
+                )}
                 <PhotoGallery
+                  className={show.galleryNote ? undefined : "mt-3"}
                   images={show.galleryImages.map((src, i) => ({
                     src,
-                    alt: `${show.name} photo ${i + 1}`,
+                    alt: show.galleryImageAlts?.[i] ?? `${show.name} photo ${i + 1}`,
                   }))}
                 />
               </div>

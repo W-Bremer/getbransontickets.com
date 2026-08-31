@@ -30,8 +30,12 @@ export function DealHighlights({
 
   return (
     <div className={className}>
-      {/* Deal chips — only claims backed by the price data render */}
-      <div className="flex flex-wrap gap-1.5">
+      {/* Deal chips — only claims backed by the price data render. Hidden on
+          desktop, where the sticky panel is fighting for viewport height and
+          the navy header already shows adult + kids pricing; the free-age
+          rule still reaches desktop buyers via the child-age selector note
+          and the FAQ. */}
+      <div className="flex flex-wrap gap-1.5 lg:hidden">
         {kidsFree && (
           <span className="inline-flex items-center gap-1 rounded-full bg-[#C8102E] px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase">
             <BadgePercent className="h-3 w-3" />
@@ -58,7 +62,7 @@ export function DealHighlights({
       </div>
 
       {/* Value line — matches the guarantees made at checkout */}
-      <ul className="mt-3 space-y-1 text-xs text-gray-600">
+      <ul className="mt-3 lg:mt-0 space-y-1 text-xs text-gray-600">
         <li className="flex items-center gap-1.5">
           <Check className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
           Box-office rate — no added fees, taxes included

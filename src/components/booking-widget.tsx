@@ -295,8 +295,11 @@ export default function BookingWidget({
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-      <h3 className="mb-4 text-lg font-bold text-[#1A1614]">Book This Show</h3>
+    <div className="rounded-xl border border-gray-200 bg-white p-5 lg:p-4 shadow-sm">
+      {/* On desktop the widget lives inside the sticky panel where every
+          pixel of height fights the viewport; the heading is redundant there
+          (the panel header above it already frames the booking). */}
+      <h3 className="mb-4 text-lg font-bold text-[#1A1614] lg:hidden">Book This Show</h3>
 
       {/* Next-available shortcuts */}
       {quickPicks.length > 0 && (
@@ -354,7 +357,7 @@ export default function BookingWidget({
               key={day}
               disabled={disabled}
               onClick={() => selectDate(dateStr)}
-              className={`rounded py-1.5 text-sm transition-colors ${
+              className={`rounded py-1.5 lg:py-1 text-sm lg:text-xs transition-colors ${
                 disabled
                   ? "cursor-not-allowed text-gray-300"
                   : isSelected
@@ -368,7 +371,7 @@ export default function BookingWidget({
         })}
       </div>
 
-      <div className="mb-4 min-h-[1rem] text-center text-xs text-gray-500">
+      <div className="mb-4 lg:mb-2 min-h-[1rem] text-center text-xs text-gray-500">
         {loadFailed
           ? "We could not load show dates. Please refresh the page, or call us to book."
           : !availability
@@ -402,8 +405,8 @@ export default function BookingWidget({
         </p>
       )}
 
-      {/* Guest selectors */}
-      <div className="mb-4 space-y-3">
+      {/* Guest selectors — side by side on desktop to save panel height */}
+      <div className="mb-4 space-y-3 lg:grid lg:grid-cols-2 lg:items-center lg:gap-2 lg:space-y-0">
         <div className="flex items-center justify-between">
           <span className="text-sm text-[#1A1614]">Adults</span>
           <div className="flex items-center gap-2">
@@ -450,7 +453,7 @@ export default function BookingWidget({
             offered: those kids enter free without a ticket, and offering the
             age here would quietly charge full child price for them. */}
         {children > 0 && (
-          <div className="space-y-2 rounded-lg bg-gray-50 p-3">
+          <div className="space-y-2 rounded-lg bg-gray-50 p-3 lg:col-span-2">
             <span className="text-xs font-medium text-gray-500">Child Ages</span>
             <div className="grid grid-cols-2 gap-2">
               {childAges.map((age, i) => {
@@ -558,7 +561,9 @@ export default function BookingWidget({
         )}
       </button>
 
-      <p className="mt-3 text-center text-[11px] leading-relaxed text-gray-500">
+      {/* Desktop hides this line: the panel's trust bullets right above the
+          widget already say it, and the duplicate costs sticky height. */}
+      <p className="mt-3 text-center text-[11px] leading-relaxed text-gray-500 lg:hidden">
         Free cancellation with 24+ hrs notice &middot; No hidden fees &middot; E-tickets by email
       </p>
     </div>

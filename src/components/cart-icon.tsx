@@ -1,12 +1,22 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ShoppingCart } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
 
 export function CartIcon() {
   const toggleCart = useCartStore((s) => s.toggleCart);
   const getItemCount = useCartStore((s) => s.getItemCount);
-  const count = getItemCount();
+
+  // The cart lives in localStorage, which the server can't see: rendering the
+  // count during hydration mismatches the server HTML for anyone arriving
+  // with items, and React then regenerates the whole tree (slow first paint
+  // for exactly the visitors who are mid-purchase). Badge appears post-mount.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  const count = mounted ? getItemCount() : 0;
 
   return (
     <button
