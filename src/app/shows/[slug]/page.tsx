@@ -14,6 +14,7 @@ import { DealHighlights } from "@/components/deal-highlights";
 import { formatPrice } from "@/lib/utils";
 import { ShowCard } from "@/components/show-card";
 import { JsonLd } from "@/components/json-ld";
+import { BookNowButton } from "@/components/book-now-button";
 import BookingWidget from "@/components/booking-widget";
 import { BookingModal } from "@/components/booking-modal";
 import StickyBookingBar from "@/components/sticky-booking-bar";
@@ -168,8 +169,10 @@ export default async function ShowDetailPage({
       <JsonLd data={productSchema} />
 
       {/* Hero. Short on phones so the booking panel below it starts above the
-          fold — buying shouldn't require scrolling past a screen of photo. */}
-      <div className="relative h-[32svh] min-h-[240px] sm:h-[42vh] sm:min-h-[340px] lg:h-[50vh] lg:min-h-[400px]">
+          fold — buying shouldn't require scrolling past a screen of photo.
+          Desktop stays slim too, so the sticky panel's top half (price,
+          rating, trust, date chips) lands inside the first viewport. */}
+      <div className="relative h-[32svh] min-h-[240px] sm:h-[42vh] sm:min-h-[340px] lg:h-[42vh] lg:min-h-[360px]">
         <Image
           src={show.imageUrl}
           alt={show.imageAlt}
@@ -218,6 +221,26 @@ export default async function ShowDetailPage({
               <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden />
               {show.theater} &middot; Branson, MO
             </p>
+            {/* The primary CTA lives in the hero on tablet/desktop so it is
+                above the fold on every screen (phones already have the
+                sticky Buy Tickets bar in view from load). Eyetracking says
+                attention falls off a cliff at the fold; the button doesn't
+                get to live below it. */}
+            {show.isFeaturedPartner && (
+              <div className="mt-5 hidden sm:flex flex-wrap items-center gap-x-5 gap-y-3">
+                <BookNowButton label={`Book Now — From $${formatPrice(show.priceFrom)}`} />
+                <span className="text-sm font-medium text-white/90 drop-shadow">
+                  {googleRating !== undefined && googleReviewCount !== undefined && (
+                    <>
+                      <span className="text-[#E8C65A]">&#9733;</span>{" "}
+                      <span className="font-bold">{googleRating}</span> ({googleReviewCount}{" "}
+                      reviews) &middot;{" "}
+                    </>
+                  )}
+                  Free cancellation up to 24 hrs
+                </span>
+              </div>
+            )}
             {/* Ratings removed: show.rating / show.reviewCount were invented
                 values from the original build, not reviews we hold. Restore
                 only with a real, citable source. */}
