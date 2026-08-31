@@ -405,8 +405,8 @@ export default function BookingWidget({
         </p>
       )}
 
-      {/* Guest selectors — side by side on desktop to save panel height */}
-      <div className="mb-4 space-y-3 lg:grid lg:grid-cols-2 lg:items-center lg:gap-2 lg:space-y-0">
+      {/* Guest selectors */}
+      <div className="mb-4 space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-sm text-[#1A1614]">Adults</span>
           <div className="flex items-center gap-2">
@@ -453,7 +453,7 @@ export default function BookingWidget({
             offered: those kids enter free without a ticket, and offering the
             age here would quietly charge full child price for them. */}
         {children > 0 && (
-          <div className="space-y-2 rounded-lg bg-gray-50 p-3 lg:col-span-2">
+          <div className="space-y-2 rounded-lg bg-gray-50 p-3">
             <span className="text-xs font-medium text-gray-500">Child Ages</span>
             <div className="grid grid-cols-2 gap-2">
               {childAges.map((age, i) => {

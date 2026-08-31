@@ -276,22 +276,16 @@ export default async function ShowDetailPage({
                           Taxes included &middot; no checkout fees
                         </p>
                         {/* Real Google rating — live via Places when a place
-                            id is set, else the verified values in shows.ts. */}
+                            id is set, else the verified values in shows.ts.
+                            Deliberately NOT a link: paid clicks shouldn't be
+                            handed back to Google mid-purchase. */}
                         {googleRating !== undefined &&
-                          googleReviewCount !== undefined &&
-                          show.googleReviewsUrl && (
-                            <a
-                              href={show.googleReviewsUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="mt-2 inline-flex items-center gap-1.5 text-xs text-white/85 hover:text-white"
-                            >
+                          googleReviewCount !== undefined && (
+                            <div className="mt-2 inline-flex items-center gap-1.5 text-xs text-white/85">
                               <Star className="h-3.5 w-3.5 fill-[#E8C65A] text-[#E8C65A]" aria-hidden />
                               <span className="font-bold text-white">{googleRating}</span>
-                              <span className="underline decoration-white/40 underline-offset-2">
-                                {googleReviewCount} Google reviews
-                              </span>
-                            </a>
+                              <span>{googleReviewCount} Google reviews</span>
+                            </div>
                           )}
                       </div>
                       <DealHighlights
@@ -413,7 +407,6 @@ export default async function ShowDetailPage({
                   reviews={place.reviews}
                   rating={googleRating}
                   reviewCount={googleReviewCount}
-                  reviewsUrl={show.googleReviewsUrl}
                   className="mb-10"
                 />
               )}

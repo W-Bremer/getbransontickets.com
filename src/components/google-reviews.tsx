@@ -5,20 +5,19 @@ interface GoogleReviewsProps {
   reviews: CuratedReview[];
   rating: number;
   reviewCount: number;
-  reviewsUrl?: string;
   className?: string;
 }
 
 /**
  * Curated 5-star guest quotes from the show's Google listing, shown with the
  * aggregate rating beside them so the highlights stay in honest context.
- * Author attribution is required for Google-sourced reviews.
+ * Author attribution is required for Google-sourced reviews. No outbound
+ * link — paid traffic stays on the page.
  */
 export function GoogleReviews({
   reviews,
   rating,
   reviewCount,
-  reviewsUrl,
   className,
 }: GoogleReviewsProps) {
   if (reviews.length === 0) return null;
@@ -29,16 +28,9 @@ export function GoogleReviews({
         <h2 className="text-2xl font-bold text-[#1A1614] font-heading">
           What Guests Say
         </h2>
-        {reviewsUrl && (
-          <a
-            href={reviewsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-[#13264D] hover:text-[#C8102E] transition-colors"
-          >
-            {rating}&#9733; &middot; all {reviewCount} Google reviews &rarr;
-          </a>
-        )}
+        <span className="text-sm font-medium text-gray-500">
+          {rating}&#9733; from {reviewCount} Google reviews
+        </span>
       </div>
 
       <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
