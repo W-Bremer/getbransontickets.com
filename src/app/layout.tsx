@@ -8,6 +8,7 @@ import { PhoneBar } from "@/components/layout/phone-bar";
 import { CartDrawer } from "@/components/cart-drawer";
 import { DeferredChatWidget } from "@/components/deferred-chat-widget";
 import { GoogleAdsTag } from "@/components/google-ads-tag";
+import { MicrosoftAdsTag } from "@/components/microsoft-ads-tag";
 import { siteConfig } from "@/lib/config";
 import "./globals.css";
 
@@ -132,6 +133,7 @@ export default function RootLayout({
         <CartDrawer />
         <Analytics />
         <GoogleAdsTag />
+        <MicrosoftAdsTag />
         <DeferredChatWidget />
       </body>
     </html>

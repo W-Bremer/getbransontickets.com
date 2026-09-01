@@ -11,6 +11,7 @@ import {
   reportAdsConversion,
   reportAdsPageView,
 } from "@/components/google-ads-tag";
+import { reportUetPurchase, uetSetCustomer } from "@/components/microsoft-ads-tag";
 import { StepIndicator } from "../step-indicator";
 
 // Written by /checkout right before it navigates here. Kept in
@@ -65,6 +66,11 @@ export function ConfirmationClient() {
       currency: "USD",
       transaction_id: parsed.orderNumber,
     });
+
+    // Microsoft Ads: enhanced-conversion identifiers must land before the
+    // event they should attach to, then the purchase with real revenue.
+    uetSetCustomer(parsed.email, parsed.phone);
+    reportUetPurchase(parsed.total, parsed.orderNumber);
   }, [router, clearCart]);
 
   if (!order) {
