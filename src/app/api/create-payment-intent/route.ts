@@ -126,6 +126,10 @@ export async function POST(req: Request) {
           customerName: trim(body.customerName),
           customerEmail,
           customerPhone: trim(body.customerPhone, 40),
+          // The contact form displays the email/text reminder disclosure, so
+          // details arriving through it carry consent for the one-time
+          // abandoned-cart reminder (see lib/cart-recovery.ts).
+          ...(customerEmail ? { contactConsent: "checkout-2026-09" } : {}),
           ...packCartMetadata(lines),
         },
       });

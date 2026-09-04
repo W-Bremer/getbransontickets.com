@@ -5,6 +5,10 @@ import {
   VOUCHER_SLA_HOURS,
   type OrderConfirmationData,
 } from "./order-confirmation-template";
+import {
+  renderCartRecoveryEmail,
+  type CartRecoveryData,
+} from "./cart-recovery-template";
 import { formatDate, formatQuantity } from "./email-format";
 import { siteConfig } from "./config";
 
@@ -157,6 +161,86 @@ export async function sendShowtimesDigestEmail({
     to: process.env.ORDER_ALERT_EMAIL ? [process.env.ORDER_ALERT_EMAIL] : ALERT_RECIPIENTS,
     ...(process.env.ORDER_ALERT_EMAIL ? {} : { cc: ALERT_CC }),
     subject,
+    text,
+    html: `<pre style="font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.6;color:#1A1614;">${text
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")}</pre>`,
+  });
+
+  if (result.error) {
+    throw new Error(`Resend error: ${result.error.message}`);
+  }
+
+  return result.data;
+}
+
+/** The one-time abandoned-checkout reminder to the customer. */
+export async function sendCartRecoveryEmail(data: CartRecoveryData) {
+  const { subject, html, text } = renderCartRecoveryEmail(data);
+
+  const result = await getResend().emails.send({
+    from: fromAddress(),
+    to: data.customerEmail,
+    subject,
+    html,
+    text,
+    replyTo: siteConfig.email,
+  });
+
+  if (result.error) {
+    throw new Error(`Resend error: ${result.error.message}`);
+  }
+
+  return result.data;
+}
+
+export interface AbandonedCartRow {
+  name: string;
+  email: string;
+  phone: string;
+  total: number;
+  summary: string;
+  createdUnix: number;
+}
+
+/**
+ * Tells the office who walked away from checkout after leaving contact
+ * details. Plain text like the order alert: it is a call list, not marketing.
+ * Big group carts are worth an actual phone call.
+ */
+export async function sendAbandonedCartOfficeAlert(rows: AbandonedCartRow[]) {
+  const lines = [
+    `ABANDONED CHECKOUT${rows.length === 1 ? "" : "S"}: ${rows.length}`,
+    "Each customer below got the automatic reminder email just now.",
+    "For larger carts (especially groups), a quick call closes far more than the email will.",
+  ];
+
+  rows.forEach((row) => {
+    lines.push("");
+    lines.push(`- ${row.name} — $${row.total.toFixed(2)}`);
+    lines.push(`  Email: ${row.email}`);
+    lines.push(`  Phone: ${row.phone || "not given"}`);
+    lines.push(`  Cart:  ${row.summary}`);
+    lines.push(
+      `  Started: ${new Date(row.createdUnix * 1000).toLocaleString("en-US", {
+        timeZone: "America/Chicago",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      })} (Branson time)`
+    );
+  });
+
+  const text = lines.join("\n");
+  const biggest = Math.max(...rows.map((r) => r.total));
+
+  const result = await getResend().emails.send({
+    from: fromAddress(),
+    to: process.env.ORDER_ALERT_EMAIL ? [process.env.ORDER_ALERT_EMAIL] : ALERT_RECIPIENTS,
+    ...(process.env.ORDER_ALERT_EMAIL ? {} : { cc: ALERT_CC }),
+    subject: `Abandoned cart${rows.length === 1 ? "" : "s"}: $${biggest.toFixed(0)}${rows.length > 1 ? ` +${rows.length - 1} more` : ""} — reminder sent, consider calling`,
     text,
     html: `<pre style="font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.6;color:#1A1614;">${text
       .replaceAll("&", "&amp;")

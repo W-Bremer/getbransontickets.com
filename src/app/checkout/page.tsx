@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -10,6 +10,7 @@ import {
   ArrowLeft,
   ArrowRight,
   ShoppingCart,
+  Phone,
   Plus,
 } from "lucide-react";
 import {
@@ -25,6 +26,7 @@ import type {
   StripeExpressCheckoutElementReadyEvent,
 } from "@stripe/stripe-js";
 import { useCartStore, type CartItem } from "@/stores/cart";
+import { siteConfig } from "@/lib/config";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import {
   CONVERSION_LABELS,
@@ -69,6 +71,29 @@ function expectedCents(items: CartItem[]) {
       Math.round(item.pricePerAdult * 100) * item.adults +
       Math.round(item.pricePerChild * 100) * item.children,
     0
+  );
+}
+
+/**
+ * Group carts convert better on the phone than in a form — a 10-seat order
+ * usually has questions the checkout can't answer. One compact line, only
+ * for parties this size.
+ */
+function GroupCallHint({ guests }: { guests: number }) {
+  if (guests < 8) return null;
+  return (
+    <a
+      href={`tel:${siteConfig.phoneRaw}`}
+      onClick={() => reportAdsConversion(CONVERSION_LABELS.callClick)}
+      className="mb-5 flex items-center justify-center gap-2 rounded-lg bg-[#13264D]/5 px-3 py-2.5 text-sm text-[#13264D] hover:bg-[#13264D]/10 transition-colors"
+    >
+      <Phone className="h-4 w-4 shrink-0" />
+      <span>
+        Booking {guests} people? Call{" "}
+        <span className="font-semibold underline underline-offset-2">{siteConfig.phone}</span>{" "}
+        — group orders by phone.
+      </span>
+    </a>
   );
 }
 
@@ -184,11 +209,14 @@ function ContactInfoStep({
   onNext,
   formData,
   setFormData,
+  onFieldBlur,
   disabled,
 }: {
   onNext: () => void;
   formData: ContactInfo;
   setFormData: (d: ContactInfo) => void;
+  /** Fires as fields are completed so partial contact info still reaches the intent. */
+  onFieldBlur: () => void;
   disabled?: boolean;
 }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -224,6 +252,7 @@ function ContactInfoStep({
           autoComplete="name"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          onBlur={onFieldBlur}
           placeholder="John Smith"
           className={`w-full rounded-lg border px-4 py-3 text-[#1A1614] placeholder:text-[#1A1614]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.name
@@ -246,6 +275,7 @@ function ContactInfoStep({
           inputMode="email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          onBlur={onFieldBlur}
           placeholder="john@example.com"
           className={`w-full rounded-lg border px-4 py-3 text-[#1A1614] placeholder:text-[#1A1614]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.email
@@ -268,6 +298,7 @@ function ContactInfoStep({
           inputMode="tel"
           value={formData.phone}
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+          onBlur={onFieldBlur}
           placeholder="(555) 123-4567"
           className={`w-full rounded-lg border px-4 py-3 text-[#1A1614] placeholder:text-[#1A1614]/30 focus:outline-none focus:ring-2 transition-all ${
             errors.phone
@@ -288,6 +319,11 @@ function ContactInfoStep({
         Continue to Payment
         <ArrowRight className="h-5 w-5" />
       </button>
+
+      <p className="text-xs leading-relaxed text-[#1A1614]/45">
+        We use these details only for this booking — including an email or
+        text reminder if you leave before finishing. No marketing lists.
+      </p>
     </div>
   );
 }
@@ -447,6 +483,9 @@ export default function CheckoutPage() {
   // and always travel with confirm-order after payment.
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [intentError, setIntentError] = useState<string | null>(null);
+  // Skips contact re-stamps when nothing changed; must sit above the early
+  // returns with the other hooks.
+  const lastStamp = useRef("");
 
   useEffect(() => {
     setMounted(true);
@@ -599,24 +638,33 @@ export default function CheckoutPage() {
     router.push("/checkout/confirmation");
   }
 
-  function handleContactContinue() {
-    // Stamp contact details onto the intent so the webhook backstop and the
-    // Stripe receipt know who bought, even if this tab closes mid-payment.
-    // Fire-and-forget: checkout must not wait on it.
+  // Stamp contact details onto the intent so the webhook backstop, the
+  // Stripe receipt, and the abandoned-cart reminder know who this is — even
+  // if the tab closes mid-checkout. Fires on field blur (once the email looks
+  // usable) and again on Continue; fire-and-forget, checkout never waits on
+  // it, and the ref skips sends when nothing changed.
+  function stampContact() {
     const paymentIntentId = clientSecret?.split("_secret")[0];
-    if (paymentIntentId) {
-      fetch("/api/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          paymentIntentId,
-          customerName: formData.name,
-          customerEmail: formData.email,
-          customerPhone: formData.phone,
-          items: itemsPayload(items),
-        }),
-      }).catch(() => {});
-    }
+    if (!paymentIntentId) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) return;
+    const signature = JSON.stringify([paymentIntentId, formData]);
+    if (signature === lastStamp.current) return;
+    lastStamp.current = signature;
+    fetch("/api/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        paymentIntentId,
+        customerName: formData.name,
+        customerEmail: formData.email,
+        customerPhone: formData.phone,
+        items: itemsPayload(items),
+      }),
+    }).catch(() => {});
+  }
+
+  function handleContactContinue() {
+    stampContact();
     setStep(2);
   }
 
@@ -660,6 +708,9 @@ export default function CheckoutPage() {
                 )}
                 {step === 1 && (
                   <>
+                    <GroupCallHint
+                      guests={items.reduce((n, i) => n + i.adults + i.children, 0)}
+                    />
                     {clientSecret && (
                       <Elements
                         key={`express-${clientSecret}`}
@@ -673,6 +724,7 @@ export default function CheckoutPage() {
                       onNext={handleContactContinue}
                       formData={formData}
                       setFormData={setFormData}
+                      onFieldBlur={stampContact}
                       disabled={!!intentError}
                     />
                   </>
