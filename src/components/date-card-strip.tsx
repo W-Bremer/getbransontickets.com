@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
 import { openBooking } from "@/components/book-now-button";
+import { loadSchedule } from "@/lib/schedule-client";
 import { DEMAND_LABELS, type DemandLevel } from "@/lib/demand";
 
 const DEMAND_TEXT: Record<DemandLevel, string> = {
@@ -14,10 +15,6 @@ const DEMAND_TEXT: Record<DemandLevel, string> = {
 
 interface DateCardStripProps {
   slug: string;
-}
-
-interface ScheduleResponse {
-  dates: { date: string; times: string[]; demand?: DemandLevel }[];
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -35,9 +32,8 @@ export function DateCardStrip({ slug }: DateCardStripProps) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`/api/schedule/${slug}`)
-      .then((res) => (res.ok ? res.json() : Promise.reject()))
-      .then((data: ScheduleResponse) => {
+    loadSchedule(slug)
+      .then((data) => {
         if (!cancelled) {
           setAvailability(new Map(data.dates.map((d) => [d.date, d.times])));
           setDemandMap(

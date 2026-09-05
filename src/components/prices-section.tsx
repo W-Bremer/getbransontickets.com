@@ -9,6 +9,8 @@ interface PricesSectionProps {
   childPriceFrom?: number;
   kidsFreeUnderAge?: number;
   bogo50?: boolean;
+  /** Outer spacing; the default suits the standalone placement. */
+  className?: string;
 }
 
 function PriceCard({
@@ -51,12 +53,13 @@ export function PricesSection({
   childPriceFrom,
   kidsFreeUnderAge,
   bogo50,
+  className = "mt-12",
 }: PricesSectionProps) {
   const baseAdult = baseOf(priceFrom);
   const bogoPair = Math.round((2 * baseAdult - baseAdult / 2) * 100) / 100;
 
   return (
-    <div className="mt-12">
+    <div className={className}>
       <h2 className="text-2xl font-bold text-[#1A1614] font-heading">Prices</h2>
       <p className="mt-2 flex items-center gap-2 text-sm text-[#1A1614]/70">
         <Info className="h-4 w-4 shrink-0 text-[#13264D]" aria-hidden />

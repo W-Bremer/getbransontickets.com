@@ -61,11 +61,13 @@ export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
           {/* Logo */}
           <Link href="/" className="group flex items-center">
+            {/* logo-nav.png is a small pre-resized copy; the full logo.png
+                stays for the footer and email templates. */}
             <Image
-              src="/logo.png"
+              src="/logo-nav.png"
               alt="Get Branson Tickets"
-              width={220}
-              height={60}
+              width={334}
+              height={112}
               className="h-14 w-auto transition-transform group-hover:scale-105"
               priority
             />

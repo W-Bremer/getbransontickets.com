@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, Phone } from "lucide-react";
 import { openBooking } from "@/components/book-now-button";
 import { siteConfig } from "@/lib/config";
+import { loadSchedule } from "@/lib/schedule-client";
 import { DEMAND_LABELS, type DemandLevel } from "@/lib/demand";
 
 const DEMAND_PILLS: Record<DemandLevel, string> = {
@@ -17,10 +18,6 @@ interface UpcomingTimesListProps {
   slug: string;
   /** Extra dates revealed by "Show more". */
   initialCount?: number;
-}
-
-interface ScheduleResponse {
-  dates: { date: string; times: string[]; demand?: DemandLevel }[];
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -45,9 +42,8 @@ export default function UpcomingTimesList({
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`/api/schedule/${slug}`)
-      .then((res) => (res.ok ? res.json() : Promise.reject()))
-      .then((data: ScheduleResponse) => {
+    loadSchedule(slug)
+      .then((data) => {
         if (!cancelled) setDates(data.dates);
       })
       .catch(() => {

@@ -37,8 +37,10 @@ export function TabNavigation({
     }
   }, [activeTab]);
 
+  // The sticky offset must clear the fixed chrome: 36px phone bar + 80px
+  // header on mobile, 80px header from md up.
   return (
-    <div className="sticky top-16 z-30 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
+    <div className="sticky top-[116px] md:top-20 z-30 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
       <div
         ref={containerRef}
         className="relative flex overflow-x-auto scrollbar-none"

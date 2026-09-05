@@ -745,73 +745,10 @@ export default function CheckoutPage() {
           {/* Contact step centers alone; the payment step splits with the
               Order Summary column. */}
           <div className={step === 2 ? "lg:grid lg:grid-cols-3 lg:gap-8" : "mx-auto max-w-3xl"}>
-            {/* Form Area */}
-            <div className={step === 2 ? "lg:col-span-2" : ""}>
-              <div className="rounded-2xl bg-white p-6 sm:p-8 shadow-sm border border-gray-100">
-                {intentError && (
-                  <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
-                    {intentError}
-                  </div>
-                )}
-                {step === 1 && (
-                  <>
-                    <GroupCallHint
-                      guests={items.reduce((n, i) => n + i.adults + i.children, 0)}
-                    />
-                    {clientSecret && (
-                      <Elements
-                        key={`express-${clientSecret}`}
-                        stripe={getStripe()}
-                        options={{ clientSecret, appearance }}
-                      >
-                        <ExpressCheckoutSection onSuccess={handleCompleteBooking} />
-                      </Elements>
-                    )}
-                    <ContactInfoStep
-                      onNext={handleContactContinue}
-                      formData={formData}
-                      setFormData={setFormData}
-                      onFieldBlur={stampContact}
-                      disabled={!!intentError}
-                    />
-                  </>
-                )}
-                {step === 2 &&
-                  (clientSecret ? (
-                    <Elements
-                      key={`payment-${clientSecret}`}
-                      stripe={getStripe()}
-                      options={{ clientSecret, appearance }}
-                    >
-                      <StripePaymentForm
-                        onBack={() => setStep(1)}
-                        onSuccess={handleCompleteBooking}
-                        contactEmail={formData.email}
-                        contactName={formData.name}
-                        contactPhone={formData.phone}
-                      />
-                    </Elements>
-                  ) : !intentError ? (
-                    <div className="flex flex-col items-center justify-center gap-3 py-16">
-                      <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#13264D] border-t-transparent" />
-                      <p className="text-sm text-[#1A1614]/60">Preparing secure payment...</p>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => setStep(1)}
-                      className="flex items-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-3 font-semibold text-[#1A1614]/70 hover:border-[#13264D] hover:text-[#13264D] transition-all"
-                    >
-                      <ArrowLeft className="h-4 w-4" />
-                      Back
-                    </button>
-                  ))}
-              </div>
-            </div>
-
             {/* Cart Summary Sidebar; shown at the payment step, where the
                 money conversation belongs. */}
             {step === 2 && (
-            <div className="mt-8 lg:mt-0">
+            <div className="mb-8 lg:mb-0 lg:col-start-3 lg:row-start-1">
                 <div className="sticky top-24 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
                   <h2 className="text-lg font-bold text-[#1A1614] mb-4">
                     Order Summary
@@ -919,6 +856,70 @@ export default function CheckoutPage() {
                 </div>
             </div>
             )}
+
+            {/* Form Area */}
+            <div className={step === 2 ? "lg:col-span-2 lg:col-start-1 lg:row-start-1" : ""}>
+              <div className="rounded-2xl bg-white p-6 sm:p-8 shadow-sm border border-gray-100">
+                {intentError && (
+                  <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+                    {intentError}
+                  </div>
+                )}
+                {step === 1 && (
+                  <>
+                    <GroupCallHint
+                      guests={items.reduce((n, i) => n + i.adults + i.children, 0)}
+                    />
+                    {clientSecret && (
+                      <Elements
+                        key={`express-${clientSecret}`}
+                        stripe={getStripe()}
+                        options={{ clientSecret, appearance }}
+                      >
+                        <ExpressCheckoutSection onSuccess={handleCompleteBooking} />
+                      </Elements>
+                    )}
+                    <ContactInfoStep
+                      onNext={handleContactContinue}
+                      formData={formData}
+                      setFormData={setFormData}
+                      onFieldBlur={stampContact}
+                      disabled={!!intentError}
+                    />
+                  </>
+                )}
+                {step === 2 &&
+                  (clientSecret ? (
+                    <Elements
+                      key={`payment-${clientSecret}`}
+                      stripe={getStripe()}
+                      options={{ clientSecret, appearance }}
+                    >
+                      <StripePaymentForm
+                        onBack={() => setStep(1)}
+                        onSuccess={handleCompleteBooking}
+                        contactEmail={formData.email}
+                        contactName={formData.name}
+                        contactPhone={formData.phone}
+                      />
+                    </Elements>
+                  ) : !intentError ? (
+                    <div className="flex flex-col items-center justify-center gap-3 py-16">
+                      <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#13264D] border-t-transparent" />
+                      <p className="text-sm text-[#1A1614]/60">Preparing secure payment...</p>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setStep(1)}
+                      className="flex items-center gap-2 rounded-xl border-2 border-gray-200 px-6 py-3 font-semibold text-[#1A1614]/70 hover:border-[#13264D] hover:text-[#13264D] transition-all"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Back
+                    </button>
+                  ))}
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
