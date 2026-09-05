@@ -126,14 +126,13 @@ function GroupCallHint({ guests }: { guests: number }) {
 function DiscountSelector({
   discountType,
   onChange,
-  updating,
 }: {
   discountType: DiscountType;
   onChange: (d: DiscountType) => void;
-  updating: boolean;
 }) {
+  // No preselection and no "no discount" chip: tapping a chip selects it,
+  // tapping it again deselects (back to none).
   const options: { value: DiscountType; label: string }[] = [
-    { value: "none", label: "No discount" },
     { value: "senior", label: "Senior 55+" },
     { value: "military", label: "Military or Veteran" },
   ];
@@ -154,7 +153,7 @@ function DiscountSelector({
             type="button"
             role="radio"
             aria-checked={discountType === o.value}
-            onClick={() => onChange(o.value)}
+            onClick={() => onChange(discountType === o.value ? "none" : o.value)}
             className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
               discountType === o.value
                 ? "border-[#13264D] bg-[#13264D] text-white"
@@ -165,11 +164,6 @@ function DiscountSelector({
           </button>
         ))}
       </div>
-      <p className="mt-2 text-[11px] leading-relaxed text-[#1A1614]/45">
-        {updating
-          ? "Updating your total..."
-          : "Your discount shows at payment. One discount per order. ID may be checked at the theater."}
-      </p>
     </div>
   );
 }
@@ -818,7 +812,6 @@ export default function CheckoutPage() {
                     <DiscountSelector
                       discountType={discountType}
                       onChange={setDiscountType}
-                      updating={!clientSecret && !intentError}
                     />
                     {clientSecret && (
                       <Elements
