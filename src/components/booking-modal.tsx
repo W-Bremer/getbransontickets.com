@@ -122,6 +122,7 @@ export function BookingModal({
             initialChildren={preselect.children}
             bogo50={bogo50}
             largeCalendar
+            competitorPrice={competitorPrice}
           />
         </div>
       </div>

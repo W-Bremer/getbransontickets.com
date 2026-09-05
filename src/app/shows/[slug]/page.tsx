@@ -377,6 +377,7 @@ export default async function ShowDetailPage({
                           imageUrl={show.imageUrl}
                           kidsFreeUnderAge={show.kidsFreeUnderAge}
                           bogo50={show.bogo50}
+                          competitorPrice={show.competitorPrice}
                         />
                       </div>
                     </div>

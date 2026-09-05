@@ -16,6 +16,8 @@ export interface CartItem {
   pricePerChild: number;
   /** Mirror of the show's BOGO 50% flag for client display; server re-derives from the catalog. */
   bogo50?: boolean;
+  /** Competitor's documented listed per-adult rate, for the struck-through compare line. */
+  competitorPricePerAdult?: number;
   imageUrl?: string;
 }
 

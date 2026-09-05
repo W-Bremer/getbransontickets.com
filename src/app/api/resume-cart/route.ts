@@ -64,6 +64,7 @@ export async function POST(req: Request) {
           pricePerAdult: prices.adult,
           pricePerChild: prices.child,
           bogo50: prices.bogo50 || undefined,
+          competitorPricePerAdult: show.competitorPrice,
           imageUrl: show.imageUrl,
         };
       })

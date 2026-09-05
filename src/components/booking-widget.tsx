@@ -26,6 +26,8 @@ interface BookingWidgetProps {
   bogo50?: boolean;
   /** Roomier calendar with demand labels written on the dates (the booking popup). */
   largeCalendar?: boolean;
+  /** Competitor's listed per-adult rate; stored on the cart item for the compare line. */
+  competitorPrice?: number;
 }
 
 interface ScheduleResponse {
@@ -72,6 +74,7 @@ export default function BookingWidget({
   initialChildren,
   bogo50,
   largeCalendar,
+  competitorPrice,
 }: BookingWidgetProps) {
   const router = useRouter();
   const today = new Date();
@@ -341,6 +344,7 @@ export default function BookingWidget({
         pricePerAdult,
         pricePerChild,
         bogo50,
+        competitorPricePerAdult: competitorPrice,
         imageUrl,
       });
       router.push("/checkout");

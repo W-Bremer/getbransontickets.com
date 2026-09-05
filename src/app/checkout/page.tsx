@@ -33,7 +33,7 @@ import {
   computeAdjustments,
   type DiscountType,
 } from "@/lib/adjustments";
-import { cartBaseSubtotal, cartTax } from "@/lib/tax";
+import { baseOf, cartBaseSubtotal, cartTax } from "@/lib/tax";
 import { siteConfig } from "@/lib/config";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import {
@@ -141,7 +141,7 @@ function DiscountSelector({
     <div className="mb-5 rounded-lg bg-[#F6F4EF] p-3">
       <div className="flex items-center gap-1.5 text-sm font-semibold text-[#1A1614]">
         <BadgePercent className="h-4 w-4 text-[#C8102E]" />
-        Senior or military? Save $5.
+        Senior or military? Save on your order.
       </div>
       <div
         className="mt-2 flex flex-wrap gap-1.5"
@@ -168,7 +168,7 @@ function DiscountSelector({
       <p className="mt-2 text-[11px] leading-relaxed text-[#1A1614]/45">
         {updating
           ? "Updating your total..."
-          : "$5 off your order. One discount per order. ID may be checked at the theater."}
+          : "Your discount shows at payment. One discount per order. ID may be checked at the theater."}
       </p>
     </div>
   );
@@ -868,7 +868,9 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Cart Summary Sidebar */}
+            {/* Cart Summary Sidebar; shown at the payment step, where the
+                money conversation belongs. */}
+            {step === 2 && (
             <div className="mt-8 lg:mt-0">
                 <div className="sticky top-24 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
                   <h2 className="text-lg font-bold text-[#1A1614] mb-4">
@@ -879,6 +881,13 @@ export default function CheckoutPage() {
                       // Line prices advertise the pre-tax base; the embedded
                       // tax shows once, in the Taxes row below.
                       const sub = cartBaseSubtotal([item]);
+                      // What the same seats list for on the competitor site
+                      // (their adult rate; kids at our rate when present).
+                      const compare =
+                        item.competitorPricePerAdult !== undefined
+                          ? item.competitorPricePerAdult * item.adults +
+                            baseOf(item.pricePerChild) * item.children
+                          : null;
                       return (
                         <div
                           key={`${item.id}-${item.date}-${i}`}
@@ -888,8 +897,15 @@ export default function CheckoutPage() {
                             <span className="text-[#1A1614] font-medium truncate mr-2">
                               {item.name}
                             </span>
-                            <span className="font-semibold text-[#1A1614] whitespace-nowrap">
-                              ${sub.toFixed(2)}
+                            <span className="text-right">
+                              {compare !== null && compare > sub && (
+                                <span className="block text-xs leading-tight text-gray-400 line-through">
+                                  ${compare.toFixed(2)}
+                                </span>
+                              )}
+                              <span className="font-semibold text-[#1A1614] whitespace-nowrap">
+                                ${sub.toFixed(2)}
+                              </span>
                             </span>
                           </div>
                           <p className="text-xs text-[#1A1614]/40">
@@ -942,6 +958,7 @@ export default function CheckoutPage() {
                   </Link>
                 </div>
             </div>
+            )}
           </div>
         </div>
       </section>
