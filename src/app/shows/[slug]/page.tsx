@@ -283,7 +283,7 @@ export default async function ShowDetailPage({
                               <span className="text-3xl font-bold leading-none text-white">
                                 ${formatBasePrice(show.priceFrom)}
                               </span>
-                              <span className="text-sm text-white/70">/ adult + tax</span>
+                              <span className="text-sm whitespace-nowrap text-white/70">/ adult + tax</span>
                             </div>
                             {show.competitorPrice !== undefined && (
                               <p className="mt-0.5 text-[11px] text-[#E8C65A]">
