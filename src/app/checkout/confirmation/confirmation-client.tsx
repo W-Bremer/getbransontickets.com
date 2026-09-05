@@ -161,7 +161,7 @@ export function ConfirmationClient() {
               {order.emailSent ? (
                 <div className="rounded-xl border-l-4 border-[#C8102E] bg-[#FDF3F4] p-5 text-left">
                   <p className="text-base font-bold text-[#C8102E]">
-                    Your vouchers arrive within minutes.
+                    Your confirmation email will arrive within minutes.
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-[#1A1614]/75">
                     We sent a receipt to{" "}

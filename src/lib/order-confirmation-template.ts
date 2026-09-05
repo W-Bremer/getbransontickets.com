@@ -77,10 +77,6 @@ export function renderOrderConfirmationEmail(data: OrderConfirmationData): {
   const baseSubtotal = cartBaseSubtotal(data.items);
   const taxes = cartTax(data.items);
   const adjustments = data.adjustments ?? [];
-  const voucherWord = data.items.length === 1 ? "voucher" : "vouchers";
-  // "show" stays singular here: it is modifying "voucher", not counting shows.
-  const voucherClause =
-    data.items.length === 1 ? "show voucher comes" : "show vouchers come";
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -92,7 +88,7 @@ export function renderOrderConfirmationEmail(data: OrderConfirmationData): {
 <body style="margin:0;padding:0;background:${BG_PAPER};font-family:Arial,sans-serif;">
   <!-- Preheader: shown in the inbox preview, hidden in the body. -->
   <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
-    We have your order. Your show ${voucherWord} will arrive within ${VOUCHER_SLA_HOURS} hours.
+    We have your order. Your tickets will arrive within ${VOUCHER_SLA_HOURS} hours.
   </div>
 
   <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:${BG_PAPER};">
@@ -131,17 +127,17 @@ export function renderOrderConfirmationEmail(data: OrderConfirmationData): {
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top:24px;border-left:4px solid ${RED};background:#fdf3f4;border-radius:6px;">
                 <tr>
                   <td style="padding:18px 20px;font-family:Arial,sans-serif;color:${TEXT_DARK};">
-                    <div style="font-size:16px;font-weight:bold;color:${RED};">Your ${voucherWord} will arrive within ${VOUCHER_SLA_HOURS} hours</div>
+                    <div style="font-size:16px;font-weight:bold;color:${RED};">Your tickets will arrive within ${VOUCHER_SLA_HOURS} hours</div>
                     <div style="font-size:14px;line-height:1.65;margin-top:8px;color:#4a443f;">
-                      This email is your receipt, not your ticket. We book every seat through the
-                      theater by hand, so your ${voucherClause} in a second email within
-                      ${VOUCHER_SLA_HOURS} hours. That voucher is what the box office scans.
-                      Nothing else is needed from you before then.
+                      This email is your receipt. We book every seat through the
+                      theater by hand, so your tickets come in a second email within
+                      ${VOUCHER_SLA_HOURS} hours. That second email is what the box office
+                      scans. Nothing else is needed from you before then.
                     </div>
                     <div style="font-size:14px;line-height:1.65;margin-top:10px;color:#4a443f;">
                       Attending today or tomorrow? Call us at
                       <a href="tel:${escapeHtml(siteConfig.phoneRaw)}" style="color:${RED};font-weight:bold;text-decoration:none;">${escapeHtml(siteConfig.phone)}</a>
-                      and we will move your ${voucherWord} to the front of the line.
+                      and we will move your tickets to the front of the line.
                     </div>
                   </td>
                 </tr>
@@ -180,11 +176,11 @@ export function renderOrderConfirmationEmail(data: OrderConfirmationData): {
                 </tr>
                 <tr>
                   <td valign="top" width="28" style="padding:0 0 12px 0;color:${NAVY};font-weight:bold;">2.</td>
-                  <td style="padding:0 0 12px 0;">You get a second email with a voucher for each show, within ${VOUCHER_SLA_HOURS} hours.</td>
+                  <td style="padding:0 0 12px 0;">You get a second email with your tickets for each show, within ${VOUCHER_SLA_HOURS} hours.</td>
                 </tr>
                 <tr>
                   <td valign="top" width="28" style="padding:0;color:${NAVY};font-weight:bold;">3.</td>
-                  <td style="padding:0;">Show that voucher at the box office, printed or on your phone. Arrive 30 minutes before showtime.</td>
+                  <td style="padding:0;">Show those tickets at the box office, printed or on your phone. Arrive 30 minutes before showtime.</td>
                 </tr>
               </table>
 
@@ -193,7 +189,7 @@ export function renderOrderConfirmationEmail(data: OrderConfirmationData): {
                   <td style="padding:16px 0;border-top:1px solid #e5e7eb;font-family:Arial,sans-serif;color:#5b5651;font-size:12px;line-height:1.6;">
                     <strong style="color:${TEXT_DARK};">Need to change something?</strong> Reply to this email or call
                     <a href="tel:${escapeHtml(siteConfig.phoneRaw)}" style="color:${NAVY};text-decoration:none;">${escapeHtml(siteConfig.phone)}</a>.
-                    Have your order number handy and we can sort it out before the ${voucherWord} go out.
+                    Have your order number handy and we can sort it out before your tickets go out.
                   </td>
                 </tr>
               </table>
@@ -221,14 +217,14 @@ export function renderOrderConfirmationEmail(data: OrderConfirmationData): {
     `Order Number: ${data.orderNumber}`,
     `Total Paid: $${data.totalAmount.toFixed(2)}`,
     "",
-    `YOUR ${voucherWord.toUpperCase()} WILL ARRIVE WITHIN ${VOUCHER_SLA_HOURS} HOURS`,
+    `YOUR TICKETS WILL ARRIVE WITHIN ${VOUCHER_SLA_HOURS} HOURS`,
     "",
-    "This email is your receipt, not your ticket. We book every seat through the",
-    `theater by hand, so your ${voucherClause} in a second email within`,
-    `${VOUCHER_SLA_HOURS} hours. That voucher is what the box office scans.`,
+    "This email is your receipt. We book every seat through the theater by",
+    `hand, so your tickets come in a second email within ${VOUCHER_SLA_HOURS} hours.`,
+    "That second email is what the box office scans.",
     "",
     `Attending today or tomorrow? Call ${siteConfig.phone} and we will move your`,
-    `${voucherWord} to the front of the line.`,
+    "tickets to the front of the line.",
     "",
     "=== YOUR ORDER ===",
   ];
@@ -255,10 +251,10 @@ export function renderOrderConfirmationEmail(data: OrderConfirmationData): {
   textLines.push("WHAT HAPPENS NEXT:");
   textLines.push("1. We confirm your seats with the theater.");
   textLines.push(
-    `2. You get a second email with a voucher for each show, within ${VOUCHER_SLA_HOURS} hours.`
+    `2. You get a second email with your tickets for each show, within ${VOUCHER_SLA_HOURS} hours.`
   );
   textLines.push(
-    "3. Show that voucher at the box office, printed or on your phone. Arrive 30 minutes before showtime."
+    "3. Show those tickets at the box office, printed or on your phone. Arrive 30 minutes before showtime."
   );
   textLines.push("");
   textLines.push(
