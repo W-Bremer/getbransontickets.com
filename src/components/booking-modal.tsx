@@ -78,8 +78,9 @@ export function BookingModal({
         onClick={() => setOpen(false)}
       />
 
-      {/* Panel: full-screen sheet on phones, card on larger screens */}
-      <div className="relative flex w-full flex-col bg-white sm:h-auto sm:max-h-[92vh] sm:max-w-md sm:rounded-2xl sm:shadow-2xl overflow-hidden">
+      {/* Panel: full-screen sheet on phones, roomy card on larger screens so
+          the calendar can carry demand labels on the dates. */}
+      <div className="relative flex w-full flex-col bg-white sm:h-auto sm:max-h-[92vh] sm:max-w-xl sm:rounded-2xl sm:shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between gap-3 border-b border-gray-200 bg-[#13264D] px-4 py-3">
           <div className="min-w-0">
             <p className="truncate text-sm font-bold text-white">{showName}</p>
@@ -120,6 +121,7 @@ export function BookingModal({
             initialAdults={preselect.adults}
             initialChildren={preselect.children}
             bogo50={bogo50}
+            largeCalendar
           />
         </div>
       </div>

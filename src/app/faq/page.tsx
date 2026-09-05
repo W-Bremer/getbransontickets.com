@@ -78,7 +78,7 @@ const faqCategories = [
       {
         question: "How does BOGO 50% work?",
         answer:
-          "On shows with the BOGO 50% offer, every pair of adult tickets gets the second ticket at half price. It is applied automatically at checkout. No code needed.",
+          "On shows with the BOGO 50% offer, buy one adult ticket and your second adult ticket is half price. It is applied automatically at checkout, one discounted ticket per order. No code needed.",
       },
       {
         question: "How do BOGO offers work?",

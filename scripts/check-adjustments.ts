@@ -79,10 +79,11 @@ check(
   fullCents
 );
 
-// BOGO 50%: half off the 2nd adult of every pair, on flagged lines only.
+// BOGO 50%: half off ONE 2nd adult ticket per flagged line, never more.
 check("bogo 2 adults @4800c", bogoAmountCents([{ adults: 2, adultPriceCents: 4800, bogo50: true }]), 2400);
-check("bogo 3 adults = one pair", bogoAmountCents([{ adults: 3, adultPriceCents: 4800, bogo50: true }]), 2400);
-check("bogo 4 adults = two pairs", bogoAmountCents([{ adults: 4, adultPriceCents: 4800, bogo50: true }]), 4800);
+check("bogo 3 adults = still one", bogoAmountCents([{ adults: 3, adultPriceCents: 4800, bogo50: true }]), 2400);
+check("bogo 4 adults = still one", bogoAmountCents([{ adults: 4, adultPriceCents: 4800, bogo50: true }]), 2400);
+check("bogo 10 adults = still one", bogoAmountCents([{ adults: 10, adultPriceCents: 4800, bogo50: true }]), 2400);
 check("bogo 1 adult = nothing", bogoAmountCents([{ adults: 1, adultPriceCents: 4800, bogo50: true }]), 0);
 check("bogo off unflagged line", bogoAmountCents([{ adults: 2, adultPriceCents: 4800 }]), 0);
 check("bogo odd price floors", bogoAmountCents([{ adults: 2, adultPriceCents: 4801, bogo50: true }]), 2400);

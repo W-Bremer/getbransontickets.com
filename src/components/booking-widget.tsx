@@ -22,8 +22,10 @@ interface BookingWidgetProps {
   /** Prefill the guest steppers (family bundle strip, ?adults=&children= links). */
   initialAdults?: number;
   initialChildren?: number;
-  /** BOGO 50%: every 2nd adult ticket in a pair is half price, applied automatically. */
+  /** BOGO 50%: one 2nd adult ticket per order at half price, applied automatically. */
   bogo50?: boolean;
+  /** Roomier calendar with demand labels written on the dates (the booking popup). */
+  largeCalendar?: boolean;
 }
 
 interface ScheduleResponse {
@@ -33,12 +35,20 @@ interface ScheduleResponse {
   dates: { date: string; times: string[]; demand?: DemandLevel }[];
 }
 
-/** Dot colors for the calendar demand markers. */
+/** Dot colors for the compact calendar demand markers. */
 const DEMAND_DOTS: Record<DemandLevel, string> = {
   available: "bg-emerald-500",
   limited: "bg-amber-400",
   "going-fast": "bg-[#C8102E]",
   "sold-out": "bg-gray-300",
+};
+
+/** Label colors for the large (popup) calendar, written on the dates. */
+const DEMAND_TEXT: Record<DemandLevel, string> = {
+  available: "text-emerald-600",
+  limited: "text-amber-500",
+  "going-fast": "text-[#C8102E]",
+  "sold-out": "text-gray-400",
 };
 
 const MONTHS = [
@@ -61,6 +71,7 @@ export default function BookingWidget({
   initialAdults,
   initialChildren,
   bogo50,
+  largeCalendar,
 }: BookingWidgetProps) {
   const router = useRouter();
   const today = new Date();
@@ -74,14 +85,10 @@ export default function BookingWidget({
   /** ISO "YYYY-MM-DD"; string on purpose so month browsing cannot desync it. */
   const [selectedDate, setSelectedDate] = useState<string | null>(initialDate ?? null);
   const [selectedTime, setSelectedTime] = useState(initialTime ?? "");
-  const defaultChildAge = Math.max(5, (kidsFreeUnderAge ?? -1) + 1);
   const startAdults = Math.min(10, Math.max(1, initialAdults ?? 2));
   const startChildren = Math.min(8, Math.max(0, initialChildren ?? 0));
   const [adults, setAdults] = useState(startAdults);
   const [children, setChildren] = useState(startChildren);
-  const [childAges, setChildAges] = useState<number[]>(
-    Array(startChildren).fill(defaultChildAge)
-  );
 
   // Cross-page prefill: /shows/[slug]?adults=2&children=2 (family bundle rows
   // on theatre pages). Applied after mount so the SSG page hydrates cleanly.
@@ -91,11 +98,7 @@ export default function BookingWidget({
     const a = Number.parseInt(params.get("adults") ?? "", 10);
     const c = Number.parseInt(params.get("children") ?? "", 10);
     if (Number.isFinite(a) && a >= 1) setAdults(Math.min(10, a));
-    if (Number.isFinite(c) && c >= 0) {
-      const clamped = Math.min(8, c);
-      setChildren(clamped);
-      setChildAges(Array(clamped).fill(defaultChildAge));
-    }
+    if (Number.isFinite(c) && c >= 0) setChildren(Math.min(8, c));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -278,25 +281,6 @@ export default function BookingWidget({
     ? (availability?.get(selectedDate) ?? [])
     : [];
 
-  const handleChildrenChange = (newCount: number) => {
-    setChildren(newCount);
-    const defaultAge = Math.max(5, (kidsFreeUnderAge ?? -1) + 1);
-    setChildAges((prev) => {
-      if (newCount > prev.length) {
-        return [...prev, ...Array(newCount - prev.length).fill(defaultAge)];
-      }
-      return prev.slice(0, newCount);
-    });
-  };
-
-  const setChildAge = (index: number, age: number) => {
-    setChildAges((prev) => {
-      const next = [...prev];
-      next[index] = age;
-      return next;
-    });
-  };
-
   const handleSubmit = async () => {
     if (!selectedDate || !selectedTime || phase !== "idle") return;
     setCheckError(null);
@@ -353,7 +337,7 @@ export default function BookingWidget({
         time: selectedTime,
         adults,
         children,
-        childAges,
+        childAges: [],
         pricePerAdult,
         pricePerChild,
         bogo50,
@@ -368,10 +352,10 @@ export default function BookingWidget({
   // cart-level Taxes row.
   const baseAdult = baseOf(pricePerAdult);
   const baseChild = baseOf(pricePerChild);
-  // BOGO 50% shown in the same pre-tax terms as the line prices.
-  const bogoBaseOff = bogo50
-    ? Math.floor(adults / 2) * (Math.round((baseAdult / 2) * 100) / 100)
-    : 0;
+  // BOGO 50% shown in the same pre-tax terms as the line prices. One
+  // discounted 2nd ticket per order, no matter how many adults.
+  const bogoBaseOff =
+    bogo50 && adults >= 2 ? Math.round((baseAdult / 2) * 100) / 100 : 0;
   const baseSubtotal = adults * baseAdult + children * baseChild - bogoBaseOff;
 
   if (bookingDisabled) {
@@ -452,7 +436,11 @@ export default function BookingWidget({
               disabled={disabled}
               onClick={() => selectDate(dateStr)}
               title={demand ? DEMAND_LABELS[demand] : undefined}
-              className={`relative rounded py-1.5 lg:py-1 text-sm lg:text-xs transition-colors ${
+              className={`relative rounded transition-colors ${
+                largeCalendar
+                  ? `pt-1.5 text-base ${demand ? "pb-4" : "pb-1.5"}`
+                  : "py-1.5 lg:py-1 text-sm lg:text-xs"
+              } ${
                 disabled
                   ? `cursor-not-allowed text-gray-300 ${soldOut ? "line-through" : ""}`
                   : isSelected
@@ -461,19 +449,29 @@ export default function BookingWidget({
               }`}
             >
               {day}
-              {demand && (
-                <span
-                  aria-hidden
-                  className={`absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full ${DEMAND_DOTS[demand]}`}
-                />
-              )}
+              {demand &&
+                (largeCalendar ? (
+                  <span
+                    className={`pointer-events-none absolute bottom-0.5 left-0 right-0 truncate px-0.5 text-center text-[8px] font-bold uppercase leading-none tracking-tight no-underline ${
+                      isSelected ? "text-white/85" : DEMAND_TEXT[demand]
+                    }`}
+                  >
+                    {DEMAND_LABELS[demand]}
+                  </span>
+                ) : (
+                  <span
+                    aria-hidden
+                    className={`absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full ${DEMAND_DOTS[demand]}`}
+                  />
+                ))}
             </button>
           );
         })}
       </div>
 
-      {/* Demand legend, only when the show sends demand labels */}
-      {demandMap && demandMap.size > 0 && (
+      {/* Demand legend for the compact calendar; the large one writes the
+          labels on the dates themselves. */}
+      {!largeCalendar && demandMap && demandMap.size > 0 && (
         <div className="mb-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px] text-gray-500">
           {(["available", "limited", "going-fast", "sold-out"] as const).map((level) => (
             <span key={level} className="inline-flex items-center gap-1">
@@ -545,7 +543,7 @@ export default function BookingWidget({
           <span className="text-sm text-[#1A1614]">Children</span>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => handleChildrenChange(Math.max(0, children - 1))}
+              onClick={() => setChildren((c) => Math.max(0, c - 1))}
               className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
               aria-label="Remove child"
             >
@@ -553,7 +551,7 @@ export default function BookingWidget({
             </button>
             <span className="w-6 text-center text-sm font-medium">{children}</span>
             <button
-              onClick={() => handleChildrenChange(Math.min(8, children + 1))}
+              onClick={() => setChildren((c) => Math.min(8, c + 1))}
               className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
               aria-label="Add child"
             >
@@ -562,41 +560,12 @@ export default function BookingWidget({
           </div>
         </div>
 
-        {/* Child age dropdowns. Ages at or under the free cutoff aren't
-            offered: those kids enter free without a ticket, and offering the
-            age here would quietly charge full child price for them. */}
-        {children > 0 && (
-          <div className="space-y-2 rounded-lg bg-gray-50 p-3">
-            <span className="text-xs font-medium text-gray-500">Child Ages</span>
-            <div className="grid grid-cols-2 gap-2">
-              {childAges.map((age, i) => {
-                const minAge = (kidsFreeUnderAge ?? -1) + 1;
-                return (
-                  <div key={i} className="flex items-center gap-1.5">
-                    <span className="text-xs text-gray-500">#{i + 1}</span>
-                    <select
-                      value={Math.max(age, minAge)}
-                      onChange={(e) => setChildAge(i, Number(e.target.value))}
-                      className="w-full rounded border border-gray-300 px-2 py-1 text-xs focus:border-[#13264D] focus:outline-none"
-                    >
-                      {Array.from({ length: 18 - minAge }, (_, a) => {
-                        const val = a + minAge;
-                        return (
-                          <option key={val} value={val}>{val} yr{val !== 1 ? "s" : ""}</option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                );
-              })}
-            </div>
-            {kidsFreeUnderAge !== undefined && (
-              <p className="text-[11px] leading-relaxed text-gray-500">
-                Ages {kidsFreeUnderAge} &amp; under attend free, no ticket needed.
-              </p>
-            )}
-          </div>
-        )}
+        <p className="text-[11px] leading-relaxed text-gray-500">
+          Kids&apos; tickets are ages 4 to 12.
+          {kidsFreeUnderAge !== undefined && (
+            <> Ages {kidsFreeUnderAge} &amp; under attend free, no ticket needed.</>
+          )}
+        </p>
       </div>
 
       {/* Price summary */}

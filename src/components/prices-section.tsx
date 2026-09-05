@@ -77,6 +77,9 @@ export function PricesSection({
             <p className="text-lg font-bold text-emerald-700">Kids free</p>
           )}
           <p className="text-sm text-[#1A1614]/60">Prices do not include tax.</p>
+          {childPriceFrom !== undefined && childPriceFrom > 0 && (
+            <p className="text-sm text-[#1A1614]/60">Child is ages 4 to 12.</p>
+          )}
           {kidsFreeUnderAge !== undefined && (
             <p className="text-sm text-[#1A1614]/60">
               Ages {kidsFreeUnderAge} and under are free.
@@ -94,7 +97,7 @@ export function PricesSection({
             </p>
             <p className="text-sm text-[#1A1614]/60">
               Buy one adult ticket, get the second 50% off. Applied
-              automatically at checkout on every pair of adult tickets.
+              automatically at checkout. One discounted ticket per order.
             </p>
             <p className="text-sm text-[#1A1614]/60">Prices do not include tax.</p>
           </PriceCard>

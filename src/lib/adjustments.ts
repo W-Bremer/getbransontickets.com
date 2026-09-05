@@ -43,15 +43,16 @@ export interface BogoLine {
 }
 
 /**
- * BOGO 50%: on enabled shows, every PAIR of adult tickets gets the second at
- * half price, applied automatically (no code, no selection). Pure function of
- * the cart lines so client and server compute it identically.
+ * BOGO 50%: on enabled shows, the SECOND adult ticket is half price, applied
+ * automatically (no code, no selection). ONE discounted ticket per show line,
+ * no matter how many adults are on it (per William, matching the offer as
+ * advertised: buy one, get ONE 50% off). Pure function of the cart lines so
+ * client and server compute it identically.
  */
 export function bogoAmountCents(lines: BogoLine[]): number {
   return lines.reduce((sum, l) => {
-    if (!l.bogo50) return sum;
-    const pairs = Math.floor(Math.max(0, Math.floor(l.adults)) / 2);
-    return sum + pairs * Math.floor(l.adultPriceCents / 2);
+    if (!l.bogo50 || Math.floor(l.adults) < 2) return sum;
+    return sum + Math.floor(l.adultPriceCents / 2);
   }, 0);
 }
 
