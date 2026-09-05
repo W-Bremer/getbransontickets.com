@@ -215,6 +215,11 @@ export function VoucherEditor({ order }: { order: OfficeOrder }) {
             <p className="text-sm text-gray-600">
               Total paid: <span className="font-bold text-[#1A1614]">${order.totalAmount.toFixed(2)}</span>
             </p>
+            {order.discountLabel && (
+              <p className="mt-1 text-xs font-medium text-emerald-700">
+                {order.discountLabel} (total already reflects it)
+              </p>
+            )}
             <p className="mt-1 text-xs text-gray-500">
               Confirm the seats with the theater before sending. The email goes
               straight to the customer.

@@ -1,6 +1,7 @@
 import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
-import { hydrateLines, unpackCartMetadata } from "@/lib/order";
+import { adjustmentsFromMetadata, hydrateLines, unpackCartMetadata } from "@/lib/order";
+import { applyAdjustments } from "@/lib/adjustments";
 import { sendAbandonedCartOfficeAlert, sendCartRecoveryEmail } from "@/lib/email";
 import { renderCartRecoverySms, type CartRecoveryData } from "@/lib/cart-recovery-template";
 import { sendSms, smsConfigured, toE164 } from "@/lib/sms";
@@ -170,16 +171,25 @@ export async function runCartRecovery(
     }
 
     const items = hydrateLines(lines);
-    const total = items.reduce(
-      (sum, i) => sum + i.pricePerAdult * i.adults + i.pricePerChild * i.children,
+    // Same math as checkout: catalog subtotal minus whatever discount the
+    // abandoned intent had locked in, so the emailed total matches what the
+    // customer saw (and what the resumed cart will charge).
+    const { adjustments } = adjustmentsFromMetadata(pi.metadata);
+    const subtotalCents = items.reduce(
+      (sum, i) =>
+        sum +
+        Math.round(i.pricePerAdult * 100) * i.adults +
+        Math.round(i.pricePerChild * 100) * i.children,
       0
     );
+    const total = applyAdjustments(subtotalCents, adjustments) / 100;
     const earliest = [...lines].map((l) => l.date).sort()[0];
 
     const data: CartRecoveryData = {
       customerName: pi.metadata?.customerName ?? "",
       customerEmail: pi.metadata.customerEmail,
       items,
+      ...(adjustments.length > 0 ? { adjustments } : {}),
       totalAmount: total,
       resumeUrl: `${siteConfig.url}/cart/resume?pi=${pi.id}`,
       showIsSoon: earliest === today || earliest === tomorrow,

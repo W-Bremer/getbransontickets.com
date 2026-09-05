@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { stripe } from "@/lib/stripe";
 import { REF_COOKIE } from "@/lib/passport";
-import { computeTotalCents } from "@/lib/pricing";
-import { packCartMetadata, type CartLine } from "@/lib/order";
+import { computeOrderTotalCents } from "@/lib/pricing";
+import { parseDiscountType } from "@/lib/adjustments";
+import { adjustmentsFromMetadata, packCartMetadata, type CartLine } from "@/lib/order";
 import { getShowBySlug } from "@/data/shows";
 import { effectiveSchedule, loadOverrides, timesForDate } from "@/lib/showtimes";
 import { formatDate } from "@/lib/email-format";
@@ -23,6 +24,8 @@ interface Body {
   customerName?: string;
   customerEmail?: string;
   customerPhone?: string;
+  /** Senior/military selection; parsed tolerantly, anything unrecognized means none. */
+  discountType?: string;
   /** When set, stamp contact details onto this existing intent instead of creating one. */
   paymentIntentId?: string;
 }
@@ -42,13 +45,15 @@ export async function POST(req: Request) {
     }
 
     // Prices are looked up server-side by item id; client-supplied prices are ignored.
-    const totalCents = computeTotalCents(items);
-    if (totalCents === null) {
+    const discountType = parseDiscountType(body.discountType);
+    const order = computeOrderTotalCents(items, discountType);
+    if (order === null) {
       return NextResponse.json(
         { error: "Cart contains an unknown item or invalid quantities" },
         { status: 400 }
       );
     }
+    const { totalCents, subtotalCents, adjustments } = order;
 
     if (totalCents < 50) {
       return NextResponse.json(
@@ -112,7 +117,11 @@ export async function POST(req: Request) {
     // cheap intent as a more expensive cart.
     if (body.paymentIntentId) {
       const existing = await stripe.paymentIntents.retrieve(body.paymentIntentId);
-      if (existing.amount !== totalCents) {
+      // The intent's own metadata is authoritative for its discount; the body's
+      // discountType is ignored here. A discount toggle always creates a fresh
+      // intent, so a stale stamp racing a toggle still targets a consistent one.
+      const locked = adjustmentsFromMetadata(existing.metadata);
+      if (existing.amount !== Math.max(0, subtotalCents - locked.discountCents)) {
         return NextResponse.json(
           { error: "Cart no longer matches this payment" },
           { status: 409 }
@@ -151,6 +160,15 @@ export async function POST(req: Request) {
         customerName: trim(body.customerName),
         customerEmail,
         customerPhone: trim(body.customerPhone, 40),
+        // Locked in at creation and never rewritten: vouchers, recovery, and
+        // the office desk all read the discount from here. The cents snapshot
+        // keeps old orders verifying even if the discount amount changes.
+        ...(discountType !== "none" && adjustments[0]
+          ? {
+              discountType,
+              discountCents: String(-adjustments[0].amountCents),
+            }
+          : {}),
         // One key per line item so the webhook can rebuild the order if the
         // customer closes the tab before the browser confirms.
         ...packCartMetadata(lines),
@@ -160,6 +178,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       clientSecret: paymentIntent.client_secret,
       amount: totalCents,
+      discountType,
     });
   } catch (err) {
     console.error("create-payment-intent error:", err);

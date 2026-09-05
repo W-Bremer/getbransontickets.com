@@ -1,7 +1,7 @@
 import { Phone } from "lucide-react";
 import { BookNowButton } from "@/components/book-now-button";
 import { siteConfig } from "@/lib/config";
-import { formatPrice } from "@/lib/utils";
+import { formatBasePrice } from "@/lib/tax";
 
 interface BookingCtaBannerProps {
   heading: string;
@@ -32,9 +32,9 @@ export function BookingCtaBanner({
             {heading}
           </h3>
           <p className="mt-1.5 text-sm sm:text-base text-white/80">
-            Tickets ${formatPrice(priceFrom)}
+            Tickets ${formatBasePrice(priceFrom)} + tax
             {childPriceFrom !== undefined && childPriceFrom > 0 && (
-              <> &middot; kids ${formatPrice(childPriceFrom)}</>
+              <> &middot; kids ${formatBasePrice(childPriceFrom)}</>
             )}
             {childPriceFrom === 0 && <> &middot; kids free</>}
             {" "}&middot; free cancellation up to 24 hours before

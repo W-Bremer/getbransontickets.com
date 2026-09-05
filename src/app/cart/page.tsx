@@ -12,13 +12,15 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { useCartStore, type CartItem } from "@/stores/cart";
+import { DISCOUNTS } from "@/lib/adjustments";
+import { baseOf, cartBaseSubtotal } from "@/lib/tax";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
 function CartItemRow({ item }: { item: CartItem }) {
   const { removeItem, updateItem } = useCartStore();
 
-  const itemTotal =
-    item.adults * item.pricePerAdult + item.children * item.pricePerChild;
+  // Advertised pre-tax; the tax line lands once, at checkout.
+  const itemTotal = cartBaseSubtotal([item]);
 
   function updateAdults(delta: number) {
     const newAdults = Math.max(0, item.adults + delta);
@@ -104,7 +106,7 @@ function CartItemRow({ item }: { item: CartItem }) {
                 </button>
               </div>
               <span className="text-xs text-[#1A1614]/40 mt-0.5 block">
-                ${item.pricePerAdult} each
+                ${baseOf(item.pricePerAdult).toFixed(2)} each
               </span>
             </div>
 
@@ -131,7 +133,7 @@ function CartItemRow({ item }: { item: CartItem }) {
                 </button>
               </div>
               <span className="text-xs text-[#1A1614]/40 mt-0.5 block">
-                ${item.pricePerChild} each
+                ${baseOf(item.pricePerChild).toFixed(2)} each
               </span>
             </div>
           </div>
@@ -150,7 +152,7 @@ function CartItemRow({ item }: { item: CartItem }) {
 }
 
 export default function CartPage() {
-  const { items, getTotal, clearCart } = useCartStore();
+  const { items, clearCart, discountType } = useCartStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -165,7 +167,7 @@ export default function CartPage() {
     );
   }
 
-  const total = getTotal();
+  const baseSubtotal = cartBaseSubtotal(items);
 
   if (items.length === 0) {
     return (
@@ -271,9 +273,7 @@ export default function CartPage() {
 
                 <div className="mt-4 space-y-3 border-b border-gray-100 pb-4">
                   {items.map((item, i) => {
-                    const sub =
-                      item.adults * item.pricePerAdult +
-                      item.children * item.pricePerChild;
+                    const sub = cartBaseSubtotal([item]);
                     return (
                       <div
                         key={`${item.id}-${item.date}-${i}`}
@@ -291,9 +291,20 @@ export default function CartPage() {
                 </div>
 
                 <div className="mt-4 flex justify-between text-lg font-bold text-[#1A1614]">
-                  <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>Subtotal</span>
+                  <span>${baseSubtotal.toFixed(2)}</span>
                 </div>
+                {discountType !== "none" && (
+                  <div className="mt-1 flex justify-between text-sm font-medium text-emerald-700">
+                    <span>{DISCOUNTS[discountType].label}</span>
+                    <span>
+                      -${(DISCOUNTS[discountType].amountCents / 100).toFixed(2)}
+                    </span>
+                  </div>
+                )}
+                <p className="mt-1 text-xs text-[#1A1614]/40">
+                  Taxes calculated at checkout.
+                </p>
 
                 <Link
                   href="/checkout"

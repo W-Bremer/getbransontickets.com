@@ -1,4 +1,10 @@
 import { shows } from "@/data/shows";
+import {
+  computeAdjustments,
+  applyAdjustments,
+  type DiscountType,
+  type OrderAdjustment,
+} from "@/lib/adjustments";
 
 export interface PricedItem {
   id: string;
@@ -33,4 +39,24 @@ export function computeTotalCents(items: PricedItem[]): number | null {
     total += Math.round(prices.adult * 100) * adults + Math.round(prices.child * 100) * children;
   }
   return total;
+}
+
+/**
+ * Full order math: catalog subtotal plus order-level adjustments (today just
+ * the optional $5 senior/military discount). The single function behind
+ * payment-intent creation, voucher verification, and cart-recovery totals,
+ * so their figures cannot drift apart.
+ */
+export function computeOrderTotalCents(
+  items: PricedItem[],
+  discountType: DiscountType
+): { subtotalCents: number; adjustments: OrderAdjustment[]; totalCents: number } | null {
+  const subtotalCents = computeTotalCents(items);
+  if (subtotalCents === null) return null;
+  const adjustments = computeAdjustments(subtotalCents, discountType);
+  return {
+    subtotalCents,
+    adjustments,
+    totalCents: applyAdjustments(subtotalCents, adjustments),
+  };
 }

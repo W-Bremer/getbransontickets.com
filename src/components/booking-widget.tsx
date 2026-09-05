@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Check, ChevronLeft, ChevronRight, Loader2, Minus, Plus } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
 import { formatPrice } from "@/lib/utils";
+import { baseOf, formatBasePrice } from "@/lib/tax";
 
 interface BookingWidgetProps {
   showId: string;
@@ -304,7 +305,12 @@ export default function BookingWidget({
     }, 700);
   };
 
-  const total = adults * pricePerAdult + children * pricePerChild;
+  // Advertised figures are the pre-tax bases; the cart item still stores the
+  // full tax-inclusive prices (see addItem above) and checkout adds the one
+  // cart-level Taxes row.
+  const baseAdult = baseOf(pricePerAdult);
+  const baseChild = baseOf(pricePerChild);
+  const baseSubtotal = adults * baseAdult + children * baseChild;
 
   if (bookingDisabled) {
     return (
@@ -503,7 +509,7 @@ export default function BookingWidget({
             </div>
             {kidsFreeUnderAge !== undefined && (
               <p className="text-[11px] leading-relaxed text-gray-500">
-                Ages {kidsFreeUnderAge} &amp; under attend free &mdash; no ticket needed.
+                Ages {kidsFreeUnderAge} &amp; under attend free, no ticket needed.
               </p>
             )}
           </div>
@@ -513,8 +519,8 @@ export default function BookingWidget({
       {/* Price summary */}
       <div className="mb-4 rounded-lg bg-gray-50 p-3 text-sm">
         <div className="flex justify-between text-gray-600">
-          <span>{adults} Adult{adults !== 1 ? "s" : ""} x ${formatPrice(pricePerAdult)}</span>
-          <span>${formatPrice(adults * pricePerAdult)}</span>
+          <span>{adults} Adult{adults !== 1 ? "s" : ""} x ${formatBasePrice(pricePerAdult)}</span>
+          <span>${formatPrice(adults * baseAdult)}</span>
         </div>
         {children > 0 && (
           <div className="flex justify-between text-gray-600">
@@ -525,19 +531,20 @@ export default function BookingWidget({
               </>
             ) : (
               <>
-                <span>{children} Child{children !== 1 ? "ren" : ""} x ${formatPrice(pricePerChild)}</span>
-                <span>${formatPrice(children * pricePerChild)}</span>
+                <span>{children} Child{children !== 1 ? "ren" : ""} x ${formatBasePrice(pricePerChild)}</span>
+                <span>${formatPrice(children * baseChild)}</span>
               </>
             )}
           </div>
         )}
         <div className="mt-2 flex justify-between border-t border-gray-200 pt-2 font-bold text-[#1A1614]">
-          <span>Total</span>
-          <span>${formatPrice(total)}</span>
+          <span>Subtotal</span>
+          <span>${baseSubtotal.toFixed(2)}</span>
         </div>
+        <p className="mt-1 text-right text-[11px] text-gray-400">Plus tax at checkout</p>
         {children > 0 && pricePerChild < pricePerAdult && (
           <p className="mt-1.5 text-right text-xs font-semibold text-emerald-700">
-            You save ${formatPrice(children * (pricePerAdult - pricePerChild))} vs. adult
+            You save ${formatPrice(Math.round(children * (baseAdult - baseChild) * 100) / 100)} vs. adult
             pricing for the kids
           </p>
         )}
@@ -576,7 +583,7 @@ export default function BookingWidget({
         ) : phase === "confirmed" ? (
           <span className="flex items-center justify-center gap-2">
             <Check className="h-4 w-4" aria-hidden />
-            Available &mdash; taking you to checkout
+            Available! Taking you to checkout
           </span>
         ) : selectedDate ? (
           "Reserve My Seats"

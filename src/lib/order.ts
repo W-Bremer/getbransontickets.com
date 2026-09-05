@@ -1,6 +1,12 @@
 import type Stripe from "stripe";
 import { shows } from "@/data/shows";
 import { getServerPrices } from "@/lib/pricing";
+import {
+  DISCOUNTS,
+  parseDiscountType,
+  type DiscountType,
+  type OrderAdjustment,
+} from "@/lib/adjustments";
 import type { ConfirmationItem, OrderConfirmationData } from "@/lib/order-confirmation-template";
 
 /**
@@ -80,6 +86,37 @@ export function unpackCartMetadata(metadata: Stripe.Metadata): CartLine[] {
   return lines;
 }
 
+/**
+ * The discount an intent locked in at creation. `discountCents` prefers the
+ * metadata snapshot (written alongside the amount, so it stays correct even
+ * if DISCOUNTS changes later) and falls back to today's table when only the
+ * type survived. Intents created before discounts existed carry neither key
+ * and parse to none / 0, which is what keeps every old order verifying.
+ */
+export function adjustmentsFromMetadata(
+  metadata: Stripe.Metadata | null | undefined
+): { discountType: DiscountType; discountCents: number; adjustments: OrderAdjustment[] } {
+  const discountType = parseDiscountType(metadata?.discountType);
+  if (discountType === "none") {
+    return { discountType, discountCents: 0, adjustments: [] };
+  }
+  const snapshot = Number.parseInt(metadata?.discountCents ?? "", 10);
+  const discountCents = Number.isFinite(snapshot) && snapshot >= 0
+    ? snapshot
+    : DISCOUNTS[discountType].amountCents;
+  return {
+    discountType,
+    discountCents,
+    adjustments: [
+      {
+        code: discountType,
+        label: DISCOUNTS[discountType].label,
+        amountCents: -discountCents,
+      },
+    ],
+  };
+}
+
 /** Fills in show name, theater, and authoritative prices from the catalog. */
 export function hydrateLines(lines: CartLine[]): ConfirmationItem[] {
   return lines.map((line) => {
@@ -110,12 +147,15 @@ export function confirmationFromPaymentIntent(
   const lines = unpackCartMetadata(pi.metadata ?? {});
   if (lines.length === 0) return null;
 
+  const { adjustments } = adjustmentsFromMetadata(pi.metadata);
+
   return {
     customerName: pi.metadata?.customerName || "Customer",
     customerEmail: pi.metadata?.customerEmail || pi.receipt_email || "",
     customerPhone: pi.metadata?.customerPhone || "",
     orderNumber: orderNumberFor(pi.id),
     items: hydrateLines(lines),
+    ...(adjustments.length > 0 ? { adjustments } : {}),
     // Always the amount Stripe actually captured, never a recomputed figure.
     totalAmount: pi.amount / 100,
     paymentIntentId: pi.id,

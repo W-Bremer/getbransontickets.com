@@ -3,7 +3,7 @@ import Link from "next/link";
 import { shows, getShowBySlug } from "@/data/shows";
 import type { Show } from "@/data/shows";
 import { getUpcomingPerformances } from "@/lib/performances";
-import { formatPrice } from "@/lib/utils";
+import { formatBasePrice } from "@/lib/tax";
 
 interface ShowCrossSellProps {
   /** Shows to feature first (an attraction's related shows); non-bookable entries are skipped. */
@@ -75,7 +75,7 @@ export function ShowCrossSell({ preferredSlugs = [], limit = 3 }: ShowCrossSellP
                 >
                   {show.name}
                 </Link>
-                <p className="text-sm text-white/60">From ${formatPrice(show.priceFrom)}</p>
+                <p className="text-sm text-white/60">From ${formatBasePrice(show.priceFrom)}</p>
               </div>
             </div>
             <Link

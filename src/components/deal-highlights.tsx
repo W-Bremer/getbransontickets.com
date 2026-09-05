@@ -1,5 +1,5 @@
 import { BadgePercent, Baby, Check } from "lucide-react";
-import { formatPrice } from "@/lib/utils";
+import { formatBasePrice } from "@/lib/tax";
 
 interface DealHighlightsProps {
   priceFrom: number;
@@ -56,16 +56,20 @@ export function DealHighlights({
         )}
         {studentPriceFrom !== undefined && studentPriceFrom < priceFrom && (
           <span className="inline-flex items-center gap-1 rounded-full bg-[#13264D] px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase">
-            Students ${formatPrice(studentPriceFrom)}
+            Students ${formatBasePrice(studentPriceFrom)}
           </span>
         )}
       </div>
 
-      {/* Value line — matches the guarantees made at checkout */}
+      {/* Value line, matching the guarantees made at checkout */}
       <ul className="mt-3 lg:mt-0 space-y-1 text-xs text-gray-600">
         <li className="flex items-center gap-1.5">
           <Check className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
-          Box-office rate — no added fees, taxes included
+          No added fees. Your total never tops the box-office rate
+        </li>
+        <li className="flex items-center gap-1.5">
+          <Check className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
+          Seniors and military: $5 off at checkout
         </li>
         <li className="flex items-center gap-1.5">
           <Check className="h-3.5 w-3.5 shrink-0 text-emerald-600" />

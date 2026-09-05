@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import BookingWidget from "@/components/booking-widget";
-import { formatPrice } from "@/lib/utils";
+import { formatBasePrice } from "@/lib/tax";
 import type { OpenBookingDetail } from "@/components/book-now-button";
 
 interface BookingModalProps {
@@ -79,9 +79,9 @@ export function BookingModal({
           <div className="min-w-0">
             <p className="truncate text-sm font-bold text-white">{showName}</p>
             <p className="text-xs text-white/75">
-              ${formatPrice(pricePerAdult)} adult
+              ${formatBasePrice(pricePerAdult)} adult
               {pricePerChild > 0 && pricePerChild < pricePerAdult && (
-                <> &middot; ${formatPrice(pricePerChild)} kids</>
+                <> &middot; ${formatBasePrice(pricePerChild)} kids</>
               )}
               {pricePerChild === 0 && <> &middot; kids free</>}
             </p>

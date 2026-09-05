@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { ExternalLink, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/config";
-import { formatPrice } from "@/lib/utils";
+import { formatBasePrice } from "@/lib/tax";
 
 interface StickyBookingBarProps {
   priceFrom: number;
@@ -50,7 +50,7 @@ export default function StickyBookingBar({
     childPriceFrom === 0
       ? "Kids' tickets free"
       : childPriceFrom !== undefined && childPriceFrom < priceFrom
-        ? `Kids $${formatPrice(childPriceFrom)}`
+        ? `Kids $${formatBasePrice(childPriceFrom)}`
         : null;
 
   return (
@@ -63,7 +63,7 @@ export default function StickyBookingBar({
         <div className="min-w-0">
           <p className="truncate text-xs text-gray-500 leading-tight">{showName}</p>
           <p className="text-lg font-bold leading-tight text-[#1A1614]">
-            From <span className="text-[#C8102E]">${formatPrice(priceFrom)}</span>
+            From <span className="text-[#C8102E]">${formatBasePrice(priceFrom)}</span>
             {kidsLine && (
               <span className="ml-1.5 align-middle text-[11px] font-bold text-[#C04E0C] uppercase tracking-wide">
                 &middot; {kidsLine}

@@ -5,7 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, X } from "lucide-react";
 import { ShowCard, type ShowCardData } from "@/components/show-card";
-import { formatPrice, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { formatBasePrice } from "@/lib/tax";
 
 export type BrowsableShow = ShowCardData & { category: string[] };
 
@@ -171,7 +172,7 @@ export function HomeShowsBrowser({ shows, categories }: HomeShowsBrowserProps) {
                         From
                       </div>
                       <div className="text-base font-bold leading-tight text-[#1A1614]">
-                        ${formatPrice(show.priceFrom)}
+                        ${formatBasePrice(show.priceFrom)}
                       </div>
                     </div>
                     <ChevronRight className="h-4 w-4 text-gray-300" />

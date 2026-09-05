@@ -1,4 +1,5 @@
-import { cn, formatPrice } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { formatBasePrice } from "@/lib/tax";
 
 interface PriceDisplayProps {
   priceFrom: number;
@@ -39,14 +40,14 @@ export function PriceDisplay({
       </span>
       <div className="flex items-baseline gap-2">
         <span className={cn("font-bold leading-none", styles.price, colors.price)}>
-          ${formatPrice(priceFrom)}
+          ${formatBasePrice(priceFrom)}
         </span>
         {priceTo && priceTo !== priceFrom && (
-          <span className={cn(variant === "light" ? "text-white/60" : "text-gray-400", styles.range)}>to ${formatPrice(priceTo)}</span>
+          <span className={cn(variant === "light" ? "text-white/60" : "text-gray-400", styles.range)}>to ${formatBasePrice(priceTo)}</span>
         )}
       </div>
       {showPerPerson && (
-        <span className={cn(variant === "light" ? "text-white/60" : "text-gray-500", "mt-1", styles.sub)}>per person</span>
+        <span className={cn(variant === "light" ? "text-white/60" : "text-gray-500", "mt-1", styles.sub)}>per person + tax</span>
       )}
     </div>
   );

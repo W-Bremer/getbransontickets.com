@@ -11,7 +11,7 @@ import { getUpcomingPerformances } from "@/lib/performances";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PriceDisplay } from "@/components/price-display";
 import { DealHighlights } from "@/components/deal-highlights";
-import { formatPrice } from "@/lib/utils";
+import { baseOf, formatBasePrice } from "@/lib/tax";
 import { ShowCard } from "@/components/show-card";
 import { JsonLd } from "@/components/json-ld";
 import { BookNowButton } from "@/components/book-now-button";
@@ -41,7 +41,7 @@ export async function generateMetadata({
 
   return {
     title: `${show.name} Branson Tickets 2026 | Showtimes & Schedule`,
-    description: `Get ${show.name} tickets in Branson, MO. ${show.shortDescription} Tickets from $${show.priceFrom}.`,
+    description: `Get ${show.name} tickets in Branson, MO. ${show.shortDescription} Tickets from $${formatBasePrice(show.priceFrom)}.`,
     alternates: { canonical: `${siteConfig.url}/shows/${show.slug}` },
     openGraph: {
       title: `${show.name} Branson Tickets 2026 | Showtimes & Schedule`,
@@ -108,7 +108,8 @@ export default async function ShowDetailPage({
     },
     offers: {
       "@type": "Offer",
-      price: show.priceFrom,
+      // Advertised pre-tax base, matching the on-page sticker.
+      price: baseOf(show.priceFrom),
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
       url: `${siteConfig.url}/shows/${show.slug}`,
@@ -157,8 +158,8 @@ export default async function ShowDetailPage({
     image: show.imageUrl,
     offers: {
       "@type": "AggregateOffer",
-      lowPrice: show.priceFrom,
-      highPrice: show.priceTo,
+      lowPrice: baseOf(show.priceFrom),
+      highPrice: show.priceTo !== undefined ? baseOf(show.priceTo) : undefined,
       priceCurrency: "USD",
     },
   };
@@ -228,7 +229,7 @@ export default async function ShowDetailPage({
                 get to live below it. */}
             {show.isFeaturedPartner && (
               <div className="mt-5 hidden sm:flex flex-wrap items-center gap-x-5 gap-y-3">
-                <BookNowButton label={`Book Now — From $${formatPrice(show.priceFrom)}`} />
+                <BookNowButton label={`Book Now from $${formatBasePrice(show.priceFrom)}`} />
                 <span className="text-sm font-medium text-white/90 drop-shadow">
                   {googleRating !== undefined && googleReviewCount !== undefined && (
                     <>
@@ -273,9 +274,9 @@ export default async function ShowDetailPage({
                             </span>
                             <div className="flex items-baseline gap-1.5">
                               <span className="text-3xl font-bold leading-none text-white">
-                                ${formatPrice(show.priceFrom)}
+                                ${formatBasePrice(show.priceFrom)}
                               </span>
-                              <span className="text-sm text-white/70">/ adult</span>
+                              <span className="text-sm text-white/70">/ adult + tax</span>
                             </div>
                           </div>
                           <div className="pb-0.5 text-right">
@@ -290,14 +291,14 @@ export default async function ShowDetailPage({
                                   Kids
                                 </div>
                                 <div className="text-xl font-bold leading-tight text-[#E8C65A]">
-                                  ${formatPrice(show.childPriceFrom)}
+                                  ${formatBasePrice(show.childPriceFrom)}
                                 </div>
                               </>
                             ) : null}
                           </div>
                         </div>
                         <p className="mt-1.5 text-[11px] text-white/60">
-                          Taxes included &middot; no checkout fees
+                          No checkout fees, ever. Other sites add $15 or more at the end.
                         </p>
                         {/* Real Google rating — live via Places when a place
                             id is set, else the verified values in shows.ts.

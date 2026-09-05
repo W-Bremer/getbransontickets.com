@@ -7,7 +7,7 @@ import { categories } from "@/lib/config";
 // import { getPublishedPosts } from "@/data/blog"; // archived
 // import { CategoryCard } from "@/components/category-card";
 import { TrustBar } from "@/components/trust-bar";
-// import { DealBanner } from "@/components/deal-banner";
+import { DealBanner } from "@/components/deal-banner";
 import { HeroSection } from "@/components/hero-section";
 import { HomeShowsBrowser, type BrowsableShow } from "@/components/home-shows-browser";
 import { NewsletterForm } from "@/components/passport/newsletter-form";
@@ -62,7 +62,11 @@ export default function HomePage() {
 
   return (
     <>
-      {/* DealBanner removed */}
+      <DealBanner
+        headline="Seniors and Military: $5 off every order. Applied at checkout."
+        ctaText="Browse Shows"
+        ctaHref="/shows"
+      />
       <HeroSection />
 
       {/* Popular Shows */}

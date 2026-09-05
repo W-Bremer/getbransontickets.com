@@ -4,6 +4,7 @@ import { sendVoucherEmail } from "@/lib/email";
 import { shows } from "@/data/shows";
 import { computeTotalCents, getServerPrices } from "@/lib/pricing";
 import {
+  adjustmentsFromMetadata,
   confirmationNumberFor,
   orderNumberFor,
   unpackCartMetadata,
@@ -106,13 +107,20 @@ export async function POST(req: Request) {
     }
 
     // A voucher must describe exactly what was paid for: recompute the total
-    // from server-side prices and require it to match the captured amount.
-    const expectedCents = computeTotalCents(items);
+    // from server-side prices, apply the discount the intent locked in at
+    // creation (metadata snapshot; absent on pre-discount orders), and require
+    // the result to match the captured amount.
+    const locked = adjustmentsFromMetadata(paymentIntent.metadata);
+    const subtotalCents = computeTotalCents(items);
+    const expectedCents =
+      subtotalCents === null ? null : Math.max(0, subtotalCents - locked.discountCents);
     if (expectedCents === null || expectedCents !== paymentIntent.amount) {
       console.error("send-voucher amount mismatch:", {
         paymentIntentId: paymentIntent.id,
         paid: paymentIntent.amount,
         expected: expectedCents,
+        discountType: locked.discountType,
+        discountCents: locked.discountCents,
       });
       return NextResponse.json(
         { error: "Order details do not match this payment" },
@@ -157,6 +165,7 @@ export async function POST(req: Request) {
       orderNumber,
       confirmationNumber,
       items: voucherItems,
+      ...(locked.adjustments.length > 0 ? { adjustments: locked.adjustments } : {}),
       totalAmount,
     });
 

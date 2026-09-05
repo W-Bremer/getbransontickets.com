@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
 import { Search, X, MapPin, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formatBasePrice } from "@/lib/tax";
 import { shows, type Show } from "@/data/shows";
 
 interface SearchModalProps {
@@ -148,7 +149,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                       </div>
                     </div>
                     <span className="shrink-0 text-sm font-bold text-[#E8C65A]">
-                      ${show.priceFrom}
+                      ${formatBasePrice(show.priceFrom)}
                     </span>
                   </button>
                 </li>

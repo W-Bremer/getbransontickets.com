@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { openBooking } from "@/components/book-now-button";
+import { formatBasePrice } from "@/lib/tax";
 
 interface AvailabilityGridProps {
   /** Slug for the live schedule lookup; only sellable shows have one served. */
@@ -158,7 +159,7 @@ export default function AvailabilityGrid({
       </div>
 
       <div className="border-t border-gray-200 bg-gray-50 px-5 py-2 text-xs text-gray-500">
-        Starting from ${pricePerAdult}/adult
+        Starting from ${formatBasePrice(pricePerAdult)}/adult plus tax
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import { shows } from "@/data/shows";
 import type { Show } from "@/data/shows";
 import { getUpcomingPerformances } from "@/lib/performances";
 import { siteConfig } from "@/lib/config";
-import { formatPrice } from "@/lib/utils";
+import { formatBasePrice } from "@/lib/tax";
 
 const quickFilters = [
   { value: "all", label: "All Days" },
@@ -226,7 +226,7 @@ export default function SchedulePage() {
                         <div className="flex items-center justify-between gap-3 px-4 pb-4">
                           <div>
                             <span className="text-sm font-semibold text-[#1A1614]">
-                              From ${formatPrice(show.priceFrom)}
+                              From ${formatBasePrice(show.priceFrom)}
                             </span>
                             <span className="ml-2 text-xs text-gray-400">
                               {show.duration}

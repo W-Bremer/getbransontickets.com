@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useCartStore, type CartItem } from "@/stores/cart";
+import { parseDiscountType } from "@/lib/adjustments";
 
 type State =
   | { phase: "loading" }
@@ -19,7 +20,7 @@ type State =
 export function ResumeCartClient() {
   const router = useRouter();
   const params = useSearchParams();
-  const { clearCart, addItem } = useCartStore();
+  const { clearCart, addItem, setDiscountType } = useCartStore();
   const [state, setState] = useState<State>({ phase: "loading" });
   const started = useRef(false);
 
@@ -38,6 +39,7 @@ export function ResumeCartClient() {
         });
         const data = (await res.json()) as {
           items?: CartItem[];
+          discountType?: string;
           completed?: boolean;
           error?: string;
         };
@@ -55,6 +57,8 @@ export function ResumeCartClient() {
         }
 
         clearCart();
+        // After clearCart, which resets the selection to none.
+        setDiscountType(parseDiscountType(data.discountType));
         data.items.forEach((item) => addItem(item));
         router.replace("/checkout");
       } catch {
@@ -82,7 +86,7 @@ export function ResumeCartClient() {
             This booking is already complete
           </h1>
           <p className="mt-3 text-[#1A1614]/60">
-            Good news — this order went through. Check your inbox for the
+            Good news: this order went through. Check your inbox for the
             confirmation and voucher emails.
           </p>
           <Link
@@ -105,8 +109,8 @@ export function ResumeCartClient() {
         </h1>
         <p className="mt-3 text-[#1A1614]/60">{state.message}</p>
         <p className="mt-2 text-[#1A1614]/60">
-          Tickets are still available — picking your show again only takes a
-          minute.
+          Tickets are still available, and picking your show again only takes
+          a minute.
         </p>
         <Link
           href="/shows"

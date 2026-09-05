@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { X, ShoppingBag, Trash2 } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
+import { cartBaseSubtotal } from "@/lib/tax";
 
 export function CartDrawer() {
   const isOpen = useCartStore((s) => s.isOpen);
   const storedItems = useCartStore((s) => s.items);
   const closeCart = useCartStore((s) => s.closeCart);
   const removeItem = useCartStore((s) => s.removeItem);
-  const getTotal = useCartStore((s) => s.getTotal);
   const getItemCount = useCartStore((s) => s.getItemCount);
 
   // The cart rehydrates from localStorage, which the server can't see;
@@ -99,9 +99,8 @@ export function CartDrawer() {
           ) : (
             <div className="space-y-4">
               {items.map((item, idx) => {
-                const subtotal =
-                  item.adults * item.pricePerAdult +
-                  item.children * item.pricePerChild;
+                // Pre-tax base; taxes appear once, at checkout.
+                const subtotal = cartBaseSubtotal([item]);
 
                 return (
                   <div
@@ -144,12 +143,13 @@ export function CartDrawer() {
         {/* Footer */}
         {items.length > 0 && (
           <div className="border-t border-gray-200 px-5 py-4">
-            <div className="mb-4 flex items-center justify-between">
-              <span className="text-base font-bold text-[#1A1614]">Total</span>
+            <div className="mb-1 flex items-center justify-between">
+              <span className="text-base font-bold text-[#1A1614]">Subtotal</span>
               <span className="text-xl font-bold text-[#1A1614]">
-                ${getTotal().toFixed(2)}
+                ${cartBaseSubtotal(items).toFixed(2)}
               </span>
             </div>
+            <p className="mb-4 text-xs text-gray-400">Taxes calculated at checkout.</p>
             <Link
               href="/checkout"
               onClick={closeCart}

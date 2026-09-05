@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { unpackCartMetadata } from "@/lib/order";
+import { adjustmentsFromMetadata, unpackCartMetadata } from "@/lib/order";
 import { getServerPrices } from "@/lib/pricing";
 import { shows } from "@/data/shows";
 
@@ -75,7 +75,11 @@ export async function POST(req: Request) {
       );
     }
 
-    return NextResponse.json({ items });
+    // The discount the abandoned checkout had selected, so the resumed cart
+    // pre-selects it and the new intent matches the emailed total.
+    const { discountType } = adjustmentsFromMetadata(pi.metadata);
+
+    return NextResponse.json({ items, discountType });
   } catch (err) {
     console.error("resume-cart error:", err);
     return NextResponse.json({ error: "Unable to restore this cart" }, { status: 500 });

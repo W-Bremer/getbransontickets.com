@@ -12,6 +12,7 @@ import {
   ShoppingCart,
   Phone,
   Plus,
+  BadgePercent,
 } from "lucide-react";
 import {
   Elements,
@@ -26,6 +27,12 @@ import type {
   StripeExpressCheckoutElementReadyEvent,
 } from "@stripe/stripe-js";
 import { useCartStore, type CartItem } from "@/stores/cart";
+import {
+  applyAdjustments,
+  computeAdjustments,
+  type DiscountType,
+} from "@/lib/adjustments";
+import { cartBaseSubtotal, cartTax } from "@/lib/tax";
 import { siteConfig } from "@/lib/config";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import {
@@ -91,9 +98,67 @@ function GroupCallHint({ guests }: { guests: number }) {
       <span>
         Booking {guests} people? Call{" "}
         <span className="font-semibold underline underline-offset-2">{siteConfig.phone}</span>{" "}
-        — group orders by phone.
+        for group orders.
       </span>
     </a>
+  );
+}
+
+/**
+ * Senior/military self-attestation. A single scalar selection means the two
+ * discounts can never stack. Sits above the wallet buttons so a one-tap buyer
+ * sees it before paying; toggling recreates the PaymentIntent at the new
+ * amount, which is why the copy flips to an updating note while the fresh
+ * client secret is in flight.
+ */
+function DiscountSelector({
+  discountType,
+  onChange,
+  updating,
+}: {
+  discountType: DiscountType;
+  onChange: (d: DiscountType) => void;
+  updating: boolean;
+}) {
+  const options: { value: DiscountType; label: string }[] = [
+    { value: "none", label: "No discount" },
+    { value: "senior", label: "Senior 55+" },
+    { value: "military", label: "Military or Veteran" },
+  ];
+  return (
+    <div className="mb-5 rounded-lg bg-[#F6F4EF] p-3">
+      <div className="flex items-center gap-1.5 text-sm font-semibold text-[#1A1614]">
+        <BadgePercent className="h-4 w-4 text-[#C8102E]" />
+        Senior or military? Save $5.
+      </div>
+      <div
+        className="mt-2 flex flex-wrap gap-1.5"
+        role="radiogroup"
+        aria-label="Order discount"
+      >
+        {options.map((o) => (
+          <button
+            key={o.value}
+            type="button"
+            role="radio"
+            aria-checked={discountType === o.value}
+            onClick={() => onChange(o.value)}
+            className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+              discountType === o.value
+                ? "border-[#13264D] bg-[#13264D] text-white"
+                : "border-gray-300 bg-white text-[#1A1614]/70 hover:border-[#13264D]"
+            }`}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+      <p className="mt-2 text-[11px] leading-relaxed text-[#1A1614]/45">
+        {updating
+          ? "Updating your total..."
+          : "$5 off your order. One discount per order. ID may be checked at the theater."}
+      </p>
+    </div>
   );
 }
 
@@ -321,7 +386,7 @@ function ContactInfoStep({
       </button>
 
       <p className="text-xs leading-relaxed text-[#1A1614]/45">
-        We use these details only for this booking — including an email or
+        We use these details only for this booking, including an email or
         text reminder if you leave before finishing. No marketing lists.
       </p>
     </div>
@@ -469,7 +534,7 @@ function StripePaymentForm({
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, getTotal } = useCartStore();
+  const { items, discountType, setDiscountType } = useCartStore();
   const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<Step>(1);
   const [formData, setFormData] = useState<ContactInfo>({
@@ -511,14 +576,22 @@ export default function CheckoutPage() {
         const res = await fetch("/api/create-payment-intent", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items: itemsPayload(items) }),
+          body: JSON.stringify({ items: itemsPayload(items), discountType }),
         });
         if (!res.ok) {
           const body = (await res.json().catch(() => ({}))) as { error?: string };
           throw new Error(body.error ?? "Unable to start payment");
         }
-        const data = (await res.json()) as { clientSecret: string; amount: number };
-        if (data.amount !== expectedCents(items)) {
+        const data = (await res.json()) as {
+          clientSecret: string;
+          amount: number;
+          discountType?: string;
+        };
+        // Mirror the server math exactly (same shared module) so a catalog
+        // price change between add-to-cart and checkout still surfaces.
+        const subtotal = expectedCents(items);
+        const expected = applyAdjustments(subtotal, computeAdjustments(subtotal, discountType));
+        if (data.amount !== expected || (data.discountType ?? "none") !== discountType) {
           throw new Error(
             "Prices have been updated since you added these items. Please empty your cart and add them again."
           );
@@ -534,7 +607,7 @@ export default function CheckoutPage() {
     return () => {
       cancelled = true;
     };
-  }, [mounted, items]);
+  }, [mounted, items, discountType]);
 
   if (!mounted) {
     return (
@@ -544,7 +617,15 @@ export default function CheckoutPage() {
     );
   }
 
-  const total = getTotal();
+  // All the money figures the page shows. Cart items store the tax-inclusive
+  // box-office prices; the sidebar advertises the pre-tax subtotal and breaks
+  // the embedded tax out as its own cart-level row, then applies the discount.
+  // baseSubtotal + taxes always equals the old all-in subtotal to the cent.
+  const subtotalCents = expectedCents(items);
+  const adjustments = computeAdjustments(subtotalCents, discountType);
+  const total = applyAdjustments(subtotalCents, adjustments) / 100;
+  const baseSubtotal = cartBaseSubtotal(items);
+  const taxes = cartTax(items);
 
   if (items.length === 0) {
     return (
@@ -590,7 +671,10 @@ export default function CheckoutPage() {
   async function handleCompleteBooking(paymentIntentId: string, contact?: ContactInfo) {
     const who = contact ?? formData;
     const fallbackOrder = `BRN-${paymentIntentId.replace(/^pi_/, "").slice(-8).toUpperCase()}`;
-    const snapshotTotal = total;
+    // Ads/UET conversion value. Prefer the amount Stripe actually captured
+    // (confirm-order returns it); the client-side figure is only the fallback
+    // when that call fails.
+    let snapshotTotal = total;
     // Tickets, not cart lines: one line for "2 adults, 1 child" is 3 tickets.
     const snapshotCount = items.reduce((n, i) => n + i.adults + i.children, 0);
 
@@ -610,8 +694,11 @@ export default function CheckoutPage() {
       });
 
       if (res.ok) {
-        const data = (await res.json()) as { orderNumber: string };
+        const data = (await res.json()) as { orderNumber: string; total?: number };
         orderNumber = data.orderNumber;
+        if (typeof data.total === "number" && data.total > 0) {
+          snapshotTotal = data.total;
+        }
         emailSent = true;
       }
     } catch {
@@ -711,6 +798,11 @@ export default function CheckoutPage() {
                     <GroupCallHint
                       guests={items.reduce((n, i) => n + i.adults + i.children, 0)}
                     />
+                    <DiscountSelector
+                      discountType={discountType}
+                      onChange={setDiscountType}
+                      updating={!clientSecret && !intentError}
+                    />
                     {clientSecret && (
                       <Elements
                         key={`express-${clientSecret}`}
@@ -769,9 +861,9 @@ export default function CheckoutPage() {
                   </h2>
                   <div className="space-y-3 border-b border-gray-100 pb-4">
                     {items.map((item, i) => {
-                      const sub =
-                        item.adults * item.pricePerAdult +
-                        item.children * item.pricePerChild;
+                      // Line prices advertise the pre-tax base; the embedded
+                      // tax shows once, in the Taxes row below.
+                      const sub = cartBaseSubtotal([item]);
                       return (
                         <div
                           key={`${item.id}-${item.date}-${i}`}
@@ -797,7 +889,26 @@ export default function CheckoutPage() {
                       );
                     })}
                   </div>
-                  <div className="mt-4 flex justify-between text-lg font-bold text-[#1A1614]">
+                  <div className="mt-4 space-y-1.5 text-sm text-[#1A1614]/70">
+                    <div className="flex justify-between">
+                      <span>Subtotal</span>
+                      <span>${baseSubtotal.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Taxes</span>
+                      <span>${taxes.toFixed(2)}</span>
+                    </div>
+                    {adjustments.map((a) => (
+                      <div
+                        key={a.code}
+                        className="flex justify-between font-medium text-emerald-700"
+                      >
+                        <span>{a.label}</span>
+                        <span>-${(-a.amountCents / 100).toFixed(2)}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-3 flex justify-between border-t border-gray-100 pt-3 text-lg font-bold text-[#1A1614]">
                     <span>Total</span>
                     <span>${total.toFixed(2)}</span>
                   </div>

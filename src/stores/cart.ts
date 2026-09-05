@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { DiscountType } from '@/lib/adjustments';
 
 export interface CartItem {
   type: 'show' | 'attraction' | 'package';
@@ -19,9 +20,12 @@ export interface CartItem {
 interface CartStore {
   items: CartItem[];
   isOpen: boolean;
+  /** Order-level senior/military selection; single scalar so discounts can never stack. */
+  discountType: DiscountType;
   addItem: (item: CartItem) => void;
   removeItem: (id: string, date: string) => void;
   updateItem: (id: string, date: string, updates: Partial<CartItem>) => void;
+  setDiscountType: (discountType: DiscountType) => void;
   clearCart: () => void;
   toggleCart: () => void;
   openCart: () => void;
@@ -35,6 +39,7 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       items: [],
       isOpen: false,
+      discountType: 'none',
 
       addItem: (item) =>
         set((state) => ({
@@ -57,7 +62,9 @@ export const useCartStore = create<CartStore>()(
           ),
         })),
 
-      clearCart: () => set({ items: [] }),
+      setDiscountType: (discountType) => set({ discountType }),
+
+      clearCart: () => set({ items: [], discountType: 'none' }),
 
       toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
 
@@ -78,7 +85,9 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'branson-cart',
-      partialize: (state) => ({ items: state.items }),
+      // Old persisted blobs lack discountType; zustand merges it in from the
+      // default above, so no version bump is needed.
+      partialize: (state) => ({ items: state.items, discountType: state.discountType }),
     }
   )
 );

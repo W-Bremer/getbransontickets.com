@@ -2,6 +2,7 @@ import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { shows } from "@/data/shows";
 import {
+  adjustmentsFromMetadata,
   confirmationNumberFor,
   orderNumberFor,
   unpackCartMetadata,
@@ -33,6 +34,8 @@ export interface OfficeOrder {
   /** Unix seconds. */
   created: number;
   totalAmount: number;
+  /** e.g. "Senior discount (55+): $5.00 off", so a below-list total is no surprise. */
+  discountLabel: string | null;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
@@ -63,12 +66,18 @@ export function officeOrderFromIntent(pi: Stripe.PaymentIntent): OfficeOrder | n
     };
   });
 
+  const locked = adjustmentsFromMetadata(pi.metadata);
+
   return {
     paymentIntentId: pi.id,
     orderNumber: orderNumberFor(pi.id),
     confirmationNumber: confirmationNumberFor(pi.id),
     created: pi.created,
     totalAmount: pi.amount / 100,
+    discountLabel:
+      locked.discountCents > 0
+        ? `${locked.adjustments[0].label}: $${(locked.discountCents / 100).toFixed(2)} off`
+        : null,
     customerName: pi.metadata?.customerName || "",
     customerEmail: pi.metadata?.customerEmail || pi.receipt_email || "",
     customerPhone: pi.metadata?.customerPhone || "",

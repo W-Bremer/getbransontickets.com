@@ -1,5 +1,6 @@
 import { siteConfig } from "./config";
 import { escapeHtml, formatDate } from "./email-format";
+import type { OrderAdjustment } from "./adjustments";
 
 export interface VoucherItem {
   name: string;
@@ -31,6 +32,8 @@ export interface VoucherData {
   orderNumber: string;
   confirmationNumber: string;
   items: VoucherItem[];
+  /** Order-level discount the payment locked in; rendered under Total Paid. */
+  adjustments?: OrderAdjustment[];
   totalAmount: number;
   /**
    * Hides the amount paid. Useful when the voucher is handed to a box office,
@@ -162,6 +165,12 @@ export function renderVoucherEmail(data: VoucherData): { html: string; text: str
                         : `<div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2ded6;">
                       <div style="font-size:11px;color:#666;letter-spacing:1px;text-transform:uppercase;">Total Paid</div>
                       <div style="font-size:22px;font-weight:bold;color:${TEXT_DARK};margin-top:4px;">$${data.totalAmount.toFixed(2)}</div>
+                      ${(data.adjustments ?? [])
+                        .map(
+                          (a) =>
+                            `<div style="font-size:12px;color:#047857;font-weight:bold;margin-top:4px;">Includes ${escapeHtml(a.label)}: $${(-a.amountCents / 100).toFixed(2)} off</div>`
+                        )
+                        .join("")}
                     </div>`
                     }
                   </td>
@@ -215,7 +224,14 @@ export function renderVoucherEmail(data: VoucherData): { html: string; text: str
     "",
     `Confirmation Number: ${data.confirmationNumber}`,
     `Order Number: ${data.orderNumber}`,
-    ...(data.hideTotalPaid ? [] : [`Total Paid: $${data.totalAmount.toFixed(2)}`]),
+    ...(data.hideTotalPaid
+      ? []
+      : [
+          `Total Paid: $${data.totalAmount.toFixed(2)}`,
+          ...(data.adjustments ?? []).map(
+            (a) => `Includes ${a.label}: $${(-a.amountCents / 100).toFixed(2)} off`
+          ),
+        ]),
     "",
     "=== YOUR VOUCHERS ===",
   ];

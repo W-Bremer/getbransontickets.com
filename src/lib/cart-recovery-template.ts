@@ -1,5 +1,7 @@
 import { siteConfig } from "./config";
 import { escapeHtml, formatDate, formatQuantity } from "./email-format";
+import { cartBaseSubtotal, cartTax } from "./tax";
+import type { OrderAdjustment } from "./adjustments";
 import type { ConfirmationItem } from "./order-confirmation-template";
 
 /**
@@ -14,6 +16,8 @@ export interface CartRecoveryData {
   customerName: string;
   customerEmail: string;
   items: ConfirmationItem[];
+  /** Discount the abandoned intent had locked in (e.g. senior/military $5). */
+  adjustments?: OrderAdjustment[];
   totalAmount: number;
   /** Absolute link that rebuilds this cart and lands on checkout. */
   resumeUrl: string;
@@ -26,8 +30,10 @@ const RED = "#C8102E";
 const TEXT_DARK = "#1A1614";
 const BG_PAPER = "#F6F4EF";
 
+// Pre-tax base per line, matching what checkout showed; taxes render once as
+// their own row so the emailed figures line up with the resumed cart.
 function itemSubtotal(item: ConfirmationItem): number {
-  return item.pricePerAdult * item.adults + item.pricePerChild * item.children;
+  return cartBaseSubtotal([item]);
 }
 
 function itemRow(item: ConfirmationItem): string {
@@ -58,6 +64,9 @@ export function renderCartRecoveryEmail(data: CartRecoveryData): {
   const firstName = data.customerName.trim().split(/\s+/)[0] || "there";
   const firstShow = data.items[0]?.name ?? "Branson show";
   const subject = `Your ${firstShow} booking isn't finished`;
+  const baseSubtotal = cartBaseSubtotal(data.items);
+  const taxes = cartTax(data.items);
+  const adjustments = data.adjustments ?? [];
 
   const soonNote = data.showIsSoon
     ? `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top:20px;border-left:4px solid ${RED};background:#fdf3f4;border-radius:6px;">
@@ -109,8 +118,24 @@ export function renderCartRecoveryEmail(data: CartRecoveryData): {
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 ${data.items.map(itemRow).join("")}
                 <tr>
-                  <td style="padding:14px 0;font-family:Arial,sans-serif;color:${TEXT_DARK};font-size:16px;font-weight:bold;">Total</td>
-                  <td align="right" style="padding:14px 0;font-family:Arial,sans-serif;color:${TEXT_DARK};font-size:18px;font-weight:bold;">$${data.totalAmount.toFixed(2)}</td>
+                  <td style="padding:12px 0 2px 0;font-family:Arial,sans-serif;color:#5b5651;font-size:14px;">Subtotal</td>
+                  <td align="right" style="padding:12px 0 2px 0;font-family:Arial,sans-serif;color:#5b5651;font-size:14px;">$${baseSubtotal.toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td style="padding:2px 0;font-family:Arial,sans-serif;color:#5b5651;font-size:14px;">Taxes</td>
+                  <td align="right" style="padding:2px 0;font-family:Arial,sans-serif;color:#5b5651;font-size:14px;">$${taxes.toFixed(2)}</td>
+                </tr>
+                ${adjustments
+                  .map(
+                    (a) => `<tr>
+                  <td style="padding:2px 0;font-family:Arial,sans-serif;color:#047857;font-size:14px;font-weight:bold;">${escapeHtml(a.label)}</td>
+                  <td align="right" style="padding:2px 0;font-family:Arial,sans-serif;color:#047857;font-size:14px;font-weight:bold;">-$${(-a.amountCents / 100).toFixed(2)}</td>
+                </tr>`
+                  )
+                  .join("")}
+                <tr>
+                  <td style="padding:10px 0 14px 0;font-family:Arial,sans-serif;color:${TEXT_DARK};font-size:16px;font-weight:bold;">Total</td>
+                  <td align="right" style="padding:10px 0 14px 0;font-family:Arial,sans-serif;color:${TEXT_DARK};font-size:18px;font-weight:bold;">$${data.totalAmount.toFixed(2)}</td>
                 </tr>
               </table>
 
@@ -179,6 +204,11 @@ export function renderCartRecoveryEmail(data: CartRecoveryData): {
   });
 
   textLines.push("");
+  textLines.push(`Subtotal: $${baseSubtotal.toFixed(2)}`);
+  textLines.push(`Taxes: $${taxes.toFixed(2)}`);
+  adjustments.forEach((a) => {
+    textLines.push(`${a.label}: -$${(-a.amountCents / 100).toFixed(2)}`);
+  });
   textLines.push(`Total: $${data.totalAmount.toFixed(2)}`);
   textLines.push("");
   textLines.push(`Finish your booking here (takes about 2 minutes):`);

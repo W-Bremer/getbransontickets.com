@@ -1,5 +1,7 @@
 import { siteConfig } from "./config";
 import { escapeHtml, formatDate, formatQuantity } from "./email-format";
+import { cartBaseSubtotal, cartTax } from "./tax";
+import type { OrderAdjustment } from "./adjustments";
 
 /**
  * Sent the moment a payment clears. This is NOT the voucher: vouchers are
@@ -25,6 +27,8 @@ export interface OrderConfirmationData {
   customerPhone: string;
   orderNumber: string;
   items: ConfirmationItem[];
+  /** Order-level discount rows (e.g. the $5 senior/military discount). */
+  adjustments?: OrderAdjustment[];
   totalAmount: number;
   /** Lets the office alert link straight to the voucher desk. Never rendered to the customer. */
   paymentIntentId?: string;
@@ -38,8 +42,11 @@ const BG_PAPER = "#F6F4EF";
 /** Hours we promise on the voucher. Change here and the copy follows. */
 export const VOUCHER_SLA_HOURS = 12;
 
+// Line amounts advertise the pre-tax base; the embedded tax appears once in
+// the Taxes row, matching how checkout displayed the order. Base + tax rows
+// always sum back to the tax-inclusive catalog prices to the cent.
 function itemSubtotal(item: ConfirmationItem): number {
-  return item.pricePerAdult * item.adults + item.pricePerChild * item.children;
+  return cartBaseSubtotal([item]);
 }
 
 function itemRow(item: ConfirmationItem): string {
@@ -67,6 +74,9 @@ export function renderOrderConfirmationEmail(data: OrderConfirmationData): {
   text: string;
 } {
   const firstName = data.customerName.trim().split(/\s+/)[0] || "there";
+  const baseSubtotal = cartBaseSubtotal(data.items);
+  const taxes = cartTax(data.items);
+  const adjustments = data.adjustments ?? [];
   const voucherWord = data.items.length === 1 ? "voucher" : "vouchers";
   // "show" stays singular here: it is modifying "voucher", not counting shows.
   const voucherClause =
@@ -141,8 +151,24 @@ export function renderOrderConfirmationEmail(data: OrderConfirmationData): {
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 ${data.items.map(itemRow).join("")}
                 <tr>
-                  <td style="padding:16px 0;font-family:Arial,sans-serif;color:${TEXT_DARK};font-size:16px;font-weight:bold;">Total</td>
-                  <td align="right" style="padding:16px 0;font-family:Arial,sans-serif;color:${TEXT_DARK};font-size:18px;font-weight:bold;">$${data.totalAmount.toFixed(2)}</td>
+                  <td style="padding:14px 0 2px 0;font-family:Arial,sans-serif;color:#5b5651;font-size:14px;">Subtotal</td>
+                  <td align="right" style="padding:14px 0 2px 0;font-family:Arial,sans-serif;color:#5b5651;font-size:14px;">$${baseSubtotal.toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td style="padding:2px 0;font-family:Arial,sans-serif;color:#5b5651;font-size:14px;">Taxes</td>
+                  <td align="right" style="padding:2px 0;font-family:Arial,sans-serif;color:#5b5651;font-size:14px;">$${taxes.toFixed(2)}</td>
+                </tr>
+                ${adjustments
+                  .map(
+                    (a) => `<tr>
+                  <td style="padding:2px 0;font-family:Arial,sans-serif;color:#047857;font-size:14px;font-weight:bold;">${escapeHtml(a.label)}</td>
+                  <td align="right" style="padding:2px 0;font-family:Arial,sans-serif;color:#047857;font-size:14px;font-weight:bold;">-$${(-a.amountCents / 100).toFixed(2)}</td>
+                </tr>`
+                  )
+                  .join("")}
+                <tr>
+                  <td style="padding:12px 0 16px 0;font-family:Arial,sans-serif;color:${TEXT_DARK};font-size:16px;font-weight:bold;">Total</td>
+                  <td align="right" style="padding:12px 0 16px 0;font-family:Arial,sans-serif;color:${TEXT_DARK};font-size:18px;font-weight:bold;">$${data.totalAmount.toFixed(2)}</td>
                 </tr>
               </table>
 
@@ -219,6 +245,11 @@ export function renderOrderConfirmationEmail(data: OrderConfirmationData): {
   });
 
   textLines.push("");
+  textLines.push(`Subtotal: $${baseSubtotal.toFixed(2)}`);
+  textLines.push(`Taxes: $${taxes.toFixed(2)}`);
+  adjustments.forEach((a) => {
+    textLines.push(`${a.label}: -$${(-a.amountCents / 100).toFixed(2)}`);
+  });
   textLines.push(`Total: $${data.totalAmount.toFixed(2)}`);
   textLines.push("");
   textLines.push("WHAT HAPPENS NEXT:");

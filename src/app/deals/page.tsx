@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Tag, Ticket, Sparkles } from "lucide-react";
 import { siteConfig } from "@/lib/config";
+import { formatBasePrice } from "@/lib/tax";
 import { shows } from "@/data/shows";
 import { attractions } from "@/data/attractions";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -131,7 +132,7 @@ export default function DealsPage() {
                           From
                         </span>
                         <span className="ml-1 text-lg font-bold text-[#1A1614]">
-                          ${show.priceFrom}
+                          ${formatBasePrice(show.priceFrom)}
                         </span>
                       </div>
                     </div>
@@ -200,7 +201,7 @@ export default function DealsPage() {
                         From
                       </span>
                       <span className="ml-1 text-lg font-bold text-white">
-                        ${show.priceFrom}
+                        ${formatBasePrice(show.priceFrom)}
                       </span>
                     </div>
                   </div>

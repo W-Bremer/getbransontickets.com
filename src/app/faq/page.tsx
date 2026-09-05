@@ -66,6 +66,11 @@ const faqCategories = [
           "Deals change through the year. Current offers include BOGO promotions on select shows, family passes, and dollar-off deals from Branson theaters. Check our Deals page for what's available right now.",
       },
       {
+        question: "Do you offer senior or military discounts?",
+        answer:
+          "Yes. Seniors 55 and over and military members or veterans get $5 off their order. Just pick the discount that applies on the checkout page. One discount per order, and the theater may ask to see ID at the box office.",
+      },
+      {
         question: "How do BOGO offers work?",
         answer:
           "With BOGO deals, you purchase one full-price ticket and receive a second ticket free. Some BOGO offers apply to specific dates or show times. Check the deal details on each show listing for specifics.",
