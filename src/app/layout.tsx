@@ -124,7 +124,8 @@ export default function RootLayout({
         <Header
           partnerShows={getPartnerShows().map((s) => ({ name: s.name, slug: s.slug }))}
         />
-        <main className="min-h-screen pt-[80px] pb-14 md:pt-[80px] md:pb-0">
+        {/* Phones: 36px local-expert bar + 80px navbar stacked above the page. */}
+        <main className="min-h-screen pt-[116px] md:pt-[80px]">
           {children}
         </main>
         <Footer />

@@ -522,7 +522,7 @@ export default async function ShowDetailPage({
           {show.bookingPageV2 && show.isFeaturedPartner && (
             <section
               id="booking-widget"
-              className="mt-16 scroll-mt-24 border-t border-gray-200 pt-10"
+              className="mt-16 scroll-mt-32 md:scroll-mt-24 border-t border-gray-200 pt-10"
             >
               <h2 className="text-2xl font-bold text-[#1A1614] font-heading">
                 Pick Your Date and Time

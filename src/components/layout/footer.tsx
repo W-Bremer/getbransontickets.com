@@ -176,9 +176,6 @@ export function Footer() {
           <p className="text-xs text-white/40">
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
-          <p className="text-xs text-white/50">
-            Seniors and military save $5 at checkout on every order.
-          </p>
           <p className="text-xs tracking-widest text-white/40 uppercase">
             Live Entertainment Capital of the World
           </p>

@@ -3,13 +3,13 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu, Search, Phone, ChevronDown, X, Ticket,
 } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 import { CartIcon } from "@/components/cart-icon";
+import { SearchModal } from "@/components/search-modal";
 import { cn } from "@/lib/utils";
 
 export interface HeaderShowLink {
@@ -30,8 +30,6 @@ export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {
   const [showsOpen, setShowsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -48,20 +46,12 @@ export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {
     return () => document.documentElement.classList.remove("mobile-nav-open");
   }, [mobileOpen]);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/shows?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchOpen(false);
-      setSearchQuery("");
-    }
-  };
-
   return (
     <>
       <header
         className={cn(
-          "fixed top-0 right-0 left-0 z-50 transition-all duration-300",
+          // On phones the gold local-expert bar sits above the navbar.
+          "fixed top-9 md:top-0 right-0 left-0 z-50 transition-all duration-300",
           scrolled
             ? "bg-[#13264D]/95 shadow-lg shadow-black/20 backdrop-blur-xl"
             : "bg-[#13264D]"
@@ -205,7 +195,7 @@ export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {
             >
               {/* The menu is taller than the phone screen once every partner
                   show is listed, so it scrolls inside the fixed header. */}
-              <div className="mx-auto max-w-7xl space-y-1 overflow-y-auto overscroll-contain px-4 py-4 max-h-[calc(100dvh-5.5rem)] pb-[max(1rem,env(safe-area-inset-bottom))]">
+              <div className="mx-auto max-w-7xl space-y-1 overflow-y-auto overscroll-contain px-4 py-4 max-h-[calc(100dvh-7.75rem)] pb-[max(1rem,env(safe-area-inset-bottom))]">
                 <Link
                   href="/shows"
                   onClick={() => setMobileOpen(false)}
@@ -251,60 +241,8 @@ export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {
         </AnimatePresence>
       </header>
 
-      {/* Search Overlay */}
-      <AnimatePresence>
-        {searchOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-[#0D1B38]/95 backdrop-blur-xl"
-          >
-            <div className="mx-auto max-w-2xl px-4 pt-24">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-bold text-white">Search</h2>
-                <button
-                  onClick={() => setSearchOpen(false)}
-                  className="rounded-lg p-2 text-white/70 hover:bg-white/10 hover:text-white"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-              <form onSubmit={handleSearch}>
-                <div className="relative">
-                  <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/40" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search shows, attractions, theaters..."
-                    className="w-full rounded-xl border border-white/20 bg-white/5 py-4 pl-12 pr-4 text-lg text-white placeholder:text-white/40 focus:border-[#E8C65A]/50 focus:outline-none focus:ring-2 focus:ring-[#E8C65A]/20"
-                    autoFocus
-                  />
-                </div>
-              </form>
-              <div className="mt-6 text-sm text-white/40">
-                <p className="mb-3">Popular searches:</p>
-                <div className="flex flex-wrap gap-2">
-                  {["Haygoods", "Dinner Shows", "Magic", "Comedy", "Silver Dollar City", "Dolly Parton"].map((term) => (
-                    <button
-                      key={term}
-                      onClick={() => {
-                        setSearchQuery(term);
-                        router.push(`/shows?q=${encodeURIComponent(term)}`);
-                        setSearchOpen(false);
-                      }}
-                      className="rounded-full border border-white/20 px-3 py-1.5 text-sm text-white/70 hover:border-[#E8C65A]/50 hover:text-[#E8C65A]"
-                    >
-                      {term}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Instant site-wide search (shows, attractions, theaters) */}
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }

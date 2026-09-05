@@ -7,10 +7,8 @@ import { categories } from "@/lib/config";
 // import { getPublishedPosts } from "@/data/blog"; // archived
 // import { CategoryCard } from "@/components/category-card";
 import { TrustBar } from "@/components/trust-bar";
-import { DealBanner } from "@/components/deal-banner";
 import { HeroSection } from "@/components/hero-section";
 import { HomeShowsBrowser, type BrowsableShow } from "@/components/home-shows-browser";
-import { NewsletterForm } from "@/components/passport/newsletter-form";
 import { Tag, Percent, Compass, QrCode, BadgePercent } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -62,11 +60,6 @@ export default function HomePage() {
 
   return (
     <>
-      <DealBanner
-        headline="Seniors and Military: $5 off every order. Applied at checkout."
-        ctaText="Browse Shows"
-        ctaHref="/shows"
-      />
       <HeroSection />
 
       {/* Popular Shows */}
@@ -429,19 +422,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="py-16 sm:py-20 bg-[#F6F4EF]">
-        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1614]">
-            Get Branson Deals in Your Inbox
-          </h2>
-          <p className="mt-3 text-gray-500">
-            New shows, current offers, and seasonal specials. An email now and then.
-          </p>
-          <NewsletterForm />
-          <p className="mt-3 text-xs text-gray-400">No spam, ever. Unsubscribe anytime.</p>
-        </div>
-      </section>
     </>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ShowCard } from "@/components/show-card";
 import { SlidersHorizontal, X } from "lucide-react";
 import type { Show } from "@/data/shows";
@@ -21,6 +21,13 @@ export function ShowsListingClient({ shows, categories }: ShowsListingClientProp
   const [mealOnly, setMealOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+
+  // Honor /shows?q=... links (header search fallback, old bookmarks). Read
+  // post-mount so the page stays statically generated.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("q");
+    if (q) setSearchQuery(q);
+  }, []);
 
   const filteredShows = useMemo(() => {
     let filtered = [...shows];

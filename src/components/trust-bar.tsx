@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Phone, MapPin, CalendarCheck, Ticket } from "lucide-react";
+import { Phone, MapPin, BadgeDollarSign, Ticket } from "lucide-react";
 import { shows } from "@/data/shows";
 import { attractions } from "@/data/attractions";
 import { siteConfig } from "@/lib/config";
@@ -40,15 +39,12 @@ export function TrustBar({ className }: { className?: string }) {
         </div>
 
         <div className="flex flex-col gap-1.5 bg-[#F6F4EF] p-6">
-          <CalendarCheck className="h-5 w-5 text-[#C8102E]" strokeWidth={1.6} />
+          <BadgeDollarSign className="h-5 w-5 text-[#C8102E]" strokeWidth={1.6} />
           <p className="font-display text-lg font-bold text-[#13264D]">
-            Schedules checked July 2026
+            Best Price Guarantee
           </p>
           <p className="text-sm text-[#5C6478]">
-            Showtimes and venues verified against each box office.{" "}
-            <Link href="/about" className="underline underline-offset-2 hover:text-[#C8102E]">
-              How we check
-            </Link>
+            Find a lower price for the same seats and we will match it.
           </p>
         </div>
 
