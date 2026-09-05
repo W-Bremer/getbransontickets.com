@@ -6,7 +6,6 @@ import {
   MapPin,
   Facebook,
   Instagram,
-  Twitter,
   Youtube,
 } from "lucide-react";
 import { siteConfig } from "@/lib/config";
@@ -40,7 +39,6 @@ const companyLinks = [
 const socialLinks = [
   { label: "Facebook", href: siteConfig.socialLinks.facebook, icon: Facebook },
   { label: "Instagram", href: siteConfig.socialLinks.instagram, icon: Instagram },
-  { label: "Twitter", href: siteConfig.socialLinks.twitter, icon: Twitter },
   { label: "YouTube", href: siteConfig.socialLinks.youtube, icon: Youtube },
 ];
 

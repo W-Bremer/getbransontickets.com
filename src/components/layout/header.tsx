@@ -157,12 +157,20 @@ export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {
 
           {/* Right side */}
           <div className="flex items-center gap-2">
+            {/* Action label over a big bold number: converts better than a
+                bare number for a phone-first audience, and matches the
+                "local expert" framing used at checkout and in Ticket Info. */}
             <a
               href={`tel:${siteConfig.phoneRaw}`}
-              className="hidden items-center gap-2 rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/20 lg:flex"
+              className="hidden flex-col items-center rounded-lg border border-[#E8C65A]/50 bg-white/10 px-4 py-1.5 leading-tight transition-colors hover:border-[#E8C65A] hover:bg-white/20 lg:flex"
             >
-              <Phone className="h-4 w-4" />
-              {siteConfig.phone}
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#E8C65A]">
+                Talk to a Local Expert
+              </span>
+              <span className="flex items-center gap-1.5 text-lg font-bold text-white">
+                <Phone className="h-4 w-4" aria-hidden />
+                {siteConfig.phone}
+              </span>
             </a>
 
             <button
@@ -234,7 +242,7 @@ export function Header({ partnerShows }: { partnerShows: HeaderShowLink[] }) {
                     className="flex items-center justify-center gap-2 rounded-lg bg-[#C8102E] px-4 py-3 font-semibold text-white"
                   >
                     <Phone className="h-4 w-4" />
-                    Call {siteConfig.phone}
+                    Talk to a Local Expert: {siteConfig.phone}
                   </a>
                 </div>
               </div>

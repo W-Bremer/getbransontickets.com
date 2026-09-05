@@ -23,7 +23,9 @@ export function PhoneBar() {
         className="flex items-center justify-center gap-2.5 bg-[#E8C65A] px-4 py-3 font-semibold text-[#13264D] shadow-lg shadow-black/20 transition-colors active:bg-[#c49a38]"
       >
         <Phone className="h-5 w-5" />
-        <span className="text-sm">Call Now: {siteConfig.phone}</span>
+        <span className="text-sm">
+          <span className="font-bold">{siteConfig.phone}</span> Talk to a Local Expert
+        </span>
       </a>
     </div>
   );

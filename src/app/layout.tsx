@@ -101,7 +101,6 @@ const jsonLd = {
   sameAs: [
     siteConfig.socialLinks.facebook,
     siteConfig.socialLinks.instagram,
-    siteConfig.socialLinks.twitter,
     siteConfig.socialLinks.youtube,
   ],
 };

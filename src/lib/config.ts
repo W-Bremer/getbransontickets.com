@@ -18,7 +18,6 @@ export const siteConfig = {
   socialLinks: {
     facebook: "https://facebook.com/getbransontickets",
     instagram: "https://instagram.com/getbransontickets",
-    twitter: "https://twitter.com/getbransontickets",
     youtube: "https://youtube.com/@getbransontickets",
   },
 } as const;
