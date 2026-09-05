@@ -66,11 +66,6 @@ const faqCategories = [
           "Deals change through the year. Current offers include BOGO promotions on select shows, family passes, and dollar-off deals from Branson theaters. Check our Deals page for what's available right now.",
       },
       {
-        question: "Do you offer senior or military discounts?",
-        answer:
-          "Yes. Seniors 55 and over and military members or veterans get $5 off their order. Just pick the discount that applies on the checkout page. One discount per order, and the theater may ask to see ID at the box office.",
-      },
-      {
         question: "What is the Best Price Guarantee?",
         answer:
           "If you find a lower advertised price for the same show, date, and seating on another ticket site, call us before you book and we will match it. Our live local experts are at (417) 243-9629.",

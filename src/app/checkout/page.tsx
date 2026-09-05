@@ -12,7 +12,6 @@ import {
   ShoppingCart,
   Phone,
   Plus,
-  BadgePercent,
 } from "lucide-react";
 import {
   Elements,
@@ -31,7 +30,6 @@ import {
   applyAdjustments,
   bogoAmountCents,
   computeAdjustments,
-  type DiscountType,
 } from "@/lib/adjustments";
 import { baseOf, cartBaseSubtotal, cartTax } from "@/lib/tax";
 import { siteConfig } from "@/lib/config";
@@ -116,57 +114,9 @@ function GroupCallHint({ guests }: { guests: number }) {
   );
 }
 
-/**
- * Senior/military self-attestation. A single scalar selection means the two
- * discounts can never stack. Sits above the wallet buttons so a one-tap buyer
- * sees it before paying; toggling recreates the PaymentIntent at the new
- * amount, which is why the copy flips to an updating note while the fresh
- * client secret is in flight.
- */
-function DiscountSelector({
-  discountType,
-  onChange,
-}: {
-  discountType: DiscountType;
-  onChange: (d: DiscountType) => void;
-}) {
-  // No preselection and no "no discount" chip: tapping a chip selects it,
-  // tapping it again deselects (back to none).
-  const options: { value: DiscountType; label: string }[] = [
-    { value: "senior", label: "Senior 55+" },
-    { value: "military", label: "Military or Veteran" },
-  ];
-  return (
-    <div className="mb-5 rounded-lg bg-[#F6F4EF] p-3">
-      <div className="flex items-center gap-1.5 text-sm font-semibold text-[#1A1614]">
-        <BadgePercent className="h-4 w-4 text-[#C8102E]" />
-        Senior or military? Save on your order.
-      </div>
-      <div
-        className="mt-2 flex flex-wrap gap-1.5"
-        role="radiogroup"
-        aria-label="Order discount"
-      >
-        {options.map((o) => (
-          <button
-            key={o.value}
-            type="button"
-            role="radio"
-            aria-checked={discountType === o.value}
-            onClick={() => onChange(discountType === o.value ? "none" : o.value)}
-            className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
-              discountType === o.value
-                ? "border-[#13264D] bg-[#13264D] text-white"
-                : "border-gray-300 bg-white text-[#1A1614]/70 hover:border-[#13264D]"
-            }`}
-          >
-            {o.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
+// Senior/military $5 selector removed 2026-09-05 (paused per William).
+// The adjustments engine still honors discounts stamped on existing intents;
+// to re-enable, restore DiscountSelector and its wiring from git history.
 
 /**
  * One-tap wallets (Apple Pay / Google Pay / Link) ahead of the contact form.
@@ -540,7 +490,7 @@ function StripePaymentForm({
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, discountType, setDiscountType } = useCartStore();
+  const { items } = useCartStore();
   const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<Step>(1);
   const [formData, setFormData] = useState<ContactInfo>({
@@ -582,7 +532,7 @@ export default function CheckoutPage() {
         const res = await fetch("/api/create-payment-intent", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items: itemsPayload(items), discountType }),
+          body: JSON.stringify({ items: itemsPayload(items) }),
         });
         if (!res.ok) {
           const body = (await res.json().catch(() => ({}))) as { error?: string };
@@ -591,16 +541,15 @@ export default function CheckoutPage() {
         const data = (await res.json()) as {
           clientSecret: string;
           amount: number;
-          discountType?: string;
         };
         // Mirror the server math exactly (same shared module) so a catalog
         // price change between add-to-cart and checkout still surfaces.
         const subtotal = expectedCents(items);
         const expected = applyAdjustments(
           subtotal,
-          computeAdjustments(subtotal, discountType, cartBogoCents(items))
+          computeAdjustments(subtotal, "none", cartBogoCents(items))
         );
-        if (data.amount !== expected || (data.discountType ?? "none") !== discountType) {
+        if (data.amount !== expected) {
           throw new Error(
             "Prices have been updated since you added these items. Please empty your cart and add them again."
           );
@@ -616,7 +565,7 @@ export default function CheckoutPage() {
     return () => {
       cancelled = true;
     };
-  }, [mounted, items, discountType]);
+  }, [mounted, items]);
 
   if (!mounted) {
     return (
@@ -631,7 +580,7 @@ export default function CheckoutPage() {
   // the embedded tax out as its own cart-level row, then applies the discount.
   // baseSubtotal + taxes always equals the old all-in subtotal to the cent.
   const subtotalCents = expectedCents(items);
-  const adjustments = computeAdjustments(subtotalCents, discountType, cartBogoCents(items));
+  const adjustments = computeAdjustments(subtotalCents, "none", cartBogoCents(items));
   const total = applyAdjustments(subtotalCents, adjustments) / 100;
   const baseSubtotal = cartBaseSubtotal(items);
   const taxes = cartTax(items);
@@ -808,10 +757,6 @@ export default function CheckoutPage() {
                   <>
                     <GroupCallHint
                       guests={items.reduce((n, i) => n + i.adults + i.children, 0)}
-                    />
-                    <DiscountSelector
-                      discountType={discountType}
-                      onChange={setDiscountType}
                     />
                     {clientSecret && (
                       <Elements

@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 import { stripe } from "@/lib/stripe";
 import { REF_COOKIE } from "@/lib/passport";
 import { computeOrderTotalCents } from "@/lib/pricing";
-import { parseDiscountType } from "@/lib/adjustments";
 import { adjustmentsFromMetadata, packCartMetadata, type CartLine } from "@/lib/order";
 import { getShowBySlug } from "@/data/shows";
 import { effectiveSchedule, loadOverrides, timesForDate } from "@/lib/showtimes";
@@ -24,8 +23,6 @@ interface Body {
   customerName?: string;
   customerEmail?: string;
   customerPhone?: string;
-  /** Senior/military selection; parsed tolerantly, anything unrecognized means none. */
-  discountType?: string;
   /** When set, stamp contact details onto this existing intent instead of creating one. */
   paymentIntentId?: string;
 }
@@ -45,7 +42,9 @@ export async function POST(req: Request) {
     }
 
     // Prices are looked up server-side by item id; client-supplied prices are ignored.
-    const discountType = parseDiscountType(body.discountType);
+    // Senior/military paused 2026-09-05: new intents always price without it,
+    // while adjustmentsFromMetadata keeps honoring stamps on existing intents.
+    const discountType = "none" as const;
     const order = computeOrderTotalCents(items, discountType);
     if (order === null) {
       return NextResponse.json(
@@ -187,7 +186,6 @@ export async function POST(req: Request) {
     return NextResponse.json({
       clientSecret: paymentIntent.client_secret,
       amount: totalCents,
-      discountType,
     });
   } catch (err) {
     console.error("create-payment-intent error:", err);

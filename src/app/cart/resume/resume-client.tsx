@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useCartStore, type CartItem } from "@/stores/cart";
-import { parseDiscountType } from "@/lib/adjustments";
 
 type State =
   | { phase: "loading" }
@@ -20,7 +19,7 @@ type State =
 export function ResumeCartClient() {
   const router = useRouter();
   const params = useSearchParams();
-  const { clearCart, addItem, setDiscountType } = useCartStore();
+  const { clearCart, addItem } = useCartStore();
   const [state, setState] = useState<State>({ phase: "loading" });
   const started = useRef(false);
 
@@ -39,7 +38,6 @@ export function ResumeCartClient() {
         });
         const data = (await res.json()) as {
           items?: CartItem[];
-          discountType?: string;
           completed?: boolean;
           error?: string;
         };
@@ -57,8 +55,6 @@ export function ResumeCartClient() {
         }
 
         clearCart();
-        // After clearCart, which resets the selection to none.
-        setDiscountType(parseDiscountType(data.discountType));
         data.items.forEach((item) => addItem(item));
         router.replace("/checkout");
       } catch {

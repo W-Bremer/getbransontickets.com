@@ -69,10 +69,6 @@ export function DealHighlights({
         </li>
         <li className="flex items-center gap-1.5">
           <Check className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
-          Seniors and military: $5 off at checkout
-        </li>
-        <li className="flex items-center gap-1.5">
-          <Check className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
           Free cancellation with 24+ hours notice
         </li>
         <li className="flex items-center gap-1.5">

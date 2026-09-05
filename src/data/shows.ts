@@ -23,7 +23,7 @@ googleRating: 4.6, googleReviewCount: 265, googleReviewsUrl: "https://www.google
 faqs: [
 { question: "How long is the Amazing Acrobats of Shanghai show?", answer: "About 2 hours. Plan to arrive 30 minutes early to park and find your seats." },
 { question: "Is the show good for kids?", answer: "Yes! It's one of Branson's most family-friendly shows, and the nonstop acrobatics hold even young kids' attention. Children 3 and under are admitted free." },
-{ question: "What do tickets cost?", answer: "Adult tickets are $41.98 plus tax and kids are $21.86 plus tax. There are no added fees, and your total never tops the theater box office rate. Children 3 and under are free, and seniors and military save $5 at checkout." },
+{ question: "What do tickets cost?", answer: "Adult tickets are $41.98 plus tax and kids are $21.86 plus tax. There are no added fees, and your total never tops the theater box office rate. Children 3 and under are free." },
 { question: "What if our plans change?", answer: "You can cancel for a full refund up to 24 hours before showtime. Need a different date instead? Call us at (417) 243-9629 and we'll switch it." },
 { question: "How do we get our tickets?", answer: "Everything is delivered by email, and your confirmation arrives immediately after you book. Just show your tickets on your phone at the theater box office; nothing to print." },
 { question: "When are showtimes?", answer: "Most days at 7:30 PM, with 2:00 PM matinees on many dates and occasional 10:00 AM morning shows. The booking calendar shows every date the theater has on sale." },
