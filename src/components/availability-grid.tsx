@@ -3,6 +3,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { openBooking } from "@/components/book-now-button";
 import { formatBasePrice } from "@/lib/tax";
+import { DEMAND_LABELS, type DemandLevel } from "@/lib/demand";
+
+/** Pill styling per demand level, in the spirit of box-office grids. */
+const DEMAND_PILLS: Record<DemandLevel, string> = {
+  available: "bg-emerald-100 text-emerald-800",
+  limited: "bg-amber-100 text-amber-900",
+  "going-fast": "bg-[#C8102E] text-white",
+  "sold-out": "bg-gray-200 text-gray-500",
+};
 
 interface AvailabilityGridProps {
   /** Slug for the live schedule lookup; only sellable shows have one served. */
@@ -15,7 +24,7 @@ interface AvailabilityGridProps {
 }
 
 interface ScheduleResponse {
-  dates: { date: string; times: string[] }[];
+  dates: { date: string; times: string[]; demand?: DemandLevel }[];
 }
 
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -45,6 +54,7 @@ export default function AvailabilityGrid({
   // Sellable shows render the real performance calendar (same source as the
   // booking widget); others fall back to the weekly pattern for display.
   const [availability, setAvailability] = useState<Map<string, string[]> | null>(null);
+  const [demandMap, setDemandMap] = useState<Map<string, DemandLevel> | null>(null);
   useEffect(() => {
     if (!isSellable || !slug) return;
     let cancelled = false;
@@ -53,6 +63,15 @@ export default function AvailabilityGrid({
       .then((data: ScheduleResponse) => {
         if (!cancelled) {
           setAvailability(new Map(data.dates.map((d) => [d.date, d.times])));
+          setDemandMap(
+            data.dates.some((d) => d.demand)
+              ? new Map(
+                  data.dates.flatMap((d) =>
+                    d.demand ? [[d.date, d.demand] as const] : []
+                  )
+                )
+              : null
+          );
         }
       })
       .catch(() => {});
@@ -94,7 +113,7 @@ export default function AvailabilityGrid({
     <div className="rounded-xl border border-gray-200 bg-white overflow-hidden">
       <div className="border-b border-gray-200 bg-gray-50 px-5 py-3">
         <h3 className="text-sm font-bold text-[#1A1614]">
-          Upcoming Availability &mdash; {showName}
+          Upcoming Availability: {showName}
         </h3>
       </div>
 
@@ -127,12 +146,21 @@ export default function AvailabilityGrid({
               <td className="px-4 py-3 font-medium text-[#1A1614]">Show times</td>
               {days.map((date, i) => {
                 const times = timesFor(date);
+                const demand = demandMap?.get(isoOf(date));
                 return (
                   <td key={i} className="px-2 py-3 text-center align-top">
                     {times === null ? (
-                      <span className="inline-block rounded bg-gray-100 px-3 py-1.5 text-xs text-gray-400">
-                        N/A
-                      </span>
+                      demand === "sold-out" ? (
+                        <span
+                          className={`inline-block rounded px-3 py-1.5 text-xs font-bold ${DEMAND_PILLS["sold-out"]}`}
+                        >
+                          Sold Out
+                        </span>
+                      ) : (
+                        <span className="inline-block rounded bg-gray-100 px-3 py-1.5 text-xs text-gray-400">
+                          N/A
+                        </span>
+                      )
                     ) : (
                       <div className="flex flex-col items-center gap-1">
                         {times.map((t) => (
@@ -140,6 +168,13 @@ export default function AvailabilityGrid({
                             {t}
                           </span>
                         ))}
+                        {demand && demand !== "sold-out" && (
+                          <span
+                            className={`inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${DEMAND_PILLS[demand]}`}
+                          >
+                            {DEMAND_LABELS[demand]}
+                          </span>
+                        )}
                         {isSellable && (
                           <button
                             onClick={() => bookDay(date)}

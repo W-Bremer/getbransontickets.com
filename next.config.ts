@@ -48,11 +48,20 @@ const nextConfig: NextConfig = {
     qualities: [75, 80, 82, 90],
   },
   async redirects() {
-    return Object.entries(legacyAttractionSlugs).map(([from, to]) => ({
-      source: `/attractions/${from}`,
-      destination: `/attractions/${to}`,
-      permanent: true,
-    }));
+    return [
+      ...Object.entries(legacyAttractionSlugs).map(([from, to]) => ({
+        source: `/attractions/${from}`,
+        destination: `/attractions/${to}`,
+        permanent: true,
+      })),
+      // The acrobats were long marketed as "Acrobats of China"; searches and
+      // old links still use that name.
+      {
+        source: "/shows/acrobats-of-china",
+        destination: "/shows/amazing-acrobats-of-shanghai",
+        permanent: true,
+      },
+    ];
   },
 };
 

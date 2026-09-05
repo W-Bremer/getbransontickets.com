@@ -19,6 +19,8 @@ import BookingWidget from "@/components/booking-widget";
 import { BookingModal } from "@/components/booking-modal";
 import StickyBookingBar from "@/components/sticky-booking-bar";
 import { GoogleReviews } from "@/components/google-reviews";
+import { FamilyBundle } from "@/components/family-bundle";
+import { ShowDetailSections } from "@/components/show-detail-sections";
 import { getPlaceSnapshot } from "@/lib/google-places";
 import { ShowDetailClient } from "./show-detail-client";
 
@@ -273,11 +275,21 @@ export default async function ShowDetailPage({
                               Tickets from
                             </span>
                             <div className="flex items-baseline gap-1.5">
+                              {show.competitorPrice !== undefined && (
+                                <span className="text-xl font-bold leading-none text-white/40 line-through decoration-[#C8102E] decoration-2">
+                                  ${show.competitorPrice}
+                                </span>
+                              )}
                               <span className="text-3xl font-bold leading-none text-white">
                                 ${formatBasePrice(show.priceFrom)}
                               </span>
                               <span className="text-sm text-white/70">/ adult + tax</span>
                             </div>
+                            {show.competitorPrice !== undefined && (
+                              <p className="mt-0.5 text-[11px] text-[#E8C65A]">
+                                ${show.competitorPrice} is the listed rate on other ticket sites
+                              </p>
+                            )}
                           </div>
                           <div className="pb-0.5 text-right">
                             {show.childPriceFrom === 0 ? (
@@ -320,6 +332,14 @@ export default async function ShowDetailPage({
                         kidsFreeUnderAge={show.kidsFreeUnderAge}
                         className="px-4 pt-4"
                       />
+                      {show.familyBundle && (
+                        <div className="px-4 pt-3">
+                          <FamilyBundle
+                            priceFrom={show.priceFrom}
+                            childPriceFrom={show.childPriceFrom}
+                          />
+                        </div>
+                      )}
                       <div className="p-1 pt-3">
                         <BookingWidget
                           showId={show.slug}
@@ -468,6 +488,9 @@ export default async function ShowDetailPage({
             </div>
           </div>
 
+          {/* Long-form editorial + photos (per-show via detailSections) */}
+          <ShowDetailSections show={show} />
+
           {/* Related Shows */}
           {relatedShows.length > 0 && (
             <div className="mt-16 pt-12 border-t border-gray-200">
@@ -493,6 +516,7 @@ export default async function ShowDetailPage({
           pricePerChild={show.childPriceFrom ?? Math.round(show.priceFrom * 0.6)}
           imageUrl={show.imageUrl}
           kidsFreeUnderAge={show.kidsFreeUnderAge}
+          competitorPrice={show.competitorPrice}
         />
       )}
 

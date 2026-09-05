@@ -8,6 +8,8 @@
 // Branson tourism tax on admission tickets. TODO(William): verify against a
 // box-office receipt or Cindy before adjusting, then leave it alone; the
 // labeled Taxes line must equal genuine tax embedded in the retail rate.
+// If this changes, also update the hardcoded sticker prices in the Acrobats
+// FAQ answer in src/data/shows.ts ("What do tickets cost?").
 export const TAX_RATE = 0.1435;
 
 /** Pre-tax display price for one tax-inclusive dollar amount. */

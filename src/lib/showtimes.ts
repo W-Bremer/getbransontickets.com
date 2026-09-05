@@ -3,6 +3,7 @@ import { get, put } from "@vercel/blob";
 import type { Show } from "@/data/shows";
 import { shows } from "@/data/shows";
 import { getSeasonDates } from "./season";
+import { demandForDate, type DemandLevel } from "./demand";
 
 /**
  * Single source of truth for what dates and times a show can be booked.
@@ -337,20 +338,52 @@ export function timesForDate(
 export interface DayAvailability {
   date: string;
   times: string[];
+  /** Demand label; only populated for shows with demandBadges enabled. */
+  demand?: DemandLevel;
 }
 
-/** Every bookable date in the next windowDays, starting today Branson time. */
+/**
+ * Every bookable date in the next windowDays, starting today Branson time.
+ * With demandSlug set (shows.demandBadges), each day carries a demand label:
+ * real office sold-out data wins outright (a fully sold-out day is emitted
+ * with no times instead of vanishing, and a partially sold-out day reads
+ * "going-fast"); otherwise the deterministic heuristic in lib/demand.ts.
+ */
 export function buildAvailability(
   schedule: EffectiveSchedule,
   windowDays = 240,
-  now = new Date()
+  now = new Date(),
+  demandSlug?: string
 ): DayAvailability[] {
   const start = chicagoToday(now);
+  // Same schedule with sold-out entries ignored: comparing against it is how
+  // a "no times" day is classified as sold out (times existed, all removed)
+  // versus simply dark (no times to begin with).
+  const ignoringSoldOut: EffectiveSchedule | null = demandSlug
+    ? { ...schedule, soldOut: [] }
+    : null;
   const days: DayAvailability[] = [];
   for (let i = 0; i < windowDays; i++) {
     const date = addDays(start, i);
     const times = timesForDate(schedule, date, now);
-    if (times.length > 0) days.push({ date, times });
+    if (times.length > 0) {
+      if (demandSlug && ignoringSoldOut) {
+        const fullTimes = timesForDate(ignoringSoldOut, date, now);
+        const demand =
+          times.length < fullTimes.length
+            ? ("going-fast" as const)
+            : demandForDate(demandSlug, date, i);
+        days.push({ date, times, demand });
+      } else {
+        days.push({ date, times });
+      }
+    } else if (
+      demandSlug &&
+      ignoringSoldOut &&
+      timesForDate(ignoringSoldOut, date, now).length > 0
+    ) {
+      days.push({ date, times: [], demand: "sold-out" });
+    }
   }
   return days;
 }

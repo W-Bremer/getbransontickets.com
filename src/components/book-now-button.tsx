@@ -5,6 +5,9 @@ import { Ticket } from "lucide-react";
 export interface OpenBookingDetail {
   date?: string;
   time?: string;
+  /** Prefill the guest steppers (e.g. the family bundle strip opens 2 + 2). */
+  adults?: number;
+  children?: number;
 }
 
 /** Open the booking popup from anywhere on a show page. */

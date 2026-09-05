@@ -12,8 +12,8 @@ import { partners } from "@/data/partners";
  * discounts it. changeFrequency is omitted entirely: Google ignores it.
  */
 const CONTENT_UPDATED = {
-  // Show catalog audit: schedules and venues verified against each box office.
-  shows: new Date("2026-07-25"),
+  // Tax-out pricing display + Acrobats long-form sections and family bundle.
+  shows: new Date("2026-09-05"),
   // Attraction copy cleaned of upstream boilerplate.
   attractions: new Date("2026-07-25"),
   passport: new Date("2026-07-25"),

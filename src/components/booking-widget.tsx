@@ -6,6 +6,7 @@ import { Check, ChevronLeft, ChevronRight, Loader2, Minus, Plus } from "lucide-r
 import { useCartStore } from "@/stores/cart";
 import { formatPrice } from "@/lib/utils";
 import { baseOf, formatBasePrice } from "@/lib/tax";
+import { DEMAND_LABELS, type DemandLevel } from "@/lib/demand";
 
 interface BookingWidgetProps {
   showId: string;
@@ -18,14 +19,25 @@ interface BookingWidgetProps {
   /** Preselect a performance (booking popup opened from a specific date/time button). */
   initialDate?: string;
   initialTime?: string;
+  /** Prefill the guest steppers (family bundle strip, ?adults=&children= links). */
+  initialAdults?: number;
+  initialChildren?: number;
 }
 
 interface ScheduleResponse {
   slug: string;
   bookingDisabled: boolean;
   scheduleNote: string | null;
-  dates: { date: string; times: string[] }[];
+  dates: { date: string; times: string[]; demand?: DemandLevel }[];
 }
+
+/** Dot colors for the calendar demand markers. */
+const DEMAND_DOTS: Record<DemandLevel, string> = {
+  available: "bg-emerald-500",
+  limited: "bg-amber-400",
+  "going-fast": "bg-[#C8102E]",
+  "sold-out": "bg-gray-300",
+};
 
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
@@ -44,6 +56,8 @@ export default function BookingWidget({
   kidsFreeUnderAge,
   initialDate,
   initialTime,
+  initialAdults,
+  initialChildren,
 }: BookingWidgetProps) {
   const router = useRouter();
   const today = new Date();
@@ -57,14 +71,39 @@ export default function BookingWidget({
   /** ISO "YYYY-MM-DD"; string on purpose so month browsing cannot desync it. */
   const [selectedDate, setSelectedDate] = useState<string | null>(initialDate ?? null);
   const [selectedTime, setSelectedTime] = useState(initialTime ?? "");
-  const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(0);
-  const [childAges, setChildAges] = useState<number[]>([]);
+  const defaultChildAge = Math.max(5, (kidsFreeUnderAge ?? -1) + 1);
+  const startAdults = Math.min(10, Math.max(1, initialAdults ?? 2));
+  const startChildren = Math.min(8, Math.max(0, initialChildren ?? 0));
+  const [adults, setAdults] = useState(startAdults);
+  const [children, setChildren] = useState(startChildren);
+  const [childAges, setChildAges] = useState<number[]>(
+    Array(startChildren).fill(defaultChildAge)
+  );
+
+  // Cross-page prefill: /shows/[slug]?adults=2&children=2 (family bundle rows
+  // on theatre pages). Applied after mount so the SSG page hydrates cleanly.
+  useEffect(() => {
+    if (initialAdults !== undefined || initialChildren !== undefined) return;
+    const params = new URLSearchParams(window.location.search);
+    const a = Number.parseInt(params.get("adults") ?? "", 10);
+    const c = Number.parseInt(params.get("children") ?? "", 10);
+    if (Number.isFinite(a) && a >= 1) setAdults(Math.min(10, a));
+    if (Number.isFinite(c) && c >= 0) {
+      const clamped = Math.min(8, c);
+      setChildren(clamped);
+      setChildAges(Array(clamped).fill(defaultChildAge));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // The dates a customer can actually book: the show's real performance
   // calendar (weekly pattern, dark days, seasonal pauses, sold-out dates)
   // served by /api/schedule/[slug]. Until it loads, no date is clickable.
   const [availability, setAvailability] = useState<Map<string, string[]> | null>(null);
+  // Demand labels per date (only for shows with demandBadges); real sold-out
+  // dates arrive with no times, so they render disabled with a Sold Out mark
+  // instead of looking like dark days.
+  const [demandMap, setDemandMap] = useState<Map<string, DemandLevel> | null>(null);
   const [bookingDisabled, setBookingDisabled] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
 
@@ -83,6 +122,13 @@ export default function BookingWidget({
         if (cancelled) return;
         const map = new Map(data.dates.map((d) => [d.date, d.times]));
         setAvailability(map);
+        setDemandMap(
+          data.dates.some((d) => d.demand)
+            ? new Map(
+                data.dates.flatMap((d) => (d.demand ? [[d.date, d.demand] as const] : []))
+              )
+            : null
+        );
         setBookingDisabled(data.bookingDisabled);
         // A preselected performance (popup opened from a date button) gets
         // validated against the live schedule; anything stale is cleared so
@@ -196,6 +242,7 @@ export default function BookingWidget({
   const quickPicks = useMemo(() => {
     if (!availability) return [];
     return [...availability.entries()]
+      .filter(([, times]) => times.length > 0)
       .slice(0, 3)
       .map(([date, times]) => ({ date, time: times[0] }));
   }, [availability]);
@@ -275,6 +322,13 @@ export default function BookingWidget({
     if (!stillAvailable) {
       if (fresh) {
         setAvailability(new Map(fresh.dates.map((d) => [d.date, d.times])));
+        setDemandMap(
+          fresh.dates.some((d) => d.demand)
+            ? new Map(
+                fresh.dates.flatMap((d) => (d.demand ? [[d.date, d.demand] as const] : []))
+              )
+            : null
+        );
         setBookingDisabled(fresh.bookingDisabled);
       }
       setSelectedTime("");
@@ -381,25 +435,46 @@ export default function BookingWidget({
           const hasShow = !!availability?.get(dateStr)?.length;
           const disabled = isPast(day) || !hasShow;
           const isSelected = selectedDate === dateStr;
+          const demand = !isPast(day) ? demandMap?.get(dateStr) : undefined;
+          const soldOut = demand === "sold-out";
 
           return (
             <button
               key={day}
               disabled={disabled}
               onClick={() => selectDate(dateStr)}
-              className={`rounded py-1.5 lg:py-1 text-sm lg:text-xs transition-colors ${
+              title={demand ? DEMAND_LABELS[demand] : undefined}
+              className={`relative rounded py-1.5 lg:py-1 text-sm lg:text-xs transition-colors ${
                 disabled
-                  ? "cursor-not-allowed text-gray-300"
+                  ? `cursor-not-allowed text-gray-300 ${soldOut ? "line-through" : ""}`
                   : isSelected
                     ? "bg-[#13264D] font-semibold text-white"
                     : "text-[#1A1614] hover:bg-[#13264D]/10"
               }`}
             >
               {day}
+              {demand && (
+                <span
+                  aria-hidden
+                  className={`absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full ${DEMAND_DOTS[demand]}`}
+                />
+              )}
             </button>
           );
         })}
       </div>
+
+      {/* Demand legend, only when the show sends demand labels */}
+      {demandMap && demandMap.size > 0 && (
+        <div className="mb-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px] text-gray-500">
+          {(["available", "limited", "going-fast", "sold-out"] as const).map((level) => (
+            <span key={level} className="inline-flex items-center gap-1">
+              <span className={`h-1.5 w-1.5 rounded-full ${DEMAND_DOTS[level]}`} />
+              {DEMAND_LABELS[level]}
+            </span>
+          ))}
+        </div>
+      )}
 
       <div className="mb-4 lg:mb-2 min-h-[1rem] text-center text-xs text-gray-500">
         {loadFailed

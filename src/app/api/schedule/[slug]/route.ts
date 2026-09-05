@@ -21,7 +21,12 @@ export async function GET(
 
   const overrides = await loadOverrides();
   const schedule = effectiveSchedule(show, overrides.overrides[show.slug]);
-  const dates = buildAvailability(schedule, 240);
+  const dates = buildAvailability(
+    schedule,
+    240,
+    new Date(),
+    show.demandBadges ? show.slug : undefined
+  );
 
   return NextResponse.json(
     {

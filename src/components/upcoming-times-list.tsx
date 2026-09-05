@@ -4,6 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, Phone } from "lucide-react";
 import { openBooking } from "@/components/book-now-button";
 import { siteConfig } from "@/lib/config";
+import { DEMAND_LABELS, type DemandLevel } from "@/lib/demand";
+
+const DEMAND_PILLS: Record<DemandLevel, string> = {
+  available: "bg-emerald-100 text-emerald-800",
+  limited: "bg-amber-100 text-amber-900",
+  "going-fast": "bg-[#C8102E] text-white",
+  "sold-out": "bg-gray-200 text-gray-500",
+};
 
 interface UpcomingTimesListProps {
   slug: string;
@@ -12,7 +20,7 @@ interface UpcomingTimesListProps {
 }
 
 interface ScheduleResponse {
-  dates: { date: string; times: string[] }[];
+  dates: { date: string; times: string[]; demand?: DemandLevel }[];
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -29,7 +37,9 @@ export default function UpcomingTimesList({
   slug,
   initialCount = 8,
 }: UpcomingTimesListProps) {
-  const [dates, setDates] = useState<{ date: string; times: string[] }[] | null>(null);
+  const [dates, setDates] = useState<
+    { date: string; times: string[]; demand?: DemandLevel }[] | null
+  >(null);
   const [failed, setFailed] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -103,8 +113,15 @@ export default function UpcomingTimesList({
             key={row.date}
             className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 sm:px-5"
           >
-            <span className="text-base font-semibold text-[#1A1614]">
+            <span className="inline-flex items-center gap-2 text-base font-semibold text-[#1A1614]">
               {dayLabel(row.date)}
+              {row.demand && row.demand !== "available" && (
+                <span
+                  className={`rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${DEMAND_PILLS[row.demand]}`}
+                >
+                  {DEMAND_LABELS[row.demand]}
+                </span>
+              )}
             </span>
             <div className="flex flex-wrap gap-2">
               {row.times.map((time) => (
