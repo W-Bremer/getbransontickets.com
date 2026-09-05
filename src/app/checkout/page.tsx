@@ -799,9 +799,11 @@ export default function CheckoutPage() {
       {/* Content */}
       <section className="py-10 sm:py-14 bg-[#F6F4EF]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="lg:grid lg:grid-cols-3 lg:gap-8">
+          {/* Contact step centers alone; the payment step splits with the
+              Order Summary column. */}
+          <div className={step === 2 ? "lg:grid lg:grid-cols-3 lg:gap-8" : "mx-auto max-w-3xl"}>
             {/* Form Area */}
-            <div className="lg:col-span-2">
+            <div className={step === 2 ? "lg:col-span-2" : ""}>
               <div className="rounded-2xl bg-white p-6 sm:p-8 shadow-sm border border-gray-100">
                 {intentError && (
                   <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
