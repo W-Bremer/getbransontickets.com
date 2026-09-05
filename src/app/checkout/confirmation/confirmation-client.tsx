@@ -161,17 +161,14 @@ export function ConfirmationClient() {
               {order.emailSent ? (
                 <div className="rounded-xl border-l-4 border-[#C8102E] bg-[#FDF3F4] p-5 text-left">
                   <p className="text-base font-bold text-[#C8102E]">
-                    Your vouchers arrive within 12 hours
+                    Your vouchers arrive within minutes.
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-[#1A1614]/75">
                     We sent a receipt to{" "}
                     <span className="font-semibold text-[#1A1614]">
                       {order.email}
                     </span>
-                    . We book every seat through the theater by hand, so your
-                    show voucher comes in a second email within 12 hours. That
-                    voucher is what the box office scans, and there is nothing
-                    else you need to do before then.
+                    .
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-[#1A1614]/75">
                     Attending today or tomorrow? Call{" "}
