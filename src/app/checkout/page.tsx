@@ -958,6 +958,26 @@ export default function CheckoutPage() {
                   >
                     Edit Cart
                   </Link>
+
+                  {/* Human safety net at the highest-anxiety moment. Framed as
+                      help, not as an alternative to paying online, so it
+                      rescues stuck buyers without inviting channel-switching.
+                      The tel: link fires the callClick conversion. */}
+                  <div className="mt-4 border-t border-gray-100 pt-4 text-center">
+                    <p className="text-xs text-[#1A1614]/60">
+                      Need help finishing your booking?
+                    </p>
+                    <a
+                      href={`tel:${siteConfig.phoneRaw}`}
+                      className="mt-1 inline-flex items-center gap-1.5 text-lg font-bold text-[#13264D] transition-colors hover:text-[#C8102E]"
+                    >
+                      <Phone className="h-4 w-4" aria-hidden />
+                      {siteConfig.phone}
+                    </a>
+                    <p className="mt-0.5 text-[11px] text-[#1A1614]/45">
+                      A live local expert will finish it with you.
+                    </p>
+                  </div>
                 </div>
             </div>
             )}
