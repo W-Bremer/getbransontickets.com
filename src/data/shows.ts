@@ -52,7 +52,7 @@ detailSections: [
 ], imageUrl: "/shows/amazing-acrobats-of-shanghai/grand-shanghai-circus-branson-acrobatic-trio.jpg", imageAlt: "Acrobatic trio adagio on stage at the Grand Shanghai Theatre in Branson" },
 { heading: "Planning Your Visit", paragraphs: [
 "Most dates play at 7:30 PM, with 2:00 PM matinees on many days and occasional 10:00 AM morning performances. The show runs about two hours, and arriving 30 minutes early leaves time to park and find your seats. The booking calendar on this page shows every date and time the theater has on sale, and every seat is booked directly with the theater.",
-"Kids' tickets cost about half the adult rate, children 3 and under attend free, and seniors and military save $5 at checkout. Plans change on vacation, so every ticket comes with free cancellation up to 24 hours before showtime.",
+"Kids' tickets cost about half the adult rate, and children 3 and under attend free. Plans change on vacation, so every ticket comes with free cancellation up to 24 hours before showtime.",
 ], imageUrl: "/shows/amazing-acrobats-of-shanghai/shanghai-circus-branson-aerial-silks.jpg", imageAlt: "Aerial silks artist at the Amazing Acrobats of Shanghai show in Branson" },
 { heading: "Who Will Love This Show", paragraphs: [
 "Families rank the acrobats among Branson's best shows for kids because the action never stops long enough for young attention spans to wander. Grandparents love it for the artistry, and group leaders book it because it lands with every age on the bus. With a 4.6-star Google rating from hundreds of visitors, it is consistently rated one of the most impressive productions in Branson.",

@@ -16,6 +16,9 @@ interface BookingModalProps {
   /** Competitor's documented listed rate, struck through. */
   competitorPrice?: number;
   bogo50?: boolean;
+  /** Open immediately with this event (the lazy wrapper replays the first
+      gbt:open-booking that arrived before the chunk loaded). */
+  initialEvent?: OpenBookingDetail;
 }
 
 /**
@@ -34,11 +37,17 @@ export function BookingModal({
   kidsFreeUnderAge,
   competitorPrice,
   bogo50,
+  initialEvent,
 }: BookingModalProps) {
-  const [open, setOpen] = useState(false);
-  const [preselect, setPreselect] = useState<OpenBookingDetail>({});
+  const [open, setOpen] = useState(initialEvent !== undefined);
+  const [preselect, setPreselect] = useState<OpenBookingDetail>(initialEvent ?? {});
   // Remounts the widget on every open so a fresh preselection applies.
   const [openCount, setOpenCount] = useState(0);
+
+  // Tell the rest of the page (the sticky buy bar) when the popup is up.
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent("gbt:booking-modal", { detail: { open } }));
+  }, [open]);
 
   useEffect(() => {
     const onOpen = (e: Event) => {
@@ -99,7 +108,7 @@ export function BookingModal({
           </div>
           <button
             onClick={() => setOpen(false)}
-            className="flex shrink-0 items-center gap-1.5 rounded-lg border border-white/40 px-3 py-2 text-sm font-semibold text-white hover:bg-white/10"
+            className="flex min-h-11 shrink-0 items-center gap-1.5 rounded-lg border border-white/40 px-3 py-2 text-sm font-semibold text-white hover:bg-white/10"
             aria-label="Close booking"
           >
             <X className="h-4 w-4" aria-hidden />
@@ -123,6 +132,7 @@ export function BookingModal({
             bogo50={bogo50}
             largeCalendar
             competitorPrice={competitorPrice}
+            autoSelectFirst
           />
         </div>
       </div>

@@ -3,14 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { openBooking } from "@/components/book-now-button";
+import { loadSchedule } from "@/lib/schedule-client";
 import { DEMAND_LABELS, type DemandLevel } from "@/lib/demand";
 
 interface ShowCalendarProps {
   slug: string;
-}
-
-interface ScheduleResponse {
-  dates: { date: string; times: string[]; demand?: DemandLevel }[];
 }
 
 const MONTHS = [
@@ -43,9 +40,8 @@ export function ShowCalendar({ slug }: ShowCalendarProps) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`/api/schedule/${slug}`)
-      .then((res) => (res.ok ? res.json() : Promise.reject()))
-      .then((data: ScheduleResponse) => {
+    loadSchedule(slug)
+      .then((data) => {
         if (cancelled) return;
         setAvailability(new Map(data.dates.map((d) => [d.date, d.times])));
         setDemandMap(

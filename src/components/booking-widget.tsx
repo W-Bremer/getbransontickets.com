@@ -6,6 +6,7 @@ import { Check, ChevronLeft, ChevronRight, Loader2, Minus, Plus } from "lucide-r
 import { useCartStore } from "@/stores/cart";
 import { formatPrice } from "@/lib/utils";
 import { baseOf, formatBasePrice } from "@/lib/tax";
+import { loadSchedule, refreshSchedule, type ScheduleResponse } from "@/lib/schedule-client";
 import { DEMAND_LABELS, type DemandLevel } from "@/lib/demand";
 
 interface BookingWidgetProps {
@@ -28,13 +29,9 @@ interface BookingWidgetProps {
   largeCalendar?: boolean;
   /** Competitor's listed per-adult rate; stored on the cart item for the compare line. */
   competitorPrice?: number;
-}
-
-interface ScheduleResponse {
-  slug: string;
-  bookingDisabled: boolean;
-  scheduleNote: string | null;
-  dates: { date: string; times: string[]; demand?: DemandLevel }[];
+  /** With no initialDate, preselect the first available date and time so the
+      Reserve button is enabled on open (the booking popup passes this). */
+  autoSelectFirst?: boolean;
 }
 
 /** Dot colors for the compact calendar demand markers. */
@@ -75,6 +72,7 @@ export default function BookingWidget({
   bogo50,
   largeCalendar,
   competitorPrice,
+  autoSelectFirst,
 }: BookingWidgetProps) {
   const router = useRouter();
   const today = new Date();
@@ -125,9 +123,7 @@ export default function BookingWidget({
     let cancelled = false;
     async function load() {
       try {
-        const res = await fetch(`/api/schedule/${showId}`);
-        if (!res.ok) throw new Error(`schedule ${res.status}`);
-        const data = (await res.json()) as ScheduleResponse;
+        const data = await loadSchedule(showId);
         if (cancelled) return;
         const map = new Map(data.dates.map((d) => [d.date, d.times]));
         setAvailability(map);
@@ -152,6 +148,22 @@ export default function BookingWidget({
           }
           return;
         }
+        // No date handed in: land ready to book. The first available
+        // performance is preselected (and clearly announced by the
+        // highlighted day, the active quick-pick chip, and the
+        // "Available on ..." line), so no entry point dead-ends on a
+        // disabled "Select a Date" button.
+        if (autoSelectFirst) {
+          const first = data.dates.find((d) => d.times.length > 0);
+          if (first) {
+            const [y, m] = first.date.split("-").map(Number);
+            setCurrentYear(y);
+            setCurrentMonth(m - 1);
+            setSelectedDate(first.date);
+            setSelectedTime(first.times[0]);
+            return;
+          }
+        }
         // Open on the first month that can actually be booked. At a month
         // boundary (or during a seasonal pause) the current month renders as
         // a wall of grayed-out days and every visitor has to know to click
@@ -173,7 +185,7 @@ export default function BookingWidget({
     return () => {
       cancelled = true;
     };
-  }, [showId, initialDate, initialTime]);
+  }, [showId, initialDate, initialTime, autoSelectFirst]);
 
   // Checkout is the very next page for most buyers; have it warm.
   useEffect(() => {
@@ -296,12 +308,9 @@ export default function BookingWidget({
     let stillAvailable = true;
     let fresh: ScheduleResponse | null = null;
     try {
-      const res = await fetch(`/api/schedule/${showId}`, { cache: "no-store" });
-      if (res.ok) {
-        fresh = (await res.json()) as ScheduleResponse;
-        const times = fresh.dates.find((d) => d.date === selectedDate)?.times ?? [];
-        stillAvailable = !fresh.bookingDisabled && times.includes(selectedTime);
-      }
+      fresh = await refreshSchedule(showId);
+      const times = fresh.dates.find((d) => d.date === selectedDate)?.times ?? [];
+      stillAvailable = !fresh.bookingDisabled && times.includes(selectedTime);
     } catch {
       // keep stillAvailable = true
     }
@@ -393,7 +402,7 @@ export default function BookingWidget({
                 <button
                   key={pick.date}
                   onClick={() => selectQuickPick(pick)}
-                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+                  className={`rounded-full border px-3 ${largeCalendar ? "py-2.5 min-h-11" : "py-1.5"} text-xs font-semibold transition-colors ${
                     isActive
                       ? "border-[#13264D] bg-[#13264D] text-white"
                       : "border-gray-300 text-[#1A1614] hover:border-[#13264D] hover:text-[#13264D]"
@@ -506,7 +515,7 @@ export default function BookingWidget({
               setSelectedTime(e.target.value);
               setCheckError(null);
             }}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-[#1A1614] focus:border-[#13264D] focus:ring-1 focus:ring-[#13264D] focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 px-3 py-3 text-sm text-[#1A1614] focus:border-[#13264D] focus:ring-1 focus:ring-[#13264D] focus:outline-none"
           >
             {timesForSelected.map((t) => (
               <option key={t} value={t}>{t}</option>
@@ -527,18 +536,18 @@ export default function BookingWidget({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setAdults((a) => Math.max(1, a - 1))}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
               aria-label="Remove adult"
             >
-              <Minus className="h-3 w-3" />
+              <Minus className="h-4 w-4" />
             </button>
-            <span className="w-6 text-center text-sm font-medium">{adults}</span>
+            <span className="w-8 text-center text-base font-semibold">{adults}</span>
             <button
               onClick={() => setAdults((a) => Math.min(10, a + 1))}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
               aria-label="Add adult"
             >
-              <Plus className="h-3 w-3" />
+              <Plus className="h-4 w-4" />
             </button>
           </div>
         </div>
@@ -548,18 +557,18 @@ export default function BookingWidget({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setChildren((c) => Math.max(0, c - 1))}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
               aria-label="Remove child"
             >
-              <Minus className="h-3 w-3" />
+              <Minus className="h-4 w-4" />
             </button>
-            <span className="w-6 text-center text-sm font-medium">{children}</span>
+            <span className="w-8 text-center text-base font-semibold">{children}</span>
             <button
               onClick={() => setChildren((c) => Math.min(8, c + 1))}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:border-[#13264D] hover:text-[#13264D]"
               aria-label="Add child"
             >
-              <Plus className="h-3 w-3" />
+              <Plus className="h-4 w-4" />
             </button>
           </div>
         </div>

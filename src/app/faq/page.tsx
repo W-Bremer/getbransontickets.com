@@ -63,7 +63,7 @@ const faqCategories = [
       {
         question: "What kind of deals do you offer?",
         answer:
-          "Deals change through the year. Current offers include BOGO promotions on select shows, family passes, and dollar-off deals from Branson theaters. Check our Deals page for what's available right now.",
+          "Deals change through the year. Current offers include BOGO 50% promotions on select shows and reduced kids' pricing. Check our Deals page for what's available right now.",
       },
       {
         question: "What is the Best Price Guarantee?",
@@ -74,11 +74,6 @@ const faqCategories = [
         question: "How does BOGO 50% work?",
         answer:
           "On shows with the BOGO 50% offer, buy one adult ticket and your second adult ticket is half price. It is applied automatically at checkout, one discounted ticket per order. No code needed.",
-      },
-      {
-        question: "How do BOGO offers work?",
-        answer:
-          "With BOGO deals, you purchase one full-price ticket and receive a second ticket free. Some BOGO offers apply to specific dates or show times. Check the deal details on each show listing for specifics.",
       },
     ],
   },

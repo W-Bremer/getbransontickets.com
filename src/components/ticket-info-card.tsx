@@ -1,18 +1,13 @@
 "use client";
 
 import { Phone } from "lucide-react";
+import { openBooking } from "@/components/book-now-button";
 import { siteConfig } from "@/lib/config";
 import { formatBasePrice } from "@/lib/tax";
 
 interface TicketInfoCardProps {
   priceFrom: number;
   competitorPrice?: number;
-}
-
-/** Scrolls to the big booking calendar (it carries id="booking-widget"). */
-function scrollToBooking() {
-  const el = document.getElementById("booking-widget");
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 /**
@@ -42,7 +37,7 @@ export function TicketInfoCard({ priceFrom, competitorPrice }: TicketInfoCardPro
 
         <button
           type="button"
-          onClick={scrollToBooking}
+          onClick={() => openBooking()}
           className="w-full rounded-xl bg-[#E8C65A] px-6 py-3.5 text-lg font-bold text-[#1A1614] shadow transition-colors hover:bg-[#d9b544]"
         >
           Reserve Tickets

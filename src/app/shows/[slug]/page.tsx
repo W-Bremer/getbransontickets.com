@@ -16,10 +16,11 @@ import { ShowCard } from "@/components/show-card";
 import { JsonLd } from "@/components/json-ld";
 import { BookNowButton } from "@/components/book-now-button";
 import BookingWidget from "@/components/booking-widget";
-import { BookingModal } from "@/components/booking-modal";
+import { LazyBookingModal } from "@/components/booking-modal-lazy";
 import StickyBookingBar from "@/components/sticky-booking-bar";
 import { GoogleReviews } from "@/components/google-reviews";
 import { FamilyBundle } from "@/components/family-bundle";
+import { MobileBuyBlock } from "@/components/mobile-buy-block";
 import { TicketInfoCard } from "@/components/ticket-info-card";
 import { BestPriceBadge } from "@/components/best-price-badge";
 import { DateCardStrip } from "@/components/date-card-strip";
@@ -180,7 +181,11 @@ export default async function ShowDetailPage({
           fold — buying shouldn't require scrolling past a screen of photo.
           Desktop stays slim too, so the sticky panel's top half (price,
           rating, trust, date chips) lands inside the first viewport. */}
-      <div className="relative h-[32svh] min-h-[240px] sm:h-[42vh] sm:min-h-[340px] lg:h-[42vh] lg:min-h-[360px]">
+      <div
+        className={`relative ${
+          show.bookingPageV2 ? "h-[30svh] min-h-[192px]" : "h-[32svh] min-h-[240px]"
+        } sm:h-[42vh] sm:min-h-[340px] lg:h-[42vh] lg:min-h-[360px]`}
+      >
         <Image
           src={show.imageUrl}
           alt={show.imageAlt}
@@ -235,7 +240,11 @@ export default async function ShowDetailPage({
                 attention falls off a cliff at the fold; the button doesn't
                 get to live below it. */}
             {show.isFeaturedPartner && (
-              <div className="mt-5 hidden sm:flex flex-wrap items-center gap-x-5 gap-y-3">
+              <div
+                className={`mt-5 hidden flex-wrap items-center gap-x-5 gap-y-3 ${
+                  show.bookingPageV2 ? "lg:flex" : "sm:flex"
+                }`}
+              >
                 <BookNowButton label={`Book Now from $${formatBasePrice(show.priceFrom)}`} />
                 <span className="text-sm font-medium text-white/90 drop-shadow">
                   {googleRating !== undefined && googleReviewCount !== undefined && (
@@ -256,11 +265,20 @@ export default async function ShowDetailPage({
         </div>
       </div>
 
-      {/* Quick date cards (enhanced booking layout) */}
+      {/* Mobile buy block + quick date cards (enhanced booking layout) */}
       {show.bookingPageV2 && show.isFeaturedPartner && (
         <div className="border-b border-gray-200 bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <DateCardStrip slug={show.slug} />
+          <div className="mx-auto max-w-7xl px-4 pt-4 pb-5 sm:py-6 sm:px-6 lg:px-8">
+            <MobileBuyBlock
+              priceFrom={show.priceFrom}
+              competitorPrice={show.competitorPrice}
+              bogo50={show.bogo50}
+              rating={googleRating}
+              reviewCount={googleReviewCount}
+            />
+            <div className="mt-4 lg:mt-0">
+              <DateCardStrip slug={show.slug} />
+            </div>
           </div>
         </div>
       )}
@@ -285,7 +303,9 @@ export default async function ShowDetailPage({
                       priceFrom={show.priceFrom}
                       competitorPrice={show.competitorPrice}
                     />
-                    <div className="flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+                    {/* Mobile trust lives in the buy block above the fold;
+                        the desktop rail keeps this strip. */}
+                    <div className="hidden lg:flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
                       <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" aria-hidden />
                       <span className="text-sm font-bold text-emerald-800">
                         Instant Confirmation
@@ -439,6 +459,20 @@ export default async function ShowDetailPage({
               </div>
             </div>
 
+            {/* Prices (Standard + BOGO 50%): one screen down on mobile,
+                full-width row under the content on desktop. */}
+            {show.bookingPageV2 && show.isFeaturedPartner && (
+              <div className="mt-10 lg:mt-0 lg:col-span-3 lg:col-start-1 lg:row-start-3">
+                <PricesSection
+                  priceFrom={show.priceFrom}
+                  childPriceFrom={show.childPriceFrom}
+                  kidsFreeUnderAge={show.kidsFreeUnderAge}
+                  bogo50={show.bogo50}
+                  className=""
+                />
+              </div>
+            )}
+
             {/* Left Content */}
             <div className="mt-10 lg:mt-0 lg:col-span-2 lg:col-start-1 lg:row-start-1">
               {/* Quick Facts */}
@@ -516,31 +550,26 @@ export default async function ShowDetailPage({
                 theaterSlug={showTheater?.slug}
               />
             </div>
+
+            {/* Full booking calendar (enhanced booking layout) */}
+            {show.bookingPageV2 && show.isFeaturedPartner && (
+              <section
+                id="booking-widget"
+                className="mt-16 scroll-mt-32 md:scroll-mt-24 border-t border-gray-200 pt-10 lg:mt-4 lg:col-span-3 lg:col-start-1 lg:row-start-2"
+              >
+                <h2 className="text-2xl font-bold text-[#1A1614] font-heading">
+                  Pick Your Date and Time
+                </h2>
+                <p className="mt-2 text-sm text-[#1A1614]/70">
+                  Click on a date or show time below to book.
+                </p>
+                <div className="mt-6">
+                  <ShowCalendar slug={show.slug} />
+                </div>
+              </section>
+            )}
           </div>
 
-          {/* Full booking calendar + prices (enhanced booking layout) */}
-          {show.bookingPageV2 && show.isFeaturedPartner && (
-            <section
-              id="booking-widget"
-              className="mt-16 scroll-mt-32 md:scroll-mt-24 border-t border-gray-200 pt-10"
-            >
-              <h2 className="text-2xl font-bold text-[#1A1614] font-heading">
-                Pick Your Date and Time
-              </h2>
-              <p className="mt-2 text-sm text-[#1A1614]/70">
-                Click on a date or show time below to book.
-              </p>
-              <div className="mt-6">
-                <ShowCalendar slug={show.slug} />
-              </div>
-              <PricesSection
-                priceFrom={show.priceFrom}
-                childPriceFrom={show.childPriceFrom}
-                kidsFreeUnderAge={show.kidsFreeUnderAge}
-                bogo50={show.bogo50}
-              />
-            </section>
-          )}
 
           {/* Long-form editorial + photos (per-show via detailSections) */}
           <ShowDetailSections show={show} />
@@ -563,7 +592,7 @@ export default async function ShowDetailPage({
 
       {/* Booking popup — every "Book Now" button on the page opens it */}
       {show.isFeaturedPartner && (
-        <BookingModal
+        <LazyBookingModal
           showId={show.slug}
           showName={show.name}
           pricePerAdult={show.priceFrom}
