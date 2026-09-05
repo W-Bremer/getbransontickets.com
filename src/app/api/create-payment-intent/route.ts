@@ -121,7 +121,10 @@ export async function POST(req: Request) {
       // discountType is ignored here. A discount toggle always creates a fresh
       // intent, so a stale stamp racing a toggle still targets a consistent one.
       const locked = adjustmentsFromMetadata(existing.metadata);
-      if (existing.amount !== Math.max(0, subtotalCents - locked.discountCents)) {
+      if (
+        existing.amount !==
+        Math.max(0, subtotalCents - locked.discountCents - locked.bogoCents)
+      ) {
         return NextResponse.json(
           { error: "Cart no longer matches this payment" },
           { status: 409 }
@@ -161,14 +164,20 @@ export async function POST(req: Request) {
         customerEmail,
         customerPhone: trim(body.customerPhone, 40),
         // Locked in at creation and never rewritten: vouchers, recovery, and
-        // the office desk all read the discount from here. The cents snapshot
-        // keeps old orders verifying even if the discount amount changes.
-        ...(discountType !== "none" && adjustments[0]
-          ? {
-              discountType,
-              discountCents: String(-adjustments[0].amountCents),
+        // the office desk all read these from here. The cents snapshots keep
+        // old orders verifying even if amounts or show flags change later.
+        ...(() => {
+          const out: Record<string, string> = {};
+          for (const a of adjustments) {
+            if (a.code === "bogo50" && a.amountCents < 0) {
+              out.bogoCents = String(-a.amountCents);
+            } else if (a.code === discountType && a.amountCents < 0) {
+              out.discountType = discountType;
+              out.discountCents = String(-a.amountCents);
             }
-          : {}),
+          }
+          return out;
+        })(),
         // One key per line item so the webhook can rebuild the order if the
         // customer closes the tab before the browser confirms.
         ...packCartMetadata(lines),

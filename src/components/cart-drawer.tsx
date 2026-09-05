@@ -5,6 +5,7 @@ import Link from "next/link";
 import { X, ShoppingBag, Trash2 } from "lucide-react";
 import { useCartStore } from "@/stores/cart";
 import { cartBaseSubtotal } from "@/lib/tax";
+import { bogoAmountCents, computeAdjustments } from "@/lib/adjustments";
 
 export function CartDrawer() {
   const isOpen = useCartStore((s) => s.isOpen);
@@ -12,6 +13,7 @@ export function CartDrawer() {
   const closeCart = useCartStore((s) => s.closeCart);
   const removeItem = useCartStore((s) => s.removeItem);
   const getItemCount = useCartStore((s) => s.getItemCount);
+  const discountType = useCartStore((s) => s.discountType);
 
   // The cart rehydrates from localStorage, which the server can't see;
   // rendering it during hydration mismatches the SSR HTML for anyone who
@@ -149,6 +151,33 @@ export function CartDrawer() {
                 ${cartBaseSubtotal(items).toFixed(2)}
               </span>
             </div>
+            {computeAdjustments(
+              items.reduce(
+                (sum, i) =>
+                  sum +
+                  Math.round(i.pricePerAdult * 100) * i.adults +
+                  Math.round(i.pricePerChild * 100) * i.children,
+                0
+              ),
+              discountType,
+              bogoAmountCents(
+                items.map((i) => ({
+                  adults: i.adults,
+                  adultPriceCents: Math.round(i.pricePerAdult * 100),
+                  bogo50: i.bogo50,
+                }))
+              )
+            )
+              .filter((a) => a.amountCents !== 0)
+              .map((a) => (
+                <div
+                  key={a.code}
+                  className="mb-1 flex items-center justify-between text-sm font-medium text-emerald-700"
+                >
+                  <span>{a.label}</span>
+                  <span>-${(-a.amountCents / 100).toFixed(2)}</span>
+                </div>
+              ))}
             <p className="mb-4 text-xs text-gray-400">Taxes calculated at checkout.</p>
             <Link
               href="/checkout"

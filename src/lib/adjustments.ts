@@ -27,29 +27,63 @@ export function parseDiscountType(raw: string | null | undefined): DiscountType 
 }
 
 export interface OrderAdjustment {
-  code: string; // "senior" | "military" | future: "fee-*", "tax-*", "bundle-*"
+  code: string; // "bogo50" | "senior" | "military" | future: "fee-*", "tax-*"
   label: string; // rendered in emails, checkout sidebar, office desk
   amountCents: number; // negative = discount, positive = fee/tax
+}
+
+export const BOGO_CODE = "bogo50";
+export const BOGO_LABEL = "BOGO 50% off 2nd adult ticket";
+
+export interface BogoLine {
+  adults: number;
+  /** Tax-inclusive adult price in cents (the charged catalog rate). */
+  adultPriceCents: number;
+  bogo50?: boolean;
+}
+
+/**
+ * BOGO 50%: on enabled shows, every PAIR of adult tickets gets the second at
+ * half price, applied automatically (no code, no selection). Pure function of
+ * the cart lines so client and server compute it identically.
+ */
+export function bogoAmountCents(lines: BogoLine[]): number {
+  return lines.reduce((sum, l) => {
+    if (!l.bogo50) return sum;
+    const pairs = Math.floor(Math.max(0, Math.floor(l.adults)) / 2);
+    return sum + pairs * Math.floor(l.adultPriceCents / 2);
+  }, 0);
 }
 
 // Stripe refuses charges under 50 cents; never discount an order below it.
 const MIN_CHARGE_CENTS = 50;
 
-/** All adjustments for an order, in application order. Today: zero or one. */
+/**
+ * All adjustments for an order, in application order: BOGO first, then the
+ * senior/military $5. They stack; each is clamped so the total never drops
+ * below the Stripe minimum.
+ */
 export function computeAdjustments(
   subtotalCents: number,
-  discountType: DiscountType
+  discountType: DiscountType,
+  bogoCents = 0
 ): OrderAdjustment[] {
-  if (discountType === "none") return [];
-  const discount = DISCOUNTS[discountType];
-  const maxOff = Math.max(0, subtotalCents - MIN_CHARGE_CENTS);
-  return [
-    {
+  const out: OrderAdjustment[] = [];
+  let headroom = Math.max(0, subtotalCents - MIN_CHARGE_CENTS);
+  if (bogoCents > 0) {
+    const off = Math.min(bogoCents, headroom);
+    headroom -= off;
+    out.push({ code: BOGO_CODE, label: BOGO_LABEL, amountCents: -off });
+  }
+  if (discountType !== "none") {
+    const discount = DISCOUNTS[discountType];
+    out.push({
       code: discountType,
       label: discount.label,
-      amountCents: -Math.min(discount.amountCents, maxOff),
-    },
-  ];
+      amountCents: -Math.min(discount.amountCents, headroom),
+    });
+  }
+  return out;
 }
 
 export function applyAdjustments(
@@ -63,7 +97,11 @@ export function applyAdjustments(
 /** Convenience: subtotal in, final order total out. */
 export function orderTotalCents(
   subtotalCents: number,
-  discountType: DiscountType
+  discountType: DiscountType,
+  bogoCents = 0
 ): number {
-  return applyAdjustments(subtotalCents, computeAdjustments(subtotalCents, discountType));
+  return applyAdjustments(
+    subtotalCents,
+    computeAdjustments(subtotalCents, discountType, bogoCents)
+  );
 }

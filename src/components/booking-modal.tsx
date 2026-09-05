@@ -13,8 +13,9 @@ interface BookingModalProps {
   pricePerChild: number;
   imageUrl?: string;
   kidsFreeUnderAge?: number;
-  /** Competitor's documented listed rate, struck through with its label. */
+  /** Competitor's documented listed rate, struck through. */
   competitorPrice?: number;
+  bogo50?: boolean;
 }
 
 /**
@@ -32,6 +33,7 @@ export function BookingModal({
   imageUrl,
   kidsFreeUnderAge,
   competitorPrice,
+  bogo50,
 }: BookingModalProps) {
   const [open, setOpen] = useState(false);
   const [preselect, setPreselect] = useState<OpenBookingDetail>({});
@@ -83,10 +85,7 @@ export function BookingModal({
             <p className="truncate text-sm font-bold text-white">{showName}</p>
             <p className="text-xs text-white/75">
               {competitorPrice !== undefined && (
-                <span
-                  className="mr-1 text-white/45 line-through"
-                  title={`$${competitorPrice} is the listed rate on other ticket sites`}
-                >
+                <span className="mr-1 text-white/45 line-through">
                   ${competitorPrice}
                 </span>
               )}
@@ -95,11 +94,6 @@ export function BookingModal({
                 <> &middot; ${formatBasePrice(pricePerChild)} kids</>
               )}
               {pricePerChild === 0 && <> &middot; kids free</>}
-              {competitorPrice !== undefined && (
-                <span className="block text-[10px] text-white/55">
-                  ${competitorPrice} is the listed rate on other ticket sites
-                </span>
-              )}
             </p>
           </div>
           <button
@@ -125,6 +119,7 @@ export function BookingModal({
             initialTime={preselect.time}
             initialAdults={preselect.adults}
             initialChildren={preselect.children}
+            bogo50={bogo50}
           />
         </div>
       </div>

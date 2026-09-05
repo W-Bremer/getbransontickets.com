@@ -75,8 +75,10 @@ export function officeOrderFromIntent(pi: Stripe.PaymentIntent): OfficeOrder | n
     created: pi.created,
     totalAmount: pi.amount / 100,
     discountLabel:
-      locked.discountCents > 0
-        ? `${locked.adjustments[0].label}: $${(locked.discountCents / 100).toFixed(2)} off`
+      locked.adjustments.length > 0
+        ? locked.adjustments
+            .map((a) => `${a.label}: $${(-a.amountCents / 100).toFixed(2)} off`)
+            .join(" + ")
         : null,
     customerName: pi.metadata?.customerName || "",
     customerEmail: pi.metadata?.customerEmail || pi.receipt_email || "",

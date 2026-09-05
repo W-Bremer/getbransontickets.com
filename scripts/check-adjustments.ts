@@ -3,8 +3,10 @@
  * Run: npx tsx scripts/check-adjustments.ts
  */
 import {
+  BOGO_LABEL,
   DISCOUNTS,
   applyAdjustments,
+  bogoAmountCents,
   computeAdjustments,
   orderTotalCents,
   parseDiscountType,
@@ -76,6 +78,26 @@ check(
   Math.round((cartBaseSubtotal(cart) + cartTax(cart)) * 100),
   fullCents
 );
+
+// BOGO 50%: half off the 2nd adult of every pair, on flagged lines only.
+check("bogo 2 adults @4800c", bogoAmountCents([{ adults: 2, adultPriceCents: 4800, bogo50: true }]), 2400);
+check("bogo 3 adults = one pair", bogoAmountCents([{ adults: 3, adultPriceCents: 4800, bogo50: true }]), 2400);
+check("bogo 4 adults = two pairs", bogoAmountCents([{ adults: 4, adultPriceCents: 4800, bogo50: true }]), 4800);
+check("bogo 1 adult = nothing", bogoAmountCents([{ adults: 1, adultPriceCents: 4800, bogo50: true }]), 0);
+check("bogo off unflagged line", bogoAmountCents([{ adults: 2, adultPriceCents: 4800 }]), 0);
+check("bogo odd price floors", bogoAmountCents([{ adults: 2, adultPriceCents: 4801, bogo50: true }]), 2400);
+check(
+  "bogo stacks with senior",
+  orderTotalCents(9600, "senior", 2400),
+  9600 - 2400 - 500
+);
+check(
+  "bogo row shape + order",
+  computeAdjustments(9600, "military", 2400).map((a) => [a.code, a.amountCents]),
+  [["bogo50", -2400], ["military", -500]]
+);
+check("bogo label stable", BOGO_LABEL, "BOGO 50% off 2nd adult ticket");
+check("bogo clamped to minimum", orderTotalCents(2400, "none", 9999), 50);
 
 // Sanity on the configured rate itself.
 check("TAX_RATE in a plausible band", TAX_RATE > 0.1 && TAX_RATE < 0.2, true);

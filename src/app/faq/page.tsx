@@ -71,6 +71,16 @@ const faqCategories = [
           "Yes. Seniors 55 and over and military members or veterans get $5 off their order. Just pick the discount that applies on the checkout page. One discount per order, and the theater may ask to see ID at the box office.",
       },
       {
+        question: "What is the Best Price Guarantee?",
+        answer:
+          "If you find a lower advertised price for the same show, date, and seating on another ticket site, call us before you book and we will match it. Our live local experts are at (417) 243-9629.",
+      },
+      {
+        question: "How does BOGO 50% work?",
+        answer:
+          "On shows with the BOGO 50% offer, every pair of adult tickets gets the second ticket at half price. It is applied automatically at checkout. No code needed.",
+      },
+      {
         question: "How do BOGO offers work?",
         answer:
           "With BOGO deals, you purchase one full-price ticket and receive a second ticket free. Some BOGO offers apply to specific dates or show times. Check the deal details on each show listing for specifics.",

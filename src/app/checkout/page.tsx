@@ -29,6 +29,7 @@ import type {
 import { useCartStore, type CartItem } from "@/stores/cart";
 import {
   applyAdjustments,
+  bogoAmountCents,
   computeAdjustments,
   type DiscountType,
 } from "@/lib/adjustments";
@@ -78,6 +79,17 @@ function expectedCents(items: CartItem[]) {
       Math.round(item.pricePerAdult * 100) * item.adults +
       Math.round(item.pricePerChild * 100) * item.children,
     0
+  );
+}
+
+/** Client mirror of the automatic BOGO 50%, from the cart's own flags. */
+function cartBogoCents(items: CartItem[]) {
+  return bogoAmountCents(
+    items.map((item) => ({
+      adults: item.adults,
+      adultPriceCents: Math.round(item.pricePerAdult * 100),
+      bogo50: item.bogo50,
+    }))
   );
 }
 
@@ -590,7 +602,10 @@ export default function CheckoutPage() {
         // Mirror the server math exactly (same shared module) so a catalog
         // price change between add-to-cart and checkout still surfaces.
         const subtotal = expectedCents(items);
-        const expected = applyAdjustments(subtotal, computeAdjustments(subtotal, discountType));
+        const expected = applyAdjustments(
+          subtotal,
+          computeAdjustments(subtotal, discountType, cartBogoCents(items))
+        );
         if (data.amount !== expected || (data.discountType ?? "none") !== discountType) {
           throw new Error(
             "Prices have been updated since you added these items. Please empty your cart and add them again."
@@ -622,7 +637,7 @@ export default function CheckoutPage() {
   // the embedded tax out as its own cart-level row, then applies the discount.
   // baseSubtotal + taxes always equals the old all-in subtotal to the cent.
   const subtotalCents = expectedCents(items);
-  const adjustments = computeAdjustments(subtotalCents, discountType);
+  const adjustments = computeAdjustments(subtotalCents, discountType, cartBogoCents(items));
   const total = applyAdjustments(subtotalCents, adjustments) / 100;
   const baseSubtotal = cartBaseSubtotal(items);
   const taxes = cartTax(items);

@@ -2,6 +2,8 @@ import type Stripe from "stripe";
 import { shows } from "@/data/shows";
 import { getServerPrices } from "@/lib/pricing";
 import {
+  BOGO_CODE,
+  BOGO_LABEL,
   DISCOUNTS,
   parseDiscountType,
   type DiscountType,
@@ -87,34 +89,46 @@ export function unpackCartMetadata(metadata: Stripe.Metadata): CartLine[] {
 }
 
 /**
- * The discount an intent locked in at creation. `discountCents` prefers the
- * metadata snapshot (written alongside the amount, so it stays correct even
- * if DISCOUNTS changes later) and falls back to today's table when only the
- * type survived. Intents created before discounts existed carry neither key
- * and parse to none / 0, which is what keeps every old order verifying.
+ * The adjustments an intent locked in at creation, from metadata snapshots
+ * written alongside the amount (so they stay correct even if the discount
+ * table or a show's BOGO flag changes later). `discountCents` falls back to
+ * today's table when only the type survived. Intents created before these
+ * features existed carry no keys and parse to none / 0 / 0, which is what
+ * keeps every old order verifying.
  */
 export function adjustmentsFromMetadata(
   metadata: Stripe.Metadata | null | undefined
-): { discountType: DiscountType; discountCents: number; adjustments: OrderAdjustment[] } {
-  const discountType = parseDiscountType(metadata?.discountType);
-  if (discountType === "none") {
-    return { discountType, discountCents: 0, adjustments: [] };
+): {
+  discountType: DiscountType;
+  discountCents: number;
+  bogoCents: number;
+  adjustments: OrderAdjustment[];
+} {
+  const adjustments: OrderAdjustment[] = [];
+
+  const bogoSnapshot = Number.parseInt(metadata?.bogoCents ?? "", 10);
+  const bogoCents =
+    Number.isFinite(bogoSnapshot) && bogoSnapshot > 0 ? bogoSnapshot : 0;
+  if (bogoCents > 0) {
+    adjustments.push({ code: BOGO_CODE, label: BOGO_LABEL, amountCents: -bogoCents });
   }
-  const snapshot = Number.parseInt(metadata?.discountCents ?? "", 10);
-  const discountCents = Number.isFinite(snapshot) && snapshot >= 0
-    ? snapshot
-    : DISCOUNTS[discountType].amountCents;
-  return {
-    discountType,
-    discountCents,
-    adjustments: [
-      {
-        code: discountType,
-        label: DISCOUNTS[discountType].label,
-        amountCents: -discountCents,
-      },
-    ],
-  };
+
+  const discountType = parseDiscountType(metadata?.discountType);
+  let discountCents = 0;
+  if (discountType !== "none") {
+    const snapshot = Number.parseInt(metadata?.discountCents ?? "", 10);
+    discountCents =
+      Number.isFinite(snapshot) && snapshot >= 0
+        ? snapshot
+        : DISCOUNTS[discountType].amountCents;
+    adjustments.push({
+      code: discountType,
+      label: DISCOUNTS[discountType].label,
+      amountCents: -discountCents,
+    });
+  }
+
+  return { discountType, discountCents, bogoCents, adjustments };
 }
 
 /** Fills in show name, theater, and authoritative prices from the catalog. */

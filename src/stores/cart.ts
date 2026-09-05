@@ -14,6 +14,8 @@ export interface CartItem {
   seatingTier?: string;
   pricePerAdult: number;
   pricePerChild: number;
+  /** Mirror of the show's BOGO 50% flag for client display; server re-derives from the catalog. */
+  bogo50?: boolean;
   imageUrl?: string;
 }
 

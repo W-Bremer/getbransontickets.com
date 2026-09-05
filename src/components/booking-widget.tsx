@@ -22,6 +22,8 @@ interface BookingWidgetProps {
   /** Prefill the guest steppers (family bundle strip, ?adults=&children= links). */
   initialAdults?: number;
   initialChildren?: number;
+  /** BOGO 50%: every 2nd adult ticket in a pair is half price, applied automatically. */
+  bogo50?: boolean;
 }
 
 interface ScheduleResponse {
@@ -58,6 +60,7 @@ export default function BookingWidget({
   initialTime,
   initialAdults,
   initialChildren,
+  bogo50,
 }: BookingWidgetProps) {
   const router = useRouter();
   const today = new Date();
@@ -353,6 +356,7 @@ export default function BookingWidget({
         childAges,
         pricePerAdult,
         pricePerChild,
+        bogo50,
         imageUrl,
       });
       router.push("/checkout");
@@ -364,7 +368,11 @@ export default function BookingWidget({
   // cart-level Taxes row.
   const baseAdult = baseOf(pricePerAdult);
   const baseChild = baseOf(pricePerChild);
-  const baseSubtotal = adults * baseAdult + children * baseChild;
+  // BOGO 50% shown in the same pre-tax terms as the line prices.
+  const bogoBaseOff = bogo50
+    ? Math.floor(adults / 2) * (Math.round((baseAdult / 2) * 100) / 100)
+    : 0;
+  const baseSubtotal = adults * baseAdult + children * baseChild - bogoBaseOff;
 
   if (bookingDisabled) {
     return (
@@ -610,6 +618,12 @@ export default function BookingWidget({
                 <span>${formatPrice(children * baseChild)}</span>
               </>
             )}
+          </div>
+        )}
+        {bogoBaseOff > 0 && (
+          <div className="flex justify-between font-semibold text-emerald-700">
+            <span>BOGO 50% off 2nd adult</span>
+            <span>-${bogoBaseOff.toFixed(2)}</span>
           </div>
         )}
         <div className="mt-2 flex justify-between border-t border-gray-200 pt-2 font-bold text-[#1A1614]">

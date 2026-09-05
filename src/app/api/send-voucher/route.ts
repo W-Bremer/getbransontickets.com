@@ -113,7 +113,9 @@ export async function POST(req: Request) {
     const locked = adjustmentsFromMetadata(paymentIntent.metadata);
     const subtotalCents = computeTotalCents(items);
     const expectedCents =
-      subtotalCents === null ? null : Math.max(0, subtotalCents - locked.discountCents);
+      subtotalCents === null
+        ? null
+        : Math.max(0, subtotalCents - locked.discountCents - locked.bogoCents);
     if (expectedCents === null || expectedCents !== paymentIntent.amount) {
       console.error("send-voucher amount mismatch:", {
         paymentIntentId: paymentIntent.id,
@@ -121,6 +123,7 @@ export async function POST(req: Request) {
         expected: expectedCents,
         discountType: locked.discountType,
         discountCents: locked.discountCents,
+        bogoCents: locked.bogoCents,
       });
       return NextResponse.json(
         { error: "Order details do not match this payment" },

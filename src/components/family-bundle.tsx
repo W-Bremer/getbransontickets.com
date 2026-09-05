@@ -8,6 +8,8 @@ import { baseOf } from "@/lib/tax";
 interface FamilyBundleProps {
   priceFrom: number;
   childPriceFrom?: number;
+  /** Fold the automatic BOGO 50% (half off the 2nd adult) into the math. */
+  bogo50?: boolean;
   /** When set, the CTA links to this show page with ?adults=2&children=2
       (theatre pages); otherwise it opens the booking popup prefilled. */
   href?: string;
@@ -23,6 +25,7 @@ interface FamilyBundleProps {
 export function FamilyBundle({
   priceFrom,
   childPriceFrom,
+  bogo50,
   href,
   className = "",
 }: FamilyBundleProps) {
@@ -31,7 +34,8 @@ export function FamilyBundle({
 
   const baseAdult = baseOf(priceFrom);
   const baseChild = baseOf(childPriceFrom);
-  const family = Math.round((2 * baseAdult + 2 * baseChild) * 100) / 100;
+  const bogoOff = bogo50 ? Math.round((baseAdult / 2) * 100) / 100 : 0;
+  const family = Math.round((2 * baseAdult + 2 * baseChild - bogoOff) * 100) / 100;
   const fourAdults = Math.round(4 * baseAdult * 100) / 100;
   const saved = Math.round((fourAdults - family) * 100) / 100;
 
@@ -44,8 +48,8 @@ export function FamilyBundle({
     ) : (
       <>
         <span className="font-bold">Family of 4: ${family.toFixed(2)}</span> plus tax
-        (2 adults + 2 kids). Kids&apos; rates save you ${saved.toFixed(2)} vs. adult
-        seats.
+        (2 adults + 2 kids{bogo50 ? " with BOGO 50%" : ""}). Save ${saved.toFixed(2)}{" "}
+        vs. 4 adult seats.
       </>
     );
 

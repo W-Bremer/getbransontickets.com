@@ -1,7 +1,9 @@
 import { shows } from "@/data/shows";
 import {
+  bogoAmountCents,
   computeAdjustments,
   applyAdjustments,
+  type BogoLine,
   type DiscountType,
   type OrderAdjustment,
 } from "@/lib/adjustments";
@@ -13,12 +15,15 @@ export interface PricedItem {
 }
 
 /** Authoritative per-person prices for a cart item id. Returns null for unknown ids. */
-export function getServerPrices(id: string): { adult: number; child: number } | null {
+export function getServerPrices(
+  id: string
+): { adult: number; child: number; bogo50: boolean } | null {
   const show = shows.find((s) => s.slug === id);
   if (!show) return null;
   return {
     adult: show.priceFrom,
     child: show.childPriceFrom ?? Math.round(show.priceFrom * 0.6),
+    bogo50: show.bogo50 === true,
   };
 }
 
@@ -53,7 +58,19 @@ export function computeOrderTotalCents(
 ): { subtotalCents: number; adjustments: OrderAdjustment[]; totalCents: number } | null {
   const subtotalCents = computeTotalCents(items);
   if (subtotalCents === null) return null;
-  const adjustments = computeAdjustments(subtotalCents, discountType);
+  const bogoLines: BogoLine[] = items.map((item) => {
+    const prices = getServerPrices(item.id);
+    return {
+      adults: item.adults,
+      adultPriceCents: Math.round((prices?.adult ?? 0) * 100),
+      bogo50: prices?.bogo50,
+    };
+  });
+  const adjustments = computeAdjustments(
+    subtotalCents,
+    discountType,
+    bogoAmountCents(bogoLines)
+  );
   return {
     subtotalCents,
     adjustments,

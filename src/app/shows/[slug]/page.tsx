@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Phone, ExternalLink, Star } from "lucide-react";
+import { Clock, MapPin, Users, CalendarDays, UtensilsCrossed, Phone, ExternalLink, Star, CheckCircle2 } from "lucide-react";
 import { shows, getShowBySlug, getPartnerShows } from "@/data/shows";
 import { theaters } from "@/data/theaters";
 import { siteConfig } from "@/lib/config";
@@ -20,6 +20,11 @@ import { BookingModal } from "@/components/booking-modal";
 import StickyBookingBar from "@/components/sticky-booking-bar";
 import { GoogleReviews } from "@/components/google-reviews";
 import { FamilyBundle } from "@/components/family-bundle";
+import { TicketInfoCard } from "@/components/ticket-info-card";
+import { BestPriceBadge } from "@/components/best-price-badge";
+import { DateCardStrip } from "@/components/date-card-strip";
+import { ShowCalendar } from "@/components/show-calendar";
+import { PricesSection } from "@/components/prices-section";
 import { ShowDetailSections } from "@/components/show-detail-sections";
 import { getPlaceSnapshot } from "@/lib/google-places";
 import { ShowDetailClient } from "./show-detail-client";
@@ -251,6 +256,15 @@ export default async function ShowDetailPage({
         </div>
       </div>
 
+      {/* Quick date cards (enhanced booking layout) */}
+      {show.bookingPageV2 && show.isFeaturedPartner && (
+        <div className="border-b border-gray-200 bg-white">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <DateCardStrip slug={show.slug} />
+          </div>
+        </div>
+      )}
+
       {/* Main Content */}
       <div className="bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
@@ -262,10 +276,31 @@ export default async function ShowDetailPage({
                 panel scrolls internally instead of running past the fold. */}
             <div className="lg:col-start-3 lg:row-start-1">
               <div
-                id="booking-widget"
-                className="lg:sticky lg:top-24 space-y-6 lg:space-y-3 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:overscroll-contain lg:pb-1 lg:pr-1"
+                id={show.bookingPageV2 ? undefined : "booking-widget"}
+                className="lg:sticky lg:top-24 space-y-6 lg:space-y-4 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:overscroll-contain lg:pb-1 lg:pr-1"
               >
-                {show.isFeaturedPartner ? (
+                {show.isFeaturedPartner && show.bookingPageV2 ? (
+                  <>
+                    <TicketInfoCard
+                      priceFrom={show.priceFrom}
+                      competitorPrice={show.competitorPrice}
+                    />
+                    <div className="flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+                      <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" aria-hidden />
+                      <span className="text-sm font-bold text-emerald-800">
+                        Instant Confirmation
+                      </span>
+                    </div>
+                    <BestPriceBadge />
+                    {show.familyBundle && (
+                      <FamilyBundle
+                        priceFrom={show.priceFrom}
+                        childPriceFrom={show.childPriceFrom}
+                        bogo50={show.bogo50}
+                      />
+                    )}
+                  </>
+                ) : show.isFeaturedPartner ? (
                   <>
                     <div className="rounded-2xl border border-gray-200 shadow-lg bg-white overflow-hidden">
                       <div className="bg-[#13264D] px-5 py-4">
@@ -285,11 +320,6 @@ export default async function ShowDetailPage({
                               </span>
                               <span className="text-sm whitespace-nowrap text-white/70">/ adult + tax</span>
                             </div>
-                            {show.competitorPrice !== undefined && (
-                              <p className="mt-0.5 text-[11px] text-[#E8C65A]">
-                                ${show.competitorPrice} is the listed rate on other ticket sites
-                              </p>
-                            )}
                           </div>
                           <div className="pb-0.5 text-right">
                             {show.childPriceFrom === 0 ? (
@@ -309,9 +339,6 @@ export default async function ShowDetailPage({
                             ) : null}
                           </div>
                         </div>
-                        <p className="mt-1.5 text-[11px] text-white/60">
-                          No checkout fees, ever. Other sites add $15 or more at the end.
-                        </p>
                         {/* Real Google rating — live via Places when a place
                             id is set, else the verified values in shows.ts.
                             Deliberately NOT a link: paid clicks shouldn't be
@@ -337,6 +364,7 @@ export default async function ShowDetailPage({
                           <FamilyBundle
                             priceFrom={show.priceFrom}
                             childPriceFrom={show.childPriceFrom}
+                            bogo50={show.bogo50}
                           />
                         </div>
                       )}
@@ -348,6 +376,7 @@ export default async function ShowDetailPage({
                           pricePerChild={show.childPriceFrom ?? Math.round(show.priceFrom * 0.6)}
                           imageUrl={show.imageUrl}
                           kidsFreeUnderAge={show.kidsFreeUnderAge}
+                          bogo50={show.bogo50}
                         />
                       </div>
                     </div>
@@ -488,6 +517,30 @@ export default async function ShowDetailPage({
             </div>
           </div>
 
+          {/* Full booking calendar + prices (enhanced booking layout) */}
+          {show.bookingPageV2 && show.isFeaturedPartner && (
+            <section
+              id="booking-widget"
+              className="mt-16 scroll-mt-24 border-t border-gray-200 pt-10"
+            >
+              <h2 className="text-2xl font-bold text-[#1A1614] font-heading">
+                Pick Your Date and Time
+              </h2>
+              <p className="mt-2 text-sm text-[#1A1614]/70">
+                Click on a date or show time below to book.
+              </p>
+              <div className="mt-6">
+                <ShowCalendar slug={show.slug} />
+              </div>
+              <PricesSection
+                priceFrom={show.priceFrom}
+                childPriceFrom={show.childPriceFrom}
+                kidsFreeUnderAge={show.kidsFreeUnderAge}
+                bogo50={show.bogo50}
+              />
+            </section>
+          )}
+
           {/* Long-form editorial + photos (per-show via detailSections) */}
           <ShowDetailSections show={show} />
 
@@ -517,6 +570,7 @@ export default async function ShowDetailPage({
           imageUrl={show.imageUrl}
           kidsFreeUnderAge={show.kidsFreeUnderAge}
           competitorPrice={show.competitorPrice}
+          bogo50={show.bogo50}
         />
       )}
 

@@ -63,6 +63,7 @@ export async function POST(req: Request) {
           seatingTier: line.seatingTier,
           pricePerAdult: prices.adult,
           pricePerChild: prices.child,
+          bogo50: prices.bogo50 || undefined,
           imageUrl: show.imageUrl,
         };
       })

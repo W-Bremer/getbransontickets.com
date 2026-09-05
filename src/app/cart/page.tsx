@@ -12,7 +12,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { useCartStore, type CartItem } from "@/stores/cart";
-import { DISCOUNTS } from "@/lib/adjustments";
+import { bogoAmountCents, computeAdjustments } from "@/lib/adjustments";
 import { baseOf, cartBaseSubtotal } from "@/lib/tax";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
@@ -168,6 +168,24 @@ export default function CartPage() {
   }
 
   const baseSubtotal = cartBaseSubtotal(items);
+  const subtotalCents = items.reduce(
+    (sum, i) =>
+      sum +
+      Math.round(i.pricePerAdult * 100) * i.adults +
+      Math.round(i.pricePerChild * 100) * i.children,
+    0
+  );
+  const adjustments = computeAdjustments(
+    subtotalCents,
+    discountType,
+    bogoAmountCents(
+      items.map((i) => ({
+        adults: i.adults,
+        adultPriceCents: Math.round(i.pricePerAdult * 100),
+        bogo50: i.bogo50,
+      }))
+    )
+  );
 
   if (items.length === 0) {
     return (
@@ -294,14 +312,17 @@ export default function CartPage() {
                   <span>Subtotal</span>
                   <span>${baseSubtotal.toFixed(2)}</span>
                 </div>
-                {discountType !== "none" && (
-                  <div className="mt-1 flex justify-between text-sm font-medium text-emerald-700">
-                    <span>{DISCOUNTS[discountType].label}</span>
-                    <span>
-                      -${(DISCOUNTS[discountType].amountCents / 100).toFixed(2)}
-                    </span>
-                  </div>
-                )}
+                {adjustments
+                  .filter((a) => a.amountCents !== 0)
+                  .map((a) => (
+                    <div
+                      key={a.code}
+                      className="mt-1 flex justify-between text-sm font-medium text-emerald-700"
+                    >
+                      <span>{a.label}</span>
+                      <span>-${(-a.amountCents / 100).toFixed(2)}</span>
+                    </div>
+                  ))}
                 <p className="mt-1 text-xs text-[#1A1614]/40">
                   Taxes calculated at checkout.
                 </p>
