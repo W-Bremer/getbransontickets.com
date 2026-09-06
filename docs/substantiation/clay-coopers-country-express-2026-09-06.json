@@ -1,0 +1,13 @@
+{
+ "show": "clay-coopers-country-express",
+ "source": "https://www.bransonshows.com/activity/ClayCoopersCountryMusicExpress.cfm",
+ "pageTitle": "Clay Cooper's Country Music Express",
+ "capturedUtc": "2026-09-06T11:20:00Z",
+ "method": "HTTP GET of the listing page; the Offer objects below are copied verbatim from the page's own schema.org JSON-LD",
+ "competitorPriceUsed": 71.15,
+ "offers": [
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-09-06\", \"validThrough\": \"2026-12-09\", \"price\" : \"71.15\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/ClayCoopersCountryMusicExpress.cfm\" }",
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-11-01\", \"validThrough\": \"2026-12-30\", \"price\" : \"71.15\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/ClayCoopersCountryMusicExpress.cfm\" }",
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-12-31\", \"validThrough\": \"2026-12-31\", \"price\" : \"124.99\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/ClayCoopersCountryMusicExpress.cfm\" }"
+ ]
+}

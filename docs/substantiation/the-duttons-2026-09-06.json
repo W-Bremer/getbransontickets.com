@@ -1,0 +1,12 @@
+{
+ "show": "the-duttons",
+ "source": "https://www.bransonshows.com/activity/DuttonsFamilyShow.cfm",
+ "pageTitle": "The Duttons Branson Family Theatre Shows",
+ "capturedUtc": "2026-09-06T11:20:00Z",
+ "method": "HTTP GET of the listing page; the Offer objects below are copied verbatim from the page's own schema.org JSON-LD",
+ "competitorPriceUsed": 51.92,
+ "offers": [
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-09-07\", \"validThrough\": \"2026-10-30\", \"price\" : \"51.92\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/DuttonsFamilyShow.cfm\" }",
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-11-02\", \"validThrough\": \"2026-12-16\", \"price\" : \"51.92\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/DuttonsFamilyShow.cfm\" }"
+ ]
+}

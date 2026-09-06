@@ -175,7 +175,7 @@ export function ShowDetailClient({ show, theaterSlug }: ShowDetailClientProps) {
               <div>
                 <h3 className="text-lg font-bold text-[#1A1614] mb-1">Show Times</h3>
                 <p className="mb-4 text-sm text-gray-600">
-                  Pick a date &mdash; every button below is a real, on-sale showtime.
+                  Pick a date. Every button below is a real, on-sale showtime.
                 </p>
                 <UpcomingTimesList slug={show.slug} />
                 <p className="mt-2 text-sm text-gray-500">

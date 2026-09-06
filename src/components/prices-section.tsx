@@ -7,6 +7,7 @@ import { baseOf, formatBasePrice } from "@/lib/tax";
 interface PricesSectionProps {
   priceFrom: number;
   childPriceFrom?: number;
+  studentPriceFrom?: number;
   kidsFreeUnderAge?: number;
   bogo50?: boolean;
   /** Outer spacing; the default suits the standalone placement. */
@@ -51,6 +52,7 @@ function PriceCard({
 export function PricesSection({
   priceFrom,
   childPriceFrom,
+  studentPriceFrom,
   kidsFreeUnderAge,
   bogo50,
   className = "mt-12",
@@ -78,6 +80,11 @@ export function PricesSection({
           )}
           {childPriceFrom === 0 && (
             <p className="text-lg font-bold text-emerald-700">Kids free</p>
+          )}
+          {studentPriceFrom !== undefined && (
+            <p className="text-lg text-[#1A1614]">
+              <span className="font-bold">Student:</span> ${formatBasePrice(studentPriceFrom)}
+            </p>
           )}
           <p className="text-sm text-[#1A1614]/60">Prices do not include tax.</p>
           {childPriceFrom !== undefined && childPriceFrom > 0 && (
