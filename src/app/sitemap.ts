@@ -5,7 +5,6 @@ import { attractions } from "@/data/attractions";
 import { theaters } from "@/data/theaters";
 import { passportCategories } from "@/data/passport";
 import { partners } from "@/data/partners";
-import { getPublishedPosts } from "@/data/blog";
 import { getScheduleMonths } from "@/lib/month-schedule";
 
 /**
@@ -96,15 +95,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const blogPages: MetadataRoute.Sitemap = [
-    { url: `${baseUrl}/blog`, lastModified: CONTENT_UPDATED.shows, priority: 0.6 },
-    ...getPublishedPosts().map((p) => ({
-      url: `${baseUrl}/blog/${p.slug}`,
-      lastModified: new Date(p.publishedDate),
-      priority: 0.5,
-    })),
-  ];
-
   return [
     ...staticPages,
     ...monthPages,
@@ -114,6 +104,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...showPages,
     ...theaterPages,
     ...attractionPages,
-    ...blogPages,
   ];
 }
