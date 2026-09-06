@@ -34,7 +34,9 @@ export async function generateMetadata({
   if (!theater) return { title: "Theater Not Found" };
 
   return {
-    title: `${theater.name}: Shows, Seating & Directions`,
+    title: `${
+      theater.name.includes("Branson") ? theater.name : `${theater.name} Branson`
+    } 2026 | Shows, Seating & Directions`,
     description: `${theater.name} in Branson, MO. ${theater.shortDescription} ${theater.seatingCapacity} seats. See current shows, get directions, and book tickets.`,
     alternates: { canonical: `${siteConfig.url}/theaters/${theater.slug}` },
     openGraph: {

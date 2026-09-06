@@ -5,6 +5,8 @@ import { attractions } from "@/data/attractions";
 import { theaters } from "@/data/theaters";
 import { passportCategories } from "@/data/passport";
 import { partners } from "@/data/partners";
+import { getPublishedPosts } from "@/data/blog";
+import { getScheduleMonths } from "@/lib/month-schedule";
 
 /**
  * lastModified is set per content group rather than to the build clock. An
@@ -12,8 +14,8 @@ import { partners } from "@/data/partners";
  * discounts it. changeFrequency is omitted entirely: Google ignores it.
  */
 const CONTENT_UPDATED = {
-  // Tax-out pricing display + Acrobats long-form sections and family bundle.
-  shows: new Date("2026-09-05"),
+  // Month schedule pages, Christmas hub, schedule freshness pass.
+  shows: new Date("2026-09-06"),
   // Attraction copy cleaned of upstream boilerplate.
   attractions: new Date("2026-07-25"),
   passport: new Date("2026-07-25"),
@@ -32,6 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/deals`, lastModified: CONTENT_UPDATED.shows, priority: 0.8 },
     { url: `${baseUrl}/shows/deals`, lastModified: CONTENT_UPDATED.shows, priority: 0.7 },
     { url: `${baseUrl}/shows/schedule`, lastModified: CONTENT_UPDATED.shows, priority: 0.8 },
+    { url: `${baseUrl}/shows/christmas`, lastModified: CONTENT_UPDATED.shows, priority: 0.8 },
     { url: `${baseUrl}/theaters`, lastModified: CONTENT_UPDATED.theaters, priority: 0.7 },
     { url: `${baseUrl}/plan-your-trip`, lastModified: CONTENT_UPDATED.passport, priority: 0.7 },
     { url: `${baseUrl}/passport/deals`, lastModified: CONTENT_UPDATED.passport, priority: 0.7 },
@@ -85,13 +88,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  // Month schedules regenerate daily (rolling performance windows), so the
+  // sitemap date tracks the deploy that last rebuilt this file.
+  const monthPages: MetadataRoute.Sitemap = getScheduleMonths(4).map((m) => ({
+    url: `${baseUrl}/shows/schedule/${m.slug}`,
+    lastModified: CONTENT_UPDATED.shows,
+    priority: 0.8,
+  }));
+
+  const blogPages: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/blog`, lastModified: CONTENT_UPDATED.shows, priority: 0.6 },
+    ...getPublishedPosts().map((p) => ({
+      url: `${baseUrl}/blog/${p.slug}`,
+      lastModified: new Date(p.publishedDate),
+      priority: 0.5,
+    })),
+  ];
+
   return [
     ...staticPages,
+    ...monthPages,
     ...passportGuidePages,
     ...partnerPages,
     ...categoryPages,
     ...showPages,
     ...theaterPages,
     ...attractionPages,
+    ...blogPages,
   ];
 }

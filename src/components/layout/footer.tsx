@@ -16,12 +16,15 @@ const showLinks = getPartnerShows().map((s) => ({
   href: `/shows/${s.slug}`,
 }));
 
+// Exact-match anchor text: Bing counts "terms used in links referring to the
+// page", internal links included, so these read like the searches they serve.
 const exploreLinks = [
-  { label: "All Shows", href: "/shows" },
+  { label: "Branson Shows 2026", href: "/shows" },
+  { label: "Branson Show Schedule 2026", href: "/shows/schedule" },
+  { label: "Christmas Shows 2026", href: "/shows/christmas" },
   { label: "Attractions", href: "/attractions" },
   { label: "Branson Passport", href: "/passport" },
   { label: "Theaters & Venues", href: "/theaters" },
-  { label: "Show Schedule", href: "/shows/schedule" },
   { label: "Deals & Discounts", href: "/deals" },
   { label: "Plan Your Trip", href: "/plan-your-trip" },
 ];
