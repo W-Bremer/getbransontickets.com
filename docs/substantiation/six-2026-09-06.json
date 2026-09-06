@@ -1,0 +1,14 @@
+{
+ "show": "six",
+ "source": "https://www.bransonshows.com/activity/SIXBranson.cfm",
+ "pageTitle": "SIX Branson",
+ "capturedUtc": "2026-09-06T11:20:00Z",
+ "method": "HTTP GET of the listing page; the Offer objects below are copied verbatim from the page's own schema.org JSON-LD",
+ "competitorPriceUsed": 52.99,
+ "offers": [
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-09-09\", \"validThrough\": \"2026-10-30\", \"price\" : \"52.99\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/SIXBranson.cfm\" }",
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-11-02\", \"validThrough\": \"2027-01-02\", \"price\" : \"65.38\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/SIXBranson.cfm\" }",
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-09-09\", \"validThrough\": \"2026-10-30\", \"price\" : \"56.39\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/SIXBranson.cfm\" }",
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-11-02\", \"validThrough\": \"2027-01-02\", \"price\" : \"71.15\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/SIXBranson.cfm\" }"
+ ]
+}

@@ -28,6 +28,7 @@ import { ShowCalendar } from "@/components/show-calendar";
 import { PricesSection } from "@/components/prices-section";
 import { ShowDetailSections } from "@/components/show-detail-sections";
 import { getPlaceSnapshot } from "@/lib/google-places";
+import { buildShowFaqs } from "@/lib/show-faqs";
 import { ShowDetailClient } from "./show-detail-client";
 
 export async function generateStaticParams() {
@@ -84,6 +85,10 @@ export default async function ShowDetailPage({
   const season = getSeasonDates(show);
 
   const performances = getUpcomingPerformances(show);
+
+  // Curated questions plus the evergreen booking answers generated from the
+  // same data the page renders (price, showtimes, location, refunds).
+  const faqs = buildShowFaqs(show);
 
   // Live Google rating + curated 5-star quotes, refreshed with the page's
   // ISR window. Falls back to the hand-verified static values in shows.ts.
@@ -181,11 +186,7 @@ export default async function ShowDetailPage({
           fold — buying shouldn't require scrolling past a screen of photo.
           Desktop stays slim too, so the sticky panel's top half (price,
           rating, trust, date chips) lands inside the first viewport. */}
-      <div
-        className={`relative ${
-          show.bookingPageV2 ? "h-[30svh] min-h-[192px]" : "h-[32svh] min-h-[240px]"
-        } sm:h-[42vh] sm:min-h-[340px] lg:h-[42vh] lg:min-h-[360px]`}
-      >
+      <div className="relative h-[30svh] min-h-[192px] sm:h-[42vh] sm:min-h-[340px] lg:h-[42vh] lg:min-h-[360px]">
         <Image
           src={show.imageUrl}
           alt={show.imageAlt}
@@ -466,6 +467,7 @@ export default async function ShowDetailPage({
                 <PricesSection
                   priceFrom={show.priceFrom}
                   childPriceFrom={show.childPriceFrom}
+                  studentPriceFrom={show.studentPriceFrom}
                   kidsFreeUnderAge={show.kidsFreeUnderAge}
                   bogo50={show.bogo50}
                   className=""
@@ -540,7 +542,7 @@ export default async function ShowDetailPage({
                   childPriceFrom: show.childPriceFrom,
                   mealIncluded: show.mealIncluded,
                   mealType: show.mealType,
-                  faqs: show.faqs,
+                  faqs,
                   category: show.category,
                   galleryImages: show.galleryImages,
                   galleryImageAlts: show.galleryImageAlts,

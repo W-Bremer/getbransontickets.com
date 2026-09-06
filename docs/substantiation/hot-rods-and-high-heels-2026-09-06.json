@@ -1,0 +1,12 @@
+{
+ "show": "hot-rods-and-high-heels",
+ "source": "https://www.bransonshows.com/activity/HotRodsHighHeels.cfm",
+ "pageTitle": "Hot Rods & High Heels",
+ "capturedUtc": "2026-09-06T11:20:00Z",
+ "method": "HTTP GET of the listing page; the Offer objects below are copied verbatim from the page's own schema.org JSON-LD",
+ "competitorPriceUsed": 53.85,
+ "offers": [
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-09-07\", \"validThrough\": \"2026-10-30\", \"price\" : \"53.85\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/HotRodsHighHeels.cfm\" }",
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-11-02\", \"validThrough\": \"2026-12-30\", \"price\" : \"53.85\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/HotRodsHighHeels.cfm\" }"
+ ]
+}

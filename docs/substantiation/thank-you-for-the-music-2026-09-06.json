@@ -1,0 +1,11 @@
+{
+ "show": "thank-you-for-the-music",
+ "source": "https://www.bransonshows.com/activity/ABBATributeThankYouForTheMusic.cfm",
+ "pageTitle": "ABBA Tribute: Thank You For The Music Branson",
+ "capturedUtc": "2026-09-06T11:20:00Z",
+ "method": "HTTP GET of the listing page; the Offer objects below are copied verbatim from the page's own schema.org JSON-LD",
+ "competitorPriceUsed": 38.46,
+ "offers": [
+  "{ \"@type\" : \"Offer\", \"name\" : \"Adult Admission\", \"availability\": \"https://schema.org/InStock\", \"validFrom\": \"2026-09-08\", \"validThrough\": \"2026-12-11\", \"price\" : \"38.46\", \"priceCurrency\": \"USD\", \"url\" : \"https://www.bransonshows.com/activity/ABBATributeThankYouForTheMusic.cfm\" }"
+ ]
+}

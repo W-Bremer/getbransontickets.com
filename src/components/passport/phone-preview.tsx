@@ -42,7 +42,7 @@ export function PhonePreview({ className }: { className?: string }) {
             <div className="space-y-2">
               {[
                 { img: "/branson-lakes-lodging.jpg", t: "Branson Lakes Lodging", s: "Late checkout" },
-                { img: "/shows/the-duttons.png", t: "The Duttons", s: "Family Pass $113" },
+                { img: "/shows/the-duttons.jpg", t: "The Duttons", s: "Family Pass $113" },
               ].map((row) => (
                 <div key={row.t} className="flex items-center gap-2 rounded-md border border-[#E4E2DC] p-1.5">
                   <div className="relative h-8 w-10 shrink-0 overflow-hidden rounded">
