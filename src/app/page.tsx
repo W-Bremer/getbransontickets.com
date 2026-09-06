@@ -4,7 +4,6 @@ import Image from "next/image";
 import { getPartnerShows } from "@/data/shows";
 import { attractions } from "@/data/attractions";
 import { categories } from "@/lib/config";
-// import { getPublishedPosts } from "@/data/blog"; // archived
 // import { CategoryCard } from "@/components/category-card";
 import { TrustBar } from "@/components/trust-bar";
 import { HeroSection } from "@/components/hero-section";
